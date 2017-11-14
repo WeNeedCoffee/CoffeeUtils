@@ -7,8 +7,8 @@ public class Logic {
 	
 	/** http://stackoverflow.com/questions/31582524/how-to-check-multiple-objects-for-nullity
 	 * @author StackOverflow:kamwo
-	 * @param objects
-	 * @return
+	 * @param any number of objects
+	 * @return true if any object in the arguments is null
 	 */
 	public static Boolean isAnyObjectNull(Object... objects) {
 	    for (Object o: objects) {
@@ -36,7 +36,7 @@ public class Logic {
 	/** http://stackoverflow.com/questions/4191687/how-to-calculate-mean-median-mode-and-range-from-a-set-of-numbers
 	 * @author Stackoverflow:nico-huysamen
 	 * @param data
-	 * @return
+	 * @return Median of float array
 	 */
     public static float getMedian(float[] data) {
         float[] copy = Arrays.copyOf(data, data.length);
