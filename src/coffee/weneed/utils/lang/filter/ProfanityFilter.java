@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 /**
  * @author Lyenliang, Dalethium
@@ -97,29 +96,6 @@ public class ProfanityFilter {
 				e.printStackTrace();
 			}
 		}
-	}
-	/**
-	 * Ask the user to input something
-	 * 
-	 * @return string that user inputs
-	 */
-	private String readUserInput() {
-		String userInput = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("Say something: ");
-		try {
-			userInput = br.readLine();
-		} catch (IOException ioe) {
-			System.out.println("readLine error!!!");
-			System.exit(1);
-		} finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return userInput;
 	}
 
 	/**
