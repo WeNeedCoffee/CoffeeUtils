@@ -18,6 +18,7 @@ public class ProfanityFilter {
 
 	public ProfanityFilter() {
 		root = new TreeNode();
+		buildDictionaryTree("badwords.txt");
 	}
 
 	/**
