@@ -2,8 +2,8 @@ package coffee.weneed.utils.lang.filter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author Lyenliang, Dalethium
@@ -30,7 +30,7 @@ public class ProfanityFilter {
 		String line;
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader(fileName));
+			in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/" + fileName)));
 			while ((line = in.readLine()) != null) {
 				// for each bad word
 				addToTree(line.toLowerCase(), 0, root);
@@ -80,7 +80,7 @@ public class ProfanityFilter {
 		String line;
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader("endings.txt"));
+			in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/endings.txt")));
 			while ((line = in.readLine()) != null) {
 				// for each bad word
 				addToTree(badWordLine + line.toLowerCase(), 0, root);
