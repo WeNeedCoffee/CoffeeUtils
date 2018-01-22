@@ -1,5 +1,9 @@
 package coffee.weneed.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Provides a suite of utilities for manipulating strings.
  *
@@ -8,6 +12,7 @@ package coffee.weneed.utils;
  * @version 1.1
  *
  */
+//TODO source and clean up
 public class StringUtil {
 
 	/**
@@ -232,4 +237,53 @@ public class StringUtil {
 		}
 		return sb.toString();
 	}
+	
+    public static String[] spliceFirst(String[] arr) {
+    	List<String> list = new ArrayList<>();
+		Collections.addAll(list, arr);
+		list.remove(0);
+		return list.toArray(new String[0]);
+    }
+    
+    /**
+     * Java equivilent of PHP's substr
+     * @author https://stackoverflow.com/questions/28916163/java-equivalent-of-php-substr
+     * @param string
+     * @param from
+     * @param to
+     * @return substring
+     */
+    public static String substr(String string,int from,int to) {
+	    if (from < 0 && to < 0) {
+	        if (Math.abs(from) > Math.abs(to)) {
+	            String s = string.substring(string.length()-Math.abs(from));
+	            return s.substring(s.length()-Math.abs(to));
+	        } else {
+	            return "";
+	        }
+	   } else if (from >= 0 && to < 0) {
+	        String s = string.substring(from);
+	       if (Math.abs(to) >= s.length()) {
+	           return "";
+	       } else {
+	           return s.substring(0,s.length()-Math.abs(to));
+	       }
+
+
+	    } else if (from < 0 && to >= 0) {
+	        String s = string.substring(string.length()-Math.abs(from));
+	        if(to >= s.length()) {
+	        	return s;   
+	        }
+	        return s.substring(0,to);
+	    } else {
+	        String s = string.substring(Math.abs(from));
+	        if(to >= s.length()) {
+	            return s;
+	        } else {
+	            return s.substring(0, Math.abs(to));
+	        }
+	    }
+	}
+    
 }

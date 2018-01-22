@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
  * @author Dalethium
  *
  */
+//TODO source and clean up
 public class HexTool {
 
     private static final char[] HEX = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
@@ -50,7 +51,19 @@ public class HexTool {
         }
         return ret.toString();
     }
-
+    
+    public static byte[] dehexify(String hexString) {
+        if (hexString.length()%2 == 1)
+            throw new IllegalArgumentException("Invalid length");       
+        int len = hexString.length()/2;
+        byte[] bytes = new byte[len];
+        for (int i=0; i<len; i++) {
+            int index = i*2;
+            bytes[i] = (byte)Integer.parseInt(hexString.substring(index, index+2), 16);
+        }
+        return bytes;
+    }
+    
     public static byte[] getByteArrayFromHexString(String hex) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int nexti = 0;
@@ -122,6 +135,13 @@ public class HexTool {
         }
         return baos.toByteArray();
     }
+    public static String bytesToHexa(byte[] digest) {
+    	StringBuffer hexString = new StringBuffer();
+    	for (int i = 0; i < digest.length; i++) {
+    		hexString.append(Integer.toHexString(0xFF & digest[i]));
+    	}
+    	return hexString.toString();
+	}
 
     public static final String getOpcodeToString(int op) {
         return new StringBuilder().append("0x").append(StringUtil.getLeftPaddedStr(Integer.toHexString(op).toUpperCase(), '0', 4)).toString();
