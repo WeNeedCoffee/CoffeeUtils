@@ -1,5 +1,6 @@
 package coffee.weneed.utils;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -286,4 +287,11 @@ public class StringUtil {
 	    }
 	}
     
+	public static Character getChar(String s) {
+		return s.charAt(0);
+	}
+	
+	public static String normalize(String s) { 
+		return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
+	}
 }

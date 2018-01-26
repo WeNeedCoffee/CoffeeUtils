@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 
 /**
  * @author Lyenliang, Dalethium
- * 
+ *
  */
+//TODO register endings for words starting with the endings, for example registering Stroker from Stroke
+//TODO check words for middle dupes between endings like rim and rimming
 public class ProfanityFilter {
 	private TreeNode root;
 	private int badWordStart;
