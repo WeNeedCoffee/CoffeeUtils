@@ -2,8 +2,6 @@ package coffee.weneed.utils.lang.filter;
 
 import java.util.HashMap;
 
-import coffee.weneed.utils.StringUtil;
-
 /**
  * @author Lyenliang, Dalethium
  *
@@ -58,60 +56,13 @@ public class TreeNode {
 		node.put(letter, childNode);
 	}
 	
-	private TreeNode getNode(String s) {
-		return node.get(s.charAt(0));
-	}
-	
-	private TreeNode getLeetChildByLetter(Character letter) {
-		if (letter.equals(StringUtil.getChar("4"))) {
-			return getNode("a") != null ? getNode("a") : getNode("4");
-		} else if (letter.equals(StringUtil.getChar("3"))) {
-			return getNode("e") != null ? getNode("e") : getNode("3");
-		} else if (letter.equals(StringUtil.getChar("9"))) {
-			return getNode("g") != null ? getNode("g") : getNode("9");
-		} else if (letter.equals(StringUtil.getChar("0"))) {
-			return getNode("o") != null ? getNode("o") : getNode("0");
-		} else if (letter.equals(StringUtil.getChar("1"))) {
-			return getNode("i") != null ? getNode("i") : getNode("l") != null ? getNode("l") : getNode("1");
-		} else if (letter.equals(StringUtil.getChar("4"))) {
-			return getNode("a") != null ? getNode("a") : getNode("4");
-		} else if (letter.equals(StringUtil.getChar("b"))) {
-			return getNode("g") != null ? getNode("g") : getNode("b");
-		} else {
-			return node.get(letter);
-		}
-	}
 	public TreeNode getChildByLetter(Character letter) {
 		// Returns the value to which the specified key is mapped, or null if
 		// this map contains no mapping for the key.
-		return getLeetChildByLetter(letter);
-	}
-
-	private boolean isKey(String s) {
-		return node.containsKey(s.charAt(0));
-	}
-	
-	private boolean containsLeetChild(Character letter) {
-		if (letter.equals(StringUtil.getChar("4"))) {
-			return isKey("a") ? isKey("a") : isKey("4");
-		} else if (letter.equals(StringUtil.getChar("3"))) {
-			return isKey("e") ? isKey("e") : isKey("3");
-		} else if (letter.equals(StringUtil.getChar("9"))) {
-			return isKey("g") ? isKey("g") : isKey("9");
-		} else if (letter.equals(StringUtil.getChar("0"))) {
-			return isKey("o") ? isKey("o") : isKey("0");
-		} else if (letter.equals(StringUtil.getChar("1"))) {
-			return isKey("i") ? isKey("i") : isKey("l") ? isKey("l") : isKey("1");
-		} else if (letter.equals(StringUtil.getChar("4"))) {
-			return isKey("a") ? isKey("a") : isKey("4");
-		} else if (letter.equals(StringUtil.getChar("b"))) {
-			return isKey("g")  ? isKey("g") : isKey("b");
-		} else {
-			return node.containsKey(letter);
-		}
+		return node.get(letter); //getLeetChildByLetter(letter);
 	}
 	
 	public boolean containsChild(Character letter) {
-		return containsLeetChild(letter);
+		return node.containsKey(letter);//containsLeetChild(letter);
 	}
 }
