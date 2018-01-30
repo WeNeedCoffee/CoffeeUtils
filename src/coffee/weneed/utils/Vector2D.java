@@ -1,5 +1,9 @@
 package coffee.weneed.utils;
-
+/**
+ * A utility class for handling 2 dimensional coordinates.
+ * @author Dalethium
+ *
+ */
 public class Vector2D {
 	private int X;
 	private int Y;

@@ -10,10 +10,10 @@ import java.util.List;
  *
  * @author Dalethium, ?
  * @since Revision 0
- * @version 1.1
+ * @version 1.2
  *
  */
-//TODO source and clean up
+//TODO credit/source
 public class StringUtil {
 
 	/**
@@ -133,7 +133,13 @@ public class StringUtil {
 		}
 		return ret;
 	}
-
+	
+	/**
+	 * Creates a human readable string based on the time elapsed between <code>startMillis</code> and <code>endMillis</code>.
+	 * @param startMillis The start time.
+	 * @param endMillis The end time.
+	 * @return Readable string of the time between <code>startMillis</code> and <code>endMillis</code>.
+	 */
 	public static final String getReadableMillis(long startMillis, long endMillis) {
 		StringBuilder sb = new StringBuilder();
 		double elapsedSeconds = (endMillis - startMillis) / 1000.0;
@@ -203,7 +209,13 @@ public class StringUtil {
 		return sb.toString();
 	}
 
-	public static final int getDaysAmount(long startMillis, long endMillis) {
+	/**
+	 * Returns the elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 * @param startMillis
+	 * @param endMillis
+	 * @return Elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 */
+	public static final int getDaysBetween(long startMillis, long endMillis) {
 		double elapsedSeconds = (endMillis - startMillis) / 1000.0;
 		int elapsedMinutes = (int) (elapsedSeconds / 60.0);
 		int elapsedHrs = elapsedMinutes / 60;
@@ -222,6 +234,12 @@ public class StringUtil {
 		return def;
 	}
 
+	/**
+	 * Checks if a given input is a number via the Character interface.
+	 * @param s
+	 * @return True or false based on whether or not the input is a number.
+	 * @see Character.isDigit
+	 */
 	public static boolean isNumber(String s) {
 		for (char c : s.toCharArray()) {
 			if (!Character.isDigit(c)) {
@@ -239,6 +257,12 @@ public class StringUtil {
 		return sb.toString();
 	}
 	
+	/**
+	 * @author Dalethium
+	 * Removes the first item from a array of strings.
+	 * @param arr An array to modify.
+	 * @return The inputed array minus the first item.
+	 */
     public static String[] spliceFirst(String[] arr) {
     	List<String> list = new ArrayList<>();
 		Collections.addAll(list, arr);
@@ -287,11 +311,23 @@ public class StringUtil {
 	    }
 	}
     
+    /**
+     * @author Dalethium
+     * Gets the first character of the provided string.
+     * @param s The string.
+     * @return The first character of the provided string.
+     * @see Character 
+     */
 	public static Character getChar(String s) {
 		return s.charAt(0);
 	}
 	
-	public static String normalize(String s) { 
-		return Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
+	/**
+	 * Normalizes <code>string</code> by removing all non ascii characters.
+	 * @param string The string to normalize.
+	 * @return Normalized ascii string.
+	 */
+	public static String normalize(String string) { 
+		return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
 	}
 }

@@ -1,7 +1,11 @@
 package coffee.weneed.utils;
 
 import java.io.UnsupportedEncodingException;
-
+/**
+ * 
+ * @author Dalethium
+ *
+ */
 public class Crypto {
 		public String MD5(String md5) {
 		   try {
