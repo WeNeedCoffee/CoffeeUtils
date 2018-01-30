@@ -201,14 +201,7 @@ public class ProfanityFilter {
 			return true;
 		} else if (searchLeet(pUserInput, characterIndex, node, update)){
 			return true;
-		} /*else if (!recur && characterIndex > 0 && (characterIndex + 1) < pUserInput.length()) {
-			if ((letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1))) ||
-					isLeetMatch(letter, pUserInput, characterIndex + 1) || 
-						search(pUserInput, characterIndex + 1, node, false, true)) {
-				if (update) searchAlongTree(pUserInput, characterIndex + 1, node);
-				return true;
-			}
-		} */
+		} 
 		return false;
 	}
 	
@@ -236,8 +229,8 @@ public class ProfanityFilter {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 1 && (characterIndex + 1) < pUserInput.length() && ((ch.equals(pUserInput.charAt(characterIndex - 1)) ||
-					searchLeet(pUserInput, characterIndex + 1, node, false)) && node.containsChild(pUserInput.charAt(characterIndex - 1)) || 
+			if (characterIndex > 0 && (characterIndex + 1) < pUserInput.length() && ((ch.equals(pUserInput.charAt(characterIndex + 1)) ||	
+					matchLeet(pUserInput, characterIndex + 1).contains(ch))  || 
 						search(pUserInput, characterIndex + 1, node, false))) {
 				searchAlongTree(pUserInput, characterIndex + 1, node);
 				return;
@@ -251,8 +244,21 @@ public class ProfanityFilter {
 
 	private void searchAlongTree(String pUserInput, int characterIndex, TreeNode node) {
 		if (characterIndex < pUserInput.length()) {
+			Character letter = pUserInput.charAt(characterIndex);
 			if (search(pUserInput, characterIndex, node, true)) {
 				return;
+			} else if (characterIndex > 0 && (characterIndex + 1) < pUserInput.length()) {
+				if ((letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1)) ||
+					matchLeet(pUserInput, characterIndex + 1).contains(letter) || matchLeet(pUserInput, characterIndex - 1).contains(letter))) {
+					searchAlongTree(pUserInput, characterIndex + 1, node);
+					return;
+				} 
+				try {
+					if (!node.isEnd()) (letter + "").replaceAll("[\\W_]", "").charAt(0);
+				} catch(IndexOutOfBoundsException e) {
+					searchAlongTree(pUserInput, characterIndex + 1, node);
+					return;
+				}
 			}
 			isSuspicionFound = false;
 			badWordStart = -1;
