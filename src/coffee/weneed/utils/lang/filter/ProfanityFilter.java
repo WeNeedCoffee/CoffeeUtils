@@ -70,16 +70,13 @@ public class ProfanityFilter {
 			}
 		}
 		try {
-			
 			while ((line = in.readLine()) != null) {
-				// for each bad word
 				addToTree(line.toLowerCase(), 0, root);
 				finishTree(line.toLowerCase());
 			}
-
-		} catch (FileNotFoundException e) { // FileReader
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) { // readLine
+		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -89,7 +86,36 @@ public class ProfanityFilter {
 			}
 		}
 	}
-
+	
+	private void finishTree(String badWordLine) {
+		String line;
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/endings.txt")));
+		} catch (NullPointerException e) {
+			try {
+				in = new BufferedReader(new InputStreamReader(new FileInputStream("endings.txt")));
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+		try {
+			while ((line = in.readLine()) != null) {
+				addToTree(badWordLine + line.toLowerCase(), 0, root);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (in !=null) in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	/**
 	 * @param badWordLine
 	 * @param characterIndex
@@ -104,46 +130,10 @@ public class ProfanityFilter {
 				node.addChild(c);
 			}
 			node = node.getChildByLetter(c);
-			// check if this is the last letter
 			if (characterIndex == (badWordLine.length() - 1)) {
-				// mark this letter as the end of a bad word
 				node.setEnd(true);
 			} else {
-				// add next letter
 				addToTree(badWordLine, characterIndex + 1, node);
-			}
-		}
-	}
-
-	
-	private void finishTree(String badWordLine) {
-		String line;
-		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/endings.txt")));
-		} catch (NullPointerException e) {
-			try {
-				in = new BufferedReader(new InputStreamReader(new FileInputStream("endings.txt")));
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		try {
-			while ((line = in.readLine()) != null) {
-				// for each bad word
-				addToTree(badWordLine + line.toLowerCase(), 0, root);
-			}
-
-		} catch (FileNotFoundException e) { // FileReader
-			e.printStackTrace();
-		} catch (IOException e) { // readLine
-			e.printStackTrace();
-		} finally {
-			try {
-				in.close();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -155,7 +145,6 @@ public class ProfanityFilter {
 	public String filterBadWords(String userInput) {
 		String userInputLC = userInput.toLowerCase();
 		init(userInputLC.length());
-		// for each character in a bad word
 		for (int i = 0; i < userInputLC.length(); i++) {
 			searchAlongTree(userInputLC, i, root);
 		}
@@ -181,17 +170,6 @@ public class ProfanityFilter {
 			toSkip += toSkip(c, leet, sub, node, toSkip + leet.length());
 		}
 		return toSkip;
-	}
-	
-	private boolean isLeetMatch(Character c, String pUserInput, int characterIndex) {
-		String sub = StringUtil.substr(pUserInput, characterIndex, pUserInput.length());
-		if (!leets.containsKey(c)) return false;
-		for (String s : leets.get(c)) {
-			if (sub.startsWith(s)) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	private List<Character> matchLeet(String pUserInput, int characterIndex) {
@@ -257,10 +235,9 @@ public class ProfanityFilter {
 			isSuspicionFound = true;
 			badWordStart = characterIndex;
 		}
-
 		if (node.getChildByLetter(ch).isEnd()) {
 			if (characterIndex > 1 && (characterIndex + 1) < pUserInput.length() && ((ch.equals(pUserInput.charAt(characterIndex - 1)) ||
-					isLeetMatch(ch, pUserInput, characterIndex + 1)) && node.containsChild(pUserInput.charAt(characterIndex - 1)) || 
+					searchLeet(pUserInput, characterIndex + 1, node, false)) && node.containsChild(pUserInput.charAt(characterIndex - 1)) || 
 						search(pUserInput, characterIndex + 1, node, false))) {
 				searchAlongTree(pUserInput, characterIndex + 1, node);
 				return;
