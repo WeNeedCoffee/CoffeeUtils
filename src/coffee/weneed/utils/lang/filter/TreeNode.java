@@ -6,7 +6,6 @@ import java.util.HashMap;
  * @author Lyenliang, Dalethium
  *
  */
-//TODO register multiple char l33t replacements like ph for f
 public class TreeNode {
 	private HashMap<Character, TreeNode> node;
 	/**
@@ -59,10 +58,10 @@ public class TreeNode {
 	public TreeNode getChildByLetter(Character letter) {
 		// Returns the value to which the specified key is mapped, or null if
 		// this map contains no mapping for the key.
-		return node.get(letter); //getLeetChildByLetter(letter);
+		return node.get(letter);
 	}
 	
 	public boolean containsChild(Character letter) {
-		return node.containsKey(letter);//containsLeetChild(letter);
+		return node.containsKey(letter);
 	}
 }

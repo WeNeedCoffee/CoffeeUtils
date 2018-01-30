@@ -26,6 +26,20 @@ public class ProfanityFilter {
 	private int badWordEnd;
 	private boolean isSuspicionFound;
 	private boolean[] asteriskMark;
+	private static Map<Character, String[]> leets = new HashMap<Character, String[]>();
+	
+	static {
+		//TODO finish
+		leets.put(StringUtil.getChar("a"), new String[] {"@", "4", "/\\", "/-\\"});
+		leets.put(StringUtil.getChar("b"), new String[] {"13", "18", "l3", "8"});
+		leets.put(StringUtil.getChar("c"), new String[] {"k", "s", "<", "("});
+		leets.put(StringUtil.getChar("d"), new String[] {"|)", "o|", "|>", "<|"});
+		leets.put(StringUtil.getChar("e"), new String[] {"3"});
+		leets.put(StringUtil.getChar("g"), new String[] {"b", "(", "9", "6"});
+		leets.put(StringUtil.getChar("k"), new String[] {"c", "s"});
+		leets.put(StringUtil.getChar("l"), new String[] {"1_", "1", "|", "i", "|_", "i_"}); //test
+		leets.put(StringUtil.getChar("s"), new String[] {"k", "c"});
+	}
 	
 	public ProfanityFilter() {
 		root = new TreeNode();
@@ -152,27 +166,18 @@ public class ProfanityFilter {
 		badWordEnd = -1;
 		isSuspicionFound = false;
 	}
-	static Map<Character, String[]> leets = new HashMap<Character, String[]>();
-	static {
-		leets.put(StringUtil.getChar("a"), new String[] {"@", "4", "/\\", "/-\\"});
-		leets.put(StringUtil.getChar("b"), new String[] {"13", "18", "l3", "8"});
-		leets.put(StringUtil.getChar("c"), new String[] {"k", "s", "<", "("});
-		leets.put(StringUtil.getChar("d"), new String[] {"|)", "o|", "|>", "<|"});
-		leets.put(StringUtil.getChar("e"), new String[] {"3"});
-		leets.put(StringUtil.getChar("g"), new String[] {"b", "(", "9", "6"});
-		leets.put(StringUtil.getChar("k"), new String[] {"c", "s"});
-		leets.put(StringUtil.getChar("l"), new String[] {"1_", "1", "|", "i", "|_", "i_"}); //test
-		leets.put(StringUtil.getChar("s"), new String[] {"k", "c"});
-	}
+	
 	private static int toSkip(Character c, String leet, String sub, TreeNode node) {
 		return toSkip(c, leet, sub, node, 0);
 	}
+	
 	private static int toSkip(Character c, String leet, String sub, TreeNode node, int toSkip) {
 		if (StringUtil.substr(sub, toSkip, sub.length()).startsWith(leet)) {
 			toSkip += toSkip(c, leet, sub, node, toSkip + leet.length());
 		}
 		return toSkip;
 	}
+	
 	private boolean isLeetMatch(Character c, String pUserInput, int characterIndex) {
 		String sub = StringUtil.substr(pUserInput, characterIndex, pUserInput.length());
 		if (!leets.containsKey(c)) return false;
@@ -183,6 +188,7 @@ public class ProfanityFilter {
 		}
 		return false;
 	}
+	
 	private List<Character> matchLeet(String pUserInput, int characterIndex) {
 		List<Character> leetmatch = new ArrayList<Character>();
 		String sub = StringUtil.substr(pUserInput, characterIndex, pUserInput.length());
@@ -200,9 +206,11 @@ public class ProfanityFilter {
 		}
 		return leetmatch;
 	}
+	
 	private boolean search(String pUserInput, int characterIndex, TreeNode node, boolean update) {
 		return search(pUserInput, characterIndex, node, update, false);
 	}
+	
 	private boolean search(String pUserInput, int characterIndex, TreeNode node, boolean update, boolean recur) {
 		Character letter = pUserInput.charAt(characterIndex);
 		if (node.containsChild(letter)) {
@@ -220,13 +228,13 @@ public class ProfanityFilter {
 		} */
 		return false;
 	}
+	
 	private boolean searchLeet(String pUserInput, int characterIndex, TreeNode node, boolean update) {
 		List<Character> leetmatch = matchLeet(pUserInput, characterIndex);
 		for (Character ch : leetmatch) {
 			if (node.containsChild(ch)) {
 				String[] ssss = leets.get(ch);
 				Arrays.sort(ssss, (b, a)->Integer.compare(a.length(), b.length()));
-				
 				for (String leet : ssss) {
 					int toSkip = toSkip(ch, leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
 					if (toSkip > 0) {
@@ -244,7 +252,7 @@ public class ProfanityFilter {
 			isSuspicionFound = true;
 			badWordStart = characterIndex;
 		}
-		// if this is the final letter of a bad word
+
 		if (node.getChildByLetter(ch).isEnd()) {
 			if (characterIndex > 1 && (characterIndex + 1) < pUserInput.length() && ((ch.equals(pUserInput.charAt(characterIndex - 1)) ||
 					isLeetMatch(ch, pUserInput, characterIndex + 1)) && node.containsChild(pUserInput.charAt(characterIndex - 1)) || 
@@ -258,13 +266,12 @@ public class ProfanityFilter {
 		node = node.getChildByLetter(ch);
 		searchAlongTree(pUserInput, characterIndex + toSkip, node);
 	}
-	//TODO detect things like: "Nazzzi"
+
 	private void searchAlongTree(String pUserInput, int characterIndex, TreeNode node) {
 		if (characterIndex < pUserInput.length()) {
 			if (search(pUserInput, characterIndex, node, true)) {
 				return;
 			}
-			// initialize some parameters
 			isSuspicionFound = false;
 			badWordStart = -1;
 			badWordEnd = -1;
