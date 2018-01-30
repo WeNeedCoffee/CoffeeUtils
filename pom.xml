@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>CoffeeUtils</groupId>
   <artifactId>CoffeeUtils</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <build>
     <sourceDirectory>src/java</sourceDirectory>
     <plugins>
@@ -16,4 +16,12 @@
       </plugin>
     </plugins>
   </build>
+  <name>Coffee Utils</name>
+  <url>https://github.com/WeNeedCoffee/CoffeeUtils</url>
+  <description>Generic utilities</description>
+  <inceptionYear>2017</inceptionYear>
+  <organization>
+  	<name>We Need Coffee</name>
+  	<url>http://weneed.coffee/</url>
+  </organization>
 </project>
