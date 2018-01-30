@@ -30,6 +30,7 @@ public class ProfanityFilter {
 	
 	static {
 		//TODO finish
+		//TODO load from file
 		leets.put(StringUtil.getChar("a"), new String[] {"@", "4", "/\\", "/-\\"});
 		leets.put(StringUtil.getChar("b"), new String[] {"13", "18", "l3", "8"});
 		leets.put(StringUtil.getChar("c"), new String[] {"k", "s", "<", "("});
@@ -148,11 +149,11 @@ public class ProfanityFilter {
 	 * @return string with bad words filtered
 	 */
 	public String filterBadWords(String userInput) {
-		userInput = userInput.toLowerCase();
-		init(userInput.length());
+		String userInputLC = userInput.toLowerCase();
+		init(userInputLC.length());
 		// for each character in a bad word
-		for (int i = 0; i < userInput.length(); i++) {
-			searchAlongTree(userInput, i, root);
+		for (int i = 0; i < userInputLC.length(); i++) {
+			searchAlongTree(userInputLC, i, root);
 		}
 		return applyAsteriskMark(userInput);
 	}
