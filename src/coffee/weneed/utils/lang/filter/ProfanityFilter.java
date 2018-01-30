@@ -31,15 +31,19 @@ public class ProfanityFilter {
 	static {
 		//TODO finish
 		//TODO load from file
-		leets.put(StringUtil.getChar("a"), new String[] {"@", "4", "/\\", "/-\\"});
-		leets.put(StringUtil.getChar("b"), new String[] {"13", "18", "l3", "8"});
-		leets.put(StringUtil.getChar("c"), new String[] {"k", "s", "<", "("});
-		leets.put(StringUtil.getChar("d"), new String[] {"|)", "o|", "|>", "<|"});
+		leets.put(StringUtil.getChar("a"), new String[] {"@", "4", "/\\", "/-\\", "/_\\"});
+		leets.put(StringUtil.getChar("b"), new String[] {"13", "18", "l3", "8", "|:", "|8", "|b", "lo", "|o", "|3"});
+		leets.put(StringUtil.getChar("c"), new String[] {"k", "s", "<", "(", "[", "{"});
+		leets.put(StringUtil.getChar("d"), new String[] {"|)", "o|", "|>", "<|", "|}", "|]"});
 		leets.put(StringUtil.getChar("e"), new String[] {"3"});
+		leets.put(StringUtil.getChar("f"), new String[] {"ph", "|=", "|\"", "|#"});
 		leets.put(StringUtil.getChar("g"), new String[] {"b", "(", "9", "6"});
-		leets.put(StringUtil.getChar("k"), new String[] {"c", "s"});
-		leets.put(StringUtil.getChar("l"), new String[] {"1_", "1", "|", "i", "|_", "i_"}); //test
-		leets.put(StringUtil.getChar("s"), new String[] {"k", "c"});
+		leets.put(StringUtil.getChar("k"), new String[] {"c", "|<", "1<", "|{", "/<", "\\<"});
+		leets.put(StringUtil.getChar("l"), new String[] {"1_", "1", "|", "i", "|_", "i_"});
+		leets.put(StringUtil.getChar("n"), new String[] {"|\\|", "/\\/", "/V"});
+		leets.put(StringUtil.getChar("s"), new String[] {"c", "5", "$", "z"});
+		leets.put(StringUtil.getChar("u"), new String[] {"v", "|_|", "L|", "\\/", "\\_/", "\\_\\", "/_/"});
+		leets.put(StringUtil.getChar("w"), new String[] {"\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV"});
 	}
 	
 	public ProfanityFilter() {
