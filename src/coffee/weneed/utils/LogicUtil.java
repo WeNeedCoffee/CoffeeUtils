@@ -3,7 +3,7 @@ package coffee.weneed.utils;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Logic {
+public class LogicUtil {
 	
 	/** http://stackoverflow.com/questions/31582524/how-to-check-multiple-objects-for-nullity
 	 * @author StackOverflow:kamwo
@@ -50,5 +50,9 @@ public class Logic {
             sum += m[i];
         }
         return sum / m.length;
+    }
+    
+    public static int getUnixTime() {
+    	return Math.round(System.currentTimeMillis() / 1000);
     }
 }
