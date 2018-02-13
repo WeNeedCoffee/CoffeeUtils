@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Provides a suite of utilities for manipulating strings.
  *
  * @author Dalethium, ?
- * @since Revision 0
  * @version 1.2
- *
+ * @since Revision 0
  */
-//TODO credit/source
+// TODO credit/source
 public class StringUtil {
 
 	/**
@@ -82,6 +82,7 @@ public class StringUtil {
 	 *
 	 * @param arr The array of strings to join.
 	 * @param start Starting from which string.
+	 * @param sep the sep
 	 * @return The joined strings.
 	 */
 	public static final String joinStringFrom(final String arr[], final int start, final String sep) {
@@ -96,7 +97,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Makes an enum name human readable (fixes spaces, capitalization, etc)
+	 * Makes an enum name human readable (fixes spaces, capitalization, etc).
 	 *
 	 * @param enumName The name of the enum to neaten up.
 	 * @return The human-readable enum name.
@@ -133,7 +134,7 @@ public class StringUtil {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Creates a human readable string based on the time elapsed between <code>startMillis</code> and <code>endMillis</code>.
 	 * @param startMillis The start time.
@@ -211,8 +212,9 @@ public class StringUtil {
 
 	/**
 	 * Returns the elapsed days between <code>startMillis</code> and <code>endMillis</code>.
-	 * @param startMillis
-	 * @param endMillis
+	 *
+	 * @param startMillis the start millis
+	 * @param endMillis the end millis
 	 * @return Elapsed days between <code>startMillis</code> and <code>endMillis</code>.
 	 */
 	public static final int getDaysBetween(long startMillis, long endMillis) {
@@ -223,6 +225,14 @@ public class StringUtil {
 		return elapsedDays;
 	}
 
+	/**
+	 * Gets the optional int arg.
+	 *
+	 * @param splitted the splitted
+	 * @param position the position
+	 * @param def the def
+	 * @return the optional int arg
+	 */
 	public static int getOptionalIntArg(String[] splitted, int position, int def) {
 		if (splitted.length > position) {
 			try {
@@ -236,7 +246,8 @@ public class StringUtil {
 
 	/**
 	 * Checks if a given input is a number via the Character interface.
-	 * @param s
+	 *
+	 * @param s the s
 	 * @return True or false based on whether or not the input is a number.
 	 * @see Character.isDigit
 	 */
@@ -248,7 +259,15 @@ public class StringUtil {
 		}
 		return true;
 	}
-	
+
+	/**
+	 * Combine.
+	 *
+	 * @param in the in
+	 * @param index the index
+	 * @param sep the sep
+	 * @return the string
+	 */
 	public static String combine(String[] in, int index, char sep) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = index; i < in.length; i++) {
@@ -256,78 +275,82 @@ public class StringUtil {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
+	 * Splice first.
+	 *
 	 * @author Dalethium
 	 * Removes the first item from a array of strings.
 	 * @param arr An array to modify.
 	 * @return The inputed array minus the first item.
 	 */
-    public static String[] spliceFirst(String[] arr) {
-    	List<String> list = new ArrayList<>();
+	public static String[] spliceFirst(String[] arr) {
+		List<String> list = new ArrayList<>();
 		Collections.addAll(list, arr);
 		list.remove(0);
 		return list.toArray(new String[0]);
-    }
-    
-    /**
-     * Java equivilent of PHP's substr
-     * @author https://stackoverflow.com/questions/28916163/java-equivalent-of-php-substr
-     * @param string
-     * @param from
-     * @param to
-     * @return substring
-     */
-    public static String substr(String string,int from,int to) {
-	    if (from < 0 && to < 0) {
-	        if (Math.abs(from) > Math.abs(to)) {
-	            String s = string.substring(string.length()-Math.abs(from));
-	            return s.substring(s.length()-Math.abs(to));
-	        } else {
-	            return "";
-	        }
-	   } else if (from >= 0 && to < 0) {
-	        String s = string.substring(from);
-	       if (Math.abs(to) >= s.length()) {
-	           return "";
-	       } else {
-	           return s.substring(0,s.length()-Math.abs(to));
-	       }
-
-
-	    } else if (from < 0 && to >= 0) {
-	        String s = string.substring(string.length()-Math.abs(from));
-	        if(to >= s.length()) {
-	        	return s;   
-	        }
-	        return s.substring(0,to);
-	    } else {
-	        String s = string.substring(Math.abs(from));
-	        if(to >= s.length()) {
-	            return s;
-	        } else {
-	            return s.substring(0, Math.abs(to));
-	        }
-	    }
 	}
-    
-    /**
-     * @author Dalethium
-     * Gets the first character of the provided string.
-     * @param s The string.
-     * @return The first character of the provided string.
-     * @see Character 
-     */
+
+	/**
+	 * Java equivilent of PHP's substr.
+	 *
+	 * @author https://stackoverflow.com/questions/28916163/java-equivalent-of-php-substr
+	 * @param string the string
+	 * @param from the from
+	 * @param to the to
+	 * @return substring
+	 */
+	public static String substr(String string, int from, int to) {
+		if (from < 0 && to < 0) {
+			if (Math.abs(from) > Math.abs(to)) {
+				String s = string.substring(string.length() - Math.abs(from));
+				return s.substring(s.length() - Math.abs(to));
+			} else {
+				return "";
+			}
+		} else if (from >= 0 && to < 0) {
+			String s = string.substring(from);
+			if (Math.abs(to) >= s.length()) {
+				return "";
+			} else {
+				return s.substring(0, s.length() - Math.abs(to));
+			}
+
+		} else if (from < 0 && to >= 0) {
+			String s = string.substring(string.length() - Math.abs(from));
+			if (to >= s.length()) {
+				return s;
+			}
+			return s.substring(0, to);
+		} else {
+			String s = string.substring(Math.abs(from));
+			if (to >= s.length()) {
+				return s;
+			} else {
+				return s.substring(0, Math.abs(to));
+			}
+		}
+	}
+
+	/**
+	 * Gets the char.
+	 *
+	 * @author Dalethium
+	 * Gets the first character of the provided string.
+	 * @param s The string.
+	 * @return The first character of the provided string.
+	 * @see Character
+	 */
 	public static Character getChar(String s) {
 		return s.charAt(0);
 	}
-	
+
 	/**
 	 * Normalizes <code>string</code> by removing all non ascii characters.
 	 * @param string The string to normalize.
 	 * @return Normalized ascii string.
 	 */
-	public static String normalize(String string) { 
+	public static String normalize(String string) {
 		return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
 	}
 }
