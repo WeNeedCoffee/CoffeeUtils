@@ -53,7 +53,7 @@ public class HexTool {
 			if ((bytes[x] < 32) && (bytes[x] >= 0)) {
 				ret[x] = '.';
 			} else {
-				int chr = (short) bytes[x] & 0xFF;
+				int chr = bytes[x] & 0xFF;
 				ret[x] = ((char) chr);
 			}
 		}

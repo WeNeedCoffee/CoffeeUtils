@@ -13,7 +13,8 @@ public class Lang {
 	 * @param languagecode the languagecode
 	 * @return the string
 	 */
-	public static void getString(String key, String languagecode) {
+	public static String getString(String key, String languagecode) {
 		// TODO Read from lang file?
+		return null;
 	}
 }
