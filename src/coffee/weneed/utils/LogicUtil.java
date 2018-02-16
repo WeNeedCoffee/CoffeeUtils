@@ -65,13 +65,5 @@ public class LogicUtil {
 		}
 		return sum / m.length;
 	}
-
-	/**
-	 * Gets the unix time.
-	 *
-	 * @return the unix time
-	 */
-	public static int getUnixTime() {
-		return Math.round(System.currentTimeMillis() / 1000);
-	}
+	
 }

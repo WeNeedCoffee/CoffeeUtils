@@ -35,4 +35,13 @@ public class TimeUtil {
 		if (after < before) return true;
 		return false;
 	}
+	
+	/**
+	 * Gets the unix time.
+	 *
+	 * @return the unix time
+	 */
+	public static int getUnixTime() {
+		return Math.round(System.currentTimeMillis() / 1000);
+	}
 }
