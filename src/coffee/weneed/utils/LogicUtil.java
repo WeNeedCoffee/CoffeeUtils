@@ -65,5 +65,5 @@ public class LogicUtil {
 		}
 		return sum / m.length;
 	}
-	
+
 }

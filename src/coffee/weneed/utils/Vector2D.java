@@ -9,10 +9,10 @@ package coffee.weneed.utils;
 public class Vector2D {
 
 	/** The x. */
-	private int X;
+	private double X;
 
 	/** The y. */
-	private int Y;
+	private double Y;
 
 	/**
 	 * Instantiates a new vector 2 D.
@@ -24,12 +24,12 @@ public class Vector2D {
 	/**
 	 * Instantiates a new vector 2 D.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param d the x
+	 * @param e the y
 	 */
-	public Vector2D(int x, int y) {
-		this.X = x;
-		this.Y = y;
+	public Vector2D(double d, double e) {
+		this.X = d;
+		this.Y = e;
 	}
 
 	/**
@@ -37,8 +37,17 @@ public class Vector2D {
 	 *
 	 * @return the x
 	 */
-	public int getX() {
+	public double getX() {
 		return this.X;
+	}
+
+	/**
+	 * Gets the rounded X.
+	 *
+	 * @return the rounded X
+	 */
+	public int getRoundedX() {
+		return (int) Math.round(this.X); // TODO this, better
 	}
 
 	/**
@@ -46,26 +55,35 @@ public class Vector2D {
 	 *
 	 * @return the y
 	 */
-	public int getY() {
+	public double getY() {
 		return this.Y;
+	}
+
+	/**
+	 * Gets the rounded Y.
+	 *
+	 * @return the rounded Y
+	 */
+	public int getRoundedY() {
+		return (int) Math.round(this.Y); // TODO this, better
 	}
 
 	/**
 	 * Sets the x.
 	 *
-	 * @param x the new x
+	 * @param d the new x
 	 */
-	public void setX(int x) {
-		this.X = x;
+	public void setX(double d) {
+		this.X = d;
 	}
 
 	/**
 	 * Sets the y.
 	 *
-	 * @param y the new y
+	 * @param d the new y
 	 */
-	public void setY(int y) {
-		this.Y = y;
+	public void setY(double d) {
+		this.Y = d;
 	}
 
 	/**
@@ -74,9 +92,38 @@ public class Vector2D {
 	 * @param x the x
 	 * @param y the y
 	 */
-	public void setPos(int x, int y) {
+	public void setPos(double x, double y) {
 		setX(x);
 		setY(y);
+	}
+
+	/**
+	 * Gets the length.
+	 *
+	 * @return the length
+	 */
+	public double getLength() {
+		return Math.sqrt(getX() * getX() + getY() * getY());
+	}
+
+	/**
+	 * Sets the length.
+	 *
+	 * @param len the new length
+	 */
+	public void setLength(double len) {
+		double l2 = getLength();
+		scale(len / l2);
+	}
+
+	/**
+	 * Scale.
+	 *
+	 * @param d the d
+	 */
+	public void scale(double d) {
+		setX(getX() * d);
+		setY(getY() * d);
 	}
 
 	/**

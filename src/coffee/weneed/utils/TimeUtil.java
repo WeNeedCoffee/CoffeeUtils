@@ -35,7 +35,7 @@ public class TimeUtil {
 		if (after < before) return true;
 		return false;
 	}
-	
+
 	/**
 	 * Gets the unix time.
 	 *
