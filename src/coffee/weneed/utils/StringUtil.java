@@ -17,103 +17,19 @@ import java.util.List;
 public class StringUtil {
 
 	/**
-	 * Gets a string padded from the left to
-	 * <code>length</code> by
-	 * <code>padchar</code>.
+	 * Combine.
 	 *
-	 * @param in The input string to be padded.
-	 * @param padchar The character to pad with.
-	 * @param length The length to pad to.
-	 * @return The padded string.
-	 */
-	public static final String getLeftPaddedStr(final String in, final char padchar, final int length) {
-		StringBuilder builder = new StringBuilder(length);
-		for (int x = in.length(); x < length; x++) {
-			builder.append(padchar);
-		}
-		builder.append(in);
-		return builder.toString();
-	}
-
-	/**
-	 * Gets a string padded from the right to
-	 * <code>length</code> by
-	 * <code>padchar</code>.
-	 *
-	 * @param in The input string to be padded.
-	 * @param padchar The character to pad with.
-	 * @param length The length to pad to.
-	 * @return The padded string.
-	 */
-	public static final String getRightPaddedStr(final String in, final char padchar, final int length) {
-		StringBuilder builder = new StringBuilder(in);
-		for (int x = in.length(); x < length; x++) {
-			builder.append(padchar);
-		}
-		return builder.toString();
-	}
-
-	/**
-	 * Detects if a string is numeric, via regex.
-	 *
-	 * @param in The string to check.
-	 * @return True if the string is numeric, false otherwise.
-	 */
-	public static final boolean isNumeric(String in) {
-		return in.matches("-?\\d+(\\.\\d+)?");
-	}
-
-	/**
-	 * Joins an array of strings starting from string
-	 * <code>start</code> with a space.
-	 *
-	 * @param arr The array of strings to join.
-	 * @param start Starting from which string.
-	 * @return The joined strings.
-	 */
-	public static final String joinStringFrom(final String arr[], final int start) {
-		return joinStringFrom(arr, start, " ");
-	}
-
-	/**
-	 * Joins an array of strings starting from string
-	 * <code>start</code> with
-	 * <code>sep</code> as a seperator.
-	 *
-	 * @param arr The array of strings to join.
-	 * @param start Starting from which string.
+	 * @param in the in
+	 * @param index the index
 	 * @param sep the sep
-	 * @return The joined strings.
+	 * @return the string
 	 */
-	public static final String joinStringFrom(final String arr[], final int start, final String sep) {
-		StringBuilder builder = new StringBuilder();
-		for (int i = start; i < arr.length; i++) {
-			builder.append(arr[i]);
-			if (i != arr.length - 1) {
-				builder.append(sep);
-			}
+	public static String combine(String[] in, int index, char sep) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = index; i < in.length; i++) {
+			sb.append(in[i]).append(i + 1 >= in.length ? "" : sep);
 		}
-		return builder.toString();
-	}
-
-	/**
-	 * Makes an enum name human readable (fixes spaces, capitalization, etc).
-	 *
-	 * @param enumName The name of the enum to neaten up.
-	 * @return The human-readable enum name.
-	 */
-	public static final String makeEnumHumanReadable(final String enumName) {
-		StringBuilder builder = new StringBuilder(enumName.length() + 1);
-		for (String word : enumName.split("_")) {
-			if (word.length() <= 2) {
-				builder.append(word); // assume that it's an abbrevation
-			} else {
-				builder.append(word.charAt(0));
-				builder.append(word.substring(1).toLowerCase());
-			}
-			builder.append(' ');
-		}
-		return builder.substring(0, enumName.length());
+		return sb.toString();
 	}
 
 	/**
@@ -133,6 +49,72 @@ public class StringUtil {
 			}
 		}
 		return ret;
+	}
+
+	/**
+	 * Gets the char.
+	 *
+	 * @author Dalethium
+	 * Gets the first character of the provided string.
+	 * @param s The string.
+	 * @return The first character of the provided string.
+	 * @see Character
+	 */
+	public static Character getChar(String s) {
+		return s.charAt(0);
+	}
+
+	/**
+	 * Returns the elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 *
+	 * @param startMillis the start millis
+	 * @param endMillis the end millis
+	 * @return Elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 */
+	public static final int getDaysBetween(long startMillis, long endMillis) {
+		double elapsedSeconds = (endMillis - startMillis) / 1000.0;
+		int elapsedMinutes = (int) (elapsedSeconds / 60.0);
+		int elapsedHrs = elapsedMinutes / 60;
+		int elapsedDays = elapsedHrs / 24;
+		return elapsedDays;
+	}
+
+	/**
+	 * Gets a string padded from the left to
+	 * <code>length</code> by
+	 * <code>padchar</code>.
+	 *
+	 * @param in The input string to be padded.
+	 * @param padchar The character to pad with.
+	 * @param length The length to pad to.
+	 * @return The padded string.
+	 */
+	public static final String getLeftPaddedStr(final String in, final char padchar, final int length) {
+		StringBuilder builder = new StringBuilder(length);
+		for (int x = in.length(); x < length; x++) {
+			builder.append(padchar);
+		}
+		builder.append(in);
+		return builder.toString();
+	}
+
+	/**
+	 * Gets the optional int arg.
+	 *
+	 * @param splitted the splitted
+	 * @param position the position
+	 * @param def the def
+	 * @return the optional int arg
+	 */
+	public static int getOptionalIntArg(String[] splitted, int position, int def) {
+		if (splitted.length > position) {
+			try {
+				return Integer.parseInt(splitted[position]);
+			} catch (NumberFormatException nfe) {
+				return def;
+			}
+		}
+		return def;
 	}
 
 	/**
@@ -211,37 +193,21 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 * Gets a string padded from the right to
+	 * <code>length</code> by
+	 * <code>padchar</code>.
 	 *
-	 * @param startMillis the start millis
-	 * @param endMillis the end millis
-	 * @return Elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 * @param in The input string to be padded.
+	 * @param padchar The character to pad with.
+	 * @param length The length to pad to.
+	 * @return The padded string.
 	 */
-	public static final int getDaysBetween(long startMillis, long endMillis) {
-		double elapsedSeconds = (endMillis - startMillis) / 1000.0;
-		int elapsedMinutes = (int) (elapsedSeconds / 60.0);
-		int elapsedHrs = elapsedMinutes / 60;
-		int elapsedDays = elapsedHrs / 24;
-		return elapsedDays;
-	}
-
-	/**
-	 * Gets the optional int arg.
-	 *
-	 * @param splitted the splitted
-	 * @param position the position
-	 * @param def the def
-	 * @return the optional int arg
-	 */
-	public static int getOptionalIntArg(String[] splitted, int position, int def) {
-		if (splitted.length > position) {
-			try {
-				return Integer.parseInt(splitted[position]);
-			} catch (NumberFormatException nfe) {
-				return def;
-			}
+	public static final String getRightPaddedStr(final String in, final char padchar, final int length) {
+		StringBuilder builder = new StringBuilder(in);
+		for (int x = in.length(); x < length; x++) {
+			builder.append(padchar);
 		}
-		return def;
+		return builder.toString();
 	}
 
 	/**
@@ -261,19 +227,75 @@ public class StringUtil {
 	}
 
 	/**
-	 * Combine.
+	 * Detects if a string is numeric, via regex.
 	 *
-	 * @param in the in
-	 * @param index the index
-	 * @param sep the sep
-	 * @return the string
+	 * @param in The string to check.
+	 * @return True if the string is numeric, false otherwise.
 	 */
-	public static String combine(String[] in, int index, char sep) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = index; i < in.length; i++) {
-			sb.append(in[i]).append(i + 1 >= in.length ? "" : sep);
+	public static final boolean isNumeric(String in) {
+		return in.matches("-?\\d+(\\.\\d+)?");
+	}
+
+	/**
+	 * Joins an array of strings starting from string
+	 * <code>start</code> with a space.
+	 *
+	 * @param arr The array of strings to join.
+	 * @param start Starting from which string.
+	 * @return The joined strings.
+	 */
+	public static final String joinStringFrom(final String arr[], final int start) {
+		return joinStringFrom(arr, start, " ");
+	}
+
+	/**
+	 * Joins an array of strings starting from string
+	 * <code>start</code> with
+	 * <code>sep</code> as a seperator.
+	 *
+	 * @param arr The array of strings to join.
+	 * @param start Starting from which string.
+	 * @param sep the sep
+	 * @return The joined strings.
+	 */
+	public static final String joinStringFrom(final String arr[], final int start, final String sep) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = start; i < arr.length; i++) {
+			builder.append(arr[i]);
+			if (i != arr.length - 1) {
+				builder.append(sep);
+			}
 		}
-		return sb.toString();
+		return builder.toString();
+	}
+
+	/**
+	 * Makes an enum name human readable (fixes spaces, capitalization, etc).
+	 *
+	 * @param enumName The name of the enum to neaten up.
+	 * @return The human-readable enum name.
+	 */
+	public static final String makeEnumHumanReadable(final String enumName) {
+		StringBuilder builder = new StringBuilder(enumName.length() + 1);
+		for (String word : enumName.split("_")) {
+			if (word.length() <= 2) {
+				builder.append(word); // assume that it's an abbrevation
+			} else {
+				builder.append(word.charAt(0));
+				builder.append(word.substring(1).toLowerCase());
+			}
+			builder.append(' ');
+		}
+		return builder.substring(0, enumName.length());
+	}
+
+	/**
+	 * Normalizes <code>string</code> by removing all non ascii characters.
+	 * @param string The string to normalize.
+	 * @return Normalized ascii string.
+	 */
+	public static String normalize(String string) {
+		return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
 	}
 
 	/**
@@ -330,27 +352,5 @@ public class StringUtil {
 				return s.substring(0, Math.abs(to));
 			}
 		}
-	}
-
-	/**
-	 * Gets the char.
-	 *
-	 * @author Dalethium
-	 * Gets the first character of the provided string.
-	 * @param s The string.
-	 * @return The first character of the provided string.
-	 * @see Character
-	 */
-	public static Character getChar(String s) {
-		return s.charAt(0);
-	}
-
-	/**
-	 * Normalizes <code>string</code> by removing all non ascii characters.
-	 * @param string The string to normalize.
-	 * @return Normalized ascii string.
-	 */
-	public static String normalize(String string) {
-		return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
 	}
 }

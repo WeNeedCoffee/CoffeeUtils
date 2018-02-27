@@ -10,14 +10,14 @@ import java.util.HashMap;
  */
 public class TreeNode {
 
-	/** The node. */
-	private HashMap<Character, TreeNode> node;
-
 	/** Indicate that this letter is the end of a profanity word. */
 	private boolean isEnd;
 
 	/** The letter stored in this node. */
 	private Character letter;
+
+	/** The node. */
+	private HashMap<Character, TreeNode> node;
 
 	/**
 	 * Instantiates a new tree node.
@@ -38,21 +38,35 @@ public class TreeNode {
 	}
 
 	/**
-	 * Gets the letter.
+	 * Adds the child.
 	 *
-	 * @return the letter
+	 * @param letter child's letter
 	 */
-	public Character getLetter() {
-		return letter;
+	public void addChild(Character letter) {
+		TreeNode childNode = new TreeNode(letter);
+		node.put(letter, childNode);
 	}
 
 	/**
-	 * Sets the letter.
+	 * Contains child.
 	 *
-	 * @param letter the new letter
+	 * @param letter the letter
+	 * @return true, if successful
 	 */
-	public void setLetter(Character letter) {
-		this.letter = letter;
+	public boolean containsChild(Character letter) {
+		return node.containsKey(letter);
+	}
+
+	/**
+	 * Gets the child by letter.
+	 *
+	 * @param letter the letter
+	 * @return the child by letter
+	 */
+	public TreeNode getChildByLetter(Character letter) {
+		// Returns the value to which the specified key is mapped, or null if
+		// this map contains no mapping for the key.
+		return node.get(letter);
 	}
 
 	/**
@@ -62,6 +76,15 @@ public class TreeNode {
 	 */
 	public int getChildNum() {
 		return node.size();
+	}
+
+	/**
+	 * Gets the letter.
+	 *
+	 * @return the letter
+	 */
+	public Character getLetter() {
+		return letter;
 	}
 
 	/**
@@ -83,34 +106,11 @@ public class TreeNode {
 	}
 
 	/**
-	 * Adds the child.
+	 * Sets the letter.
 	 *
-	 * @param letter child's letter
+	 * @param letter the new letter
 	 */
-	public void addChild(Character letter) {
-		TreeNode childNode = new TreeNode(letter);
-		node.put(letter, childNode);
-	}
-
-	/**
-	 * Gets the child by letter.
-	 *
-	 * @param letter the letter
-	 * @return the child by letter
-	 */
-	public TreeNode getChildByLetter(Character letter) {
-		// Returns the value to which the specified key is mapped, or null if
-		// this map contains no mapping for the key.
-		return node.get(letter);
-	}
-
-	/**
-	 * Contains child.
-	 *
-	 * @param letter the letter
-	 * @return true, if successful
-	 */
-	public boolean containsChild(Character letter) {
-		return node.containsKey(letter);
+	public void setLetter(Character letter) {
+		this.letter = letter;
 	}
 }

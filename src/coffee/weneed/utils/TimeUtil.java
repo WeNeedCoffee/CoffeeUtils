@@ -6,22 +6,19 @@ package coffee.weneed.utils;
  */
 public class TimeUtil {
 
-	/** The Constant ONE_SECOND_MS. */
-	public static final int ONE_SECOND_MS = 1000;
-
 	/** The Constant ONE_MINUTE_MS. */
 	public static final int ONE_MINUTE_MS = 60000;
 
+	/** The Constant ONE_SECOND_MS. */
+	public static final int ONE_SECOND_MS = 1000;
+
 	/**
-	 * Checks if is before.
+	 * Gets the unix time.
 	 *
-	 * @param before the before
-	 * @param after the after
-	 * @return true, if is before
+	 * @return the unix time
 	 */
-	public static boolean isBefore(long before, long after) {
-		if (before < after) return true;
-		return false;
+	public static int getUnixTime() {
+		return Math.round(System.currentTimeMillis() / 1000);
 	}
 
 	/**
@@ -37,11 +34,14 @@ public class TimeUtil {
 	}
 
 	/**
-	 * Gets the unix time.
+	 * Checks if is before.
 	 *
-	 * @return the unix time
+	 * @param before the before
+	 * @param after the after
+	 * @return true, if is before
 	 */
-	public static int getUnixTime() {
-		return Math.round(System.currentTimeMillis() / 1000);
+	public static boolean isBefore(long before, long after) {
+		if (before < after) return true;
+		return false;
 	}
 }

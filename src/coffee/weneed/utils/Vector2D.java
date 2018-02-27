@@ -33,12 +33,22 @@ public class Vector2D {
 	}
 
 	/**
-	 * Gets the x.
+	 * Compare.
 	 *
-	 * @return the x
+	 * @param v the v
+	 * @return the vector 2 D
 	 */
-	public double getX() {
-		return this.X;
+	public Vector2D compare(Vector2D v) {
+		return new Vector2D(v.getX() - this.getX(), v.getY() - this.getY());
+	}
+
+	/**
+	 * Gets the length.
+	 *
+	 * @return the length
+	 */
+	public double getLength() {
+		return Math.sqrt(getX() * getX() + getY() * getY());
 	}
 
 	/**
@@ -51,6 +61,24 @@ public class Vector2D {
 	}
 
 	/**
+	 * Gets the rounded Y.
+	 *
+	 * @return the rounded Y
+	 */
+	public int getRoundedY() {
+		return (int) Math.round(this.Y); // TODO this, better
+	}
+
+	/**
+	 * Gets the x.
+	 *
+	 * @return the x
+	 */
+	public double getX() {
+		return this.X;
+	}
+
+	/**
 	 * Gets the y.
 	 *
 	 * @return the y
@@ -60,12 +88,33 @@ public class Vector2D {
 	}
 
 	/**
-	 * Gets the rounded Y.
+	 * Scale.
 	 *
-	 * @return the rounded Y
+	 * @param scalar the scale to multiply by
 	 */
-	public int getRoundedY() {
-		return (int) Math.round(this.Y); // TODO this, better
+	public void scale(double scalar) {
+		setX(getX() * scalar);
+		setY(getY() * scalar);
+	}
+
+	/**
+	 * Sets the length.
+	 *
+	 * @param len the new length
+	 */
+	public void setLength(double len) {
+		scale(len / getLength());
+	}
+
+	/**
+	 * Sets the pos.
+	 *
+	 * @param x the x
+	 * @param y the y
+	 */
+	public void setPos(double x, double y) {
+		setX(x);
+		setY(y);
 	}
 
 	/**
@@ -84,55 +133,5 @@ public class Vector2D {
 	 */
 	public void setY(double d) {
 		this.Y = d;
-	}
-
-	/**
-	 * Sets the pos.
-	 *
-	 * @param x the x
-	 * @param y the y
-	 */
-	public void setPos(double x, double y) {
-		setX(x);
-		setY(y);
-	}
-
-	/**
-	 * Gets the length.
-	 *
-	 * @return the length
-	 */
-	public double getLength() {
-		return Math.sqrt(getX() * getX() + getY() * getY());
-	}
-
-	/**
-	 * Sets the length.
-	 *
-	 * @param len the new length
-	 */
-	public void setLength(double len) {
-		double l2 = getLength();
-		scale(len / l2);
-	}
-
-	/**
-	 * Scale.
-	 *
-	 * @param d the d
-	 */
-	public void scale(double d) {
-		setX(getX() * d);
-		setY(getY() * d);
-	}
-
-	/**
-	 * Compare.
-	 *
-	 * @param v the v
-	 * @return the vector 2 D
-	 */
-	public Vector2D compare(Vector2D v) {
-		return new Vector2D(v.getX() - this.getX(), v.getY() - this.getY());
 	}
 }

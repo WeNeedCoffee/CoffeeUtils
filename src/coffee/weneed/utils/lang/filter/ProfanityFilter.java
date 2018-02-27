@@ -24,21 +24,6 @@ import coffee.weneed.utils.StringUtil;
 // TODO check words for middle dupes between endings like rim and rimming
 public class ProfanityFilter {
 
-	/** The root. */
-	private TreeNode root;
-
-	/** The bad word start. */
-	private int badWordStart;
-
-	/** The bad word end. */
-	private int badWordEnd;
-
-	/** The is suspicion found. */
-	private boolean isSuspicionFound;
-
-	/** The asterisk mark. */
-	private boolean[] asteriskMark;
-
 	/** The leets. */
 	private static Map<Character, String[]> leets = new HashMap<Character, String[]>();
 
@@ -61,11 +46,94 @@ public class ProfanityFilter {
 	}
 
 	/**
+	 * To skip.
+	 *
+	 * @param c the c
+	 * @param leet the leet
+	 * @param sub the sub
+	 * @param node the node
+	 * @return the int
+	 */
+	private static int toSkip(Character c, String leet, String sub, TreeNode node) {
+		return toSkip(c, leet, sub, node, 0);
+	}
+
+	/**
+	 * To skip.
+	 *
+	 * @param c the c
+	 * @param leet the leet
+	 * @param sub the sub
+	 * @param node the node
+	 * @param toSkip the to skip
+	 * @return the int
+	 */
+	private static int toSkip(Character c, String leet, String sub, TreeNode node, int toSkip) {
+		if (StringUtil.substr(sub, toSkip, sub.length()).startsWith(leet)) {
+			toSkip += toSkip(c, leet, sub, node, toSkip + leet.length());
+		}
+		return toSkip;
+	}
+
+	/** The asterisk mark. */
+	private boolean[] asteriskMark;
+
+	/** The bad word end. */
+	private int badWordEnd;
+
+	/** The bad word start. */
+	private int badWordStart;
+
+	/** The is suspicion found. */
+	private boolean isSuspicionFound;
+
+	/** The root. */
+	private TreeNode root;
+
+	/**
 	 * Instantiates a new profanity filter.
 	 */
 	public ProfanityFilter() {
 		root = new TreeNode();
 		buildDictionaryTree("badwords.txt");
+	}
+
+	/**
+	 * Adds the to tree.
+	 *
+	 * @param badWordLine the bad word line
+	 * @param characterIndex            : index of each letter in a bad word
+	 * @param node            that iterates through the tree
+	 */
+	private void addToTree(String badWordLine, int characterIndex, TreeNode node) {
+		if (characterIndex < badWordLine.length()) {
+			Character c = badWordLine.charAt(characterIndex);
+			if (!node.containsChild(c)) {
+				node.addChild(c);
+			}
+			node = node.getChildByLetter(c);
+			if (characterIndex == (badWordLine.length() - 1)) {
+				node.setEnd(true);
+			} else {
+				addToTree(badWordLine, characterIndex + 1, node);
+			}
+		}
+	}
+
+	/**
+	 * Replace some of the letters in userInput as * according to asteriskMark.
+	 *
+	 * @param userInput the user input
+	 * @return string with bad words filtered
+	 */
+	private String applyAsteriskMark(String userInput) {
+		StringBuilder filteredBadWords = new StringBuilder(userInput);
+		for (int i = 0; i < asteriskMark.length; i++) {
+			if (asteriskMark[i] == true) {
+				filteredBadWords.setCharAt(i, '*');
+			}
+		}
+		return filteredBadWords.toString();
 	}
 
 	/**
@@ -105,6 +173,21 @@ public class ProfanityFilter {
 	}
 
 	/**
+	 * Filter bad words.
+	 *
+	 * @param userInput the user input
+	 * @return string with bad words filtered
+	 */
+	public String filterBadWords(String userInput) {
+		String userInputLC = userInput.toLowerCase();
+		init(userInputLC.length());
+		for (int i = 0; i < userInputLC.length(); i++) {
+			searchAlongTree(userInputLC, i, root);
+		}
+		return applyAsteriskMark(userInput);
+	}
+
+	/**
 	 * Finish tree.
 	 *
 	 * @param badWordLine the bad word line
@@ -139,43 +222,6 @@ public class ProfanityFilter {
 	}
 
 	/**
-	 * Adds the to tree.
-	 *
-	 * @param badWordLine the bad word line
-	 * @param characterIndex            : index of each letter in a bad word
-	 * @param node            that iterates through the tree
-	 */
-	private void addToTree(String badWordLine, int characterIndex, TreeNode node) {
-		if (characterIndex < badWordLine.length()) {
-			Character c = badWordLine.charAt(characterIndex);
-			if (!node.containsChild(c)) {
-				node.addChild(c);
-			}
-			node = node.getChildByLetter(c);
-			if (characterIndex == (badWordLine.length() - 1)) {
-				node.setEnd(true);
-			} else {
-				addToTree(badWordLine, characterIndex + 1, node);
-			}
-		}
-	}
-
-	/**
-	 * Filter bad words.
-	 *
-	 * @param userInput the user input
-	 * @return string with bad words filtered
-	 */
-	public String filterBadWords(String userInput) {
-		String userInputLC = userInput.toLowerCase();
-		init(userInputLC.length());
-		for (int i = 0; i < userInputLC.length(); i++) {
-			searchAlongTree(userInputLC, i, root);
-		}
-		return applyAsteriskMark(userInput);
-	}
-
-	/**
 	 * Inits the.
 	 *
 	 * @param length the length
@@ -191,33 +237,15 @@ public class ProfanityFilter {
 	}
 
 	/**
-	 * To skip.
+	 * Identify the letters of userInput that should be marked as "*".
 	 *
-	 * @param c the c
-	 * @param leet the leet
-	 * @param sub the sub
-	 * @param node the node
-	 * @return the int
+	 * @param badWordStart the bad word start
+	 * @param badWordEnd the bad word end
 	 */
-	private static int toSkip(Character c, String leet, String sub, TreeNode node) {
-		return toSkip(c, leet, sub, node, 0);
-	}
-
-	/**
-	 * To skip.
-	 *
-	 * @param c the c
-	 * @param leet the leet
-	 * @param sub the sub
-	 * @param node the node
-	 * @param toSkip the to skip
-	 * @return the int
-	 */
-	private static int toSkip(Character c, String leet, String sub, TreeNode node, int toSkip) {
-		if (StringUtil.substr(sub, toSkip, sub.length()).startsWith(leet)) {
-			toSkip += toSkip(c, leet, sub, node, toSkip + leet.length());
+	private void markAsterisk(int badWordStart, int badWordEnd) {
+		for (int i = badWordStart; i <= badWordEnd; i++) {
+			asteriskMark[i] = true;
 		}
-		return toSkip;
 	}
 
 	/**
@@ -280,6 +308,38 @@ public class ProfanityFilter {
 	}
 
 	/**
+	 * Search along tree.
+	 *
+	 * @param pUserInput the user input
+	 * @param characterIndex the character index
+	 * @param node the node
+	 */
+	private void searchAlongTree(String pUserInput, int characterIndex, TreeNode node) {
+		if (characterIndex < pUserInput.length()) {
+			Character letter = pUserInput.charAt(characterIndex);
+			if (search(pUserInput, characterIndex, node, true)) {
+				return;
+			} else if (characterIndex > 0 && (characterIndex + 1) < pUserInput.length()) {
+				if ((letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1))
+						|| matchLeet(pUserInput, characterIndex + 1).contains(letter)
+						|| matchLeet(pUserInput, characterIndex - 1).contains(letter))) {
+					searchAlongTree(pUserInput, characterIndex + 1, node);
+					return;
+				}
+				try {
+					if (!node.isEnd()) (letter + "").replaceAll("[\\W_]", "").charAt(0);
+				} catch (IndexOutOfBoundsException e) {
+					searchAlongTree(pUserInput, characterIndex + 1, node);
+					return;
+				}
+			}
+			isSuspicionFound = false;
+			badWordStart = -1;
+			badWordEnd = -1;
+		}
+	}
+
+	/**
 	 * Search leet.
 	 *
 	 * @param pUserInput the user input
@@ -332,65 +392,5 @@ public class ProfanityFilter {
 		}
 		node = node.getChildByLetter(ch);
 		searchAlongTree(pUserInput, characterIndex + toSkip, node);
-	}
-
-	/**
-	 * Search along tree.
-	 *
-	 * @param pUserInput the user input
-	 * @param characterIndex the character index
-	 * @param node the node
-	 */
-	private void searchAlongTree(String pUserInput, int characterIndex, TreeNode node) {
-		if (characterIndex < pUserInput.length()) {
-			Character letter = pUserInput.charAt(characterIndex);
-			if (search(pUserInput, characterIndex, node, true)) {
-				return;
-			} else if (characterIndex > 0 && (characterIndex + 1) < pUserInput.length()) {
-				if ((letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1))
-						|| matchLeet(pUserInput, characterIndex + 1).contains(letter)
-						|| matchLeet(pUserInput, characterIndex - 1).contains(letter))) {
-					searchAlongTree(pUserInput, characterIndex + 1, node);
-					return;
-				}
-				try {
-					if (!node.isEnd()) (letter + "").replaceAll("[\\W_]", "").charAt(0);
-				} catch (IndexOutOfBoundsException e) {
-					searchAlongTree(pUserInput, characterIndex + 1, node);
-					return;
-				}
-			}
-			isSuspicionFound = false;
-			badWordStart = -1;
-			badWordEnd = -1;
-		}
-	}
-
-	/**
-	 * Replace some of the letters in userInput as * according to asteriskMark.
-	 *
-	 * @param userInput the user input
-	 * @return string with bad words filtered
-	 */
-	private String applyAsteriskMark(String userInput) {
-		StringBuilder filteredBadWords = new StringBuilder(userInput);
-		for (int i = 0; i < asteriskMark.length; i++) {
-			if (asteriskMark[i] == true) {
-				filteredBadWords.setCharAt(i, '*');
-			}
-		}
-		return filteredBadWords.toString();
-	}
-
-	/**
-	 * Identify the letters of userInput that should be marked as "*".
-	 *
-	 * @param badWordStart the bad word start
-	 * @param badWordEnd the bad word end
-	 */
-	private void markAsterisk(int badWordStart, int badWordEnd) {
-		for (int i = badWordStart; i <= badWordEnd; i++) {
-			asteriskMark[i] = true;
-		}
 	}
 }
