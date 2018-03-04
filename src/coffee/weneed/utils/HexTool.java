@@ -125,6 +125,10 @@ public class HexTool {
 		return hexed.substring(0, hexed.length() - 1);
 	}
 
+	public static final String toHumanReadableString(int intValue) {
+		return Integer.toHexString(intValue);
+	}
+
 	/**
 	 * To human readable string from ascii.
 	 *
