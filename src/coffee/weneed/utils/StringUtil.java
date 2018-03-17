@@ -125,13 +125,12 @@ public class StringUtil {
 	 */
 	public static final String getReadableMillis(long startMillis, long endMillis) {
 		StringBuilder sb = new StringBuilder();
-		double elapsedSeconds = (endMillis - startMillis) / 1000.0;
-		int elapsedSecs = ((int) elapsedSeconds) % 60;
-		int elapsedMinutes = (int) (elapsedSeconds / 60.0);
-		int elapsedMins = elapsedMinutes % 60;
-		int elapsedHrs = elapsedMinutes / 60;
-		int elapsedHours = elapsedHrs % 24;
-		int elapsedDays = elapsedHrs / 24;
+		double elapsedSeconds = TimeUtil.getSecondsBetween(startMillis, endMillis);
+		int elapsedSecs = TimeUtil.getRoundedSecondsBetween(startMillis, endMillis);
+		int elapsedMinutes = TimeUtil.getMinutesBetween(startMillis, endMillis);
+		int elapsedMins = TimeUtil.getRoundedMinutesBetween(startMillis, endMillis);
+		int elapsedHours = TimeUtil.getRoundedHoursBetween(startMillis, endMillis);
+		int elapsedDays = TimeUtil.getDaysBetween(startMillis, endMillis);
 		if (elapsedDays > 0) {
 			boolean mins = elapsedHours > 0;
 			sb.append(elapsedDays);
