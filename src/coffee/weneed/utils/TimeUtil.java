@@ -6,11 +6,23 @@ package coffee.weneed.utils;
  */
 public class TimeUtil {
 
-	/** The Constant ONE_MINUTE_MS. */
-	public static final int ONE_MINUTE_MS = 60000;
-
 	/** The Constant ONE_SECOND_MS. */
 	public static final int ONE_SECOND_MS = 1000;
+
+	/** The Constant ONE_MINUTE_MS. */
+	public static final int ONE_MINUTE_MS = ONE_SECOND_MS * 60;
+
+	/** The Constant ONE_HOUR_MS. */
+	public static final int ONE_HOUR_MS = ONE_MINUTE_MS * 60;
+
+	/** The Constant ONE_DAY_MS. */
+	public static final int ONE_DAY_MS = ONE_HOUR_MS * 24;
+
+	/** The Constant ONE_WEEK_MS. */
+	public static final int ONE_WEEK_MS = ONE_DAY_MS * 7;
+
+	/** The Constant ONE_YEAR_MS. */
+	public static final int ONE_YEAR_MS = ONE_DAY_MS * 365;
 
 	/**
 	 * Gets the days between.
