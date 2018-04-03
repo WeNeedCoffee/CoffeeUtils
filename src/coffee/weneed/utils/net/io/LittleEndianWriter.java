@@ -22,14 +22,14 @@ public class LittleEndianWriter {
 	private ByteArrayOutputStream baos;
 
 	/**
-	 * Instantiates a new little endian packet writer.
+	 * Instantiates a new little endian writer.
 	 */
 	public LittleEndianWriter() {
 		this(32);
 	}
 
 	/**
-	 * Instantiates a new little endian packet writer.
+	 * Instantiates a new little endian writer.
 	 *
 	 * @param baos the baos
 	 */
@@ -38,7 +38,7 @@ public class LittleEndianWriter {
 	}
 
 	/**
-	 * Instantiates a new little endian packet writer.
+	 * Instantiates a new little endian writer.
 	 *
 	 * @param size the size
 	 */
@@ -56,11 +56,11 @@ public class LittleEndianWriter {
 	}
 
 	/**
-	 * Gets the packet.
+	 * Gets the Byte Array.
 	 *
-	 * @return the packet
+	 * @return the Byte Array
 	 */
-	public final byte[] getPacket() {
+	public final byte[] getByteArray() {
 		return getBaos().toByteArray();
 	}
 
@@ -78,7 +78,7 @@ public class LittleEndianWriter {
 	 */
 	@Override
 	public final String toString() {
-		return HexTool.toHumanReadableString(getPacket());
+		return HexTool.toHumanReadableString(getByteArray());
 	}
 
 	/**

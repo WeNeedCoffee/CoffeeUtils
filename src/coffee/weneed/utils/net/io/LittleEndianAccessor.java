@@ -16,9 +16,6 @@ public class LittleEndianAccessor {
 	/** The bs. */
 	private final ByteArrayByteStream bs;
 
-	/** The opcode. */
-	private short opcode;
-
 	/**
 	 * Instantiates a new little endian accessor.
 	 *
@@ -26,18 +23,6 @@ public class LittleEndianAccessor {
 	 */
 	public LittleEndianAccessor(ByteArrayByteStream bs) {
 		this.bs = bs;
-		this.setOpcode(readShort());
-	}
-
-	/**
-	 * Instantiates a new little endian accessor.
-	 *
-	 * @param opcode the opcode
-	 * @param bs the bs
-	 */
-	public LittleEndianAccessor(short opcode, ByteArrayByteStream bs) {
-		this.bs = bs;
-		this.setOpcode(opcode);
 	}
 
 	/**
@@ -56,15 +41,6 @@ public class LittleEndianAccessor {
 	 */
 	public final long getBytesRead() {
 		return this.bs.getBytesRead();
-	}
-
-	/**
-	 * Gets the opcode.
-	 *
-	 * @return the opcode
-	 */
-	public short getOpcode() {
-		return opcode;
 	}
 
 	/**
@@ -226,15 +202,6 @@ public class LittleEndianAccessor {
 		} catch (IOException e) {
 			System.err.println("Seek failed" + e);
 		}
-	}
-
-	/**
-	 * Sets the opcode.
-	 *
-	 * @param opcode the new opcode
-	 */
-	public void setOpcode(short opcode) {
-		this.opcode = opcode;
 	}
 
 	/**

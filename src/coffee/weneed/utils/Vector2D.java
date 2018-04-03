@@ -57,7 +57,7 @@ public class Vector2D {
 	 * @return the rounded X
 	 */
 	public int getRoundedX() {
-		return (int) Math.round(this.X); // TODO this, better
+		return MathUtil.round(getX()); // TODO this, better
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Vector2D {
 	 * @return the rounded Y
 	 */
 	public int getRoundedY() {
-		return (int) Math.round(this.Y); // TODO this, better
+		return MathUtil.round(getY()); // TODO this, better
 	}
 
 	/**

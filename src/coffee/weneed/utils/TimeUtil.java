@@ -25,11 +25,11 @@ public class TimeUtil {
 	public static final int ONE_YEAR_MS = ONE_DAY_MS * 365;
 
 	/**
-	 * Gets the days between.
+	 * Returns the elapsed days between <code>startMillis</code> and <code>endMillis</code>.
 	 *
 	 * @param startMillis the start millis
 	 * @param endMillis the end millis
-	 * @return the days between
+	 * @return Elapsed days between <code>startMillis</code> and <code>endMillis</code>.
 	 */
 	public static int getDaysBetween(long startMillis, long endMillis) {
 		return getHoursBetween(startMillis, endMillis) / 24;
@@ -55,6 +55,80 @@ public class TimeUtil {
 	 */
 	public static int getMinutesBetween(long startMillis, long endMillis) {
 		return (int) (getSecondsBetween(startMillis, endMillis) / 60.0);
+	}
+
+	/**
+	 * Creates a human readable string based on the time elapsed between <code>startMillis</code> and <code>endMillis</code>.
+	 * @param startMillis The start time.
+	 * @param endMillis The end time.
+	 * @return Readable string of the time between <code>startMillis</code> and <code>endMillis</code>.
+	 */
+	public static final String getReadableMillis(long startMillis, long endMillis) {
+		StringBuilder sb = new StringBuilder();
+		double elapsedSeconds = getSecondsBetween(startMillis, endMillis);
+		int elapsedSecs = getRoundedSecondsBetween(startMillis, endMillis);
+		int elapsedMinutes = getMinutesBetween(startMillis, endMillis);
+		int elapsedMins = getRoundedMinutesBetween(startMillis, endMillis);
+		int elapsedHours = getRoundedHoursBetween(startMillis, endMillis);
+		int elapsedDays = getDaysBetween(startMillis, endMillis);
+		if (elapsedDays > 0) {
+			boolean mins = elapsedHours > 0;
+			sb.append(elapsedDays);
+			sb.append(" day" + (elapsedDays > 1 ? "s" : "") + (mins ? ", " : "."));
+			if (mins) {
+				boolean secs = elapsedMins > 0;
+				if (!secs) {
+					sb.append("and ");
+				}
+				sb.append(elapsedHours);
+				sb.append(" hour" + (elapsedHours > 1 ? "s" : "") + (secs ? ", " : "."));
+				if (secs) {
+					boolean millis = elapsedSecs > 0;
+					if (!millis) {
+						sb.append("and ");
+					}
+					sb.append(elapsedMins);
+					sb.append(" minute" + (elapsedMins > 1 ? "s" : "") + (millis ? ", " : "."));
+					if (millis) {
+						sb.append("and ");
+						sb.append(elapsedSecs);
+						sb.append(" second" + (elapsedSecs > 1 ? "s" : "") + ".");
+					}
+				}
+			}
+		} else if (elapsedHours > 0) {
+			boolean mins = elapsedMins > 0;
+			sb.append(elapsedHours);
+			sb.append(" hour" + (elapsedHours > 1 ? "s" : "") + (mins ? ", " : "."));
+			if (mins) {
+				boolean secs = elapsedSecs > 0;
+				if (!secs) {
+					sb.append("and ");
+				}
+				sb.append(elapsedMins);
+				sb.append(" minute" + (elapsedMins > 1 ? "s" : "") + (secs ? ", " : "."));
+				if (secs) {
+					sb.append("and ");
+					sb.append(elapsedSecs);
+					sb.append(" second" + (elapsedSecs > 1 ? "s" : "") + ".");
+				}
+			}
+		} else if (elapsedMinutes > 0) {
+			boolean secs = elapsedSecs > 0;
+			sb.append(elapsedMinutes);
+			sb.append(" minute" + (elapsedMinutes > 1 ? "s" : "") + (secs ? " " : "."));
+			if (secs) {
+				sb.append("and ");
+				sb.append(elapsedSecs);
+				sb.append(" second" + (elapsedSecs > 1 ? "s" : "") + ".");
+			}
+		} else if (elapsedSeconds > 0) {
+			sb.append((int) elapsedSeconds);
+			sb.append(" second" + (elapsedSeconds > 1 ? "s" : "") + ".");
+		} else {
+			sb.append("None.");
+		}
+		return sb.toString();
 	}
 
 	/**
