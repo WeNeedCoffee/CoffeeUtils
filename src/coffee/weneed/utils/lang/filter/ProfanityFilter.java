@@ -26,7 +26,8 @@ public class ProfanityFilter {
 
 	/** The leets. */
 	private static Map<Character, String[]> leets = new HashMap<Character, String[]>();
-
+	private static Map<Character, String[]> ascii_leets = new HashMap<Character, String[]>();
+	
 	static {
 		// TODO finish
 		// TODO load from file
@@ -49,6 +50,43 @@ public class ProfanityFilter {
 		leets.put(StringUtil.getChar("w"), new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
 		leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
 		leets.put(StringUtil.getChar("z"), new String[] { "s" });
+		
+		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s"});
+		ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph"});
+		ascii_leets.put(StringUtil.getChar("g"), new String[] { "b"});
+		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c"});
+		ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
+		ascii_leets.put(StringUtil.getChar("l"), new String[] { "i"});
+		ascii_leets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
+		ascii_leets.put(StringUtil.getChar("u"), new String[] { "v"});
+		ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks" });
+		ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
+	}
+
+	/** The asterisk mark. */
+	private boolean[] asteriskMark;
+
+	/** The bad word end. */
+	private int badWordEnd;
+
+	/** The bad word start. */
+	private int badWordStart;
+
+	/** The is suspicion found. */
+	private boolean isSuspicionFound;
+
+	/** The root. */
+	private TreeNode root;
+	
+	private boolean ascii;
+
+	/**
+	 * Instantiates a new profanity filter.
+	 */
+	public ProfanityFilter(boolean ascii) {
+		root = new TreeNode();
+		this.ascii = ascii;
+		buildDictionaryTree("badwords.txt");
 	}
 
 	/**
@@ -79,29 +117,6 @@ public class ProfanityFilter {
 			toSkip += toSkip(c, leet, sub, node, toSkip + leet.length());
 		}
 		return toSkip;
-	}
-
-	/** The asterisk mark. */
-	private boolean[] asteriskMark;
-
-	/** The bad word end. */
-	private int badWordEnd;
-
-	/** The bad word start. */
-	private int badWordStart;
-
-	/** The is suspicion found. */
-	private boolean isSuspicionFound;
-
-	/** The root. */
-	private TreeNode root;
-
-	/**
-	 * Instantiates a new profanity filter.
-	 */
-	public ProfanityFilter() {
-		root = new TreeNode();
-		buildDictionaryTree("badwords.txt");
 	}
 
 	/**
@@ -264,15 +279,30 @@ public class ProfanityFilter {
 	private List<Character> matchLeet(String pUserInput, int characterIndex) {
 		List<Character> leetmatch = new ArrayList<Character>();
 		String sub = StringUtil.substr(pUserInput, characterIndex, pUserInput.length());
-		for (Entry<Character, String[]> entry : leets.entrySet()) {
-			Character c = entry.getKey();
-			String[] ss = entry.getValue();
-			for (String s : ss) {
-				if (leetmatch.contains(c)) {
-					break;
+		if (ascii) {
+			for (Entry<Character, String[]> entry : ascii_leets.entrySet()) {
+				Character c = entry.getKey();
+				String[] ss = entry.getValue();
+				for (String s : ss) {
+					if (leetmatch.contains(c)) {
+						break;
+					}
+					if (sub.startsWith(s)) {
+						leetmatch.add(c);
+					}
 				}
-				if (sub.startsWith(s)) {
-					leetmatch.add(c);
+			}
+		} else {
+			for (Entry<Character, String[]> entry : leets.entrySet()) {
+				Character c = entry.getKey();
+				String[] ss = entry.getValue();
+				for (String s : ss) {
+					if (leetmatch.contains(c)) {
+						break;
+					}
+					if (sub.startsWith(s)) {
+						leetmatch.add(c);
+					}
 				}
 			}
 		}
@@ -358,7 +388,7 @@ public class ProfanityFilter {
 		List<Character> leetmatch = matchLeet(pUserInput, characterIndex);
 		for (Character ch : leetmatch) {
 			if (node.containsChild(ch)) {
-				String[] ssss = leets.get(ch);
+				String[] ssss = ascii ? ascii_leets.get(ch) : leets.get(ch);
 				Arrays.sort(ssss, (b, a) -> Integer.compare(a.length(), b.length()));
 				for (String leet : ssss) {
 					int toSkip = toSkip(ch, leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
