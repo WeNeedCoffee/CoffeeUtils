@@ -52,10 +52,10 @@ public class ProfanityFilter {
 		leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
 		leets.put(StringUtil.getChar("z"), new String[] { "s" });
 		//TODO be able to register ks as x as well as x as ks
-		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s", "ck"});
+		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s"});
 		ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph"});
 		ascii_leets.put(StringUtil.getChar("g"), new String[] { "b"});
-		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c", "ck"});
+		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c"});
 		ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
 		ascii_leets.put(StringUtil.getChar("l"), new String[] { "i"});
 		ascii_leets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
