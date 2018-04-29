@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,16 +51,16 @@ public class ProfanityFilter {
 		leets.put(StringUtil.getChar("w"), new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
 		leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
 		leets.put(StringUtil.getChar("z"), new String[] { "s" });
-		
-		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s"});
+		//TODO be able to register ks as x as well as x as ks
+		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s", "ck"});
 		ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph"});
 		ascii_leets.put(StringUtil.getChar("g"), new String[] { "b"});
-		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c"});
+		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c", "ck"});
 		ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
 		ascii_leets.put(StringUtil.getChar("l"), new String[] { "i"});
 		ascii_leets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
 		ascii_leets.put(StringUtil.getChar("u"), new String[] { "v"});
-		ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks" });
+		ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks"});
 		ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
 	}
 
@@ -98,23 +99,22 @@ public class ProfanityFilter {
 	 * @param node the node
 	 * @return the int
 	 */
-	private static int toSkip(Character c, String leet, String sub, TreeNode node) {
-		return toSkip(c, leet, sub, node, 0);
+	private static int toSkip(String leet, String sub, TreeNode node) {
+		return toSkip(leet, sub, node, 0);
 	}
 
 	/**
 	 * To skip.
 	 *
-	 * @param c the c
 	 * @param leet the leet
 	 * @param sub the sub
 	 * @param node the node
 	 * @param toSkip the to skip
 	 * @return the int
 	 */
-	private static int toSkip(Character c, String leet, String sub, TreeNode node, int toSkip) {
+	private static int toSkip(String leet, String sub, TreeNode node, int toSkip) {
 		if (StringUtil.substr(sub, toSkip, sub.length()).startsWith(leet)) {
-			toSkip += toSkip(c, leet, sub, node, toSkip + leet.length());
+			toSkip += toSkip(leet, sub, node, toSkip + leet.length());
 		}
 		return toSkip;
 	}
@@ -343,6 +343,15 @@ public class ProfanityFilter {
 		return false;
 	}
 
+	public Entry<Integer, String> matchLastLeet(char chr, String s, int index) {
+		String[] ss = ascii ? ascii_leets.get(chr) : leets.get(chr);
+		for (String leet_match : ss) {
+			int i = s.lastIndexOf(leet_match, index);
+			if (i > -1) 
+				return  new AbstractMap.SimpleEntry<Integer, String>(i, leet_match);
+		}
+		return null;
+	}
 	/**
 	 * Search along tree.
 	 *
@@ -352,22 +361,37 @@ public class ProfanityFilter {
 	 */
 	private void searchAlongTree(String pUserInput, int characterIndex, TreeNode node) {
 		if (characterIndex < pUserInput.length()) {
-			Character letter = pUserInput.charAt(characterIndex);
 			if (search(pUserInput, characterIndex, node, true)) {
 				return;
 			} else if (characterIndex > 0 && (characterIndex + 1) < pUserInput.length()) {
-				if ((letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1))
-						|| matchLeet(pUserInput, characterIndex + 1).contains(letter)
-						|| matchLeet(pUserInput, characterIndex - 1).contains(letter))) {
+				Character letter = pUserInput.charAt(characterIndex);
+				if ((letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1)))) {
 					searchAlongTree(pUserInput, characterIndex + 1, node);
 					return;
+				} else {
+					//TODO is it (realistically) possible for matches to be usable here? or is it just going to return one ~100% of the time?
+					//List<Entry<Integer, String>> matches = new ArrayList<Entry<Integer, String>>();
+					for (Character ch : matchLeet(pUserInput, characterIndex)) {
+						Entry<Integer, String> match = matchLastLeet(ch, pUserInput, characterIndex);
+						if (match != null) {
+							String[] charmatch = ascii ? ascii_leets.get(ch) : leets.get(ch);
+							Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
+							for (String leet : charmatch) {
+								int toSkip = toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
+								if (toSkip > 0) {
+									searchAlongTree(pUserInput, characterIndex + toSkip, node);
+									return;
+								}
+							}
+						}
+					}
 				}
-				try {
-					if (!node.isEnd()) (letter + "").replaceAll("[\\W_]", "").charAt(0);
-				} catch (IndexOutOfBoundsException e) {
-					searchAlongTree(pUserInput, characterIndex + 1, node);
-					return;
-				}
+				//Ignore white spaces
+				if (!node.isEnd()) 
+					if (Character.toString(letter).matches("[\\W_]")) {
+						searchAlongTree(pUserInput, characterIndex + 1, node);
+						return;
+					}
 			}
 			isSuspicionFound = false;
 			badWordStart = -1;
@@ -388,10 +412,10 @@ public class ProfanityFilter {
 		List<Character> leetmatch = matchLeet(pUserInput, characterIndex);
 		for (Character ch : leetmatch) {
 			if (node.containsChild(ch)) {
-				String[] ssss = ascii ? ascii_leets.get(ch) : leets.get(ch);
-				Arrays.sort(ssss, (b, a) -> Integer.compare(a.length(), b.length()));
-				for (String leet : ssss) {
-					int toSkip = toSkip(ch, leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
+				String[] charmatch = ascii ? ascii_leets.get(ch) : leets.get(ch);
+				Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
+				for (String leet : charmatch) {
+					int toSkip = toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
 					if (toSkip > 0) {
 						if (update) updateNode(ch, pUserInput, characterIndex, node, toSkip);
 						return true;
