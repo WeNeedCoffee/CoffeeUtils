@@ -206,17 +206,15 @@ public class TimeUtil {
 		if (after < before) return true;
 		return false;
 	}
-
+	
 	/**
-	 * Checks if is before.
+	 * Checks if is after now.
 	 *
-	 * @param before the before
 	 * @param after the after
-	 * @return true, if is before
+	 * @return true, if is after
 	 */
-	public static boolean isBefore(long before, long after) {
-		if (before < after) return true;
-		return false;
+	public static boolean isAfterNow(long after) {
+		return isAfter(after, System.currentTimeMillis());
 	}
-
+	
 }
