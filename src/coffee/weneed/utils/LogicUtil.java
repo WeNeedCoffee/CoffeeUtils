@@ -1,5 +1,9 @@
 package coffee.weneed.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class LogicUtil.
@@ -20,5 +24,19 @@ public class LogicUtil {
 			}
 		}
 		return Boolean.FALSE;
+	}
+	
+	
+	/**
+	 * https://stackoverflow.com/questions/10766492/what-is-the-simplest-way-to-reverse-an-arraylist
+	 * 
+	 * @author StackOverflow:naomimyselfandi
+	 * @param list
+	 * @return reversed list
+	 */
+	public static <T> List<T> reverse(final List<T> list) {
+	    final List<T> result = new ArrayList<>(list);
+	    Collections.reverse(result);
+	    return result;
 	}
 }
