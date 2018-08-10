@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>CoffeeUtils</groupId>
 	<artifactId>CoffeeUtils</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>src/java</sourceDirectory>
 		<plugins>
@@ -26,5 +26,10 @@
 		<url>http://weneed.coffee/</url>
 	</organization>
 	<dependencies>
+	<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20170516</version>
+</dependency>
 	</dependencies>
 </project>

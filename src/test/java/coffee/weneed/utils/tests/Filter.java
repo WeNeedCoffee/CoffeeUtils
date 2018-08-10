@@ -13,7 +13,7 @@ public class Filter {
 	static ProfanityFilter filter = new ProfanityFilter(true);
 
 	/** The test. */
-	static String test = "Lucky me is so L_  . _ u CCky! luck! LuCk! LLLUCK! L _UCK! LUUUCCCCKK!! LUCKILY I KEEP MY LUCC! L U C K! L__U   C.K";
+	static String test = "Fucky me is so F_  . _ u CCky! fuck! FuCk! FFFUCK! F _UCK! FUUUCCCCKK!! FUCKIFY I KEEP MY FUCC! F U C K! F__U   C.K";
 
 	/**
 	 * The main method.
@@ -23,6 +23,20 @@ public class Filter {
 	public static void main(String[] args) {
 		System.out.println(test + " - " + filter.filterBadWords(test));
 		System.out.println(new String(HexTool.getBytesFromHex(HexTool.getHexFromBytes(test.getBytes()))));
+		/*File f = new File("tree.json");
+		try {
+			FileOutputStream s = new FileOutputStream(f);
+			s.write(root.toJSON().toString().getBytes());
+			s.flush();
+			s.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
 	}
 
 }

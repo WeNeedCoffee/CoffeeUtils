@@ -1,6 +1,11 @@
 package coffee.weneed.utils.lang.filter;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+
+import org.json.JSONObject;
+
+import coffee.weneed.utils.IJSONObjectDataHolder;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -8,7 +13,7 @@ import java.util.HashMap;
  *
  * @author Lyenliang, Dalethium
  */
-public class TreeNode {
+public class TreeNode implements IJSONObjectDataHolder {
 
 	/** Indicate that this letter is the end of a profanity word. */
 	private boolean isEnd;
@@ -43,8 +48,11 @@ public class TreeNode {
 	 * @param letter child's letter
 	 */
 	public void addChild(Character letter) {
-		TreeNode childNode = new TreeNode(letter);
-		node.put(letter, childNode);
+		node.put(letter, createChild(letter));
+	}
+
+	public TreeNode createChild(Character letter) {
+		return new TreeNode(letter);
 	}
 
 	/**
@@ -113,4 +121,25 @@ public class TreeNode {
 	public void setLetter(Character letter) {
 		this.letter = letter;
 	}
+
+	@Override
+	public void fromJSON(JSONObject json) {
+		if (json.has("end")) setEnd(json.getBoolean("end"));
+		for (String s : json.keySet()) {
+			if (s.equalsIgnoreCase("end")) continue;
+			TreeNode t = createChild(s.charAt(0));
+			t.fromJSON(json.getJSONObject(s));
+			node.put(s.charAt(0), t);
+		}
+	}
+
+	@Override
+	public JSONObject toJSON() {
+		JSONObject json = new JSONObject();
+		for (Entry<Character, TreeNode> e : node.entrySet())
+			json.put(e.getKey().toString(), e.getValue().toJSON());
+		if (isEnd()) json.put("end", isEnd());
+		return json;
+	}
+
 }
