@@ -14,7 +14,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					 <excludes>
-    				  <exclude>**/test/java/*.java</exclude>
+    				  <exclude>**/src/test/java/coffee/weneed/utils/tests/*.java</exclude>
   				  </excludes>
 				</configuration>
 			</plugin>
