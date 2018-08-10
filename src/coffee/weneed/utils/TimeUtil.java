@@ -206,7 +206,7 @@ public class TimeUtil {
 		if (after < before) return true;
 		return false;
 	}
-	
+
 	/**
 	 * Checks if is after now.
 	 *
@@ -216,5 +216,5 @@ public class TimeUtil {
 	public static boolean isAfterNow(long after) {
 		return isAfter(after, System.currentTimeMillis());
 	}
-	
+
 }

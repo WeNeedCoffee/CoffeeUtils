@@ -16,6 +16,14 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<resources>
+      <resource>
+        <directory></directory>
+        <includes>
+                  <include>tree.json</include>
+        </includes>
+      </resource>
+      </resources>
 	</build>
 	<name>Coffee Utils</name>
 	<url>https://github.com/WeNeedCoffee/CoffeeUtils</url>

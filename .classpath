@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="java/|test/java/|test/" kind="src" path="src"/>
-	<classpathentry excluding="src/|src/test/java/" including="tree.json" kind="src" path=""/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="test" value="true"/>

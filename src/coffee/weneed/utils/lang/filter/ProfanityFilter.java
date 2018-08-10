@@ -5,8 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.net.URL;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +16,7 @@ import java.util.Map.Entry;
 
 import org.json.JSONObject;
 
+import coffee.weneed.utils.LogicUtil;
 import coffee.weneed.utils.StringUtil;
 
 // TODO: Auto-generated Javadoc
@@ -94,15 +94,17 @@ public class ProfanityFilter {
 	
 	private boolean ascii;
 
+	public ProfanityFilter(boolean ascii) {
+		this(ascii, null);
+	}
 	/**
 	 * Instantiates a new profanity filter.
 	 */
-	public ProfanityFilter(boolean ascii) {
+	public ProfanityFilter(boolean ascii, URL url) {
 		root = new TreeNode();
 		this.ascii = ascii;
-		boolean json = true;
-		if (json) {
-			buildDictionaryTreeFromJSON("tree.json");
+		if (url != null) {
+			buildDictionaryTreeFromJSONURL(url);
 		} else {
 			buildDictionaryTree("badwords.txt");
 		}
@@ -176,19 +178,8 @@ public class ProfanityFilter {
 		return filteredBadWords.toString();
 	}
 
-	public void buildDictionaryTreeFromJSON(String fileName) {
-		String json = "";
-		try {
-			json = new String(Files.readAllBytes(Paths.get(getClass().getResource("/" + fileName).getPath())));
-		} catch (NullPointerException | IOException e) {
-			try {
-				json = new String(Files.readAllBytes(Paths.get(fileName)));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		root.fromJSON(new JSONObject(json));
+	public void buildDictionaryTreeFromJSONURL(URL toDownload) {
+		root.fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(toDownload))));
 	}
 	/**
 	 * Setup a tree for profanity filter.
