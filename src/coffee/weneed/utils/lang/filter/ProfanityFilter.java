@@ -83,6 +83,15 @@ public class ProfanityFilter {
 	/** The root. */
 	private TreeNode root;
 	
+	
+	/**
+	 * @return the root
+	 */
+	public TreeNode getRoot() {
+		return root;
+	}
+
+	
 	private boolean ascii;
 
 	/**
@@ -144,6 +153,7 @@ public class ProfanityFilter {
 			node = node.getChildByLetter(c);
 			if (characterIndex == (badWordLine.length() - 1)) {
 				node.setEnd(true);
+				node.setWhitelist(false);
 			} else {
 				addToTree(badWordLine, characterIndex + 1, node);
 			}
@@ -447,6 +457,21 @@ public class ProfanityFilter {
 			}
 		}
 		return false;
+	}
+	
+	public void addWord(String word) {
+		addToTree(word, 0, root);
+	}
+	
+	public void removeWord(String word) {
+		if (!filterBadWords(word).contains("*")) return;
+		TreeNode n = root;
+		for (Character c : word.toCharArray()) {
+			if (n.getChildByLetter(c) == null) n.addChild(c);
+			n = n.getChildByLetter(c);
+		}
+		n.setEnd(false);
+		n.setWhitelist(true);
 	}
 
 	/**

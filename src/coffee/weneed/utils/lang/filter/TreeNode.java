@@ -27,8 +27,10 @@ public class TreeNode implements IJSONObjectDataHolder {
 	/**
 	 * Instantiates a new tree node.
 	 */
+	private boolean isWhitelist;
 	public TreeNode() {
 		isEnd = false;
+		isWhitelist = false;
 		node = new HashMap<Character, TreeNode>();
 	}
 
@@ -113,6 +115,9 @@ public class TreeNode implements IJSONObjectDataHolder {
 		this.isEnd = isEnd;
 	}
 
+	public void setWhitelist(boolean isWhitelist) {
+		this.isWhitelist = isWhitelist;
+	}
 	/**
 	 * Sets the letter.
 	 *
@@ -124,21 +129,32 @@ public class TreeNode implements IJSONObjectDataHolder {
 
 	@Override
 	public void fromJSON(JSONObject json) {
-		if (json.has("end")) setEnd(json.getBoolean("end"));
+		if (json.has("end")) 
+			setEnd(json.getBoolean("end"));
+		else 
+			setEnd(false);
+		if (json.has("whitelist")) 
+			setWhitelist(json.getBoolean("whitelist"));
+		else 
+			setWhitelist(false);
 		for (String s : json.keySet()) {
-			if (s.equalsIgnoreCase("end")) continue;
+			if (s.equalsIgnoreCase("end") || s.equalsIgnoreCase("whitelist")) continue;
 			TreeNode t = createChild(s.charAt(0));
 			t.fromJSON(json.getJSONObject(s));
 			node.put(s.charAt(0), t);
 		}
 	}
 
+	public boolean isWhitelist() {
+		return this.isWhitelist;
+	}
 	@Override
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		for (Entry<Character, TreeNode> e : node.entrySet())
 			json.put(e.getKey().toString(), e.getValue().toJSON());
-		if (isEnd()) json.put("end", isEnd());
+		if (isEnd()) json.put("end", true);
+		if (isWhitelist()) json.put("whitelist", true);
 		return json;
 	}
 

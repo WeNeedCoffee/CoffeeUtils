@@ -23,20 +23,5 @@ public class Filter {
 	public static void main(String[] args) {
 		System.out.println(test + " - " + filter.filterBadWords(test));
 		System.out.println(new String(HexTool.getBytesFromHex(HexTool.getHexFromBytes(test.getBytes()))));
-		/*File f = new File("tree.json");
-		try {
-			FileOutputStream s = new FileOutputStream(f);
-			s.write(root.toJSON().toString().getBytes());
-			s.flush();
-			s.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
 	}
-
 }
