@@ -148,11 +148,19 @@ public class TreeNode implements IJSONObjectDataHolder {
 	public boolean isWhitelist() {
 		return this.isWhitelist;
 	}
+	public boolean shouldSave() {
+		if (isEnd()) return true;
+		for (TreeNode e : node.values()) {
+			if (e.isEnd()) return true;
+			if (e.shouldSave()) return true;
+		}
+		return false;
+	}
 	@Override
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		for (Entry<Character, TreeNode> e : node.entrySet())
-			json.put(e.getKey().toString(), e.getValue().toJSON());
+			if (e.getValue().shouldSave()) json.put(e.getKey().toString(), e.getValue().toJSON());
 		if (isEnd()) json.put("end", true);
 		if (isWhitelist()) json.put("whitelist", true);
 		return json;
