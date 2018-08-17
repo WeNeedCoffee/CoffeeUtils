@@ -17,7 +17,6 @@ package coffee.weneed.utils.crypt;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 
-// TODO: Auto-generated Javadoc
 /**
 * BCrypt implements OpenBSD-style Blowfish password hashing using
 * the scheme described in "A Future-Adaptable Password Scheme" by
@@ -63,23 +62,19 @@ import java.security.SecureRandom;
 */
 public class BCrypt {
 
-	/** The Constant GENSALT_DEFAULT_LOG2_ROUNDS. */
-	// BCrypt parameters
+	/** BCrypt parameters */
 	private static final int GENSALT_DEFAULT_LOG2_ROUNDS = 10;
 
 	/** The Constant BCRYPT_SALT_LEN. */
 	private static final int BCRYPT_SALT_LEN = 16;
 
-	/** The Constant BLOWFISH_NUM_ROUNDS. */
-	// Blowfish parameters
+	/** Blowfish parameters */
 	private static final int BLOWFISH_NUM_ROUNDS = 16;
 
-	/** The Constant P_orig. */
-	// Initial contents of key schedule
+	/** Initial contents of key schedule */
 	private static final int P_orig[] = { 0x243f6a88, 0x85a308d3, 0x13198a2e, 0x03707344, 0xa4093822, 0x299f31d0, 0x082efa98, 0xec4e6c89,
 			0x452821e6, 0x38d01377, 0xbe5466cf, 0x34e90c6c, 0xc0ac29b7, 0xc97c50dd, 0x3f84d5b5, 0xb5470917, 0x9216d5d9, 0x8979fb1b };
 
-	/** The Constant S_orig. */
 	private static final int S_orig[] = { 0xd1310ba6, 0x98dfb5ac, 0x2ffd72db, 0xd01adfb7, 0xb8e1afed, 0x6a267e96, 0xba7c9045, 0xf12c7f99,
 			0x24a19947, 0xb3916cf7, 0x0801f2e2, 0x858efc16, 0x636920d8, 0x71574e69, 0xa458fea3, 0xf4933d7e, 0x0d95748f, 0x728eb658, 0x718bcd58,
 			0x82154aee, 0x7b54a41d, 0xc25a59b5, 0x9c30d539, 0x2af26013, 0xc5d1b023, 0x286085f0, 0xca417918, 0xb8db38ef, 0x8e79dcb0, 0x603a180e,
@@ -175,26 +170,22 @@ public class BCrypt {
 			0x8ae88dd8, 0x7aaaf9b0, 0x4cf9aa7e, 0x1948c25c, 0x02fb8a8c, 0x01c36ae4, 0xd6ebe1f9, 0x90d4f869, 0xa65cdea0, 0x3f09252d, 0xc208e69f,
 			0xb74e6132, 0xce77e25b, 0x578fdfe3, 0x3ac372e6 };
 
-	/** The Constant bf_crypt_ciphertext. */
-	// bcrypt IV: "OrpheanBeholderScryDoubt"
+	/** bcrypt IV: "OrpheanBeholderScryDoubt" */
 	static private final int bf_crypt_ciphertext[] = { 0x4f727068, 0x65616e42, 0x65686f6c, 0x64657253, 0x63727944, 0x6f756274 };
 
-	/** The Constant base64_code. */
-	// Table for Base64 encoding
+	/** Table for Base64 encoding */
 	static private final char base64_code[] = { '.', '/', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
 			'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
 			'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
-	/** The Constant index_64. */
-	// Table for Base64 decoding
+	/** Table for Base64 decoding */
 	static private final byte index_64[] =
 			{ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 					-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, -1, -1, -1, -1, -1, -1, -1,
 					2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, -1, -1, -1, -1, -1, 28,
 					29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, -1, -1, -1, -1, -1 };
 
-	/** The p. */
-	// Expanded Blowfish key
+	/** Expanded Blowfish key */
 	private int P[];
 
 	/** The s. */
