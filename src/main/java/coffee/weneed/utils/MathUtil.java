@@ -3,6 +3,10 @@ package coffee.weneed.utils;
 import java.util.Arrays;
 import java.util.Random;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MathUtil.
+ */
 public class MathUtil {
 
 	/**
@@ -20,10 +24,12 @@ public class MathUtil {
 	}
 
 	/**
-	 * @source http://stackoverflow.com/questions/4191687/how-to-calculate-mean-median-mode-and-range-from-a-set-of-numbers
+	 * Gets the median.
+	 *
 	 * @author Stackoverflow:nico-huysamen
 	 * @param data the data
 	 * @return Median of float array
+	 * @source http://stackoverflow.com/questions/4191687/how-to-calculate-mean-median-mode-and-range-from-a-set-of-numbers
 	 */
 	public static float getMedian(float[] data) {
 		float[] copy = Arrays.copyOf(data, data.length);
@@ -46,10 +52,12 @@ public class MathUtil {
 	}
 
 	/**
-	 * @source https://stackoverflow.com/questions/2654839/rounding-a-double-to-turn-it-into-an-int-java
+	 * Round.
+	 *
 	 * @author Stackoverflow:anivaler
-	 * @param d
+	 * @param d the d
 	 * @return input rounded to nearest int
+	 * @source https://stackoverflow.com/questions/2654839/rounding-a-double-to-turn-it-into-an-int-java
 	 */
 	public static int round(double d) {
 		double dAbs = Math.abs(d);

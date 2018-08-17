@@ -28,6 +28,10 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 * Instantiates a new tree node.
 	 */
 	private boolean isWhitelist;
+
+	/**
+	 * Instantiates a new tree node.
+	 */
 	public TreeNode() {
 		isEnd = false;
 		isWhitelist = false;
@@ -53,6 +57,12 @@ public class TreeNode implements IJSONObjectDataHolder {
 		node.put(letter, createChild(letter));
 	}
 
+	/**
+	 * Creates the child.
+	 *
+	 * @param letter the letter
+	 * @return the tree node
+	 */
 	public TreeNode createChild(Character letter) {
 		return new TreeNode(letter);
 	}
@@ -115,9 +125,15 @@ public class TreeNode implements IJSONObjectDataHolder {
 		this.isEnd = isEnd;
 	}
 
+	/**
+	 * Sets the whitelist.
+	 *
+	 * @param isWhitelist the new whitelist
+	 */
 	public void setWhitelist(boolean isWhitelist) {
 		this.isWhitelist = isWhitelist;
 	}
+
 	/**
 	 * Sets the letter.
 	 *
@@ -127,16 +143,15 @@ public class TreeNode implements IJSONObjectDataHolder {
 		this.letter = letter;
 	}
 
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
+	 */
 	@Override
 	public void fromJSON(JSONObject json) {
-		if (json.has("end")) 
-			setEnd(json.getBoolean("end"));
-		else 
-			setEnd(false);
-		if (json.has("whitelist")) 
-			setWhitelist(json.getBoolean("whitelist"));
-		else 
-			setWhitelist(false);
+		if (json.has("end")) setEnd(json.getBoolean("end"));
+		else setEnd(false);
+		if (json.has("whitelist")) setWhitelist(json.getBoolean("whitelist"));
+		else setWhitelist(false);
 		for (String s : json.keySet()) {
 			if (s.equalsIgnoreCase("end") || s.equalsIgnoreCase("whitelist")) continue;
 			TreeNode t = createChild(s.charAt(0));
@@ -145,9 +160,20 @@ public class TreeNode implements IJSONObjectDataHolder {
 		}
 	}
 
+	/**
+	 * Checks if is whitelist.
+	 *
+	 * @return true, if is whitelist
+	 */
 	public boolean isWhitelist() {
 		return this.isWhitelist;
 	}
+
+	/**
+	 * Should save.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean shouldSave() {
 		if (isEnd()) return true;
 		for (TreeNode e : node.values()) {
@@ -156,6 +182,10 @@ public class TreeNode implements IJSONObjectDataHolder {
 		}
 		return false;
 	}
+
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.IJSONObjectDataHolder#toJSON()
+	 */
 	@Override
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();

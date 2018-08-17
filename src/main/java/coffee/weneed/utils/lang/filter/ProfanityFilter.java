@@ -25,14 +25,15 @@ import coffee.weneed.utils.StringUtil;
  *
  * @author Lyenliang, Dalethium
  */
-// TODO register endings for words starting with the endings, for example registering Stroker from Stroke
 // TODO check words for middle dupes between endings like rim and rimming
 public class ProfanityFilter {
 
 	/** The leets. */
 	private static Map<Character, String[]> leets = new HashMap<Character, String[]>();
+
+	/** The ascii leets. */
 	private static Map<Character, String[]> ascii_leets = new HashMap<Character, String[]>();
-	
+
 	static {
 		// TODO finish
 		// TODO load from file
@@ -55,16 +56,16 @@ public class ProfanityFilter {
 		leets.put(StringUtil.getChar("w"), new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
 		leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
 		leets.put(StringUtil.getChar("z"), new String[] { "s" });
-		//TODO be able to register ks as x as well as x as ks
-		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s"});
-		ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph"});
-		ascii_leets.put(StringUtil.getChar("g"), new String[] { "b"});
-		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c"});
+		// TODO be able to register ks as x as well as x as ks
+		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s" });
+		ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph" });
+		ascii_leets.put(StringUtil.getChar("g"), new String[] { "b" });
+		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c" });
 		ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
-		ascii_leets.put(StringUtil.getChar("l"), new String[] { "i"});
+		ascii_leets.put(StringUtil.getChar("l"), new String[] { "i" });
 		ascii_leets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
-		ascii_leets.put(StringUtil.getChar("u"), new String[] { "v"});
-		ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks"});
+		ascii_leets.put(StringUtil.getChar("u"), new String[] { "v" });
+		ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks" });
 		ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
 	}
 
@@ -82,23 +83,33 @@ public class ProfanityFilter {
 
 	/** The root. */
 	private TreeNode root;
-	
-	
+
 	/**
+	 * Gets the root.
+	 *
 	 * @return the root
 	 */
 	public TreeNode getRoot() {
 		return root;
 	}
 
-	
+	/** The ascii. */
 	private boolean ascii;
 
+	/**
+	 * Instantiates a new profanity filter.
+	 *
+	 * @param ascii the ascii
+	 */
 	public ProfanityFilter(boolean ascii) {
 		this(ascii, null);
 	}
+
 	/**
 	 * Instantiates a new profanity filter.
+	 *
+	 * @param ascii the ascii
+	 * @param url the url
 	 */
 	public ProfanityFilter(boolean ascii, URL url) {
 		root = new TreeNode();
@@ -113,7 +124,6 @@ public class ProfanityFilter {
 	/**
 	 * To skip.
 	 *
-	 * @param c the c
 	 * @param leet the leet
 	 * @param sub the sub
 	 * @param node the node
@@ -178,9 +188,15 @@ public class ProfanityFilter {
 		return filteredBadWords.toString();
 	}
 
+	/**
+	 * Builds the dictionary tree from JSONURL.
+	 *
+	 * @param toDownload the to download
+	 */
 	public void buildDictionaryTreeFromJSONURL(URL toDownload) {
 		root.fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(toDownload))));
 	}
+
 	/**
 	 * Setup a tree for profanity filter.
 	 *
@@ -367,15 +383,23 @@ public class ProfanityFilter {
 		return false;
 	}
 
+	/**
+	 * Match last leet.
+	 *
+	 * @param chr the chr
+	 * @param s the s
+	 * @param index the index
+	 * @return the entry
+	 */
 	public Entry<Integer, String> matchLastLeet(char chr, String s, int index) {
 		String[] ss = ascii ? ascii_leets.get(chr) : leets.get(chr);
 		for (String leet_match : ss) {
 			int i = s.lastIndexOf(leet_match, index);
-			if (i > -1) 
-				return  new AbstractMap.SimpleEntry<Integer, String>(i, leet_match);
+			if (i > -1) return new AbstractMap.SimpleEntry<Integer, String>(i, leet_match);
 		}
 		return null;
 	}
+
 	/**
 	 * Search along tree.
 	 *
@@ -393,8 +417,8 @@ public class ProfanityFilter {
 					searchAlongTree(pUserInput, characterIndex + 1, node);
 					return;
 				} else {
-					//TODO is it (realistically) possible for matches to be usable here? or is it just going to return one ~100% of the time?
-					//List<Entry<Integer, String>> matches = new ArrayList<Entry<Integer, String>>();
+					// TODO is it (realistically) possible for matches to be usable here? or is it just going to return one ~100% of the time?
+					// List<Entry<Integer, String>> matches = new ArrayList<Entry<Integer, String>>();
 					for (Character ch : matchLeet(pUserInput, characterIndex)) {
 						Entry<Integer, String> match = matchLastLeet(ch, pUserInput, characterIndex);
 						if (match != null) {
@@ -410,12 +434,11 @@ public class ProfanityFilter {
 						}
 					}
 				}
-				//Ignore white spaces
-				if (!node.isEnd()) 
-					if (Character.toString(letter).matches("[\\W_]")) {
-						searchAlongTree(pUserInput, characterIndex + 1, node);
-						return;
-					}
+				// Ignore white spaces
+				if (!node.isEnd()) if (Character.toString(letter).matches("[\\W_]")) {
+					searchAlongTree(pUserInput, characterIndex + 1, node);
+					return;
+				}
 			}
 			isSuspicionFound = false;
 			badWordStart = -1;
@@ -449,11 +472,21 @@ public class ProfanityFilter {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Adds the word.
+	 *
+	 * @param word the word
+	 */
 	public void addWord(String word) {
 		addToTree(word, 0, root);
 	}
-	
+
+	/**
+	 * Removes the word.
+	 *
+	 * @param word the word
+	 */
 	public void removeWord(String word) {
 		if (!filterBadWords(word).contains("*")) return;
 		TreeNode n = root;

@@ -1,8 +1,3 @@
-/*
- * ~~Part of the JavaPenguin project~~
- * Any use of this software must strictly
- * adhere to the LICENSE file.
- */
 package coffee.weneed.utils;
 
 import org.json.JSONArray;

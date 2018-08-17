@@ -16,9 +16,9 @@ public class LogicUtil {
 
 	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
-	 * 
-	 * @param toDownload
+	 *
 	 * @author StackOverflow:ron-reiter
+	 * @param toDownload the to download
 	 * @return byte array
 	 */
 	public static byte[] downloadUrl(URL toDownload) {
@@ -59,9 +59,10 @@ public class LogicUtil {
 
 	/**
 	 * https://stackoverflow.com/questions/10766492/what-is-the-simplest-way-to-reverse-an-arraylist
-	 * 
+	 *
 	 * @author StackOverflow:naomimyselfandi
-	 * @param list
+	 * @param <T> the generic type
+	 * @param list the list
 	 * @return reversed list
 	 */
 	public static <T> List<T> reverse(final List<T> list) {
