@@ -114,11 +114,7 @@ public class ProfanityFilter {
 	public ProfanityFilter(boolean ascii, URL url) {
 		root = new TreeNode();
 		this.ascii = ascii;
-		if (url != null) {
-			buildDictionaryTreeFromJSONURL(url);
-		} else {
-			buildDictionaryTree("badwords.txt");
-		}
+		buildDictionaryTreeFromJSONURL(url);
 	}
 
 	/**

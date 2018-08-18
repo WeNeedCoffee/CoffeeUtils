@@ -27,14 +27,14 @@ public class TreeNode implements IJSONObjectDataHolder {
 	/**
 	 * Instantiates a new tree node.
 	 */
-	private boolean isWhitelist;
+	private boolean whitelisted;
 
 	/**
 	 * Instantiates a new tree node.
 	 */
 	public TreeNode() {
 		isEnd = false;
-		isWhitelist = false;
+		whitelisted = false;
 		node = new HashMap<Character, TreeNode>();
 	}
 
@@ -131,7 +131,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 * @param isWhitelist the new whitelist
 	 */
 	public void setWhitelist(boolean isWhitelist) {
-		this.isWhitelist = isWhitelist;
+		this.whitelisted = isWhitelist;
 	}
 
 	/**
@@ -150,10 +150,10 @@ public class TreeNode implements IJSONObjectDataHolder {
 	public void fromJSON(JSONObject json) {
 		if (json.has("end")) setEnd(json.getBoolean("end"));
 		else setEnd(false);
-		if (json.has("whitelist")) setWhitelist(json.getBoolean("whitelist"));
+		if (json.has("whitelisted")) setWhitelist(json.getBoolean("whitelisted"));
 		else setWhitelist(false);
 		for (String s : json.keySet()) {
-			if (s.equalsIgnoreCase("end") || s.equalsIgnoreCase("whitelist")) continue;
+			if (s.equalsIgnoreCase("end") || s.equalsIgnoreCase("whitelisted")) continue;
 			TreeNode t = createChild(s.charAt(0));
 			t.fromJSON(json.getJSONObject(s));
 			node.put(s.charAt(0), t);
@@ -165,8 +165,8 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 *
 	 * @return true, if is whitelist
 	 */
-	public boolean isWhitelist() {
-		return this.isWhitelist;
+	public boolean isWhitelisted() {
+		return this.whitelisted;
 	}
 
 	/**
@@ -178,6 +178,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 		if (isEnd()) return true;
 		for (TreeNode e : node.values()) {
 			if (e.isEnd()) return true;
+			if (e.isWhitelisted()) return true;
 			if (e.shouldSave()) return true;
 		}
 		return false;
@@ -192,7 +193,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 		for (Entry<Character, TreeNode> e : node.entrySet())
 			if (e.getValue().shouldSave()) json.put(e.getKey().toString(), e.getValue().toJSON());
 		if (isEnd()) json.put("end", true);
-		if (isWhitelist()) json.put("whitelist", true);
+		if (isWhitelisted()) json.put("whitelisted", true);
 		return json;
 	}
 
