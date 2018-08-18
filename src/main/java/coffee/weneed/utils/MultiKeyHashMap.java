@@ -68,6 +68,15 @@ public class MultiKeyHashMap<K1, K2, V> {
 	}
 
 	/**
+	 * Entry set.
+	 *
+	 * @return the sets the
+	 */
+	public Set<Entry<K1, Map<K2, V>>> entrySet() {
+		return mkMap.entrySet();
+	}
+
+	/**
 	 * Gets the value object for the specified (super)key K1.
 	 *
 	 * @param k1 key1 (super-key)
@@ -144,17 +153,6 @@ public class MultiKeyHashMap<K1, K2, V> {
 	/**
 	 * Put all.
 	 *
-	 * @param map the map
-	 */
-	public void putAll(MultiKeyHashMap<K1, K2, V> map) {
-		for (Entry<K1, Map<K2, V>> entry : map.entrySet())
-			for (Entry<K2, V> item : entry.getValue().entrySet())
-				put(entry.getKey(), item.getKey(), item.getValue());
-	}
-
-	/**
-	 * Put all.
-	 *
 	 * @param key the key
 	 * @param map the map
 	 */
@@ -164,12 +162,14 @@ public class MultiKeyHashMap<K1, K2, V> {
 	}
 
 	/**
-	 * Entry set.
+	 * Put all.
 	 *
-	 * @return the sets the
+	 * @param map the map
 	 */
-	public Set<Entry<K1, Map<K2, V>>> entrySet() {
-		return mkMap.entrySet();
+	public void putAll(Map<K1, Map<K2, V>> map) {
+		for (Entry<K1, Map<K2, V>> entry : map.entrySet())
+			for (Entry<K2, V> item : entry.getValue().entrySet())
+				put(entry.getKey(), item.getKey(), item.getValue());
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 *
 	 * @param map the map
 	 */
-	public void putAll(Map<K1, Map<K2, V>> map) {
+	public void putAll(MultiKeyHashMap<K1, K2, V> map) {
 		for (Entry<K1, Map<K2, V>> entry : map.entrySet())
 			for (Entry<K2, V> item : entry.getValue().entrySet())
 				put(entry.getKey(), item.getKey(), item.getValue());

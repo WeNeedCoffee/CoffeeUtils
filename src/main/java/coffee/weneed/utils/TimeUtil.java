@@ -46,6 +46,10 @@ public class TimeUtil {
 		return getMinutesBetween(startMillis, endMillis) / 60;
 	}
 
+	public static long getMillisBetween(long startMillis, long endMillis) {
+		return endMillis - startMillis;
+	}
+
 	/**
 	 * Gets the minutes between.
 	 *
@@ -183,7 +187,7 @@ public class TimeUtil {
 	 * @return the seconds between
 	 */
 	public static double getSecondsBetween(long startMillis, long endMillis) {
-		return (endMillis - startMillis) / 1000.0;
+		return getMillisBetween(startMillis, endMillis) / 1000.0;
 	}
 
 	/**
