@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,17 @@ import java.util.List;
  * The Class LogicUtil.
  */
 public class LogicUtil {
+
+	public static byte[] downloadUrl(String string) {
+		URL url = null;
+		try {
+			url = new URL(string);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return downloadUrl(url);
+	}
 
 	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
@@ -28,8 +40,11 @@ public class LogicUtil {
 		try {
 			byte[] chunk = new byte[4096];
 			int bytesRead;
-			InputStream stream = toDownload.openStream();
 
+			URLConnection con = toDownload.openConnection();
+			con.setUseCaches(false);
+			con.setDefaultUseCaches(false);
+			InputStream stream = con.getInputStream();
 			while ((bytesRead = stream.read(chunk)) > 0) {
 				outputStream.write(chunk, 0, bytesRead);
 			}
@@ -70,16 +85,5 @@ public class LogicUtil {
 		final List<T> result = new ArrayList<>(list);
 		Collections.reverse(result);
 		return result;
-	}
-
-	public static byte[] downloadUrl(String string) {
-		URL url = null;
-		try {
-			url = new URL(string);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return downloadUrl(url);
 	}
 }
