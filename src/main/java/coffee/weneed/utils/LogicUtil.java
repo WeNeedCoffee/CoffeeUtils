@@ -3,6 +3,7 @@ package coffee.weneed.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,5 +70,16 @@ public class LogicUtil {
 		final List<T> result = new ArrayList<>(list);
 		Collections.reverse(result);
 		return result;
+	}
+
+	public static byte[] downloadUrl(String string) {
+		URL url = null;
+		try {
+			url = new URL(string);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return downloadUrl(url);
 	}
 }
