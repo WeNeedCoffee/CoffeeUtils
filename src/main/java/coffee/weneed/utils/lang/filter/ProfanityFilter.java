@@ -69,54 +69,6 @@ public class ProfanityFilter {
 		ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
 	}
 
-	/** The asterisk mark. */
-	private boolean[] asteriskMark;
-
-	/** The bad word end. */
-	private int badWordEnd;
-
-	/** The bad word start. */
-	private int badWordStart;
-
-	/** The is suspicion found. */
-	private boolean isSuspicionFound;
-
-	/** The root. */
-	private TreeNode root;
-
-	/**
-	 * Gets the root.
-	 *
-	 * @return the root
-	 */
-	public TreeNode getRoot() {
-		return root;
-	}
-
-	/** The ascii. */
-	private boolean ascii;
-
-	/**
-	 * Instantiates a new profanity filter.
-	 *
-	 * @param ascii the ascii
-	 */
-	public ProfanityFilter(boolean ascii) {
-		this(ascii, null);
-	}
-
-	/**
-	 * Instantiates a new profanity filter.
-	 *
-	 * @param ascii the ascii
-	 * @param url the url
-	 */
-	public ProfanityFilter(boolean ascii, URL url) {
-		root = new TreeNode();
-		this.ascii = ascii;
-		buildDictionaryTreeFromJSONURL(url);
-	}
-
 	/**
 	 * To skip.
 	 *
@@ -145,6 +97,45 @@ public class ProfanityFilter {
 		return toSkip;
 	}
 
+	/** The asterisk mark. */
+	private boolean[] asteriskMark;
+
+	/** The bad word end. */
+	private int badWordEnd;
+
+	/** The bad word start. */
+	private int badWordStart;
+
+	/** The is suspicion found. */
+	private boolean isSuspicionFound;
+
+	/** The root. */
+	private TreeNode root;
+
+	/** The ascii. */
+	private boolean ascii;
+
+	/**
+	 * Instantiates a new profanity filter.
+	 *
+	 * @param ascii the ascii
+	 */
+	public ProfanityFilter(boolean ascii) {
+		this(ascii, null);
+	}
+
+	/**
+	 * Instantiates a new profanity filter.
+	 *
+	 * @param ascii the ascii
+	 * @param url the url
+	 */
+	public ProfanityFilter(boolean ascii, URL url) {
+		root = new TreeNode();
+		this.ascii = ascii;
+		buildDictionaryTreeFromJSONURL(url);
+	}
+
 	/**
 	 * Adds the to tree.
 	 *
@@ -169,6 +160,15 @@ public class ProfanityFilter {
 	}
 
 	/**
+	 * Adds the word.
+	 *
+	 * @param word the word
+	 */
+	public void addWord(String word) {
+		addToTree(word, 0, root);
+	}
+
+	/**
 	 * Replace some of the letters in userInput as * according to asteriskMark.
 	 *
 	 * @param userInput the user input
@@ -182,15 +182,6 @@ public class ProfanityFilter {
 			}
 		}
 		return filteredBadWords.toString();
-	}
-
-	/**
-	 * Builds the dictionary tree from JSONURL.
-	 *
-	 * @param toDownload the to download
-	 */
-	public void buildDictionaryTreeFromJSONURL(URL toDownload) {
-		root.fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(toDownload))));
 	}
 
 	/**
@@ -227,6 +218,15 @@ public class ProfanityFilter {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * Builds the dictionary tree from JSONURL.
+	 *
+	 * @param toDownload the to download
+	 */
+	public void buildDictionaryTreeFromJSONURL(URL toDownload) {
+		root.fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(toDownload))));
 	}
 
 	/**
@@ -279,6 +279,15 @@ public class ProfanityFilter {
 	}
 
 	/**
+	 * Gets the root.
+	 *
+	 * @return the root
+	 */
+	public TreeNode getRoot() {
+		return root;
+	}
+
+	/**
 	 * Inits the.
 	 *
 	 * @param length the length
@@ -303,6 +312,23 @@ public class ProfanityFilter {
 		for (int i = badWordStart; i <= badWordEnd; i++) {
 			asteriskMark[i] = true;
 		}
+	}
+
+	/**
+	 * Match last leet.
+	 *
+	 * @param chr the chr
+	 * @param s the s
+	 * @param index the index
+	 * @return the entry
+	 */
+	public Entry<Integer, String> matchLastLeet(char chr, String s, int index) {
+		String[] ss = ascii ? ascii_leets.get(chr) : leets.get(chr);
+		for (String leet_match : ss) {
+			int i = s.lastIndexOf(leet_match, index);
+			if (i > -1) return new AbstractMap.SimpleEntry<Integer, String>(i, leet_match);
+		}
+		return null;
 	}
 
 	/**
@@ -346,6 +372,22 @@ public class ProfanityFilter {
 	}
 
 	/**
+	 * Removes the word.
+	 *
+	 * @param word the word
+	 */
+	public void removeWord(String word) {
+		if (!filterBadWords(word).contains("*")) return;
+		TreeNode n = root;
+		for (Character c : word.toCharArray()) {
+			if (n.getChildByLetter(c) == null) n.addChild(c);
+			n = n.getChildByLetter(c);
+		}
+		n.setEnd(false);
+		n.setWhitelist(true);
+	}
+
+	/**
 	 * Search.
 	 *
 	 * @param pUserInput the user input
@@ -377,23 +419,6 @@ public class ProfanityFilter {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Match last leet.
-	 *
-	 * @param chr the chr
-	 * @param s the s
-	 * @param index the index
-	 * @return the entry
-	 */
-	public Entry<Integer, String> matchLastLeet(char chr, String s, int index) {
-		String[] ss = ascii ? ascii_leets.get(chr) : leets.get(chr);
-		for (String leet_match : ss) {
-			int i = s.lastIndexOf(leet_match, index);
-			if (i > -1) return new AbstractMap.SimpleEntry<Integer, String>(i, leet_match);
-		}
-		return null;
 	}
 
 	/**
@@ -467,31 +492,6 @@ public class ProfanityFilter {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Adds the word.
-	 *
-	 * @param word the word
-	 */
-	public void addWord(String word) {
-		addToTree(word, 0, root);
-	}
-
-	/**
-	 * Removes the word.
-	 *
-	 * @param word the word
-	 */
-	public void removeWord(String word) {
-		if (!filterBadWords(word).contains("*")) return;
-		TreeNode n = root;
-		for (Character c : word.toCharArray()) {
-			if (n.getChildByLetter(c) == null) n.addChild(c);
-			n = n.getChildByLetter(c);
-		}
-		n.setEnd(false);
-		n.setWhitelist(true);
 	}
 
 	/**

@@ -29,19 +29,6 @@ public class CryptProcess {
 	}
 
 	/**
-	 * Encrypt.
-	 *
-	 * @param input the input
-	 * @return the byte[]
-	 */
-	public byte[] encrypt(byte[] input) {
-		byte[] h = input;
-		for (CryptStep s : new ArrayList<>(steps))
-			h = s.encode(h);
-		return h;
-	}
-
-	/**
 	 * Decrypt.
 	 *
 	 * @param input the input
@@ -50,6 +37,19 @@ public class CryptProcess {
 	public byte[] decrypt(byte[] input) {
 		byte[] h = input;
 		for (CryptStep s : new ArrayList<>(rsteps))
+			h = s.encode(h);
+		return h;
+	}
+
+	/**
+	 * Encrypt.
+	 *
+	 * @param input the input
+	 * @return the byte[]
+	 */
+	public byte[] encrypt(byte[] input) {
+		byte[] h = input;
+		for (CryptStep s : new ArrayList<>(steps))
 			h = s.encode(h);
 		return h;
 	}

@@ -58,6 +58,16 @@ public class TreeNode implements IJSONObjectDataHolder {
 	}
 
 	/**
+	 * Contains child.
+	 *
+	 * @param letter the letter
+	 * @return true, if successful
+	 */
+	public boolean containsChild(Character letter) {
+		return node.containsKey(letter);
+	}
+
+	/**
 	 * Creates the child.
 	 *
 	 * @param letter the letter
@@ -67,14 +77,21 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return new TreeNode(letter);
 	}
 
-	/**
-	 * Contains child.
-	 *
-	 * @param letter the letter
-	 * @return true, if successful
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
 	 */
-	public boolean containsChild(Character letter) {
-		return node.containsKey(letter);
+	@Override
+	public void fromJSON(JSONObject json) {
+		if (json.has("end")) setEnd(json.getBoolean("end"));
+		else setEnd(false);
+		if (json.has("whitelisted")) setWhitelist(json.getBoolean("whitelisted"));
+		else setWhitelist(false);
+		for (String s : json.keySet()) {
+			if (s.equalsIgnoreCase("end") || s.equalsIgnoreCase("whitelisted")) continue;
+			TreeNode t = createChild(s.charAt(0));
+			t.fromJSON(json.getJSONObject(s));
+			node.put(s.charAt(0), t);
+		}
 	}
 
 	/**
@@ -117,21 +134,21 @@ public class TreeNode implements IJSONObjectDataHolder {
 	}
 
 	/**
+	 * Checks if is whitelist.
+	 *
+	 * @return true, if is whitelist
+	 */
+	public boolean isWhitelisted() {
+		return this.whitelisted;
+	}
+
+	/**
 	 * Sets the end.
 	 *
 	 * @param isEnd the new end
 	 */
 	public void setEnd(boolean isEnd) {
 		this.isEnd = isEnd;
-	}
-
-	/**
-	 * Sets the whitelist.
-	 *
-	 * @param isWhitelist the new whitelist
-	 */
-	public void setWhitelist(boolean isWhitelist) {
-		this.whitelisted = isWhitelist;
 	}
 
 	/**
@@ -143,30 +160,13 @@ public class TreeNode implements IJSONObjectDataHolder {
 		this.letter = letter;
 	}
 
-	/* (non-Javadoc)
-	 * @see coffee.weneed.utils.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
-	 */
-	@Override
-	public void fromJSON(JSONObject json) {
-		if (json.has("end")) setEnd(json.getBoolean("end"));
-		else setEnd(false);
-		if (json.has("whitelisted")) setWhitelist(json.getBoolean("whitelisted"));
-		else setWhitelist(false);
-		for (String s : json.keySet()) {
-			if (s.equalsIgnoreCase("end") || s.equalsIgnoreCase("whitelisted")) continue;
-			TreeNode t = createChild(s.charAt(0));
-			t.fromJSON(json.getJSONObject(s));
-			node.put(s.charAt(0), t);
-		}
-	}
-
 	/**
-	 * Checks if is whitelist.
+	 * Sets the whitelist.
 	 *
-	 * @return true, if is whitelist
+	 * @param isWhitelist the new whitelist
 	 */
-	public boolean isWhitelisted() {
-		return this.whitelisted;
+	public void setWhitelist(boolean isWhitelist) {
+		this.whitelisted = isWhitelist;
 	}
 
 	/**
