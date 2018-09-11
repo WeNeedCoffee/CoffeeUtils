@@ -32,7 +32,7 @@ public class LittleEndianAccessor {
 	 * @return the long
 	 */
 	public final long available() {
-		return this.bs.available();
+		return bs.available();
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class LittleEndianAccessor {
 	 * @return the bytes read
 	 */
 	public final long getBytesRead() {
-		return this.bs.getBytesRead();
+		return bs.getBytesRead();
 	}
 
 	/**
@@ -50,7 +50,16 @@ public class LittleEndianAccessor {
 	 * @return the position
 	 */
 	public final long getPosition() {
-		return this.bs.getPosition();
+		return bs.getPosition();
+	}
+
+	/**
+	 * Read byte.
+	 *
+	 * @return the byte
+	 */
+	public final byte readByte() {
+		return (byte) bs.readByte();
 	}
 
 	/**
@@ -65,25 +74,6 @@ public class LittleEndianAccessor {
 			ret[x] = readByte();
 		}
 		return ret;
-	}
-
-	/**
-	 * Read ascii string.
-	 *
-	 * @param n the n
-	 * @return the string
-	 */
-	public final String readString() {
-		return new String(readBytes(readInt()), Charset.forName("UTF-8"));
-	}
-
-	/**
-	 * Read byte.
-	 *
-	 * @return the byte
-	 */
-	public final byte readByte() {
-		return (byte) this.bs.readByte();
 	}
 
 	/**
@@ -119,10 +109,10 @@ public class LittleEndianAccessor {
 	 * @return the int
 	 */
 	public final int readInt() {
-		int byte1 = this.bs.readByte();
-		int byte2 = this.bs.readByte();
-		int byte3 = this.bs.readByte();
-		int byte4 = this.bs.readByte();
+		int byte1 = bs.readByte();
+		int byte2 = bs.readByte();
+		int byte3 = bs.readByte();
+		int byte4 = bs.readByte();
 		return (byte4 << 24) + (byte3 << 16) + (byte2 << 8) + byte1;
 	}
 
@@ -132,14 +122,14 @@ public class LittleEndianAccessor {
 	 * @return the long
 	 */
 	public final long readLong() {
-		int byte1 = this.bs.readByte();
-		int byte2 = this.bs.readByte();
-		int byte3 = this.bs.readByte();
-		int byte4 = this.bs.readByte();
-		long byte5 = this.bs.readByte();
-		long byte6 = this.bs.readByte();
-		long byte7 = this.bs.readByte();
-		long byte8 = this.bs.readByte();
+		int byte1 = bs.readByte();
+		int byte2 = bs.readByte();
+		int byte3 = bs.readByte();
+		int byte4 = bs.readByte();
+		long byte5 = bs.readByte();
+		long byte6 = bs.readByte();
+		long byte7 = bs.readByte();
+		long byte8 = bs.readByte();
 
 		return (byte8 << 56) + (byte7 << 48) + (byte6 << 40) + (byte5 << 32) + (byte4 << 24) + (byte3 << 16) + (byte2 << 8) + byte1;
 	}
@@ -161,9 +151,19 @@ public class LittleEndianAccessor {
 	 * @return the short
 	 */
 	public final short readShort() {
-		int byte1 = this.bs.readByte();
-		int byte2 = this.bs.readByte();
+		int byte1 = bs.readByte();
+		int byte2 = bs.readByte();
 		return (short) ((byte2 << 8) + byte1);
+	}
+
+	/**
+	 * Read ascii string.
+	 *
+	 * @param n the n
+	 * @return the string
+	 */
+	public final String readString() {
+		return new String(readBytes(readInt()), Charset.forName("UTF-8"));
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class LittleEndianAccessor {
 	 */
 	public final void seek(long offset) {
 		try {
-			this.bs.seek(offset);
+			bs.seek(offset);
 		} catch (IOException e) {
 			System.err.println("Seek failed" + e);
 		}
@@ -193,7 +193,7 @@ public class LittleEndianAccessor {
 	 */
 	@Override
 	public final String toString() {
-		return this.bs.toString();
+		return bs.toString();
 	}
 
 	/**
@@ -203,6 +203,6 @@ public class LittleEndianAccessor {
 	 * @return the string
 	 */
 	public final String toString(boolean b) {
-		return this.bs.toString(b);
+		return bs.toString(b);
 	}
 }

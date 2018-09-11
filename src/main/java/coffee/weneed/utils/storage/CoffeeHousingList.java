@@ -9,13 +9,15 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 		super(parent);
 	}
 
+	@Override
+	protected void deserialize(LittleEndianAccessor lea) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	protected void serialize(LittleEndianWriter lew) {
 		// TODO Auto-generated method stub
 	}
 
-	protected void deserialize(LittleEndianAccessor lea) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

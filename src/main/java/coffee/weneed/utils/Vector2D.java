@@ -6,7 +6,7 @@ package coffee.weneed.utils;
  * @author Dalethium
  *
  */
-//TODO This should be rewritten and extended from java.awt.Point
+// TODO This should be rewritten and extended from java.awt.Point
 public class Vector2D {
 
 	/** The x. */
@@ -29,8 +29,8 @@ public class Vector2D {
 	 * @param e the y
 	 */
 	public Vector2D(double d, double e) {
-		this.X = d;
-		this.Y = e;
+		X = d;
+		Y = e;
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class Vector2D {
 	 * @return the vector 2 D
 	 */
 	public Vector2D compare(Vector2D v) {
-		return new Vector2D(v.getX() - this.getX(), v.getY() - this.getY());
+		return new Vector2D(v.getX() - getX(), v.getY() - getY());
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class Vector2D {
 	 * @return the x
 	 */
 	public double getX() {
-		return this.X;
+		return X;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Vector2D {
 	 * @return the y
 	 */
 	public double getY() {
-		return this.Y;
+		return Y;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class Vector2D {
 	 * @param d the new x
 	 */
 	public void setX(double d) {
-		this.X = d;
+		X = d;
 	}
 
 	/**
@@ -133,6 +133,6 @@ public class Vector2D {
 	 * @param d the new y
 	 */
 	public void setY(double d) {
-		this.Y = d;
+		Y = d;
 	}
 }

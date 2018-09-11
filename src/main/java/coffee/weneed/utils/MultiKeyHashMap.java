@@ -9,7 +9,7 @@ import java.util.Set;
 
 // TODO: Auto-generated Javadoc
 /**
- * MultiKeyHashMap provides to store values with two level hierarchy of keys, 
+ * MultiKeyHashMap provides to store values with two level hierarchy of keys,
  * super key (K1) and sub key (K2). The objects are inserted using super and sub keys.
  * It is not mandatory to use both keys as hierarchy, user can use two keys to store
  * the values and use either of the key to retrieve it.
@@ -30,15 +30,16 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 *  Initializes the MultiKeyHashMap.
 	 */
 	public MultiKeyHashMap() {
-		mkMap = new HashMap<K1, Map<K2, V>>();
+		mkMap = new HashMap<>();
 	}
 
 	/**
 	 * Clears the entire hash map.
 	 */
 	public void clear() {
-		for (Map<K2, V> m : mkMap.values())
+		for (Map<K2, V> m : mkMap.values()) {
 			m.clear();
+		}
 		mkMap.clear();
 	}
 
@@ -108,7 +109,7 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 * @return value objects as List
 	 */
 	public List<V> getAllItems() {
-		List<V> items = new ArrayList<V>();
+		List<V> items = new ArrayList<>();
 		for (Map<K2, V> m : mkMap.values()) {
 			for (V v : m.values()) {
 				items.add(v);
@@ -125,7 +126,9 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 */
 	public V getBySubKey(K2 k2) {
 		for (Map<K2, V> m : mkMap.values()) {
-			if (m.containsKey(k2)) return m.get(k2);
+			if (m.containsKey(k2)) {
+				return m.get(k2);
+			}
 		}
 		return null;
 	}
@@ -144,7 +147,7 @@ public class MultiKeyHashMap<K1, K2, V> {
 		if (mkMap.containsKey(k1)) {
 			k2Map = mkMap.get(k1);
 		} else {
-			k2Map = new HashMap<K2, V>();
+			k2Map = new HashMap<>();
 			mkMap.put(k1, k2Map);
 		}
 		return k2Map.put(k2, v);
@@ -157,8 +160,9 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 * @param map the map
 	 */
 	public void putAll(K1 key, Map<K2, V> map) {
-		for (Entry<K2, V> item : map.entrySet())
+		for (Entry<K2, V> item : map.entrySet()) {
 			put(key, item.getKey(), item.getValue());
+		}
 	}
 
 	/**
@@ -167,9 +171,11 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 * @param map the map
 	 */
 	public void putAll(Map<K1, Map<K2, V>> map) {
-		for (Entry<K1, Map<K2, V>> entry : map.entrySet())
-			for (Entry<K2, V> item : entry.getValue().entrySet())
+		for (Entry<K1, Map<K2, V>> entry : map.entrySet()) {
+			for (Entry<K2, V> item : entry.getValue().entrySet()) {
 				put(entry.getKey(), item.getKey(), item.getValue());
+			}
+		}
 	}
 
 	/**
@@ -178,9 +184,11 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 * @param map the map
 	 */
 	public void putAll(MultiKeyHashMap<K1, K2, V> map) {
-		for (Entry<K1, Map<K2, V>> entry : map.entrySet())
-			for (Entry<K2, V> item : entry.getValue().entrySet())
+		for (Entry<K1, Map<K2, V>> entry : map.entrySet()) {
+			for (Entry<K2, V> item : entry.getValue().entrySet()) {
 				put(entry.getKey(), item.getKey(), item.getValue());
+			}
+		}
 	}
 
 	/**

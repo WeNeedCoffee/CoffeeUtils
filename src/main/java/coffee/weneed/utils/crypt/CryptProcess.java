@@ -12,10 +12,10 @@ import coffee.weneed.utils.LogicUtil;
 public class CryptProcess {
 
 	/** The steps. */
-	private List<CryptStep> steps = new ArrayList<CryptStep>();
+	private List<CryptStep> steps = new ArrayList<>();
 
 	/** The rsteps. */
-	private List<CryptStep> rsteps = new ArrayList<CryptStep>();
+	private List<CryptStep> rsteps = new ArrayList<>();
 
 	/**
 	 * Instantiates a new crypt process.
@@ -23,8 +23,9 @@ public class CryptProcess {
 	 * @param s the s
 	 */
 	public CryptProcess(CryptStep... s) {
-		for (CryptStep e : s)
+		for (CryptStep e : s) {
 			steps.add(e);
+		}
 		rsteps = LogicUtil.reverse(steps);
 	}
 
@@ -36,8 +37,9 @@ public class CryptProcess {
 	 */
 	public byte[] decrypt(byte[] input) {
 		byte[] h = input;
-		for (CryptStep s : new ArrayList<>(rsteps))
+		for (CryptStep s : new ArrayList<>(rsteps)) {
 			h = s.encode(h);
+		}
 		return h;
 	}
 
@@ -49,8 +51,9 @@ public class CryptProcess {
 	 */
 	public byte[] encrypt(byte[] input) {
 		byte[] h = input;
-		for (CryptStep s : new ArrayList<>(steps))
+		for (CryptStep s : new ArrayList<>(steps)) {
 			h = s.encode(h);
+		}
 		return h;
 	}
 

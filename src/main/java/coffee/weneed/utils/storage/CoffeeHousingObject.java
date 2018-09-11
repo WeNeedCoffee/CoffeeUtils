@@ -13,73 +13,57 @@ import coffee.weneed.utils.net.io.LittleEndianWriter;
 
 public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObjectDataHolder {
 
+	protected Map<String, ACoffeeHousingNode> children = new HashMap<>();
 
+	protected Map<String, Object> items = new HashMap<>();
 
-	protected Map<String, ACoffeeHousingNode> children = new HashMap<String, ACoffeeHousingNode>();
-	protected Map<String, Object> items = new HashMap<String, Object>();
-	
-	
 	public CoffeeHousingObject(ACoffeeHousingNode parent) {
 		super(parent);
 	}
-	
-	public void setChildNode(String key, ACoffeeHousingNode child) {
-		child.parent = this;
-		children.put(key, child);
-	}
-	
-	public ACoffeeHousingNode getChildNode(String key) {
-		return children.get(key);
-	}
-	
-	public void setObject(String k, Object o) {
-		items.put(k, o);
-	}
-	
-	public void getObject(String k) {
-		items.get(k);
-	}
+
 	@Override
 	protected void deserialize(LittleEndianAccessor lea) {
-		if (lea.available() < 2) return; //byte for terminator
+		if (lea.available() < 2) {
+			return; // byte for terminator
+		}
 		items.clear();
 		int e = lea.readInt();
 		for (int i = 0; i < e; i++) {
 			byte b = lea.readByte();
 			switch (b) {
-				case (byte) 0x20 : {
+				case (byte) 0x20: {
 					items.put(lea.readString(), lea.readByte());
 					break;
 				}
-				case (byte) 0x21 : {
+				case (byte) 0x21: {
 					items.put(lea.readString(), lea.readBytes(lea.readInt()));
 					break;
 				}
-				case (byte) 0x22 : {
+				case (byte) 0x22: {
 					items.put(lea.readString(), lea.readInt());
 					break;
 				}
-				case (byte) 0x23 : {
+				case (byte) 0x23: {
 					items.put(lea.readString(), lea.readLong());
 					break;
 				}
-				case (byte) 0x24 : {
+				case (byte) 0x24: {
 					items.put(lea.readString(), lea.readFloat());
 					break;
 				}
-				case (byte) 0x25 : {
+				case (byte) 0x25: {
 					items.put(lea.readString(), lea.readDouble());
 					break;
 				}
-				case (byte) 0x26 : {
+				case (byte) 0x26: {
 					items.put(lea.readString(), lea.readShort());
 					break;
 				}
-				case (byte) 0x27 : {
+				case (byte) 0x27: {
 					items.put(lea.readString(), lea.readChar());
 					break;
 				}
-				case (byte) 0x28 : {
+				case (byte) 0x28: {
 					items.put(lea.readString(), lea.readString());
 					break;
 				}
@@ -90,7 +74,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 		}
 		children.clear();
 		int n = lea.readInt();
-		for (int i = 0; i < n ; i++) {
+		for (int i = 0; i < n; i++) {
 			String k = lea.readString();
 			ACoffeeHousingNode node = null;
 			switch (lea.readByte()) {
@@ -108,15 +92,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 			setChildNode(k, node);
 		}
 	}
-	
-	public byte[] toByteArray() {
-		LittleEndianWriter lew = new LittleEndianWriter();
-		lew.write((byte) 0x10);
-		serialize(lew);
-		lew.write((byte) 0x11);
-		return lew.getByteArray();
-	}
-	
+
 	public void fromByteArray(byte[] in) {
 		LittleEndianAccessor lea = new LittleEndianAccessor(new ByteArrayByteStream(in));
 		lea.readByte();
@@ -124,6 +100,22 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 		deserialize(lea);
 		lea.readByte();
 	}
+
+	@Override
+	public void fromJSON(JSONObject json) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public ACoffeeHousingNode getChildNode(String key) {
+		return children.get(key);
+	}
+
+	public void getObject(String k) {
+		items.get(k);
+	}
+
+	@Override
 	protected void serialize(LittleEndianWriter lew) {
 		lew.write((byte) 0x12);
 		lew.writeInt(items.size());
@@ -175,18 +167,27 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 		}
 	}
 
-	@Override
-	public void fromJSON(JSONObject json) {
-		// TODO Auto-generated method stub
-		
+	public void setChildNode(String key, ACoffeeHousingNode child) {
+		child.parent = this;
+		children.put(key, child);
 	}
 
+	public void setObject(String k, Object o) {
+		items.put(k, o);
+	}
+
+	public byte[] toByteArray() {
+		LittleEndianWriter lew = new LittleEndianWriter();
+		lew.write((byte) 0x10);
+		serialize(lew);
+		lew.write((byte) 0x11);
+		return lew.getByteArray();
+	}
 
 	@Override
 	public JSONObject toJSON() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

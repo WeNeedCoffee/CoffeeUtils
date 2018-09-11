@@ -24,7 +24,7 @@ public class LogicUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return downloadUrl(url);
+		return LogicUtil.downloadUrl(url);
 	}
 
 	/**

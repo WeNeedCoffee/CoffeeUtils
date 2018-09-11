@@ -10,19 +10,19 @@ public class TimeUtil {
 	public static final int ONE_SECOND_MS = 1000;
 
 	/** The Constant ONE_MINUTE_MS. */
-	public static final int ONE_MINUTE_MS = ONE_SECOND_MS * 60;
+	public static final int ONE_MINUTE_MS = TimeUtil.ONE_SECOND_MS * 60;
 
 	/** The Constant ONE_HOUR_MS. */
-	public static final int ONE_HOUR_MS = ONE_MINUTE_MS * 60;
+	public static final int ONE_HOUR_MS = TimeUtil.ONE_MINUTE_MS * 60;
 
 	/** The Constant ONE_DAY_MS. */
-	public static final int ONE_DAY_MS = ONE_HOUR_MS * 24;
+	public static final int ONE_DAY_MS = TimeUtil.ONE_HOUR_MS * 24;
 
 	/** The Constant ONE_WEEK_MS. */
-	public static final int ONE_WEEK_MS = ONE_DAY_MS * 7;
+	public static final int ONE_WEEK_MS = TimeUtil.ONE_DAY_MS * 7;
 
 	/** The Constant ONE_YEAR_MS. */
-	public static final int ONE_YEAR_MS = ONE_DAY_MS * 365;
+	public static final int ONE_YEAR_MS = TimeUtil.ONE_DAY_MS * 365;
 
 	/**
 	 * Returns the elapsed days between <code>startMillis</code> and <code>endMillis</code>.
@@ -32,7 +32,7 @@ public class TimeUtil {
 	 * @return Elapsed days between <code>startMillis</code> and <code>endMillis</code>.
 	 */
 	public static int getDaysBetween(long startMillis, long endMillis) {
-		return getHoursBetween(startMillis, endMillis) / 24;
+		return TimeUtil.getHoursBetween(startMillis, endMillis) / 24;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class TimeUtil {
 	 * @return the hours between
 	 */
 	public static int getHoursBetween(long startMillis, long endMillis) {
-		return getMinutesBetween(startMillis, endMillis) / 60;
+		return TimeUtil.getMinutesBetween(startMillis, endMillis) / 60;
 	}
 
 	public static long getMillisBetween(long startMillis, long endMillis) {
@@ -58,7 +58,7 @@ public class TimeUtil {
 	 * @return the minutes between
 	 */
 	public static int getMinutesBetween(long startMillis, long endMillis) {
-		return (int) (getSecondsBetween(startMillis, endMillis) / 60.0);
+		return (int) (TimeUtil.getSecondsBetween(startMillis, endMillis) / 60.0);
 	}
 
 	/**
@@ -69,12 +69,12 @@ public class TimeUtil {
 	 */
 	public static final String getReadableMillis(long startMillis, long endMillis) {
 		StringBuilder sb = new StringBuilder();
-		double elapsedSeconds = getSecondsBetween(startMillis, endMillis);
-		int elapsedSecs = getSecondsBetween(startMillis, endMillis) % 60;
-		int elapsedMinutes = getMinutesBetween(startMillis, endMillis);
-		int elapsedMins = getMinutesBetween(startMillis, endMillis) % 60;
-		int elapsedHours = getHoursBetween(startMillis, endMillis) % 60;
-		int elapsedDays = getDaysBetween(startMillis, endMillis);
+		double elapsedSeconds = TimeUtil.getSecondsBetween(startMillis, endMillis);
+		int elapsedSecs = TimeUtil.getSecondsBetween(startMillis, endMillis) % 60;
+		int elapsedMinutes = TimeUtil.getMinutesBetween(startMillis, endMillis);
+		int elapsedMins = TimeUtil.getMinutesBetween(startMillis, endMillis) % 60;
+		int elapsedHours = TimeUtil.getHoursBetween(startMillis, endMillis) % 60;
+		int elapsedDays = TimeUtil.getDaysBetween(startMillis, endMillis);
 		if (elapsedDays > 0) {
 			boolean mins = elapsedHours > 0;
 			sb.append(elapsedDays);
@@ -143,9 +143,9 @@ public class TimeUtil {
 	 * @return the rounded days between
 	 */
 	public static int getRoundedDaysBetween(long startMillis, long endMillis) {
-		return (getDaysBetween(startMillis, endMillis) % 24) > 11
-				? getDaysBetween(startMillis, endMillis) + (24 - (getDaysBetween(startMillis, endMillis) % 24))
-				: getDaysBetween(startMillis, endMillis) - (getDaysBetween(startMillis, endMillis) % 24);
+		return TimeUtil.getDaysBetween(startMillis, endMillis) % 24 > 11
+				? TimeUtil.getDaysBetween(startMillis, endMillis) + 24 - TimeUtil.getDaysBetween(startMillis, endMillis) % 24
+				: TimeUtil.getDaysBetween(startMillis, endMillis) - TimeUtil.getDaysBetween(startMillis, endMillis) % 24;
 
 	}
 
@@ -157,9 +157,9 @@ public class TimeUtil {
 	 * @return the rounded hours between
 	 */
 	public static int getRoundedHoursBetween(long startMillis, long endMillis) {
-		return (getHoursBetween(startMillis, endMillis) % 60) > 29
-				? getHoursBetween(startMillis, endMillis) + (60 - (getHoursBetween(startMillis, endMillis) % 60))
-				: getHoursBetween(startMillis, endMillis) - (getHoursBetween(startMillis, endMillis) % 60);
+		return TimeUtil.getHoursBetween(startMillis, endMillis) % 60 > 29
+				? TimeUtil.getHoursBetween(startMillis, endMillis) + 60 - TimeUtil.getHoursBetween(startMillis, endMillis) % 60
+				: TimeUtil.getHoursBetween(startMillis, endMillis) - TimeUtil.getHoursBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
@@ -170,9 +170,9 @@ public class TimeUtil {
 	 * @return the rounded minutes between
 	 */
 	public static int getRoundedMinutesBetween(long startMillis, long endMillis) {
-		return (getMinutesBetween(startMillis, endMillis) % 60) > 29
-				? getMinutesBetween(startMillis, endMillis) + (60 - (getMinutesBetween(startMillis, endMillis) % 60))
-				: getMinutesBetween(startMillis, endMillis) - (getMinutesBetween(startMillis, endMillis) % 60);
+		return TimeUtil.getMinutesBetween(startMillis, endMillis) % 60 > 29
+				? TimeUtil.getMinutesBetween(startMillis, endMillis) + 60 - TimeUtil.getMinutesBetween(startMillis, endMillis) % 60
+				: TimeUtil.getMinutesBetween(startMillis, endMillis) - TimeUtil.getMinutesBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
@@ -183,9 +183,9 @@ public class TimeUtil {
 	 * @return the rounded seconds between
 	 */
 	public static int getRoundedSecondsBetween(long startMillis, long endMillis) {
-		return (getSecondsBetween(startMillis, endMillis) % 60) > 29
-				? getSecondsBetween(startMillis, endMillis) + (60 - (getSecondsBetween(startMillis, endMillis) % 60))
-				: getSecondsBetween(startMillis, endMillis) - (getSecondsBetween(startMillis, endMillis) % 60);
+		return TimeUtil.getSecondsBetween(startMillis, endMillis) % 60 > 29
+				? TimeUtil.getSecondsBetween(startMillis, endMillis) + 60 - TimeUtil.getSecondsBetween(startMillis, endMillis) % 60
+				: TimeUtil.getSecondsBetween(startMillis, endMillis) - TimeUtil.getSecondsBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class TimeUtil {
 	 * @return the seconds between
 	 */
 	public static int getSecondsBetween(long startMillis, long endMillis) {
-		return (int) (getMillisBetween(startMillis, endMillis) / 1000);
+		return (int) (TimeUtil.getMillisBetween(startMillis, endMillis) / 1000);
 	}
 
 	/**
@@ -216,7 +216,9 @@ public class TimeUtil {
 	 * @return true, if is after
 	 */
 	public static boolean isAfter(long after, long before) {
-		if (after < before) return true;
+		if (after < before) {
+			return true;
+		}
 		return false;
 	}
 
@@ -227,16 +229,18 @@ public class TimeUtil {
 	 * @return true, if is after
 	 */
 	public static boolean isAfterNow(long after) {
-		return isAfter(after, System.currentTimeMillis());
+		return TimeUtil.isAfter(after, System.currentTimeMillis());
 	}
 
 	/**
 	 * Used to determine if the given input is in seconds or milliseconds
-	 * @param input a timestamp, in seconds or millis 
+	 * @param input a timestamp, in seconds or millis
 	 * @return true if input is less than Integer.MAX_VALUE
 	 */
 	public static boolean isUnixTime(long input) {
-		if (input < Integer.MAX_VALUE) return true;
+		if (input < Integer.MAX_VALUE) {
+			return true;
+		}
 		return false;
 	}
 

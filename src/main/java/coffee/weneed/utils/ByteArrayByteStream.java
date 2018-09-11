@@ -34,7 +34,7 @@ public class ByteArrayByteStream {
 	 * @return the long
 	 */
 	public long available() {
-		return this.arr.length - this.pos;
+		return arr.length - pos;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ByteArrayByteStream {
 	 * @return the bytes read
 	 */
 	public long getBytesRead() {
-		return this.bytesRead;
+		return bytesRead;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class ByteArrayByteStream {
 	 * @return the position
 	 */
 	public long getPosition() {
-		return this.pos;
+		return pos;
 	}
 
 	/**
@@ -61,8 +61,8 @@ public class ByteArrayByteStream {
 	 * @return the int
 	 */
 	public int readByte() {
-		this.bytesRead += 1L;
-		return this.arr[(this.pos++)] & 0xFF;
+		bytesRead += 1L;
+		return arr[pos++] & 0xFF;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ByteArrayByteStream {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void seek(long offset) throws IOException {
-		this.pos = ((int) offset);
+		pos = (int) offset;
 	}
 
 	/* (non-Javadoc)
@@ -91,13 +91,13 @@ public class ByteArrayByteStream {
 	 */
 	public String toString(boolean b) {
 		String nows = "";
-		if (this.arr.length - this.pos > 0) {
-			byte[] now = new byte[this.arr.length - this.pos];
-			System.arraycopy(this.arr, this.pos, now, 0, this.arr.length - this.pos);
+		if (arr.length - pos > 0) {
+			byte[] now = new byte[arr.length - pos];
+			System.arraycopy(arr, pos, now, 0, arr.length - pos);
 			nows = HexTool.toHumanReadableString(now);
 		}
 		if (b) {
-			return "All: " + HexTool.toHumanReadableString(this.arr) + "\nNow: " + nows;
+			return "All: " + HexTool.toHumanReadableString(arr) + "\nNow: " + nows;
 		}
 		return "Data: " + nows;
 	}

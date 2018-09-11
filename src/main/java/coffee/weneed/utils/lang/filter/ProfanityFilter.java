@@ -29,44 +29,44 @@ import coffee.weneed.utils.StringUtil;
 public class ProfanityFilter {
 
 	/** The leets. */
-	private static Map<Character, String[]> leets = new HashMap<Character, String[]>();
+	private static Map<Character, String[]> leets = new HashMap<>();
 
 	/** The ascii leets. */
-	private static Map<Character, String[]> ascii_leets = new HashMap<Character, String[]>();
+	private static Map<Character, String[]> ascii_leets = new HashMap<>();
 
 	static {
 		// TODO finish
 		// TODO load from file
 		// TODO determine if more than 3 chars significantly affects speed
-		leets.put(StringUtil.getChar("a"), new String[] { "@", "4", "/\\", "/-\\", "/_\\" });
-		leets.put(StringUtil.getChar("b"), new String[] { "13", "18", "l3", "8", "|:", "|8", "|b", "lo", "|o", "|3" });
-		leets.put(StringUtil.getChar("c"), new String[] { "k", "s", "<", "(", "[", "{" });
-		leets.put(StringUtil.getChar("d"), new String[] { "|)", "o|", "|>", "<|", "|}", "|]" });
-		leets.put(StringUtil.getChar("e"), new String[] { "3" });
-		leets.put(StringUtil.getChar("f"), new String[] { "ph", "|=", "|\"", "|#" });
-		leets.put(StringUtil.getChar("g"), new String[] { "b", "(", "9", "6" });
-		leets.put(StringUtil.getChar("k"), new String[] { "c", "|<", "1<", "|{", "/<", "\\<" });
-		leets.put(StringUtil.getChar("h"), new String[] { "#", "|-|", "l-l", "1-1", "i-i" });
-		leets.put(StringUtil.getChar("i"), new String[] { "1", "l", "|", "!", "y" });
-		leets.put(StringUtil.getChar("l"), new String[] { "1_", "1", "|", "i", "|_", "i_" });
-		leets.put(StringUtil.getChar("n"), new String[] { "|\\|", "/\\/", "/V" });
-		leets.put(StringUtil.getChar("m"), new String[] { "/\\/\\", "|\\/|", "|\\/|", "|V|", "/V\\" });
-		leets.put(StringUtil.getChar("s"), new String[] { "c", "5", "$", "z" });
-		leets.put(StringUtil.getChar("u"), new String[] { "v", "|_|", "L|", "\\/", "\\_/", "\\_\\", "/_/" });
-		leets.put(StringUtil.getChar("w"), new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
-		leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
-		leets.put(StringUtil.getChar("z"), new String[] { "s" });
+		ProfanityFilter.leets.put(StringUtil.getChar("a"), new String[] { "@", "4", "/\\", "/-\\", "/_\\" });
+		ProfanityFilter.leets.put(StringUtil.getChar("b"), new String[] { "13", "18", "l3", "8", "|:", "|8", "|b", "lo", "|o", "|3" });
+		ProfanityFilter.leets.put(StringUtil.getChar("c"), new String[] { "k", "s", "<", "(", "[", "{" });
+		ProfanityFilter.leets.put(StringUtil.getChar("d"), new String[] { "|)", "o|", "|>", "<|", "|}", "|]" });
+		ProfanityFilter.leets.put(StringUtil.getChar("e"), new String[] { "3" });
+		ProfanityFilter.leets.put(StringUtil.getChar("f"), new String[] { "ph", "|=", "|\"", "|#" });
+		ProfanityFilter.leets.put(StringUtil.getChar("g"), new String[] { "b", "(", "9", "6" });
+		ProfanityFilter.leets.put(StringUtil.getChar("k"), new String[] { "c", "|<", "1<", "|{", "/<", "\\<" });
+		ProfanityFilter.leets.put(StringUtil.getChar("h"), new String[] { "#", "|-|", "l-l", "1-1", "i-i" });
+		ProfanityFilter.leets.put(StringUtil.getChar("i"), new String[] { "1", "l", "|", "!", "y" });
+		ProfanityFilter.leets.put(StringUtil.getChar("l"), new String[] { "1_", "1", "|", "i", "|_", "i_" });
+		ProfanityFilter.leets.put(StringUtil.getChar("n"), new String[] { "|\\|", "/\\/", "/V" });
+		ProfanityFilter.leets.put(StringUtil.getChar("m"), new String[] { "/\\/\\", "|\\/|", "|\\/|", "|V|", "/V\\" });
+		ProfanityFilter.leets.put(StringUtil.getChar("s"), new String[] { "c", "5", "$", "z" });
+		ProfanityFilter.leets.put(StringUtil.getChar("u"), new String[] { "v", "|_|", "L|", "\\/", "\\_/", "\\_\\", "/_/" });
+		ProfanityFilter.leets.put(StringUtil.getChar("w"), new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
+		ProfanityFilter.leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
+		ProfanityFilter.leets.put(StringUtil.getChar("z"), new String[] { "s" });
 		// TODO be able to register ks as x as well as x as ks
-		ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s" });
-		ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph" });
-		ascii_leets.put(StringUtil.getChar("g"), new String[] { "b" });
-		ascii_leets.put(StringUtil.getChar("k"), new String[] { "c" });
-		ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
-		ascii_leets.put(StringUtil.getChar("l"), new String[] { "i" });
-		ascii_leets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
-		ascii_leets.put(StringUtil.getChar("u"), new String[] { "v" });
-		ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks" });
-		ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("g"), new String[] { "b" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("k"), new String[] { "c" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("l"), new String[] { "i" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("u"), new String[] { "v" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class ProfanityFilter {
 	 * @return the int
 	 */
 	private static int toSkip(String leet, String sub, TreeNode node) {
-		return toSkip(leet, sub, node, 0);
+		return ProfanityFilter.toSkip(leet, sub, node, 0);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class ProfanityFilter {
 	 */
 	private static int toSkip(String leet, String sub, TreeNode node, int toSkip) {
 		if (StringUtil.substr(sub, toSkip, sub.length()).startsWith(leet)) {
-			toSkip += toSkip(leet, sub, node, toSkip + leet.length());
+			toSkip += ProfanityFilter.toSkip(leet, sub, node, toSkip + leet.length());
 		}
 		return toSkip;
 	}
@@ -150,7 +150,7 @@ public class ProfanityFilter {
 				node.addChild(c);
 			}
 			node = node.getChildByLetter(c);
-			if (characterIndex == (badWordLine.length() - 1)) {
+			if (characterIndex == badWordLine.length() - 1) {
 				node.setEnd(true);
 				node.setWhitelist(false);
 			} else {
@@ -213,7 +213,9 @@ public class ProfanityFilter {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (in != null) in.close();
+				if (in != null) {
+					in.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -271,7 +273,9 @@ public class ProfanityFilter {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (in != null) in.close();
+				if (in != null) {
+					in.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -323,10 +327,12 @@ public class ProfanityFilter {
 	 * @return the entry
 	 */
 	public Entry<Integer, String> matchLastLeet(char chr, String s, int index) {
-		String[] ss = ascii ? ascii_leets.get(chr) : leets.get(chr);
+		String[] ss = ascii ? ProfanityFilter.ascii_leets.get(chr) : ProfanityFilter.leets.get(chr);
 		for (String leet_match : ss) {
 			int i = s.lastIndexOf(leet_match, index);
-			if (i > -1) return new AbstractMap.SimpleEntry<Integer, String>(i, leet_match);
+			if (i > -1) {
+				return new AbstractMap.SimpleEntry<>(i, leet_match);
+			}
 		}
 		return null;
 	}
@@ -339,10 +345,10 @@ public class ProfanityFilter {
 	 * @return the list
 	 */
 	private List<Character> matchLeet(String pUserInput, int characterIndex) {
-		List<Character> leetmatch = new ArrayList<Character>();
+		List<Character> leetmatch = new ArrayList<>();
 		String sub = StringUtil.substr(pUserInput, characterIndex, pUserInput.length());
 		if (ascii) {
-			for (Entry<Character, String[]> entry : ascii_leets.entrySet()) {
+			for (Entry<Character, String[]> entry : ProfanityFilter.ascii_leets.entrySet()) {
 				Character c = entry.getKey();
 				String[] ss = entry.getValue();
 				for (String s : ss) {
@@ -355,7 +361,7 @@ public class ProfanityFilter {
 				}
 			}
 		} else {
-			for (Entry<Character, String[]> entry : leets.entrySet()) {
+			for (Entry<Character, String[]> entry : ProfanityFilter.leets.entrySet()) {
 				Character c = entry.getKey();
 				String[] ss = entry.getValue();
 				for (String s : ss) {
@@ -377,10 +383,14 @@ public class ProfanityFilter {
 	 * @param word the word
 	 */
 	public void removeWord(String word) {
-		if (!filterBadWords(word).contains("*")) return;
+		if (!filterBadWords(word).contains("*")) {
+			return;
+		}
 		TreeNode n = root;
 		for (Character c : word.toCharArray()) {
-			if (n.getChildByLetter(c) == null) n.addChild(c);
+			if (n.getChildByLetter(c) == null) {
+				n.addChild(c);
+			}
 			n = n.getChildByLetter(c);
 		}
 		n.setEnd(false);
@@ -413,7 +423,9 @@ public class ProfanityFilter {
 	private boolean search(String pUserInput, int characterIndex, TreeNode node, boolean update, boolean recur) {
 		Character letter = pUserInput.charAt(characterIndex);
 		if (node.containsChild(letter)) {
-			if (update) updateNode(letter, pUserInput, characterIndex, node, 1);
+			if (update) {
+				updateNode(letter, pUserInput, characterIndex, node, 1);
+			}
 			return true;
 		} else if (searchLeet(pUserInput, characterIndex, node, update)) {
 			return true;
@@ -432,9 +444,9 @@ public class ProfanityFilter {
 		if (characterIndex < pUserInput.length()) {
 			if (search(pUserInput, characterIndex, node, true)) {
 				return;
-			} else if (characterIndex > 0 && (characterIndex + 1) < pUserInput.length()) {
+			} else if (characterIndex > 0 && characterIndex + 1 < pUserInput.length()) {
 				Character letter = pUserInput.charAt(characterIndex);
-				if ((letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1)))) {
+				if (letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1))) {
 					searchAlongTree(pUserInput, characterIndex + 1, node);
 					return;
 				} else {
@@ -443,10 +455,11 @@ public class ProfanityFilter {
 					for (Character ch : matchLeet(pUserInput, characterIndex)) {
 						Entry<Integer, String> match = matchLastLeet(ch, pUserInput, characterIndex);
 						if (match != null) {
-							String[] charmatch = ascii ? ascii_leets.get(ch) : leets.get(ch);
+							String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
 							Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
 							for (String leet : charmatch) {
-								int toSkip = toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
+								int toSkip =
+										ProfanityFilter.toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
 								if (toSkip > 0) {
 									searchAlongTree(pUserInput, characterIndex + toSkip, node);
 									return;
@@ -456,9 +469,11 @@ public class ProfanityFilter {
 					}
 				}
 				// Ignore white spaces
-				if (!node.isEnd()) if (Character.toString(letter).matches("[\\W_]")) {
-					searchAlongTree(pUserInput, characterIndex + 1, node);
-					return;
+				if (!node.isEnd()) {
+					if (Character.toString(letter).matches("[\\W_]")) {
+						searchAlongTree(pUserInput, characterIndex + 1, node);
+						return;
+					}
 				}
 			}
 			isSuspicionFound = false;
@@ -480,12 +495,14 @@ public class ProfanityFilter {
 		List<Character> leetmatch = matchLeet(pUserInput, characterIndex);
 		for (Character ch : leetmatch) {
 			if (node.containsChild(ch)) {
-				String[] charmatch = ascii ? ascii_leets.get(ch) : leets.get(ch);
+				String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
 				Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
 				for (String leet : charmatch) {
-					int toSkip = toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
+					int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
 					if (toSkip > 0) {
-						if (update) updateNode(ch, pUserInput, characterIndex, node, toSkip);
+						if (update) {
+							updateNode(ch, pUserInput, characterIndex, node, toSkip);
+						}
 						return true;
 					}
 				}
@@ -509,9 +526,8 @@ public class ProfanityFilter {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && (characterIndex + 1) < pUserInput.length()
-					&& ((ch.equals(pUserInput.charAt(characterIndex + 1)) || matchLeet(pUserInput, characterIndex + 1).contains(ch))
-							|| search(pUserInput, characterIndex + 1, node, false))) {
+			if (characterIndex > 0 && characterIndex + 1 < pUserInput.length() && (ch.equals(pUserInput.charAt(characterIndex + 1))
+					|| matchLeet(pUserInput, characterIndex + 1).contains(ch) || search(pUserInput, characterIndex + 1, node, false))) {
 				searchAlongTree(pUserInput, characterIndex + 1, node);
 				return;
 			}

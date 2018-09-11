@@ -32,11 +32,11 @@ public class HexTool {
 					break outer;
 				}
 				char chr = hex.charAt(nexti);
-				if ((chr >= '0') && (chr <= '9')) {
+				if (chr >= '0' && chr <= '9') {
 					number = chr - '0';
-				} else if ((chr >= 'a') && (chr <= 'f')) {
+				} else if (chr >= 'a' && chr <= 'f') {
 					number = chr - 'a' + 10;
-				} else if ((chr >= 'A') && (chr <= 'F')) {
+				} else if (chr >= 'A' && chr <= 'F') {
 					number = chr - 'A' + 10;
 				} else {
 					number = -1;
@@ -63,7 +63,9 @@ public class HexTool {
 	 * @see getHexFromBytes
 	 */
 	public static byte[] getBytesFromHex(String hexString) {
-		if (hexString.length() % 2 == 1) throw new IllegalArgumentException("Invalid length");
+		if (hexString.length() % 2 == 1) {
+			throw new IllegalArgumentException("Invalid length");
+		}
 		int len = hexString.length() / 2;
 		byte[] bytes = new byte[len];
 		for (int i = 0; i < len; i++) {
@@ -82,8 +84,8 @@ public class HexTool {
 	 */
 	public static String getHexFromBytes(byte[] digest) {
 		StringBuffer hexString = new StringBuffer();
-		for (int i = 0; i < digest.length; i++) {
-			hexString.append(Integer.toHexString(0xFF & digest[i]));
+		for (byte element : digest) {
+			hexString.append(Integer.toHexString(0xFF & element));
 		}
 		return hexString.toString();
 	}
@@ -106,7 +108,7 @@ public class HexTool {
 	 */
 	public static final String toHumanReadableString(byte byteValue) {
 		int tmp = byteValue << 8;
-		char[] retstr = { HEX[(tmp >> 12 & 0xF)], HEX[(tmp >> 8 & 0xF)] };
+		char[] retstr = { HexTool.HEX[tmp >> 12 & 0xF], HexTool.HEX[tmp >> 8 & 0xF] };
 		return String.valueOf(retstr);
 	}
 
@@ -118,8 +120,8 @@ public class HexTool {
 	 */
 	public static final String toHumanReadableString(byte[] bytes) {
 		StringBuilder hexed = new StringBuilder();
-		for (int i = 0; i < bytes.length; i++) {
-			hexed.append(toHumanReadableString(bytes[i]));
+		for (byte b : bytes) {
+			hexed.append(HexTool.toHumanReadableString(b));
 			hexed.append(' ');
 		}
 		return hexed.substring(0, hexed.length() - 1);
@@ -144,11 +146,11 @@ public class HexTool {
 	public static final String toHumanReadableStringFromAscii(byte[] bytes) {
 		char[] ret = new char[bytes.length];
 		for (int x = 0; x < bytes.length; x++) {
-			if ((bytes[x] < 32) && (bytes[x] >= 0)) {
+			if (bytes[x] < 32 && bytes[x] >= 0) {
 				ret[x] = '.';
 			} else {
 				int chr = bytes[x] & 0xFF;
-				ret[x] = ((char) chr);
+				ret[x] = (char) chr;
 			}
 		}
 		return String.valueOf(ret);
@@ -161,7 +163,7 @@ public class HexTool {
 	 * @return the string
 	 */
 	public static final String toHumanReadableStringPaddedStringFromAscii(byte[] bytes) {
-		String str = toHumanReadableStringFromAscii(bytes);
+		String str = HexTool.toHumanReadableStringFromAscii(bytes);
 		StringBuilder ret = new StringBuilder(str.length() * 3);
 		for (int i = 0; i < str.length(); i++) {
 			ret.append(str.charAt(i));

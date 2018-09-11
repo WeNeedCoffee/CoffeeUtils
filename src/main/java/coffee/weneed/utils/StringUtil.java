@@ -155,7 +155,7 @@ public class StringUtil {
 	 * @return The joined strings.
 	 */
 	public static final String joinStringFrom(final String arr[], final int start) {
-		return joinStringFrom(arr, start, " ");
+		return StringUtil.joinStringFrom(arr, start, " ");
 	}
 
 	/**

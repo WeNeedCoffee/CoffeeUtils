@@ -17,8 +17,8 @@ public class MathUtil {
 	 */
 	public static float getMean(float[] m) {
 		float sum = 0;
-		for (int i = 0; i < m.length; i++) {
-			sum += m[i];
+		for (float element : m) {
+			sum += element;
 		}
 		return sum / m.length;
 	}
@@ -34,7 +34,7 @@ public class MathUtil {
 	public static float getMedian(float[] data) {
 		float[] copy = Arrays.copyOf(data, data.length);
 		Arrays.sort(copy);
-		return (copy.length % 2 != 0) ? copy[copy.length / 2] : (copy[copy.length / 2] + copy[(copy.length / 2) - 1]) / 2;
+		return copy.length % 2 != 0 ? copy[copy.length / 2] : (copy[copy.length / 2] + copy[copy.length / 2 - 1]) / 2;
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class MathUtil {
 	 * @see java.util.Random#nextInt(int)
 	 */
 	public static int randInt(int min, int max) {
-		return new Random().nextInt((max - min) + 1) + min;
+		return new Random().nextInt(max - min + 1) + min;
 	}
 
 	/**

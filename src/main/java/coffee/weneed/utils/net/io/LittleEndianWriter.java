@@ -84,7 +84,7 @@ public class LittleEndianWriter {
 	 * @param b the b
 	 */
 	public final void write(byte b) {
-		this.getBaos().write(b);
+		getBaos().write(b);
 	}
 
 	/**
@@ -93,11 +93,33 @@ public class LittleEndianWriter {
 	 * @param b the b
 	 */
 	public final void write(byte[] b) {
-		for (int x = 0; x < b.length; x++) {
-			write(b[x]);
+		for (byte element : b) {
+			write(element);
 		}
 	}
-	
+
+	public final void writeChar(char c) {
+		writeShort((short) c);
+	}
+
+	/**
+	 * Write float.
+	 *
+	 * @param i the i
+	 */
+	public final void writeDouble(double d) {
+		writeLong(Double.doubleToLongBits(d));
+	}
+
+	/**
+	 * Write float.
+	 *
+	 * @param i the i
+	 */
+	public final void writeFloat(float f) {
+		writeInt(Float.floatToIntBits(f));
+	}
+
 	/**
 	 * Write int.
 	 *
@@ -108,24 +130,6 @@ public class LittleEndianWriter {
 		write((byte) (i >>> 8 & 0xFF));
 		write((byte) (i >>> 16 & 0xFF));
 		write((byte) (i >>> 24 & 0xFF));
-	}
-	
-	/**
-	 * Write float.
-	 *
-	 * @param i the i
-	 */
-	public final void writeFloat(float f) {
-		writeInt(Float.floatToIntBits(f));
-	}
-	
-	/**
-	 * Write float.
-	 *
-	 * @param i the i
-	 */
-	public final void writeDouble(double d) {
-		writeLong(Double.doubleToLongBits(d));
 	}
 
 	/**
@@ -192,9 +196,6 @@ public class LittleEndianWriter {
 		write((byte) (i >>> 8 & 0xFF));
 	}
 
-	public final void writeChar(char c) {
-		writeShort((short) c);
-	}
 	/**
 	 * Write short.
 	 *
