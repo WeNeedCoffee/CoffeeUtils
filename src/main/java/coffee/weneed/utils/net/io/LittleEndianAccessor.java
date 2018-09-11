@@ -2,6 +2,7 @@ package coffee.weneed.utils.net.io;
 
 import java.awt.Point;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import coffee.weneed.utils.ByteArrayByteStream;
 
@@ -58,7 +59,7 @@ public class LittleEndianAccessor {
 	 * @param num the num
 	 * @return the byte[]
 	 */
-	public final byte[] read(int num) {
+	public final byte[] readBytes(int num) {
 		byte[] ret = new byte[num];
 		for (int x = 0; x < num; x++) {
 			ret[x] = readByte();
@@ -72,12 +73,8 @@ public class LittleEndianAccessor {
 	 * @param n the n
 	 * @return the string
 	 */
-	public final String readAsciiString(int n) {
-		char[] ret = new char[n];
-		for (int x = 0; x < n; x++) {
-			ret[x] = ((char) readByte());
-		}
-		return new String(ret);
+	public final String readString() {
+		return new String(readBytes(readInt()), Charset.forName("UTF-8"));
 	}
 
 	/**
@@ -167,28 +164,6 @@ public class LittleEndianAccessor {
 		int byte1 = this.bs.readByte();
 		int byte2 = this.bs.readByte();
 		return (short) ((byte2 << 8) + byte1);
-	}
-
-	/**
-	 * Read signed ascii string.
-	 *
-	 * @return the string
-	 */
-	public final String readSignedAsciiString() {
-		return readAsciiString(readShort());
-	}
-
-	/**
-	 * Read U short.
-	 *
-	 * @return the int
-	 */
-	public final int readUShort() {
-		int quest = readShort();
-		if (quest < 0) {
-			quest += 65536;
-		}
-		return quest;
 	}
 
 	/**

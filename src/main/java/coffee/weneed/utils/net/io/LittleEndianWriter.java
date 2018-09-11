@@ -15,9 +15,6 @@ import coffee.weneed.utils.HexTool;
  */
 public class LittleEndianWriter {
 
-	/** The Constant ASCII. */
-	private static final Charset ASCII = Charset.forName("US-ASCII");
-
 	/** The baos. */
 	private ByteArrayOutputStream baos;
 
@@ -43,7 +40,7 @@ public class LittleEndianWriter {
 	 * @param size the size
 	 */
 	public LittleEndianWriter(int size) {
-		new ByteArrayOutputStream(size);
+		setBaos(new ByteArrayOutputStream(size));
 	}
 
 	/**
@@ -100,41 +97,7 @@ public class LittleEndianWriter {
 			write(b[x]);
 		}
 	}
-
-	/**
-	 * Write.
-	 *
-	 * @param b the b
-	 */
-	public final void write(int b) {
-		write((byte) b);
-	}
-
-	/**
-	 * Write ascii string.
-	 *
-	 * @param s the s
-	 */
-	public final void writeAsciiString(String s) {
-		write(s.getBytes(ASCII));
-	}
-
-	/**
-	 * Write ascii string.
-	 *
-	 * @param s the s
-	 * @param max the max
-	 */
-	public final void writeAsciiString(String s, int max) {
-		if (s.length() > max) {
-			s = s.substring(0, max);
-		}
-		write(s.getBytes(ASCII));
-		for (int i = s.length(); i < max; i++) {
-			write(0);
-		}
-	}
-
+	
 	/**
 	 * Write int.
 	 *
@@ -145,6 +108,24 @@ public class LittleEndianWriter {
 		write((byte) (i >>> 8 & 0xFF));
 		write((byte) (i >>> 16 & 0xFF));
 		write((byte) (i >>> 24 & 0xFF));
+	}
+	
+	/**
+	 * Write float.
+	 *
+	 * @param i the i
+	 */
+	public final void writeFloat(float f) {
+		writeInt(Float.floatToIntBits(f));
+	}
+	
+	/**
+	 * Write float.
+	 *
+	 * @param i the i
+	 */
+	public final void writeDouble(double d) {
+		writeLong(Double.doubleToLongBits(d));
 	}
 
 	/**
@@ -211,6 +192,9 @@ public class LittleEndianWriter {
 		write((byte) (i >>> 8 & 0xFF));
 	}
 
+	public final void writeChar(char c) {
+		writeShort((short) c);
+	}
 	/**
 	 * Write short.
 	 *
@@ -226,9 +210,10 @@ public class LittleEndianWriter {
 	 *
 	 * @param s the s
 	 */
-	public void writeSignedAsciiString(String s) {
-		writeShort((short) s.length());
-		writeAsciiString(s);
+	public void writeString(String s) {
+		byte[] bs = s.getBytes(Charset.forName("UTF-8"));
+		writeInt(bs.length);
+		write(bs);
 	}
 
 	/**

@@ -6,6 +6,7 @@ package coffee.weneed.utils;
  * @author Dalethium
  *
  */
+//TODO This should be rewritten and extended from java.awt.Point
 public class Vector2D {
 
 	/** The x. */
