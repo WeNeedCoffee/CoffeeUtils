@@ -1,6 +1,8 @@
-package coffee.weneed.utils;
+package coffee.weneed.utils.io;
 
 import java.io.IOException;
+
+import coffee.weneed.utils.HexUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -94,10 +96,10 @@ public class ByteArrayByteStream {
 		if (arr.length - pos > 0) {
 			byte[] now = new byte[arr.length - pos];
 			System.arraycopy(arr, pos, now, 0, arr.length - pos);
-			nows = HexTool.toHumanReadableString(now);
+			nows = HexUtil.toHumanReadableString(now);
 		}
 		if (b) {
-			return "All: " + HexTool.toHumanReadableString(arr) + "\nNow: " + nows;
+			return "All: " + HexUtil.toHumanReadableString(arr) + "\nNow: " + nows;
 		}
 		return "Data: " + nows;
 	}

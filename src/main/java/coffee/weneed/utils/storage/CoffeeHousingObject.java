@@ -5,13 +5,12 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import coffee.weneed.utils.ByteArrayByteStream;
-import coffee.weneed.utils.HexTool;
-import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
-import coffee.weneed.utils.net.io.LittleEndianAccessor;
-import coffee.weneed.utils.net.io.LittleEndianWriter;
+import coffee.weneed.utils.HexUtil;
+import coffee.weneed.utils.io.ByteArrayByteStream;
+import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeWriter;
 
-public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObjectDataHolder {
+public class CoffeeHousingObject extends ACoffeeHousingNode {
 
 	protected Map<String, ACoffeeHousingNode> children = new HashMap<>();
 
@@ -22,70 +21,70 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 	}
 
 	@Override
-	protected void deserialize(LittleEndianAccessor lea) {
-		if (lea.available() < 2) {
+	protected void deserialize(CoffeeAccessor ca) {
+		if (ca.available() < 2) {
 			return; // byte for terminator
 		}
 		items.clear();
-		int e = lea.readInt();
+		int e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			byte b = lea.readByte();
+			byte b = ca.readByte();
 			switch (b) {
 				case (byte) 0x20: {
-					items.put(lea.readString(), lea.readByte());
+					items.put(ca.readString(), ca.readByte());
 					break;
 				}
 				case (byte) 0x21: {
-					items.put(lea.readString(), lea.readBytes(lea.readInt()));
+					items.put(ca.readString(), ca.readBytes(ca.readInt()));
 					break;
 				}
 				case (byte) 0x22: {
-					items.put(lea.readString(), lea.readInt());
+					items.put(ca.readString(), ca.readInt());
 					break;
 				}
 				case (byte) 0x23: {
-					items.put(lea.readString(), lea.readLong());
+					items.put(ca.readString(), ca.readLong());
 					break;
 				}
 				case (byte) 0x24: {
-					items.put(lea.readString(), lea.readFloat());
+					items.put(ca.readString(), ca.readFloat());
 					break;
 				}
 				case (byte) 0x25: {
-					items.put(lea.readString(), lea.readDouble());
+					items.put(ca.readString(), ca.readDouble());
 					break;
 				}
 				case (byte) 0x26: {
-					items.put(lea.readString(), lea.readShort());
+					items.put(ca.readString(), ca.readShort());
 					break;
 				}
 				case (byte) 0x27: {
-					items.put(lea.readString(), lea.readChar());
+					items.put(ca.readString(), ca.readChar());
 					break;
 				}
 				case (byte) 0x28: {
-					items.put(lea.readString(), lea.readString());
+					items.put(ca.readString(), ca.readString());
 					break;
 				}
 				default: {
-					System.out.println(HexTool.toHumanReadableString(b));
+					System.out.println(HexUtil.toHumanReadableString(b));
 				}
 			}
 		}
 		children.clear();
-		int n = lea.readInt();
+		int n = ca.readInt();
 		for (int i = 0; i < n; i++) {
-			String k = lea.readString();
+			String k = ca.readString();
 			ACoffeeHousingNode node = null;
-			switch (lea.readByte()) {
+			switch (ca.readByte()) {
 				case (byte) 0x12: {
 					node = new CoffeeHousingObject(this);
-					node.deserialize(lea);
+					node.deserialize(ca);
 					break;
 				}
 				case (byte) 0x13: {
 					node = new CoffeeHousingList(this);
-					node.deserialize(lea);
+					node.deserialize(ca);
 					break;
 				}
 			}
@@ -93,12 +92,13 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 		}
 	}
 
+	@Override
 	public void fromByteArray(byte[] in) {
-		LittleEndianAccessor lea = new LittleEndianAccessor(new ByteArrayByteStream(in));
-		lea.readByte();
-		lea.readByte();
-		deserialize(lea);
-		lea.readByte();
+		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
+		ca.readByte();
+		ca.readByte();
+		deserialize(ca);
+		ca.readByte();
 	}
 
 	@Override
@@ -116,54 +116,54 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 	}
 
 	@Override
-	protected void serialize(LittleEndianWriter lew) {
-		lew.write((byte) 0x12);
-		lew.writeInt(items.size());
+	protected void serialize(CoffeeWriter cw) {
+		cw.write((byte) 0x12);
+		cw.writeInt(items.size());
 		for (String s : items.keySet()) {
 			Object o = items.get(s);
 			if (o instanceof Byte) {
-				lew.write((byte) 0x20);
-				lew.writeString(s);
-				lew.write((byte) o);
+				cw.write((byte) 0x20);
+				cw.writeString(s);
+				cw.write((byte) o);
 			} else if (o instanceof byte[]) {
-				lew.write((byte) 0x21);
-				lew.writeString(s);
-				lew.writeInt(((byte[]) o).length);
-				lew.write((byte[]) o);
+				cw.write((byte) 0x21);
+				cw.writeString(s);
+				cw.writeInt(((byte[]) o).length);
+				cw.write((byte[]) o);
 			} else if (o instanceof Integer) {
-				lew.write((byte) 0x22);
-				lew.writeString(s);
-				lew.writeInt((int) o);
+				cw.write((byte) 0x22);
+				cw.writeString(s);
+				cw.writeInt((int) o);
 			} else if (o instanceof Long) {
-				lew.write((byte) 0x23);
-				lew.writeString(s);
-				lew.writeLong((long) o);
+				cw.write((byte) 0x23);
+				cw.writeString(s);
+				cw.writeLong((long) o);
 			} else if (o instanceof Float) {
-				lew.write((byte) 0x24);
-				lew.writeString(s);
-				lew.writeFloat((float) o);
+				cw.write((byte) 0x24);
+				cw.writeString(s);
+				cw.writeFloat((float) o);
 			} else if (o instanceof Double) {
-				lew.write((byte) 0x25);
-				lew.writeString(s);
-				lew.writeDouble((double) o);
+				cw.write((byte) 0x25);
+				cw.writeString(s);
+				cw.writeDouble((double) o);
 			} else if (o instanceof Short) {
-				lew.write((byte) 0x26);
-				lew.writeString(s);
-				lew.writeShort((short) o);
+				cw.write((byte) 0x26);
+				cw.writeString(s);
+				cw.writeShort((short) o);
 			} else if (o instanceof Character) {
-				lew.write((byte) 0x27);
-				lew.writeString(s);
-				lew.writeChar((char) o);
+				cw.write((byte) 0x27);
+				cw.writeString(s);
+				cw.writeChar((char) o);
 			} else if (o instanceof String) {
-				lew.write((byte) 0x28);
-				lew.writeString(s);
-				lew.writeString((String) o);
+				cw.write((byte) 0x28);
+				cw.writeString(s);
+				cw.writeString((String) o);
 			}
 		}
-		lew.writeInt(children.size());
+		cw.writeInt(children.size());
 		for (String s : children.keySet()) {
-			lew.writeString(s);
-			children.get(s).serialize(lew);
+			cw.writeString(s);
+			children.get(s).serialize(cw);
 		}
 	}
 
@@ -176,8 +176,9 @@ public class CoffeeHousingObject extends ACoffeeHousingNode implements IJSONObje
 		items.put(k, o);
 	}
 
+	@Override
 	public byte[] toByteArray() {
-		LittleEndianWriter lew = new LittleEndianWriter();
+		CoffeeWriter lew = new CoffeeWriter();
 		lew.write((byte) 0x10);
 		serialize(lew);
 		lew.write((byte) 0x11);

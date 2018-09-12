@@ -21,7 +21,7 @@ import java.util.Set;
  * @param <K2> the generic type
  * @param <V> the value type
  */
-public class MultiKeyHashMap<K1, K2, V> {
+public class MultiKeyMap<K1, K2, V> {
 
 	/**  Map structure holding another Map structure to implement MultiKeyHashMap. */
 	private Map<K1, Map<K2, V>> mkMap;
@@ -29,7 +29,7 @@ public class MultiKeyHashMap<K1, K2, V> {
 	/**
 	 *  Initializes the MultiKeyHashMap.
 	 */
-	public MultiKeyHashMap() {
+	public MultiKeyMap() {
 		mkMap = new HashMap<>();
 	}
 
@@ -183,7 +183,7 @@ public class MultiKeyHashMap<K1, K2, V> {
 	 *
 	 * @param map the map
 	 */
-	public void putAll(MultiKeyHashMap<K1, K2, V> map) {
+	public void putAll(MultiKeyMap<K1, K2, V> map) {
 		for (Entry<K1, Map<K2, V>> entry : map.entrySet()) {
 			for (Entry<K2, V> item : entry.getValue().entrySet()) {
 				put(entry.getKey(), item.getKey(), item.getValue());

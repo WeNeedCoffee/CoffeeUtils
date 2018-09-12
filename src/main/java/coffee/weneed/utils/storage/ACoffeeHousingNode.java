@@ -1,9 +1,11 @@
 package coffee.weneed.utils.storage;
 
-import coffee.weneed.utils.net.io.LittleEndianAccessor;
-import coffee.weneed.utils.net.io.LittleEndianWriter;
+import coffee.weneed.utils.dataholders.IByteArrayDataHolder;
+import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
+import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeWriter;
 
-public abstract class ACoffeeHousingNode {
+public abstract class ACoffeeHousingNode implements IJSONObjectDataHolder, IByteArrayDataHolder {
 
 	protected ACoffeeHousingNode parent;
 
@@ -11,7 +13,7 @@ public abstract class ACoffeeHousingNode {
 		this.parent = parent;
 	}
 
-	protected abstract void deserialize(LittleEndianAccessor lea);
+	protected abstract void deserialize(CoffeeAccessor lea);
 
-	protected abstract void serialize(LittleEndianWriter lew);
+	protected abstract void serialize(CoffeeWriter lew);
 }

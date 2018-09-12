@@ -1,9 +1,10 @@
 package coffee.weneed.utils.tests;
 
-import coffee.weneed.utils.HexTool;
+import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.storage.CoffeeHousingObject;
 
 public class CoffeeHousingTest {
+
 	public static void main(String[] args) {
 		CoffeeHousingObject p = new CoffeeHousingObject(null);
 		p.setObject("1", 1L);
@@ -25,11 +26,11 @@ public class CoffeeHousingTest {
 		p.setChildNode("p1", p1);
 		p.setChildNode("p3", p3);
 		byte[] pb = p.toByteArray();
-		System.out.println(HexTool.toHumanReadableString(pb));
+		System.out.println(HexUtil.toHumanReadableString(pb));
 		p = new CoffeeHousingObject(null);
 		p.fromByteArray(pb);
 		pb = p.toByteArray();
-		System.out.println(HexTool.toHumanReadableString(pb));
-	
+		System.out.println(HexUtil.toHumanReadableString(pb));
+
 	}
 }

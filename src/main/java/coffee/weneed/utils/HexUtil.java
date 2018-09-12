@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream;
  * @author Dalethium
  */
 // TODO source and clean up
-public class HexTool {
+public class HexUtil {
 
 	/** The Constant HEX. */
 	private static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
@@ -108,7 +108,7 @@ public class HexTool {
 	 */
 	public static final String toHumanReadableString(byte byteValue) {
 		int tmp = byteValue << 8;
-		char[] retstr = { HexTool.HEX[tmp >> 12 & 0xF], HexTool.HEX[tmp >> 8 & 0xF] };
+		char[] retstr = { HexUtil.HEX[tmp >> 12 & 0xF], HexUtil.HEX[tmp >> 8 & 0xF] };
 		return String.valueOf(retstr);
 	}
 
@@ -121,7 +121,7 @@ public class HexTool {
 	public static final String toHumanReadableString(byte[] bytes) {
 		StringBuilder hexed = new StringBuilder();
 		for (byte b : bytes) {
-			hexed.append(HexTool.toHumanReadableString(b));
+			hexed.append(HexUtil.toHumanReadableString(b));
 			hexed.append(' ');
 		}
 		return hexed.substring(0, hexed.length() - 1);
@@ -163,7 +163,7 @@ public class HexTool {
 	 * @return the string
 	 */
 	public static final String toHumanReadableStringPaddedStringFromAscii(byte[] bytes) {
-		String str = HexTool.toHumanReadableStringFromAscii(bytes);
+		String str = HexUtil.toHumanReadableStringFromAscii(bytes);
 		StringBuilder ret = new StringBuilder(str.length() * 3);
 		for (int i = 0; i < str.length(); i++) {
 			ret.append(str.charAt(i));

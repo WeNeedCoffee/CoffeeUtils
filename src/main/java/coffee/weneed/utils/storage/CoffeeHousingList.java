@@ -1,7 +1,9 @@
 package coffee.weneed.utils.storage;
 
-import coffee.weneed.utils.net.io.LittleEndianAccessor;
-import coffee.weneed.utils.net.io.LittleEndianWriter;
+import org.json.JSONObject;
+
+import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeWriter;
 
 public class CoffeeHousingList extends ACoffeeHousingNode {
 
@@ -10,14 +12,38 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 	}
 
 	@Override
-	protected void deserialize(LittleEndianAccessor lea) {
+	protected void deserialize(CoffeeAccessor ca) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	protected void serialize(LittleEndianWriter lew) {
+	public void fromByteArray(byte[] b) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void fromJSON(JSONObject json) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void serialize(CoffeeWriter cw) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public byte[] toByteArray() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JSONObject toJSON() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,11 +1,11 @@
-package coffee.weneed.utils.net.io;
+package coffee.weneed.utils.io;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 
-import coffee.weneed.utils.HexTool;
+import coffee.weneed.utils.HexUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,7 +13,7 @@ import coffee.weneed.utils.HexTool;
  *
  * @author Dalethium
  */
-public class LittleEndianWriter {
+public class CoffeeWriter {
 
 	/** The baos. */
 	private ByteArrayOutputStream baos;
@@ -21,7 +21,7 @@ public class LittleEndianWriter {
 	/**
 	 * Instantiates a new little endian writer.
 	 */
-	public LittleEndianWriter() {
+	public CoffeeWriter() {
 		this(32);
 	}
 
@@ -30,7 +30,7 @@ public class LittleEndianWriter {
 	 *
 	 * @param baos the baos
 	 */
-	public LittleEndianWriter(ByteArrayOutputStream baos) {
+	public CoffeeWriter(ByteArrayOutputStream baos) {
 		setBaos(baos);
 	}
 
@@ -39,7 +39,7 @@ public class LittleEndianWriter {
 	 *
 	 * @param size the size
 	 */
-	public LittleEndianWriter(int size) {
+	public CoffeeWriter(int size) {
 		setBaos(new ByteArrayOutputStream(size));
 	}
 
@@ -75,7 +75,7 @@ public class LittleEndianWriter {
 	 */
 	@Override
 	public final String toString() {
-		return HexTool.toHumanReadableString(getByteArray());
+		return HexUtil.toHumanReadableString(getByteArray());
 	}
 
 	/**

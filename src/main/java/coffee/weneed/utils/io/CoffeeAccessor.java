@@ -1,10 +1,8 @@
-package coffee.weneed.utils.net.io;
+package coffee.weneed.utils.io;
 
 import java.awt.Point;
 import java.io.IOException;
 import java.nio.charset.Charset;
-
-import coffee.weneed.utils.ByteArrayByteStream;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,7 +10,7 @@ import coffee.weneed.utils.ByteArrayByteStream;
  *
  * @author Dalethium
  */
-public class LittleEndianAccessor {
+public class CoffeeAccessor {
 
 	/** The bs. */
 	private final ByteArrayByteStream bs;
@@ -22,7 +20,7 @@ public class LittleEndianAccessor {
 	 *
 	 * @param bs the bs
 	 */
-	public LittleEndianAccessor(ByteArrayByteStream bs) {
+	public CoffeeAccessor(ByteArrayByteStream bs) {
 		this.bs = bs;
 	}
 

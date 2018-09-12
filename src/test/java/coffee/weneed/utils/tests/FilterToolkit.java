@@ -16,10 +16,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 import coffee.weneed.utils.lang.filter.ProfanityFilter;
 
 public class FilterToolkit implements KeyListener {
+
+	static ProfanityFilter filter = null;
+
+	public static void main(String[] args) {
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				new FilterToolkit();
+			}
+		});
+	}
 
 	JFrame frame;
 
@@ -41,8 +54,6 @@ public class FilterToolkit implements KeyListener {
 
 	JScrollPane scrollPane2;
 
-	static ProfanityFilter filter = null;
-
 	JLabel l;
 
 	JLabel l1;
@@ -51,7 +62,7 @@ public class FilterToolkit implements KeyListener {
 
 	public FilterToolkit() {
 		try {
-			filter = new ProfanityFilter(true,
+			FilterToolkit.filter = new ProfanityFilter(true,
 					/*new URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?" + System.currentTimeMillis())*/
 					new File("./tree.json").toURI().toURL());
 		} catch (MalformedURLException e) {
@@ -77,7 +88,7 @@ public class FilterToolkit implements KeyListener {
 		textArea.addKeyListener(this);
 		scrollPane = new JScrollPane(textArea);
 		scrollPane.setViewportView(textArea);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		l = new JLabel();
 		l.setText("Output");
@@ -95,7 +106,7 @@ public class FilterToolkit implements KeyListener {
 		textArea1.addKeyListener(this);
 		scrollPane1 = new JScrollPane(textArea1);
 		scrollPane1.setViewportView(textArea1);
-		scrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		// panel.setLayout(null);
 		l1 = new JLabel();
 		l1.setText("Add new words");
@@ -113,7 +124,7 @@ public class FilterToolkit implements KeyListener {
 		textArea2.addKeyListener(this);
 		scrollPane2 = new JScrollPane(textArea2);
 		scrollPane2.setViewportView(textArea2);
-		scrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		// panel.setLayout(null);
 		l2 = new JLabel();
 		l2.setText("Remove words");
@@ -128,21 +139,6 @@ public class FilterToolkit implements KeyListener {
 		frame.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-			public void run() {
-				new FilterToolkit();
-			}
-		});
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -152,24 +148,32 @@ public class FilterToolkit implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (e.getComponent() instanceof JTextArea == false) return;
+			if (e.getComponent() instanceof JTextArea == false) {
+				return;
+			}
 			JTextArea ta = (JTextArea) e.getComponent();
 			String s = ta.getText();
 			s = s.substring(0, s.length() - 1);// remove enter char
 			if (ta.getName().equalsIgnoreCase("test")) {
-				l.setText(filter.filterBadWords(s));
+				l.setText(FilterToolkit.filter.filterBadWords(s));
 				ta.setText("");
 				save();
 			} else if (ta.getName().equalsIgnoreCase("test1")) {
-				filter.addWord(s);
+				FilterToolkit.filter.addWord(s);
 				ta.setText("");
 				save();
 			} else if (ta.getName().equalsIgnoreCase("test2")) {
-				filter.removeWord(s);
+				FilterToolkit.filter.removeWord(s);
 				ta.setText("");
 				save();
 			}
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 	public void save() {
@@ -177,7 +181,7 @@ public class FilterToolkit implements KeyListener {
 		f.delete();
 		try {
 			FileOutputStream s = new FileOutputStream(f);
-			s.write(filter.getRoot().toJSON().toString(1).getBytes());
+			s.write(FilterToolkit.filter.getRoot().toJSON().toString(1).getBytes());
 			s.flush();
 			s.close();
 		} catch (FileNotFoundException e) {
