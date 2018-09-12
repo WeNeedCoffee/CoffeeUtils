@@ -22,15 +22,17 @@ public class CoffeeHousingTest {
 		p3.setObject("1", 1L);
 		p3.setObject("2", "1L");
 		p3.setObject("3", (byte) 0x01);
-		p1.setChildNode("p2", p2);
-		p.setChildNode("p1", p1);
-		p.setChildNode("p3", p3);
+		p1.setObject("p2", p2);
+		p.setObject("p1", p1);
+		p.setObject("p3", p3);
 		byte[] pb = p.toByteArray();
 		System.out.println(HexUtil.toHumanReadableString(pb));
+		System.out.println(p.toJSON().toString());
 		p = new CoffeeHousingObject(null);
 		p.fromByteArray(pb);
 		pb = p.toByteArray();
 		System.out.println(HexUtil.toHumanReadableString(pb));
+		System.out.println(p.toJSON().toString());
 
 	}
 }

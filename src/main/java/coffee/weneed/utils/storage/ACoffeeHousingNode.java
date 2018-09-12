@@ -5,7 +5,7 @@ import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 import coffee.weneed.utils.io.CoffeeAccessor;
 import coffee.weneed.utils.io.CoffeeWriter;
 
-public abstract class ACoffeeHousingNode implements IJSONObjectDataHolder, IByteArrayDataHolder {
+public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONObjectDataHolder {
 
 	protected ACoffeeHousingNode parent;
 
