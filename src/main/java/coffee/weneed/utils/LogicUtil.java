@@ -16,6 +16,22 @@ import java.util.List;
  */
 public class LogicUtil {
 
+	/**
+	 * https://github.com/haha01haha01/MapleLib/blob/master/WzLib/Util/WzTool.cs
+	 *  Creates an array with b appended to the end of a.
+	 * @param a first array
+	 * @param b second array
+	 * @return An array with b appended to the end of a.
+	 * @author C#: Snow, haha01haha01
+	 * @author Java: Dalethium
+	 */
+	public static byte[] combine(byte[] a, byte[] b) {
+		byte[] result = new byte[a.length + b.length];
+		System.arraycopy(a, 0, result, 0, a.length);
+		System.arraycopy(b, 0, result, a.length, b.length);
+		return result;
+	}
+
 	public static byte[] downloadUrl(String string) {
 		URL url = null;
 		try {
