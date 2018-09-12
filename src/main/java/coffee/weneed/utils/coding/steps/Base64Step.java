@@ -1,12 +1,14 @@
-package coffee.weneed.utils.crypt;
+package coffee.weneed.utils.coding.steps;
 
 import java.util.Base64;
+
+import coffee.weneed.utils.coding.CodingStep;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Base64Step.
  */
-public class Base64Step implements CryptStep {
+public class Base64Step implements CodingStep {
 
 	/* (non-Javadoc)
 	 * @see coffee.weneed.utils.crypt.IDecodable#decode(byte[])

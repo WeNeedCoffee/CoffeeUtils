@@ -1,4 +1,4 @@
-package coffee.weneed.utils.crypt;
+package coffee.weneed.utils.coding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,21 +9,21 @@ import coffee.weneed.utils.LogicUtil;
 /**
  * The Class CryptProcess.
  */
-public class CryptProcess {
+public class CodingProcess {
 
 	/** The steps. */
-	private List<CryptStep> steps = new ArrayList<>();
+	private List<CodingStep> steps = new ArrayList<>();
 
 	/** The rsteps. */
-	private List<CryptStep> rsteps = new ArrayList<>();
+	private List<CodingStep> rsteps = new ArrayList<>();
 
 	/**
 	 * Instantiates a new crypt process.
 	 *
 	 * @param s the s
 	 */
-	public CryptProcess(CryptStep... s) {
-		for (CryptStep e : s) {
+	public CodingProcess(CodingStep... s) {
+		for (CodingStep e : s) {
 			steps.add(e);
 		}
 		rsteps = LogicUtil.reverse(steps);
@@ -37,7 +37,7 @@ public class CryptProcess {
 	 */
 	public byte[] decrypt(byte[] input) {
 		byte[] h = input;
-		for (CryptStep s : new ArrayList<>(rsteps)) {
+		for (CodingStep s : new ArrayList<>(rsteps)) {
 			h = s.encode(h);
 		}
 		return h;
@@ -51,7 +51,7 @@ public class CryptProcess {
 	 */
 	public byte[] encrypt(byte[] input) {
 		byte[] h = input;
-		for (CryptStep s : new ArrayList<>(steps)) {
+		for (CodingStep s : new ArrayList<>(steps)) {
 			h = s.encode(h);
 		}
 		return h;

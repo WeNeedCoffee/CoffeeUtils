@@ -1,4 +1,4 @@
-package coffee.weneed.utils.crypt;
+package coffee.weneed.utils.coding;
 
 // TODO: Auto-generated Javadoc
 /**
