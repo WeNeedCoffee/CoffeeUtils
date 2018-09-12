@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import coffee.weneed.utils.ByteArrayByteStream;
 import coffee.weneed.utils.HexTool;
-import coffee.weneed.utils.IJSONObjectDataHolder;
+import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 import coffee.weneed.utils.net.io.LittleEndianAccessor;
 import coffee.weneed.utils.net.io.LittleEndianWriter;
 

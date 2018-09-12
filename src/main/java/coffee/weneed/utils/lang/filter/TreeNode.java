@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 import org.json.JSONObject;
 
-import coffee.weneed.utils.IJSONObjectDataHolder;
+import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 
 // TODO: Auto-generated Javadoc
 /**

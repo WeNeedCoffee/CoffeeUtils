@@ -1,4 +1,4 @@
-package coffee.weneed.utils;
+package coffee.weneed.utils.dataholders;
 
 import org.json.JSONObject;
 

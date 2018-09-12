@@ -35,7 +35,7 @@ public class CodingProcess {
 	 * @param input the input
 	 * @return the byte[]
 	 */
-	public byte[] decrypt(byte[] input) {
+	public byte[] decode(byte[] input) {
 		byte[] h = input;
 		for (CodingStep s : new ArrayList<>(rsteps)) {
 			h = s.encode(h);
@@ -49,7 +49,7 @@ public class CodingProcess {
 	 * @param input the input
 	 * @return the byte[]
 	 */
-	public byte[] encrypt(byte[] input) {
+	public byte[] encode(byte[] input) {
 		byte[] h = input;
 		for (CodingStep s : new ArrayList<>(steps)) {
 			h = s.encode(h);
