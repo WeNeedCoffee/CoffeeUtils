@@ -16,35 +16,8 @@ import coffee.weneed.utils.io.CoffeeWriter;
  */
 public class CoffeeHousingObject extends ACoffeeHousingNode {
 
-	/** The bytes. */
-	protected Map<String, Byte> bytes = new HashMap<>();
-
-	/** The byte arrays. */
-	protected Map<String, byte[]> byte_arrays = new HashMap<>();
-
-	/** The ints. */
-	protected Map<String, Integer> ints = new HashMap<>();
-
-	/** The longs. */
-	protected Map<String, Long> longs = new HashMap<>();
-
-	/** The floats. */
-	protected Map<String, Float> floats = new HashMap<>();
-
-	/** The doubles. */
-	protected Map<String, Double> doubles = new HashMap<>();
-
-	/** The shorts. */
-	protected Map<String, Short> shorts = new HashMap<>();
-
-	/** The chars. */
-	protected Map<String, Character> chars = new HashMap<>();
-
-	/** The strings. */
-	protected Map<String, String> strings = new HashMap<>();
-
-	/** The children. */
-	protected Map<String, ACoffeeHousingNode> children = new HashMap<>();
+	/** The items. */
+	protected Map<String, Object> items = new HashMap<>();
 
 	/**
 	 * Instantiates a new coffee housing object.
@@ -63,52 +36,43 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		if (ca.available() < 2) { // byte for terminator
 			return;
 		}
-		bytes.clear();
-		byte_arrays.clear();
-		ints.clear();
-		longs.clear();
-		floats.clear();
-		doubles.clear();
-		shorts.clear();
-		chars.clear();
-		strings.clear();
+		items.clear();
 		int e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			bytes.put(ca.readString(), ca.readByte());
+			items.put(ca.readString(), ca.readByte());
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			byte_arrays.put(ca.readString(), ca.readBytes(ca.readInt()));
+			items.put(ca.readString(), ca.readBytes(ca.readInt()));
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			ints.put(ca.readString(), ca.readInt());
+			items.put(ca.readString(), ca.readInt());
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			longs.put(ca.readString(), ca.readLong());
+			items.put(ca.readString(), ca.readLong());
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			floats.put(ca.readString(), ca.readFloat());
+			items.put(ca.readString(), ca.readFloat());
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			doubles.put(ca.readString(), ca.readDouble());
+			items.put(ca.readString(), ca.readDouble());
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			shorts.put(ca.readString(), ca.readShort());
+			items.put(ca.readString(), ca.readShort());
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			chars.put(ca.readString(), ca.readChar());
+			items.put(ca.readString(), ca.readChar());
 		}
 		e = ca.readInt();
 		for (int i = 0; i < e; i++) {
-			strings.put(ca.readString(), ca.readString());
+			items.put(ca.readString(), ca.readString());
 		}
-		children.clear();
 		int n = ca.readInt();
 		for (int i = 0; i < n; i++) {
 			String k = ca.readString();
@@ -118,14 +82,14 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 					node = new CoffeeHousingObject(this);
 					node.deserialize(ca);
 					node.parent = this;
-					children.put(k, node);
+					items.put(k, node);
 					break;
 				}
 				case (byte) 0x13: {
 					node = new CoffeeHousingList(this);
 					node.deserialize(ca);
 					node.parent = this;
-					children.put(k, node);
+					items.put(k, node);
 					break;
 				}
 			}
@@ -153,22 +117,47 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 
 	}
 
-	/**
-	 * Gets the child node.
-	 *
-	 * @param key the key
-	 * @return the child node
-	 */
-	public ACoffeeHousingNode getChildNode(String key) {
-		return children.get(key);
-	}
-
 	/* (non-Javadoc)
 	 * @see coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.io.CoffeeWriter)
 	 */
 	@Override
 	protected void serialize(CoffeeWriter cw) {
 		cw.write((byte) 0x12);
+		Map<String, Byte> bytes = new HashMap<>();
+		Map<String, byte[]> byte_arrays = new HashMap<>();
+		Map<String, Integer> ints = new HashMap<>();
+		Map<String, Long> longs = new HashMap<>();
+		Map<String, Float> floats = new HashMap<>();
+		Map<String, Double> doubles = new HashMap<>();
+		Map<String, Short> shorts = new HashMap<>();
+		Map<String, Character> chars = new HashMap<>();
+		Map<String, String> strings = new HashMap<>();
+		Map<String, ACoffeeHousingNode> children = new HashMap<>();
+
+		for (String k : items.keySet()) {
+			Object o = items.get(k);
+			if (o instanceof Byte) {
+				bytes.put(k, (byte) o);
+			} else if (o instanceof byte[]) {
+				byte_arrays.put(k, (byte[]) o);
+			} else if (o instanceof Integer) {
+				ints.put(k, (int) o);
+			} else if (o instanceof Long) {
+				longs.put(k, (long) o);
+			} else if (o instanceof Float) {
+				floats.put(k, (float) o);
+			} else if (o instanceof Double) {
+				doubles.put(k, (double) o);
+			} else if (o instanceof Short) {
+				shorts.put(k, (short) o);
+			} else if (o instanceof Character) {
+				chars.put(k, (char) o);
+			} else if (o instanceof String) {
+				strings.put(k, (String) o);
+			} else if (o instanceof ACoffeeHousingNode) {
+				children.put(k, (ACoffeeHousingNode) o);
+			}
+		}
 		cw.writeInt(bytes.size());
 		for (String s : bytes.keySet()) {
 			byte b = bytes.get(s);
@@ -238,27 +227,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * @param o the o
 	 */
 	public void setObject(String k, Object o) {
-		if (o instanceof Byte) {
-			bytes.put(k, (byte) o);
-		} else if (o instanceof byte[]) {
-			byte_arrays.put(k, (byte[]) o);
-		} else if (o instanceof Integer) {
-			ints.put(k, (int) o);
-		} else if (o instanceof Long) {
-			longs.put(k, (long) o);
-		} else if (o instanceof Float) {
-			floats.put(k, (float) o);
-		} else if (o instanceof Double) {
-			doubles.put(k, (double) o);
-		} else if (o instanceof Short) {
-			shorts.put(k, (short) o);
-		} else if (o instanceof Character) {
-			chars.put(k, (char) o);
-		} else if (o instanceof String) {
-			strings.put(k, (String) o);
-		} else if (o instanceof ACoffeeHousingNode) {
-			((ACoffeeHousingNode) o).parent = this;
-			children.put(k, (ACoffeeHousingNode) o);
+		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double
+				|| o instanceof Short || o instanceof Character || o instanceof String || o instanceof ACoffeeHousingNode) {
+			items.put(k, o);
+		} else {
+			// throw something
 		}
 	}
 
@@ -290,36 +263,70 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		JSONObject chars = new JSONObject();
 		JSONObject strings = new JSONObject();
 		JSONObject children = new JSONObject();
+		Map<String, Byte> tbytes = new HashMap<>();
+		Map<String, byte[]> tbyte_arrays = new HashMap<>();
+		Map<String, Integer> tints = new HashMap<>();
+		Map<String, Long> tlongs = new HashMap<>();
+		Map<String, Float> tfloats = new HashMap<>();
+		Map<String, Double> tdoubles = new HashMap<>();
+		Map<String, Short> tshorts = new HashMap<>();
+		Map<String, Character> tchars = new HashMap<>();
+		Map<String, String> tstrings = new HashMap<>();
+		Map<String, ACoffeeHousingNode> tchildren = new HashMap<>();
 
-		for (String s : this.bytes.keySet()) {
-			bytes.put(s, this.bytes.get(s));
+		for (String k : items.keySet()) {
+			Object o = items.get(k);
+			if (o instanceof Byte) {
+				tbytes.put(k, (byte) o);
+			} else if (o instanceof byte[]) {
+				tbyte_arrays.put(k, (byte[]) o);
+			} else if (o instanceof Integer) {
+				tints.put(k, (int) o);
+			} else if (o instanceof Long) {
+				tlongs.put(k, (long) o);
+			} else if (o instanceof Float) {
+				tfloats.put(k, (float) o);
+			} else if (o instanceof Double) {
+				tdoubles.put(k, (double) o);
+			} else if (o instanceof Short) {
+				tshorts.put(k, (short) o);
+			} else if (o instanceof Character) {
+				tchars.put(k, (char) o);
+			} else if (o instanceof String) {
+				tstrings.put(k, (String) o);
+			} else if (o instanceof ACoffeeHousingNode) {
+				tchildren.put(k, (ACoffeeHousingNode) o);
+			}
 		}
-		for (String s : this.byte_arrays.keySet()) {
-			byte_arrays.put(s, HexUtil.getHexFromBytes(this.byte_arrays.get(s)));
+		for (String s : tbytes.keySet()) {
+			bytes.put(s, tbytes.get(s));
 		}
-		for (String s : this.ints.keySet()) {
-			ints.put(s, this.ints.get(s));
+		for (String s : tbyte_arrays.keySet()) {
+			byte_arrays.put(s, HexUtil.getHexFromBytes(tbyte_arrays.get(s)));
 		}
-		for (String s : this.longs.keySet()) {
-			longs.put(s, this.longs.get(s));
+		for (String s : tints.keySet()) {
+			ints.put(s, tints.get(s));
 		}
-		for (String s : this.floats.keySet()) {
-			floats.put(s, this.floats.get(s));
+		for (String s : tlongs.keySet()) {
+			longs.put(s, tlongs.get(s));
 		}
-		for (String s : this.doubles.keySet()) {
-			doubles.put(s, this.doubles.get(s));
+		for (String s : tfloats.keySet()) {
+			floats.put(s, tfloats.get(s));
 		}
-		for (String s : this.shorts.keySet()) {
-			shorts.put(s, this.shorts.get(s));
+		for (String s : tdoubles.keySet()) {
+			doubles.put(s, tdoubles.get(s));
 		}
-		for (String s : this.chars.keySet()) {
-			chars.put(s, this.chars.get(s));
+		for (String s : tshorts.keySet()) {
+			shorts.put(s, tshorts.get(s));
 		}
-		for (String s : this.strings.keySet()) {
-			strings.put(s, this.strings.get(s));
+		for (String s : tchars.keySet()) {
+			chars.put(s, tchars.get(s));
 		}
-		for (String s : this.children.keySet()) {
-			children.put(s, this.children.get(s).toJSON());
+		for (String s : tstrings.keySet()) {
+			strings.put(s, tstrings.get(s));
+		}
+		for (String s : tchildren.keySet()) {
+			children.put(s, tchildren.get(s).toJSON());
 		}
 
 		if (bytes.length() > 0) {

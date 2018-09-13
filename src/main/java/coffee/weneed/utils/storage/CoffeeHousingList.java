@@ -1,8 +1,12 @@
 package coffee.weneed.utils.storage;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -14,37 +18,10 @@ import coffee.weneed.utils.io.CoffeeWriter;
 /**
  * The Class CoffeeHousingList.
  */
-public class CoffeeHousingList extends ACoffeeHousingNode {
+public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object> {
 
 	/** The bytes. */
-	protected Map<Integer, Byte> bytes = new HashMap<>();
-
-	/** The byte arrays. */
-	protected Map<Integer, byte[]> byte_arrays = new HashMap<>();
-
-	/** The ints. */
-	protected Map<Integer, Integer> ints = new HashMap<>();
-
-	/** The longs. */
-	protected Map<Integer, Long> longs = new HashMap<>();
-
-	/** The floats. */
-	protected Map<Integer, Float> floats = new HashMap<>();
-
-	/** The doubles. */
-	protected Map<Integer, Double> doubles = new HashMap<>();
-
-	/** The shorts. */
-	protected Map<Integer, Short> shorts = new HashMap<>();
-
-	/** The chars. */
-	protected Map<Integer, Character> chars = new HashMap<>();
-
-	/** The strings. */
-	protected Map<Integer, String> strings = new HashMap<>();
-
-	/** The children. */
-	protected Map<Integer, ACoffeeHousingNode> children = new HashMap<>();
+	protected List<Object> items = new ArrayList<>();
 
 	/**
 	 * Instantiates a new coffee housing list.
@@ -55,50 +32,67 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 		super(parent);
 	}
 
-	/**
-	 * Delete index.
-	 *
-	 * @param i the i
-	 * @return true, if successful
+	/* (non-Javadoc)
+	 * @see java.util.List#add(int, java.lang.Object)
 	 */
-	private boolean deleteIndex(int i) {
-		if (bytes.containsKey(i)) {
-			bytes.remove(i);
-			return true;
-		} else if (byte_arrays.containsKey(i)) {
-			byte_arrays.remove(i);
-			return true;
-		} else if (ints.containsKey(i)) {
-			ints.remove(i);
-			return true;
-		} else if (longs.containsKey(i)) {
-			longs.remove(i);
-			return true;
-		} else if (floats.containsKey(i)) {
-			floats.remove(i);
-			return true;
-		} else if (doubles.containsKey(i)) {
-			doubles.remove(i);
-			return true;
-		} else if (shorts.containsKey(i)) {
-			shorts.remove(i);
-			return true;
-		} else if (chars.containsKey(i)) {
-			chars.remove(i);
-			return true;
-		} else if (strings.containsKey(i)) {
-			strings.remove(i);
-			return true;
-		} else {
-			return false;
-		}
+	@Override
+	public void add(int index, Object element) {
+		items.add(index, element);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#add(java.lang.Object)
+	 */
+	@Override
+	public boolean add(Object e) {
+		return items.add(e);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#addAll(java.util.Collection)
+	 */
+	@Override
+	public boolean addAll(Collection<?> c) {
+		return items.addAll(c);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#addAll(int, java.util.Collection)
+	 */
+	@Override
+	public boolean addAll(int index, Collection<?> c) {
+		return items.addAll(index, c);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#clear()
+	 */
+	@Override
+	public void clear() {
+		items.clear();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#contains(java.lang.Object)
+	 */
+	@Override
+	public boolean contains(Object o) {
+		return items.contains(o);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#containsAll(java.util.Collection)
+	 */
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return items.containsAll(c);
 	}
 
 	/* (non-Javadoc)
 	 * @see coffee.weneed.utils.storage.ACoffeeHousingNode#deserialize(coffee.weneed.utils.io.CoffeeAccessor)
 	 */
 	@Override
-	protected void deserialize(CoffeeAccessor ca) {
+	protected void deserialize(CoffeeAccessor lea) {
 		// TODO Auto-generated method stub
 
 	}
@@ -121,112 +115,141 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 
 	}
 
-	/**
-	 * Removes the index.
-	 *
-	 * @param i the i
+	/* (non-Javadoc)
+	 * @see java.util.List#get(int)
 	 */
-	public void removeIndex(int i) {
-		if (!deleteIndex(i)) {
-			return;
-		}
-		Set<Integer> l = bytes.keySet();
-		for (int e : l) {
-			if (e > i) {
-				byte x = bytes.get(e);
-				bytes.put(e - 1, x);
-				bytes.remove(e);
-			}
-		}
+	@Override
+	public Object get(int index) {
+		return items.get(index);
+	}
 
-		l = byte_arrays.keySet();
-		for (int e : l) {
-			if (e > i) {
-				byte[] x = byte_arrays.get(e);
-				byte_arrays.put(e - 1, x);
-				byte_arrays.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#indexOf(java.lang.Object)
+	 */
+	@Override
+	public int indexOf(Object o) {
+		return items.indexOf(o);
+	}
 
-		l = ints.keySet();
-		for (int e : l) {
-			if (e > i) {
-				int x = ints.get(e);
-				ints.put(e - 1, x);
-				ints.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#isEmpty()
+	 */
+	@Override
+	public boolean isEmpty() {
+		return items.isEmpty();
+	}
 
-		l = longs.keySet();
-		for (int e : l) {
-			if (e > i) {
-				long x = longs.get(e);
-				longs.put(e - 1, x);
-				longs.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#iterator()
+	 */
+	@Override
+	public Iterator<Object> iterator() {
+		return items.iterator();
+	}
 
-		l = floats.keySet();
-		for (int e : l) {
-			if (e > i) {
-				float x = floats.get(e);
-				floats.put(e - 1, x);
-				floats.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#lastIndexOf(java.lang.Object)
+	 */
+	@Override
+	public int lastIndexOf(Object o) {
+		return items.lastIndexOf(o);
+	}
 
-		l = doubles.keySet();
-		for (int e : l) {
-			if (e > i) {
-				double x = doubles.get(e);
-				doubles.put(e - 1, x);
-				doubles.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#listIterator()
+	 */
+	@Override
+	public ListIterator<Object> listIterator() {
+		return items.listIterator();
+	}
 
-		l = shorts.keySet();
-		for (int e : l) {
-			if (e > i) {
-				short x = shorts.get(e);
-				shorts.put(e - 1, x);
-				shorts.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#listIterator(int)
+	 */
+	@Override
+	public ListIterator<Object> listIterator(int index) {
+		return items.listIterator(index);
+	}
 
-		l = chars.keySet();
-		for (int e : l) {
-			if (e > i) {
-				char x = chars.get(e);
-				chars.put(e - 1, x);
-				chars.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#remove(int)
+	 */
+	@Override
+	public Object remove(int index) {
+		return items.remove(index);
+	}
 
-		l = strings.keySet();
-		for (int e : l) {
-			if (e > i) {
-				String x = strings.get(e);
-				strings.put(e - 1, x);
-				strings.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#remove(java.lang.Object)
+	 */
+	@Override
+	public boolean remove(Object o) {
+		return items.remove(o);
+	}
 
-		l = children.keySet();
-		for (int e : l) {
-			if (e > i) {
-				ACoffeeHousingNode x = children.get(e);
-				children.put(e - 1, x);
-				children.remove(e);
-			}
-		}
+	/* (non-Javadoc)
+	 * @see java.util.List#removeAll(java.util.Collection)
+	 */
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		return items.removeAll(c);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#retainAll(java.util.Collection)
+	 */
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return items.retainAll(c);
 	}
 
 	/* (non-Javadoc)
 	 * @see coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.io.CoffeeWriter)
 	 */
 	@Override
-	protected void serialize(CoffeeWriter cw) {
+	protected void serialize(CoffeeWriter lew) {
 		// TODO Auto-generated method stub
+
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#set(int, java.lang.Object)
+	 */
+	@Override
+	public Object set(int index, Object element) {
+		return items.set(index, element);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#size()
+	 */
+	@Override
+	public int size() {
+		return items.size();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#subList(int, int)
+	 */
+	@Override
+	public List<Object> subList(int fromIndex, int toIndex) {
+		return items.subList(fromIndex, toIndex);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#toArray()
+	 */
+	@Override
+	public Object[] toArray() {
+		return items.toArray();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.List#toArray(java.lang.Object[])
+	 */
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return items.toArray(a);
 	}
 
 	/* (non-Javadoc)
@@ -234,7 +257,6 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 	 */
 	@Override
 	public byte[] toByteArray() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -254,36 +276,70 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 		JSONObject chars = new JSONObject();
 		JSONObject strings = new JSONObject();
 		JSONObject children = new JSONObject();
-
-		for (int i : this.bytes.keySet()) {
-			bytes.put(String.valueOf(i), this.bytes.get(i));
+		Map<Integer, Byte> tbytes = new HashMap<>();
+		Map<Integer, byte[]> tbyte_arrays = new HashMap<>();
+		Map<Integer, Integer> tints = new HashMap<>();
+		Map<Integer, Long> tlongs = new HashMap<>();
+		Map<Integer, Float> tfloats = new HashMap<>();
+		Map<Integer, Double> tdoubles = new HashMap<>();
+		Map<Integer, Short> tshorts = new HashMap<>();
+		Map<Integer, Character> tchars = new HashMap<>();
+		Map<Integer, String> tstrings = new HashMap<>();
+		Map<Integer, ACoffeeHousingNode> tchildren = new HashMap<>();
+		int k = 0;
+		for (Object o : items.toArray()) {
+			if (o instanceof Byte) {
+				tbytes.put(k, (byte) o);
+			} else if (o instanceof byte[]) {
+				tbyte_arrays.put(k, (byte[]) o);
+			} else if (o instanceof Integer) {
+				tints.put(k, (int) o);
+			} else if (o instanceof Long) {
+				tlongs.put(k, (long) o);
+			} else if (o instanceof Float) {
+				tfloats.put(k, (float) o);
+			} else if (o instanceof Double) {
+				tdoubles.put(k, (double) o);
+			} else if (o instanceof Short) {
+				tshorts.put(k, (short) o);
+			} else if (o instanceof Character) {
+				tchars.put(k, (char) o);
+			} else if (o instanceof String) {
+				tstrings.put(k, (String) o);
+			} else if (o instanceof ACoffeeHousingNode) {
+				tchildren.put(k, (ACoffeeHousingNode) o);
+			}
+			k++;
 		}
-		for (int i : this.byte_arrays.keySet()) {
-			byte_arrays.put(String.valueOf(i), HexUtil.getHexFromBytes(this.byte_arrays.get(i)));
+		for (int i : tbytes.keySet()) {
+			bytes.put(String.valueOf(i), tbytes.get(i));
 		}
-		for (int i : this.ints.keySet()) {
-			ints.put(String.valueOf(i), this.ints.get(i));
+		for (int i : tbyte_arrays.keySet()) {
+			byte_arrays.put(String.valueOf(i), HexUtil.getHexFromBytes(tbyte_arrays.get(i)));
 		}
-		for (int i : this.longs.keySet()) {
-			longs.put(String.valueOf(i), this.longs.get(i));
+		for (int i : tints.keySet()) {
+			ints.put(String.valueOf(i), tints.get(i));
 		}
-		for (int i : this.floats.keySet()) {
-			floats.put(String.valueOf(i), this.floats.get(i));
+		for (int i : tlongs.keySet()) {
+			longs.put(String.valueOf(i), tlongs.get(i));
 		}
-		for (int i : this.doubles.keySet()) {
-			doubles.put(String.valueOf(i), this.doubles.get(i));
+		for (int i : tfloats.keySet()) {
+			floats.put(String.valueOf(i), tfloats.get(i));
 		}
-		for (int i : this.shorts.keySet()) {
-			shorts.put(String.valueOf(i), this.shorts.get(i));
+		for (int i : tdoubles.keySet()) {
+			doubles.put(String.valueOf(i), tdoubles.get(i));
 		}
-		for (int i : this.chars.keySet()) {
-			chars.put(String.valueOf(i), this.chars.get(i));
+		for (int i : tshorts.keySet()) {
+			shorts.put(String.valueOf(i), tshorts.get(i));
 		}
-		for (int i : this.strings.keySet()) {
-			strings.put(String.valueOf(i), this.strings.get(i));
+		for (int i : tchars.keySet()) {
+			chars.put(String.valueOf(i), tchars.get(i));
 		}
-		for (int i : this.children.keySet()) {
-			children.put(String.valueOf(i), this.children.get(i).toJSON());
+		for (int i : tstrings.keySet()) {
+			strings.put(String.valueOf(i), tstrings.get(i));
+		}
+		for (int i : tchildren.keySet()) {
+			children.put(String.valueOf(i), tchildren.get(i).toJSON());
 		}
 
 		if (bytes.length() > 0) {
