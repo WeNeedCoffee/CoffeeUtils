@@ -46,6 +46,13 @@ public class TimeUtil {
 		return TimeUtil.getMinutesBetween(startMillis, endMillis) / 60;
 	}
 
+	/**
+	 * Gets the millis between.
+	 *
+	 * @param startMillis the start millis
+	 * @param endMillis the end millis
+	 * @return the millis between
+	 */
 	public static long getMillisBetween(long startMillis, long endMillis) {
 		return endMillis - startMillis;
 	}
@@ -233,7 +240,8 @@ public class TimeUtil {
 	}
 
 	/**
-	 * Used to determine if the given input is in seconds or milliseconds
+	 * Used to determine if the given input is in seconds or milliseconds.
+	 *
 	 * @param input a timestamp, in seconds or millis
 	 * @return true if input is less than Integer.MAX_VALUE
 	 */

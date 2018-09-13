@@ -27,7 +27,7 @@ public class Filter {
 	 * The main method.
 	 *
 	 * @param args the arguments
-	 * @throws MalformedURLException
+	 * @throws MalformedURLException the malformed URL exception
 	 */
 	public static void main(String[] args) throws MalformedURLException {
 		Filter.filter = new ProfanityFilter(true,
@@ -67,6 +67,9 @@ public class Filter {
 
 	}
 
+	/**
+	 * Save.
+	 */
 	public static void save() {
 		File f = new File("tree.json");
 		f.delete();

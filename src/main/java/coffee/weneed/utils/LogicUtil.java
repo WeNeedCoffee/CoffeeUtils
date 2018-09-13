@@ -19,11 +19,12 @@ public class LogicUtil {
 	/**
 	 * https://github.com/haha01haha01/MapleLib/blob/master/WzLib/Util/WzTool.cs
 	 *  Creates an array with b appended to the end of a.
+	 *
+	 * @author C#: Snow, haha01haha01
+	 * @author Java: Dalethium
 	 * @param a first array
 	 * @param b second array
 	 * @return An array with b appended to the end of a.
-	 * @author C#: Snow, haha01haha01
-	 * @author Java: Dalethium
 	 */
 	public static byte[] combine(byte[] a, byte[] b) {
 		byte[] result = new byte[a.length + b.length];
@@ -32,10 +33,18 @@ public class LogicUtil {
 		return result;
 	}
 
-	public static byte[] downloadUrl(String string) {
+	/**
+	 * Download url.
+	 *
+	 * @author Dalethium
+	 * @param toDownload the to download
+	 * @return byte array
+	 * @see coffee.weneed.utils.LogicUtil#downloadUrl(URL)
+	 */
+	public static byte[] downloadUrl(String toDownload) {
 		URL url = null;
 		try {
-			url = new URL(string);
+			url = new URL(toDownload);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

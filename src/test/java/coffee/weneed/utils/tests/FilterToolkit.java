@@ -20,10 +20,20 @@ import javax.swing.ScrollPaneConstants;
 
 import coffee.weneed.utils.lang.filter.ProfanityFilter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FilterToolkit.
+ */
 public class FilterToolkit implements KeyListener {
 
+	/** The filter. */
 	static ProfanityFilter filter = null;
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
@@ -34,32 +44,48 @@ public class FilterToolkit implements KeyListener {
 		});
 	}
 
+	/** The frame. */
 	JFrame frame;
 
+	/** The panel. */
 	JPanel panel;
 
+	/** The text area. */
 	JTextArea textArea;
 
+	/** The scroll pane. */
 	JScrollPane scrollPane;
 
+	/** The panel 1. */
 	JPanel panel1;
 
+	/** The text area 1. */
 	JTextArea textArea1;
 
+	/** The scroll pane 1. */
 	JScrollPane scrollPane1;
 
+	/** The panel 2. */
 	JPanel panel2;
 
+	/** The text area 2. */
 	JTextArea textArea2;
 
+	/** The scroll pane 2. */
 	JScrollPane scrollPane2;
 
+	/** The l. */
 	JLabel l;
 
+	/** The l 1. */
 	JLabel l1;
 
+	/** The l 2. */
 	JLabel l2;
 
+	/**
+	 * Instantiates a new filter toolkit.
+	 */
 	public FilterToolkit() {
 		try {
 			FilterToolkit.filter = new ProfanityFilter(true,
@@ -139,12 +165,18 @@ public class FilterToolkit implements KeyListener {
 		frame.setVisible(true);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -170,12 +202,18 @@ public class FilterToolkit implements KeyListener {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Save.
+	 */
 	public void save() {
 		File f = new File("tree.json");
 		f.delete();

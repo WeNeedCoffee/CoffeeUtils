@@ -3,8 +3,17 @@ package coffee.weneed.utils.tests;
 import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.storage.CoffeeHousingObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CoffeeHousingTest.
+ */
 public class CoffeeHousingTest {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		CoffeeHousingObject p = new CoffeeHousingObject(null);
 		p.setObject("1", 1L);

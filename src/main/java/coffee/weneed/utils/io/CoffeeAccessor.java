@@ -157,7 +157,6 @@ public class CoffeeAccessor {
 	/**
 	 * Read ascii string.
 	 *
-	 * @param n the n
 	 * @return the string
 	 */
 	public final String readString() {

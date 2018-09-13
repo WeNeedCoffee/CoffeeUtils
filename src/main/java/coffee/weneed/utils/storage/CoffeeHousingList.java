@@ -10,32 +10,57 @@ import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.io.CoffeeAccessor;
 import coffee.weneed.utils.io.CoffeeWriter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CoffeeHousingList.
+ */
 public class CoffeeHousingList extends ACoffeeHousingNode {
 
+	/** The bytes. */
 	protected Map<Integer, Byte> bytes = new HashMap<>();
 
+	/** The byte arrays. */
 	protected Map<Integer, byte[]> byte_arrays = new HashMap<>();
 
+	/** The ints. */
 	protected Map<Integer, Integer> ints = new HashMap<>();
 
+	/** The longs. */
 	protected Map<Integer, Long> longs = new HashMap<>();
 
+	/** The floats. */
 	protected Map<Integer, Float> floats = new HashMap<>();
 
+	/** The doubles. */
 	protected Map<Integer, Double> doubles = new HashMap<>();
 
+	/** The shorts. */
 	protected Map<Integer, Short> shorts = new HashMap<>();
 
+	/** The chars. */
 	protected Map<Integer, Character> chars = new HashMap<>();
 
+	/** The strings. */
 	protected Map<Integer, String> strings = new HashMap<>();
 
+	/** The children. */
 	protected Map<Integer, ACoffeeHousingNode> children = new HashMap<>();
 
+	/**
+	 * Instantiates a new coffee housing list.
+	 *
+	 * @param parent the parent
+	 */
 	public CoffeeHousingList(ACoffeeHousingNode parent) {
 		super(parent);
 	}
 
+	/**
+	 * Delete index.
+	 *
+	 * @param i the i
+	 * @return true, if successful
+	 */
 	private boolean deleteIndex(int i) {
 		if (bytes.containsKey(i)) {
 			bytes.remove(i);
@@ -69,24 +94,38 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.storage.ACoffeeHousingNode#deserialize(coffee.weneed.utils.io.CoffeeAccessor)
+	 */
 	@Override
 	protected void deserialize(CoffeeAccessor ca) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[])
+	 */
 	@Override
 	public void fromByteArray(byte[] b) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
+	 */
 	@Override
 	public void fromJSON(JSONObject json) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Removes the index.
+	 *
+	 * @param i the i
+	 */
 	public void removeIndex(int i) {
 		if (!deleteIndex(i)) {
 			return;
@@ -182,17 +221,26 @@ public class CoffeeHousingList extends ACoffeeHousingNode {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.io.CoffeeWriter)
+	 */
 	@Override
 	protected void serialize(CoffeeWriter cw) {
 		// TODO Auto-generated method stub
 	}
 
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.dataholders.IByteArrayDataHolder#toByteArray()
+	 */
 	@Override
 	public byte[] toByteArray() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#toJSON()
+	 */
 	@Override
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();

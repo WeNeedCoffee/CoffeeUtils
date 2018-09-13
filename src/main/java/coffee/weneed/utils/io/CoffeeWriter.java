@@ -98,6 +98,11 @@ public class CoffeeWriter {
 		}
 	}
 
+	/**
+	 * Write char.
+	 *
+	 * @param c the c
+	 */
 	public final void writeChar(char c) {
 		writeShort((short) c);
 	}
@@ -105,7 +110,7 @@ public class CoffeeWriter {
 	/**
 	 * Write float.
 	 *
-	 * @param i the i
+	 * @param d the d
 	 */
 	public final void writeDouble(double d) {
 		writeLong(Double.doubleToLongBits(d));
@@ -114,7 +119,7 @@ public class CoffeeWriter {
 	/**
 	 * Write float.
 	 *
-	 * @param i the i
+	 * @param f the f
 	 */
 	public final void writeFloat(float f) {
 		writeInt(Float.floatToIntBits(f));
