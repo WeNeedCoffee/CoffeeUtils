@@ -1,9 +1,6 @@
 package coffee.weneed.utils;
 
 import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -206,21 +203,6 @@ public class StringUtil {
 	 */
 	public static String normalize(String string) {
 		return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
-	}
-
-	/**
-	 * Splice first.
-	 *
-	 * @author Dalethium
-	 * Removes the first item from a array of strings.
-	 * @param arr An array to modify.
-	 * @return The inputed array minus the first item.
-	 */
-	public static String[] spliceFirst(String[] arr) {
-		List<String> list = new ArrayList<>();
-		Collections.addAll(list, arr);
-		list.remove(0);
-		return list.toArray(new String[0]);
 	}
 
 	/**

@@ -111,4 +111,47 @@ public class LogicUtil {
 		Collections.reverse(result);
 		return result;
 	}
+
+	/**
+	 * Splice
+	 *
+	 * @author Dalethium
+	 * Removes the given item from a array.
+	 * @param arr An array to modify.
+	 * @return The inputed array minus the given item.
+	 */
+	public static <T> T[] splice(T[] arr, int pos) {
+		List<T> list = new ArrayList<>();
+		Collections.addAll(list, arr);
+		list.remove(pos); // IndexOutOfBoundsException
+		return list.toArray(LogicUtil.toArray(list));
+	}
+
+	/**
+	 * Splice first.
+	 *
+	 * @author Dalethium
+	 * Removes the first item from a array.
+	 * @param arr An array to modify.
+	 * @return The inputed array minus the first item.
+	 */
+	public static <T> T[] spliceFirst(T[] arr) {
+		return LogicUtil.splice(arr, 0);
+	}
+
+	/**
+	 * https://stackoverflow.com/questions/6522284/convert-a-generic-list-to-an-array
+	 * 
+	 * @author StackOverflow:atreys
+	 * @param list
+	 * @return array
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T[] toArray(List<T> list) {
+		T[] toR = (T[]) java.lang.reflect.Array.newInstance(list.get(0).getClass(), list.size());
+		for (int i = 0; i < list.size(); i++) {
+			toR[i] = list.get(i);
+		}
+		return toR;
+	}
 }
