@@ -23,18 +23,12 @@ public class TreeNode implements IJSONObjectDataHolder {
 
 	/** The node. */
 	private HashMap<Character, TreeNode> node;
-
-	/**
-	 * Instantiates a new tree node.
-	 */
-	private boolean whitelisted;
-
+	
 	/**
 	 * Instantiates a new tree node.
 	 */
 	public TreeNode() {
 		isEnd = false;
-		whitelisted = false;
 		node = new HashMap<>();
 	}
 
@@ -68,6 +62,16 @@ public class TreeNode implements IJSONObjectDataHolder {
 	}
 
 	/**
+	 * Contains child.
+	 *
+	 * @param letter the letter
+	 * @return true, if successful
+	 */
+	public boolean isEmpty() {
+		return node.isEmpty();
+	}
+	
+	/**
 	 * Creates the child.
 	 *
 	 * @param letter the letter
@@ -82,15 +86,11 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 */
 	@Override
 	public void fromJSON(JSONObject json) {
+		if (json.length() < 1) return;
 		if (json.has("end")) {
 			setEnd(json.getBoolean("end"));
 		} else {
 			setEnd(false);
-		}
-		if (json.has("whitelisted")) {
-			setWhitelist(json.getBoolean("whitelisted"));
-		} else {
-			setWhitelist(false);
 		}
 		for (String s : json.keySet()) {
 			if (s.equalsIgnoreCase("end") || s.equalsIgnoreCase("whitelisted")) {
@@ -141,14 +141,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return isEnd;
 	}
 
-	/**
-	 * Checks if is whitelist.
-	 *
-	 * @return true, if is whitelist
-	 */
-	public boolean isWhitelisted() {
-		return whitelisted;
-	}
 
 	/**
 	 * Sets the end.
@@ -169,15 +161,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 	}
 
 	/**
-	 * Sets the whitelist.
-	 *
-	 * @param isWhitelist the new whitelist
-	 */
-	public void setWhitelist(boolean isWhitelist) {
-		whitelisted = isWhitelist;
-	}
-
-	/**
 	 * Should save.
 	 *
 	 * @return true, if successful
@@ -190,9 +173,9 @@ public class TreeNode implements IJSONObjectDataHolder {
 			if (e.isEnd()) {
 				return true;
 			}
-			if (e.isWhitelisted()) {
-				return true;
-			}
+			//if (e.isWhitelisted()) {
+				//return true;
+			//}
 			if (e.shouldSave()) {
 				return true;
 			}
@@ -213,9 +196,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 		}
 		if (isEnd()) {
 			json.put("end", true);
-		}
-		if (isWhitelisted()) {
-			json.put("whitelisted", true);
 		}
 		return json;
 	}

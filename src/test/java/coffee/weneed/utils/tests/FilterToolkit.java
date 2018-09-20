@@ -191,11 +191,11 @@ public class FilterToolkit implements KeyListener {
 				ta.setText("");
 				save();
 			} else if (ta.getName().equalsIgnoreCase("test1")) {
-				FilterToolkit.filter.addWord(s);
+				FilterToolkit.filter.blacklistWord(s);
 				ta.setText("");
 				save();
 			} else if (ta.getName().equalsIgnoreCase("test2")) {
-				FilterToolkit.filter.removeWord(s);
+				FilterToolkit.filter.whitelistWord(s);
 				ta.setText("");
 				save();
 			}
@@ -219,7 +219,7 @@ public class FilterToolkit implements KeyListener {
 		f.delete();
 		try {
 			FileOutputStream s = new FileOutputStream(f);
-			s.write(FilterToolkit.filter.getRoot().toJSON().toString(1).getBytes());
+			s.write(FilterToolkit.filter.toJSON().toString(1).getBytes());
 			s.flush();
 			s.close();
 		} catch (FileNotFoundException e) {

@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import coffee.weneed.utils.LogicUtil;
 import coffee.weneed.utils.StringUtil;
+import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,7 +27,7 @@ import coffee.weneed.utils.StringUtil;
  * @author Lyenliang, Dalethium
  */
 // TODO check words for middle dupes between endings like rim and rimming
-public class ProfanityFilter {
+public class ProfanityFilter implements IJSONObjectDataHolder {
 
 	/** The leets. */
 	private static Map<Character, String[]> leets = new HashMap<>();
@@ -109,8 +110,9 @@ public class ProfanityFilter {
 	/** The is suspicion found. */
 	private boolean isSuspicionFound;
 
-	/** The root. */
-	private TreeNode root;
+	private TreeNode blacklist;
+	
+	private TreeNode whitelist;
 
 	/** The ascii. */
 	private boolean ascii;
@@ -130,10 +132,19 @@ public class ProfanityFilter {
 	 * @param ascii the ascii
 	 * @param url the url
 	 */
-	public ProfanityFilter(boolean ascii, URL url) {
-		root = new TreeNode();
+	public ProfanityFilter(boolean ascii, URL tree) {
+		fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(tree))));
 		this.ascii = ascii;
-		buildDictionaryTreeFromJSONURL(url);
+	}
+	public JSONObject toJSON() {
+		JSONObject json = new JSONObject();
+		json.put("blacklist", blacklist.toJSON());
+		json.put("whitelist", whitelist.toJSON());
+		return json;
+	}
+	public void fromJSON(JSONObject json) {
+		blacklist = buildDictionaryTreeFromJSON(json.getJSONObject("blacklist"));
+		whitelist = buildDictionaryTreeFromJSON(json.getJSONObject("whitelist"));
 	}
 
 	/**
@@ -152,7 +163,6 @@ public class ProfanityFilter {
 			node = node.getChildByLetter(c);
 			if (characterIndex == badWordLine.length() - 1) {
 				node.setEnd(true);
-				node.setWhitelist(false);
 			} else {
 				addToTree(badWordLine, characterIndex + 1, node);
 			}
@@ -164,8 +174,9 @@ public class ProfanityFilter {
 	 *
 	 * @param word the word
 	 */
-	public void addWord(String word) {
-		addToTree(word, 0, root);
+	public void blacklistWord(String word) {
+		addToTree(word, 0, blacklist);
+		unwhitelistWord(word);
 	}
 
 	/**
@@ -204,7 +215,7 @@ public class ProfanityFilter {
 		}
 		try {
 			while ((line = in.readLine()) != null) {
-				addToTree(line.toLowerCase(), 0, root);
+				addToTree(line.toLowerCase(), 0, blacklist);
 				finishTree(line.toLowerCase());
 			}
 		} catch (FileNotFoundException e) {
@@ -227,8 +238,10 @@ public class ProfanityFilter {
 	 *
 	 * @param toDownload the to download
 	 */
-	public void buildDictionaryTreeFromJSONURL(URL toDownload) {
-		root.fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(toDownload))));
+	public TreeNode buildDictionaryTreeFromJSON(JSONObject json) {
+		TreeNode n = new TreeNode();
+		n.fromJSON(json);
+		return n;
 	}
 
 	/**
@@ -241,7 +254,7 @@ public class ProfanityFilter {
 		String userInputLC = userInput.toLowerCase();
 		init(userInputLC.length());
 		for (int i = 0; i < userInputLC.length(); i++) {
-			searchAlongTree(userInputLC, i, root);
+			searchAlongTree(userInputLC, i, blacklist);
 		}
 		return applyAsteriskMark(userInput);
 	}
@@ -265,7 +278,7 @@ public class ProfanityFilter {
 		}
 		try {
 			while ((line = in.readLine()) != null) {
-				addToTree(badWordLine + line.toLowerCase(), 0, root);
+				addToTree(badWordLine + line.toLowerCase(), 0, blacklist);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -288,7 +301,7 @@ public class ProfanityFilter {
 	 * @return the root
 	 */
 	public TreeNode getRoot() {
-		return root;
+		return blacklist;
 	}
 
 	/**
@@ -382,11 +395,20 @@ public class ProfanityFilter {
 	 *
 	 * @param word the word
 	 */
-	public void removeWord(String word) {
+	public void whitelistWord(String word) {
 		if (!filterBadWords(word).contains("*")) {
 			return;
 		}
-		TreeNode n = root;
+		TreeNode n = whitelist;
+		for (Character c : word.toCharArray()) {
+			if (n.getChildByLetter(c) == null) {
+				n.addChild(c);
+			}
+			n = n.getChildByLetter(c);
+		}
+		n.setEnd(true);
+		
+		n = blacklist;
 		for (Character c : word.toCharArray()) {
 			if (n.getChildByLetter(c) == null) {
 				n.addChild(c);
@@ -394,7 +416,25 @@ public class ProfanityFilter {
 			n = n.getChildByLetter(c);
 		}
 		n.setEnd(false);
-		n.setWhitelist(true);
+	}
+	
+	/**
+	 * Removes the word.
+	 *
+	 * @param word the word
+	 */
+	public void unwhitelistWord(String word) {
+		if (!filterBadWords(word).contains("*")) {
+			return;
+		}
+		TreeNode n = whitelist;
+		for (Character c : word.toCharArray()) {
+			if (n.getChildByLetter(c) == null) {
+				n.addChild(c);
+			}
+			n = n.getChildByLetter(c);
+		}
+		n.setEnd(false);
 	}
 
 	/**
@@ -511,30 +551,51 @@ public class ProfanityFilter {
 		return false;
 	}
 
+	private boolean checkWhiteList(String input) {
+		if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
+			return false;
+		} else {
+			return checkWhiteList(input, whitelist, 0);
+		}
+	}
+	
+	private boolean checkWhiteList(String input, TreeNode n, int spot) {
+		if (n.isEnd()) return true;
+		if (spot >= input.length() || n.isEmpty()) return false;
+		char e = StringUtil.getChar(input.substring(0 + spot, 1 + spot));
+		if (n.containsChild(e)) {
+			return checkWhiteList(input, n.getChildByLetter(e), spot + 1);
+		} else {
+			return checkWhiteList(input.substring(spot));
+		}
+	}
 	/**
 	 * Update node.
 	 *
 	 * @param ch the ch
-	 * @param pUserInput the user input
+	 * @param input the user input
 	 * @param characterIndex the character index
 	 * @param node the node
 	 * @param toSkip the to skip
 	 */
-	private void updateNode(Character ch, String pUserInput, int characterIndex, TreeNode node, int toSkip) {
+	private void updateNode(Character ch, String input, int characterIndex, TreeNode node, int toSkip) {
 		if (isSuspicionFound == false) {
 			isSuspicionFound = true;
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < pUserInput.length() && (ch.equals(pUserInput.charAt(characterIndex + 1))
-					|| matchLeet(pUserInput, characterIndex + 1).contains(ch) || search(pUserInput, characterIndex + 1, node, false))) {
-				searchAlongTree(pUserInput, characterIndex + 1, node);
+			if (characterIndex > 0 && characterIndex + 1 < input.length() && (ch.equals(input.charAt(characterIndex + 1))
+					|| matchLeet(input, characterIndex + 1).contains(ch) || search(input, characterIndex + 1, node, false))) {
+				searchAlongTree(input, characterIndex + 1, node);
+				return;
+			}
+			if (checkWhiteList(input)) {
 				return;
 			}
 			badWordEnd = characterIndex + toSkip - 1;
 			markAsterisk(badWordStart, badWordEnd);
 		}
 		node = node.getChildByLetter(ch);
-		searchAlongTree(pUserInput, characterIndex + toSkip, node);
+		searchAlongTree(input, characterIndex + toSkip, node);
 	}
 }

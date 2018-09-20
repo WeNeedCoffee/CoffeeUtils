@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.LogicUtil;
@@ -31,37 +30,38 @@ public class Filter {
 	 */
 	public static void main(String[] args) throws MalformedURLException {
 		Filter.filter = new ProfanityFilter(true,
-				new URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?_=" + System.currentTimeMillis()));
+				//new URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?_=" + System.currentTimeMillis()));
+				new File("./tree.json").toURI().toURL());
 		System.out.println(Filter.test + " - " + Filter.filter.filterBadWords(Filter.test));
 		System.out.println(new String(HexUtil.getBytesFromHex(HexUtil.getHexFromBytes(Filter.test.getBytes()))));
 		for (String s : new String(LogicUtil.downloadUrl(
 				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-long.txt"))
 						.split("\\n")) {
-			Filter.filter.removeWord(s);
+			Filter.filter.whitelistWord(s);
 		}
 
 		for (String s : new String(LogicUtil.downloadUrl(
 				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-medium.txt"))
 						.split("\\n")) {
-			Filter.filter.removeWord(s);
+			Filter.filter.whitelistWord(s);
 		}
 
 		for (String s : new String(LogicUtil.downloadUrl(
 				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-short.txt"))
 						.split("\\n")) {
-			Filter.filter.removeWord(s);
+			Filter.filter.whitelistWord(s);
 		}
 
 		for (String s : new String(LogicUtil.downloadUrl(
 				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears.txt"))
 						.split("\\n")) {
-			Filter.filter.removeWord(s);
+			Filter.filter.whitelistWord(s);
 		}
 
 		for (String s : new String(LogicUtil
 				.downloadUrl("https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-no-swears.txt"))
 						.split("\\n")) {
-			Filter.filter.removeWord(s);
+			Filter.filter.whitelistWord(s);
 		}
 		Filter.save();
 
@@ -75,7 +75,7 @@ public class Filter {
 		f.delete();
 		try {
 			FileOutputStream s = new FileOutputStream(f);
-			s.write(Filter.filter.getRoot().toJSON().toString(1).getBytes());
+			s.write(Filter.filter.toJSON().toString(1).getBytes());
 			s.flush();
 			s.close();
 		} catch (FileNotFoundException e) {
