@@ -1,10 +1,5 @@
 package coffee.weneed.utils.lang.filter;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -111,7 +106,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	private boolean isSuspicionFound;
 
 	private TreeNode blacklist;
-	
+
 	private TreeNode whitelist;
 
 	/** The ascii. */
@@ -135,16 +130,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	public ProfanityFilter(boolean ascii, URL tree) {
 		fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(tree))));
 		this.ascii = ascii;
-	}
-	public JSONObject toJSON() {
-		JSONObject json = new JSONObject();
-		json.put("blacklist", blacklist.toJSON());
-		json.put("whitelist", whitelist.toJSON());
-		return json;
-	}
-	public void fromJSON(JSONObject json) {
-		blacklist = buildDictionaryTreeFromJSON(json.getJSONObject("blacklist"));
-		whitelist = buildDictionaryTreeFromJSON(json.getJSONObject("whitelist"));
 	}
 
 	/**
@@ -170,16 +155,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	}
 
 	/**
-	 * Adds the word.
-	 *
-	 * @param word the word
-	 */
-	public void blacklistWord(String word) {
-		addToTree(word, 0, blacklist);
-		unwhitelistWord(word);
-	}
-
-	/**
 	 * Replace some of the letters in userInput as * according to asteriskMark.
 	 *
 	 * @param userInput the user input
@@ -196,41 +171,13 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	}
 
 	/**
-	 * Setup a tree for profanity filter.
+	 * Adds the word.
 	 *
-	 * @param fileName the file name
+	 * @param word the word
 	 */
-	public void buildDictionaryTree(String fileName) {
-		String line;
-		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/" + fileName)));
-		} catch (NullPointerException e) {
-			try {
-				in = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		try {
-			while ((line = in.readLine()) != null) {
-				addToTree(line.toLowerCase(), 0, blacklist);
-				finishTree(line.toLowerCase());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (in != null) {
-					in.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	public void blacklistWord(String word) {
+		addToTree(word, 0, blacklist);
+		unwhitelistWord(word);
 	}
 
 	/**
@@ -242,6 +189,29 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		TreeNode n = new TreeNode();
 		n.fromJSON(json);
 		return n;
+	}
+
+	private boolean checkWhiteList(String input) {
+		if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
+			return false;
+		} else {
+			return checkWhiteList(input, whitelist, 0);
+		}
+	}
+
+	private boolean checkWhiteList(String input, TreeNode n, int spot) {
+		if (n.isEnd()) {
+			return true;
+		}
+		if (spot >= input.length() || n.isEmpty()) {
+			return false;
+		}
+		char e = StringUtil.getChar(input.substring(0 + spot, 1 + spot));
+		if (n.containsChild(e)) {
+			return checkWhiteList(input, n.getChildByLetter(e), spot + 1);
+		} else {
+			return checkWhiteList(input.substring(spot));
+		}
 	}
 
 	/**
@@ -259,40 +229,10 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		return applyAsteriskMark(userInput);
 	}
 
-	/**
-	 * Finish tree.
-	 *
-	 * @param badWordLine the bad word line
-	 */
-	private void finishTree(String badWordLine) {
-		String line;
-		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/endings.txt")));
-		} catch (NullPointerException e) {
-			try {
-				in = new BufferedReader(new InputStreamReader(new FileInputStream("endings.txt")));
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
-		}
-		try {
-			while ((line = in.readLine()) != null) {
-				addToTree(badWordLine + line.toLowerCase(), 0, blacklist);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (in != null) {
-					in.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	@Override
+	public void fromJSON(JSONObject json) {
+		blacklist = buildDictionaryTreeFromJSON(json.getJSONObject("blacklist"));
+		whitelist = buildDictionaryTreeFromJSON(json.getJSONObject("whitelist"));
 	}
 
 	/**
@@ -353,37 +293,22 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Match leet.
 	 *
-	 * @param pUserInput the user input
+	 * @param input the user input
 	 * @param characterIndex the character index
 	 * @return the list
 	 */
-	private List<Character> matchLeet(String pUserInput, int characterIndex) {
+	private List<Character> matchLeet(String input, int characterIndex) {
 		List<Character> leetmatch = new ArrayList<>();
-		String sub = StringUtil.substr(pUserInput, characterIndex, pUserInput.length());
-		if (ascii) {
-			for (Entry<Character, String[]> entry : ProfanityFilter.ascii_leets.entrySet()) {
-				Character c = entry.getKey();
-				String[] ss = entry.getValue();
-				for (String s : ss) {
-					if (leetmatch.contains(c)) {
-						break;
-					}
-					if (sub.startsWith(s)) {
-						leetmatch.add(c);
-					}
+		String sub = StringUtil.substr(input, characterIndex, input.length());
+		for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet() : ProfanityFilter.leets.entrySet()) {
+			Character c = entry.getKey();
+			String[] ss = entry.getValue();
+			for (String s : ss) {
+				if (leetmatch.contains(c)) {
+					break;
 				}
-			}
-		} else {
-			for (Entry<Character, String[]> entry : ProfanityFilter.leets.entrySet()) {
-				Character c = entry.getKey();
-				String[] ss = entry.getValue();
-				for (String s : ss) {
-					if (leetmatch.contains(c)) {
-						break;
-					}
-					if (sub.startsWith(s)) {
-						leetmatch.add(c);
-					}
+				if (sub.startsWith(s)) {
+					leetmatch.add(c);
 				}
 			}
 		}
@@ -391,33 +316,113 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	}
 
 	/**
-	 * Removes the word.
+	 * Search.
 	 *
-	 * @param word the word
+	 * @param input the user input
+	 * @param characterIndex the character index
+	 * @param node the node
+	 * @param update the update
+	 * @param recur the recur
+	 * @return true, if successful
 	 */
-	public void whitelistWord(String word) {
-		if (!filterBadWords(word).contains("*")) {
-			return;
-		}
-		TreeNode n = whitelist;
-		for (Character c : word.toCharArray()) {
-			if (n.getChildByLetter(c) == null) {
-				n.addChild(c);
+	private boolean search(String input, int characterIndex, TreeNode node, boolean update) {
+		Character letter = input.charAt(characterIndex);
+		if (node.containsChild(letter)) {
+			if (update) {
+				updateNode(letter, input, characterIndex, node, 1);
 			}
-			n = n.getChildByLetter(c);
+			return true;
+		} else if (searchLeet(input, characterIndex, node, update)) {
+			return true;
 		}
-		n.setEnd(true);
-		
-		n = blacklist;
-		for (Character c : word.toCharArray()) {
-			if (n.getChildByLetter(c) == null) {
-				n.addChild(c);
-			}
-			n = n.getChildByLetter(c);
-		}
-		n.setEnd(false);
+		return false;
 	}
-	
+
+	/**
+	 * Search along tree.
+	 *
+	 * @param input the user input
+	 * @param characterIndex the character index
+	 * @param node the node
+	 */
+	private void searchAlongTree(String input, int characterIndex, TreeNode node) {
+		if (characterIndex < input.length()) {
+			if (search(input, characterIndex, node, true)) {
+				return;
+			} else if (characterIndex > 0 && characterIndex + 1 < input.length()) {
+				Character letter = input.charAt(characterIndex);
+				if (letter.equals(input.charAt(characterIndex - 1)) || letter.equals(input.charAt(characterIndex + 1))) {
+					searchAlongTree(input, characterIndex + 1, node);
+					return;
+				} else {
+					// TODO is it (realistically) possible for matches to be usable here? or is it just going to return one ~100% of the time?
+					// List<Entry<Integer, String>> matches = new ArrayList<Entry<Integer, String>>();
+					for (Character ch : matchLeet(input, characterIndex)) {
+						Entry<Integer, String> match = matchLastLeet(ch, input, characterIndex);
+						if (match != null) {
+							String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
+							Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
+							for (String leet : charmatch) {
+								int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()), node);
+								if (toSkip > 0) {
+									searchAlongTree(input, characterIndex + toSkip, node);
+									return;
+								}
+							}
+						}
+					}
+				}
+				// Ignore white spaces
+				if (!node.isEnd()) {
+					if (Character.toString(letter).matches("[\\W_]")) {
+						searchAlongTree(input, characterIndex + 1, node);
+						return;
+					}
+				}
+			}
+			isSuspicionFound = false;
+			badWordStart = -1;
+			badWordEnd = -1;
+		}
+	}
+
+	/**
+	 * Search leet.
+	 *
+	 * @param input the user input
+	 * @param characterIndex the character index
+	 * @param node the node
+	 * @param update the update
+	 * @return true, if successful
+	 */
+	private boolean searchLeet(String input, int characterIndex, TreeNode node, boolean update) {
+		List<Character> leetmatch = matchLeet(input, characterIndex);
+		for (Character ch : leetmatch) {
+			if (node.containsChild(ch)) {
+				String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
+				Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
+				for (String leet : charmatch) {
+					int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()), node);
+					if (toSkip > 0) {
+						if (update) {
+							updateNode(ch, input, characterIndex, node, toSkip);
+						}
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public JSONObject toJSON() {
+		JSONObject json = new JSONObject();
+		json.put("blacklist", blacklist.toJSON());
+		json.put("whitelist", whitelist.toJSON());
+		return json;
+	}
+
 	/**
 	 * Removes the word.
 	 *
@@ -437,138 +442,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		n.setEnd(false);
 	}
 
-	/**
-	 * Search.
-	 *
-	 * @param pUserInput the user input
-	 * @param characterIndex the character index
-	 * @param node the node
-	 * @param update the update
-	 * @return true, if successful
-	 */
-	private boolean search(String pUserInput, int characterIndex, TreeNode node, boolean update) {
-		return search(pUserInput, characterIndex, node, update, false);
-	}
-
-	/**
-	 * Search.
-	 *
-	 * @param pUserInput the user input
-	 * @param characterIndex the character index
-	 * @param node the node
-	 * @param update the update
-	 * @param recur the recur
-	 * @return true, if successful
-	 */
-	private boolean search(String pUserInput, int characterIndex, TreeNode node, boolean update, boolean recur) {
-		Character letter = pUserInput.charAt(characterIndex);
-		if (node.containsChild(letter)) {
-			if (update) {
-				updateNode(letter, pUserInput, characterIndex, node, 1);
-			}
-			return true;
-		} else if (searchLeet(pUserInput, characterIndex, node, update)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Search along tree.
-	 *
-	 * @param pUserInput the user input
-	 * @param characterIndex the character index
-	 * @param node the node
-	 */
-	private void searchAlongTree(String pUserInput, int characterIndex, TreeNode node) {
-		if (characterIndex < pUserInput.length()) {
-			if (search(pUserInput, characterIndex, node, true)) {
-				return;
-			} else if (characterIndex > 0 && characterIndex + 1 < pUserInput.length()) {
-				Character letter = pUserInput.charAt(characterIndex);
-				if (letter.equals(pUserInput.charAt(characterIndex - 1)) || letter.equals(pUserInput.charAt(characterIndex + 1))) {
-					searchAlongTree(pUserInput, characterIndex + 1, node);
-					return;
-				} else {
-					// TODO is it (realistically) possible for matches to be usable here? or is it just going to return one ~100% of the time?
-					// List<Entry<Integer, String>> matches = new ArrayList<Entry<Integer, String>>();
-					for (Character ch : matchLeet(pUserInput, characterIndex)) {
-						Entry<Integer, String> match = matchLastLeet(ch, pUserInput, characterIndex);
-						if (match != null) {
-							String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
-							Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
-							for (String leet : charmatch) {
-								int toSkip =
-										ProfanityFilter.toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
-								if (toSkip > 0) {
-									searchAlongTree(pUserInput, characterIndex + toSkip, node);
-									return;
-								}
-							}
-						}
-					}
-				}
-				// Ignore white spaces
-				if (!node.isEnd()) {
-					if (Character.toString(letter).matches("[\\W_]")) {
-						searchAlongTree(pUserInput, characterIndex + 1, node);
-						return;
-					}
-				}
-			}
-			isSuspicionFound = false;
-			badWordStart = -1;
-			badWordEnd = -1;
-		}
-	}
-
-	/**
-	 * Search leet.
-	 *
-	 * @param pUserInput the user input
-	 * @param characterIndex the character index
-	 * @param node the node
-	 * @param update the update
-	 * @return true, if successful
-	 */
-	private boolean searchLeet(String pUserInput, int characterIndex, TreeNode node, boolean update) {
-		List<Character> leetmatch = matchLeet(pUserInput, characterIndex);
-		for (Character ch : leetmatch) {
-			if (node.containsChild(ch)) {
-				String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
-				Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
-				for (String leet : charmatch) {
-					int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(pUserInput, characterIndex, pUserInput.length()), node);
-					if (toSkip > 0) {
-						if (update) {
-							updateNode(ch, pUserInput, characterIndex, node, toSkip);
-						}
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	private boolean checkWhiteList(String input) {
-		if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
-			return false;
-		} else {
-			return checkWhiteList(input, whitelist, 0);
-		}
-	}
-	
-	private boolean checkWhiteList(String input, TreeNode n, int spot) {
-		if (n.isEnd()) return true;
-		if (spot >= input.length() || n.isEmpty()) return false;
-		char e = StringUtil.getChar(input.substring(0 + spot, 1 + spot));
-		if (n.containsChild(e)) {
-			return checkWhiteList(input, n.getChildByLetter(e), spot + 1);
-		} else {
-			return checkWhiteList(input.substring(spot));
-		}
-	}
 	/**
 	 * Update node.
 	 *
@@ -597,5 +470,33 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		}
 		node = node.getChildByLetter(ch);
 		searchAlongTree(input, characterIndex + toSkip, node);
+	}
+
+	/**
+	 * Removes the word.
+	 *
+	 * @param word the word
+	 */
+	public void whitelistWord(String word) {
+		if (!filterBadWords(word).contains("*")) {
+			return;
+		}
+		TreeNode n = whitelist;
+		for (Character c : word.toCharArray()) {
+			if (n.getChildByLetter(c) == null) {
+				n.addChild(c);
+			}
+			n = n.getChildByLetter(c);
+		}
+		n.setEnd(true);
+
+		n = blacklist;
+		for (Character c : word.toCharArray()) {
+			if (n.getChildByLetter(c) == null) {
+				n.addChild(c);
+			}
+			n = n.getChildByLetter(c);
+		}
+		n.setEnd(false);
 	}
 }

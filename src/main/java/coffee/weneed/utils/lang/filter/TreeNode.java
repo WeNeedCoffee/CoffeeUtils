@@ -23,7 +23,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 
 	/** The node. */
 	private HashMap<Character, TreeNode> node;
-	
+
 	/**
 	 * Instantiates a new tree node.
 	 */
@@ -62,16 +62,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 	}
 
 	/**
-	 * Contains child.
-	 *
-	 * @param letter the letter
-	 * @return true, if successful
-	 */
-	public boolean isEmpty() {
-		return node.isEmpty();
-	}
-	
-	/**
 	 * Creates the child.
 	 *
 	 * @param letter the letter
@@ -86,7 +76,9 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 */
 	@Override
 	public void fromJSON(JSONObject json) {
-		if (json.length() < 1) return;
+		if (json.length() < 1) {
+			return;
+		}
 		if (json.has("end")) {
 			setEnd(json.getBoolean("end"));
 		} else {
@@ -133,6 +125,16 @@ public class TreeNode implements IJSONObjectDataHolder {
 	}
 
 	/**
+	 * Contains child.
+	 *
+	 * @param letter the letter
+	 * @return true, if successful
+	 */
+	public boolean isEmpty() {
+		return node.isEmpty();
+	}
+
+	/**
 	 * Checks if is end.
 	 *
 	 * @return true, if is end
@@ -140,7 +142,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 	public boolean isEnd() {
 		return isEnd;
 	}
-
 
 	/**
 	 * Sets the end.
@@ -173,9 +174,9 @@ public class TreeNode implements IJSONObjectDataHolder {
 			if (e.isEnd()) {
 				return true;
 			}
-			//if (e.isWhitelisted()) {
-				//return true;
-			//}
+			// if (e.isWhitelisted()) {
+			// return true;
+			// }
 			if (e.shouldSave()) {
 				return true;
 			}
