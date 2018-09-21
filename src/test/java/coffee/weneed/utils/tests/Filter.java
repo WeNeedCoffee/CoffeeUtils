@@ -37,38 +37,13 @@ public class Filter {
 				new File("./tree.json").toURI().toURL());
 		System.out.println(Filter.test + " - " + Filter.filter.filterBadWords(Filter.test));
 		System.out.println(new String(HexUtil.getBytesFromHex(HexUtil.getHexFromBytes(Filter.test.getBytes()))));
-		Filter.sortBaddies();
+		// Filter.sortBaddies();
+
 		for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
 			Filter.filter.blacklistWord(s);
 		}
 
-		for (String s : new String(LogicUtil.downloadUrl(
-				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-long.txt"))
-						.split("\\n")) {
-			Filter.filter.whitelistWord(s);
-		}
-
-		for (String s : new String(LogicUtil.downloadUrl(
-				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-medium.txt"))
-						.split("\\n")) {
-			Filter.filter.whitelistWord(s);
-		}
-
-		for (String s : new String(LogicUtil.downloadUrl(
-				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-short.txt"))
-						.split("\\n")) {
-			Filter.filter.whitelistWord(s);
-		}
-
-		for (String s : new String(LogicUtil.downloadUrl(
-				"https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears.txt"))
-						.split("\\n")) {
-			Filter.filter.whitelistWord(s);
-		}
-
-		for (String s : new String(LogicUtil
-				.downloadUrl("https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-no-swears.txt"))
-						.split("\\n")) {
+		for (String s : new String(LogicUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
 			Filter.filter.whitelistWord(s);
 		}
 

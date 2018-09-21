@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import coffee.weneed.utils.LogicUtil;
 import coffee.weneed.utils.lang.filter.ProfanityFilter;
 
 // TODO: Auto-generated Javadoc
@@ -115,7 +118,20 @@ public class FilterToolkit implements KeyListener {
 		scrollPane = new JScrollPane(textArea);
 		scrollPane.setViewportView(textArea);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		frame.addWindowListener(new WindowAdapter() {
 
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.out.println("Fixing whitelist...");
+				try {
+					fix();
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println("Done!");
+			}
+		});
 		l = new JLabel();
 		l.setText("Output");
 
@@ -163,6 +179,14 @@ public class FilterToolkit implements KeyListener {
 		// Display the window.
 		frame.pack();
 		frame.setVisible(true);
+
+	}
+
+	private void fix() throws MalformedURLException {
+		for (String s : new String(LogicUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
+			Filter.filter.whitelistWord(s);
+		}
+		save();
 	}
 
 	/* (non-Javadoc)
@@ -189,15 +213,14 @@ public class FilterToolkit implements KeyListener {
 			if (ta.getName().equalsIgnoreCase("test")) {
 				l.setText(FilterToolkit.filter.filterBadWords(s));
 				ta.setText("");
-				save();
 			} else if (ta.getName().equalsIgnoreCase("test1")) {
 				FilterToolkit.filter.blacklistWord(s);
-				ta.setText("");
 				save();
+				ta.setText("");
 			} else if (ta.getName().equalsIgnoreCase("test2")) {
 				FilterToolkit.filter.whitelistWord(s);
-				ta.setText("");
 				save();
+				ta.setText("");
 			}
 		}
 	}

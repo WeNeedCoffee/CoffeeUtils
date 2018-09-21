@@ -1,5 +1,10 @@
 package coffee.weneed.utils.lang.filter;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.AbstractMap;
 import java.util.Arrays;
@@ -175,6 +180,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	public void blacklistWord(String word) {
 		addToTree(word, 0, blacklist);
+		finishTree(word);
 		unwhitelistWord(word);
 	}
 
@@ -225,6 +231,42 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			searchAlongTree(userInputLC, i, blacklist);
 		}
 		return applyAsteriskMark(userInput);
+	}
+
+	/**
+	 * Finish tree.
+	 *
+	 * @param badWordLine the bad word line
+	 */
+	private void finishTree(String badWordLine) {
+		String line;
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/endings.txt")));
+		} catch (NullPointerException e) {
+			try {
+				in = new BufferedReader(new InputStreamReader(new FileInputStream("endings.txt")));
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+		}
+		try {
+			while ((line = in.readLine()) != null) {
+				addToTree(badWordLine + line.toLowerCase(), 0, blacklist);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (in != null) {
+					in.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -439,8 +481,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < input.length() && (ch.equals(input.charAt(characterIndex + 1)) 
-					|| search(input, characterIndex + 1, node, false))) {
+			if (characterIndex > 0 && characterIndex + 1 < input.length()
+					&& (ch.equals(input.charAt(characterIndex + 1)) || search(input, characterIndex + 1, node, false))) {
 				searchAlongTree(input, characterIndex + 1, node);
 				return;
 			}

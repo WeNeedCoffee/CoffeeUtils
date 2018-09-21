@@ -23,8 +23,8 @@ public class TreeNode implements IJSONObjectDataHolder {
 
 	/** The node. */
 	private HashMap<Character, TreeNode> node;
-	
-	//private TreeNode parent;
+
+	// private TreeNode parent;
 
 	/**
 	 * Instantiates a new tree node.
@@ -43,18 +43,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 		this();
 		this.letter = letter;
 	}
-	
-	/**
-	 * Instantiates a new tree node.
-	 *
-	 * @param letter the letter
-	 */
-	public TreeNode(TreeNode parent, Character letter) {
-		this(letter);
-		//this.parent = parent;
-		
-	}
-	
+
 	/**
 	 * Instantiates a new tree node.
 	 *
@@ -64,6 +53,18 @@ public class TreeNode implements IJSONObjectDataHolder {
 		this();
 		fromJSON(in);
 	}
+
+	/**
+	 * Instantiates a new tree node.
+	 *
+	 * @param letter the letter
+	 */
+	public TreeNode(TreeNode parent, Character letter) {
+		this(letter);
+		// this.parent = parent;
+
+	}
+
 	/**
 	 * Adds the child.
 	 *
@@ -72,11 +73,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 	public void addChild(Character letter) {
 		node.put(letter, createChild(letter));
 	}
-	
-	public void removeChild(Character letter) {
-		node.remove(letter);
-	}
-
 
 	/**
 	 * Contains child.
@@ -86,6 +82,10 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 */
 	public boolean containsChild(Character letter) {
 		return node.containsKey(letter);
+	}
+
+	public TreeNode copy() {
+		return new TreeNode(toJSON());
 	}
 
 	/**
@@ -170,6 +170,10 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return isEnd;
 	}
 
+	public void removeChild(Character letter) {
+		node.remove(letter);
+	}
+
 	/**
 	 * Sets the end.
 	 *
@@ -208,9 +212,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return false;
 	}
 
-	public TreeNode copy() {
-		return new TreeNode(toJSON());
-	}
 	/* (non-Javadoc)
 	 * @see coffee.weneed.utils.IJSONObjectDataHolder#toJSON()
 	 */
