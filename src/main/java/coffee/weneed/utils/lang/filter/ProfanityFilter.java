@@ -2,10 +2,8 @@ package coffee.weneed.utils.lang.filter;
 
 import java.net.URL;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -73,8 +71,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param node the node
 	 * @return the int
 	 */
-	private static int toSkip(String leet, String sub, TreeNode node) {
-		return ProfanityFilter.toSkip(leet, sub, node, 0);
+	private static int toSkip(String leet, String sub) {
+		return ProfanityFilter.toSkip(leet, sub, 0);
 	}
 
 	/**
@@ -86,9 +84,9 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param toSkip the to skip
 	 * @return the int
 	 */
-	private static int toSkip(String leet, String sub, TreeNode node, int toSkip) {
+	private static int toSkip(String leet, String sub, int toSkip) {
 		if (StringUtil.substr(sub, toSkip, sub.length()).startsWith(leet)) {
-			toSkip += ProfanityFilter.toSkip(leet, sub, node, toSkip + leet.length());
+			toSkip += ProfanityFilter.toSkip(leet, sub, toSkip + leet.length());
 		}
 		return toSkip;
 	}
@@ -291,31 +289,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	}
 
 	/**
-	 * Match leet.
-	 *
-	 * @param input the user input
-	 * @param characterIndex the character index
-	 * @return the list
-	 */
-	private List<Character> matchLeet(String input, int characterIndex) {
-		List<Character> leetmatch = new ArrayList<>();
-		String sub = StringUtil.substr(input, characterIndex, input.length());
-		for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet() : ProfanityFilter.leets.entrySet()) {
-			Character c = entry.getKey();
-			String[] ss = entry.getValue();
-			for (String s : ss) {
-				if (leetmatch.contains(c)) {
-					break;
-				}
-				if (sub.startsWith(s)) {
-					leetmatch.add(c);
-				}
-			}
-		}
-		return leetmatch;
-	}
-
-	/**
 	 * Search.
 	 *
 	 * @param input the user input
@@ -357,16 +330,20 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 				} else {
 					// TODO is it (realistically) possible for matches to be usable here? or is it just going to return one ~100% of the time?
 					// List<Entry<Integer, String>> matches = new ArrayList<Entry<Integer, String>>();
-					for (Character ch : matchLeet(input, characterIndex)) {
-						Entry<Integer, String> match = matchLastLeet(ch, input, characterIndex);
-						if (match != null) {
-							String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
-							Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
-							for (String leet : charmatch) {
-								int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()), node);
+					String sub = StringUtil.substr(input, characterIndex, input.length());
+					for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet() : ProfanityFilter.leets.entrySet()) {
+						Character c = entry.getKey();
+						if (!node.containsChild(c)) {
+							continue;
+						}
+						String[] ss = entry.getValue();
+						for (String leet : ss) {
+							if (sub.startsWith(leet)) {
+								String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(c) : ProfanityFilter.leets.get(c);
+								Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
+								int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()));
 								if (toSkip > 0) {
 									searchAlongTree(input, characterIndex + toSkip, node);
-									return;
 								}
 							}
 						}
@@ -396,16 +373,21 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @return true, if successful
 	 */
 	private boolean searchLeet(String input, int characterIndex, TreeNode node, boolean update) {
-		List<Character> leetmatch = matchLeet(input, characterIndex);
-		for (Character ch : leetmatch) {
-			if (node.containsChild(ch)) {
-				String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(ch) : ProfanityFilter.leets.get(ch);
-				Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
-				for (String leet : charmatch) {
-					int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()), node);
+		String sub = StringUtil.substr(input, characterIndex, input.length());
+		for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet() : ProfanityFilter.leets.entrySet()) {
+			Character c = entry.getKey();
+			if (!node.containsChild(c)) {
+				continue;
+			}
+			String[] ss = entry.getValue();
+			for (String leet : ss) {
+				if (sub.startsWith(leet)) {
+					String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(c) : ProfanityFilter.leets.get(c);
+					Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
+					int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()));
 					if (toSkip > 0) {
 						if (update) {
-							updateNode(ch, input, characterIndex, node, toSkip);
+							updateNode(c, input, characterIndex, node, toSkip);
 						}
 						return true;
 					}
@@ -457,8 +439,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < input.length() && (ch.equals(input.charAt(characterIndex + 1))
-					|| matchLeet(input, characterIndex + 1).contains(ch) || search(input, characterIndex + 1, node, false))) {
+			if (characterIndex > 0 && characterIndex + 1 < input.length()
+					&& (ch.equals(input.charAt(characterIndex + 1)) || search(input, characterIndex + 1, node, false))) {
 				searchAlongTree(input, characterIndex + 1, node);
 				return;
 			}
@@ -489,7 +471,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			n = n.getChildByLetter(c);
 		}
 		n.setEnd(true);
-
 		n = blacklist;
 		for (Character c : word.toCharArray()) {
 			if (n.getChildByLetter(c) == null) {
