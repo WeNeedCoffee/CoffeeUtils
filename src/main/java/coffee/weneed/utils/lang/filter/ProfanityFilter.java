@@ -439,8 +439,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < input.length()
-					&& (ch.equals(input.charAt(characterIndex + 1)) || search(input, characterIndex + 1, node, false))) {
+			if (characterIndex > 0 && characterIndex + 1 < input.length() && (ch.equals(input.charAt(characterIndex + 1)) 
+					|| search(input, characterIndex + 1, node, false))) {
 				searchAlongTree(input, characterIndex + 1, node);
 				return;
 			}
