@@ -39,8 +39,11 @@ public class Filter {
 		System.out.println(new String(HexUtil.getBytesFromHex(HexUtil.getHexFromBytes(Filter.test.getBytes()))));
 		// Filter.sortBaddies();
 
-		for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
+		/*for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
 			Filter.filter.blacklistWord(s);
+			for (String end : new String(LogicUtil.downloadUrl(new File("./endings.txt").toURI().toURL())).split("\\n")) {
+					Filter.filter.blacklistWord(s.toLowerCase() + end.toLowerCase());
+			}
 		}
 
 		for (String s : new String(LogicUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
@@ -48,7 +51,7 @@ public class Filter {
 		}
 
 		Filter.save();
-
+*/
 	}
 
 	/**

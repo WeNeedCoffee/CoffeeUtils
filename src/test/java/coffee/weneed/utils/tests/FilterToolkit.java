@@ -215,6 +215,14 @@ public class FilterToolkit implements KeyListener {
 				ta.setText("");
 			} else if (ta.getName().equalsIgnoreCase("test1")) {
 				FilterToolkit.filter.blacklistWord(s);
+				try {
+					for (String end : new String(LogicUtil.downloadUrl(new File("./endings.txt").toURI().toURL())).split("\\n")) {
+						FilterToolkit.filter.blacklistWord(s.toLowerCase() + end.toLowerCase());
+					}
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				save();
 				ta.setText("");
 			} else if (ta.getName().equalsIgnoreCase("test2")) {
