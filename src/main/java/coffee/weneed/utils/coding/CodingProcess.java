@@ -3,7 +3,7 @@ package coffee.weneed.utils.coding;
 import java.util.ArrayList;
 import java.util.List;
 
-import coffee.weneed.utils.LogicUtil;
+import coffee.weneed.utils.ArrayUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,7 +26,7 @@ public class CodingProcess {
 		for (CodingStep e : s) {
 			steps.add(e);
 		}
-		rsteps = LogicUtil.reverse(steps);
+		rsteps = ArrayUtil.reverse(steps);
 	}
 
 	/**
