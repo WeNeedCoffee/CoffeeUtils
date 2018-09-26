@@ -198,7 +198,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @return string with bad words filtered
 	 */
 	public String filterBadWords(String userInput) {
-		String userInputLC = userInput.toLowerCase().replaceAll("[\\W_]", "");
+		String userInputLC = userInput.toLowerCase();
 
 		init(userInputLC.length());
 		for (int i = 0; i < userInputLC.length(); i++) {
@@ -322,6 +322,12 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 				return;
 			} else if (characterIndex + 1 < input.length()) {
 				if (letter.equals(input.charAt(characterIndex - 1)) || letter.equals(input.charAt(characterIndex + 1))) {
+					searchAlongTree(input, characterIndex + 1, node);
+					return;
+				}
+			}
+			if (!node.isEnd()) {
+				if (Character.toString(letter).matches("[\\W_]")) {
 					searchAlongTree(input, characterIndex + 1, node);
 					return;
 				}

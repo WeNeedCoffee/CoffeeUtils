@@ -52847,13 +52847,16 @@
      "s": {"end": true},
      "e": {"end": true}
     }},
-    "s": {"c": {
-     "i": {"p": {"l": {"i": {"n": {
-      "a": {"r": {"y": {"end": true}}},
-      "e": {"end": true}
-     }}}}},
-     "end": true
-    }},
+    "s": {
+     "c": {
+      "i": {"p": {"l": {"i": {"n": {
+       "a": {"r": {"y": {"end": true}}},
+       "e": {"end": true}
+      }}}}},
+      "end": true
+     },
+     "k": {"end": true}
+    },
     "f": {"f": {"s": {"end": true}}}
    },
    "o": {"c": {"u": {"m": {"e": {"n": {"t": {"end": true}}}}}}}
