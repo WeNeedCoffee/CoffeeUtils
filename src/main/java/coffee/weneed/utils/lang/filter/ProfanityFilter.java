@@ -57,6 +57,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s" });
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph" });
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("g"), new String[] { "b" });
+		ProfanityFilter.ascii_leets.put(StringUtil.getChar("h"), new String[] { "wh" });
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("k"), new String[] { "c" });
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("l"), new String[] { "i" });
