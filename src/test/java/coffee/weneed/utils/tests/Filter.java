@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import coffee.weneed.utils.ArrayUtil;
-import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.LogicUtil;
 import coffee.weneed.utils.lang.filter.ProfanityFilter;
 
@@ -58,24 +57,21 @@ public class Filter {
 		Filter.filter = new ProfanityFilter(true,
 				// new URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?_=" + System.currentTimeMillis()));
 				new File("./tree.json").toURI().toURL());
-		System.out.println(Filter.test + " - " + Filter.filter.filterBadWords(Filter.test));
-		System.out.println(new String(HexUtil.getBytesFromHex(HexUtil.getHexFromBytes(Filter.test.getBytes()))));
+		// System.out.println(Filter.test + " - " + Filter.filter.filterBadWords(Filter.test));
+		// System.out.println(new String(HexUtil.getBytesFromHex(HexUtil.getHexFromBytes(Filter.test.getBytes()))));
 		Filter.fixList("badwords.txt");
 		Filter.fixList("endings.txt");
 		Filter.fixList("cleanwords.txt");
 
-		/*for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
+		for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
 			Filter.filter.blacklistWord(s);
-			for (String end : new String(LogicUtil.downloadUrl(new File("./endings.txt").toURI().toURL())).split("\\n")) {
-					Filter.filter.blacklistWord(s.toLowerCase() + end.toLowerCase());
-			}
 		}
-		
+
 		for (String s : new String(LogicUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
 			Filter.filter.whitelistWord(s);
 		}
-		
-		Filter.save();*/
+
+		Filter.save();
 
 	}
 

@@ -6,8 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -66,34 +64,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("u"), new String[] { "v" });
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks" });
 		ProfanityFilter.ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
-	}
-
-	/**
-	 * To skip.
-	 *
-	 * @param leet the leet
-	 * @param sub the sub
-	 * @param node the node
-	 * @return the int
-	 */
-	private static int toSkip(String leet, String sub) {
-		return ProfanityFilter.toSkip(leet, sub, 0);
-	}
-
-	/**
-	 * To skip.
-	 *
-	 * @param leet the leet
-	 * @param sub the sub
-	 * @param node the node
-	 * @param toSkip the to skip
-	 * @return the int
-	 */
-	private static int toSkip(String leet, String sub, int toSkip) {
-		if (StringUtil.substr(sub, toSkip, sub.length()).startsWith(leet)) {
-			toSkip += ProfanityFilter.toSkip(leet, sub, toSkip + leet.length());
-		}
-		return toSkip;
 	}
 
 	/** The asterisk mark. */
@@ -195,26 +165,29 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		return n;
 	}
 
-	private boolean checkWhiteList(String input) {
-		if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
-			return false;
+	private void checkWhiteList(String input, int start) {
+		if (input.isEmpty() || input.length() < start) {
+			return;
+		} else if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
+			return;
 		} else {
-			return checkWhiteList(input, whitelist, 0);
+			checkWhiteList(input, whitelist, start, 0, input);
 		}
 	}
 
-	private boolean checkWhiteList(String input, TreeNode n, int spot) {
+	private void checkWhiteList(String input, TreeNode n, int start, int spot, String orig) {
 		if (n.isEnd()) {
-			return true;
+			unmarkAsterisk(start, start + spot - 1);
+			checkWhiteList(input.substring(spot), start + spot);
 		}
 		if (spot >= input.length() || n.isEmpty()) {
-			return false;
+			return;
 		}
 		char e = StringUtil.getChar(input.substring(0 + spot, 1 + spot));
 		if (n.containsChild(e)) {
-			return checkWhiteList(input, n.getChildByLetter(e), spot + 1);
+			checkWhiteList(input, n.getChildByLetter(e), start, spot + 1, orig);
 		} else {
-			return checkWhiteList(input.substring(spot));
+			checkWhiteList(input.substring(spot), start + spot);
 		}
 	}
 
@@ -225,7 +198,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @return string with bad words filtered
 	 */
 	public String filterBadWords(String userInput) {
-		String userInputLC = userInput.toLowerCase();
+		String userInputLC = userInput.toLowerCase().replaceAll("[\\W_]", "");
+
 		init(userInputLC.length());
 		for (int i = 0; i < userInputLC.length(); i++) {
 			searchAlongTree(userInputLC, i, blacklist);
@@ -312,25 +286,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	}
 
 	/**
-	 * Match last leet.
-	 *
-	 * @param chr the chr
-	 * @param s the s
-	 * @param index the index
-	 * @return the entry
-	 */
-	public Entry<Integer, String> matchLastLeet(char chr, String s, int index) {
-		String[] ss = ascii ? ProfanityFilter.ascii_leets.get(chr) : ProfanityFilter.leets.get(chr);
-		for (String leet_match : ss) {
-			int i = s.lastIndexOf(leet_match, index);
-			if (i > -1) {
-				return new AbstractMap.SimpleEntry<>(i, leet_match);
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * Search.
 	 *
 	 * @param input the user input
@@ -362,47 +317,19 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	private void searchAlongTree(String input, int characterIndex, TreeNode node) {
 		if (characterIndex < input.length()) {
+			Character letter = input.charAt(characterIndex);
 			if (search(input, characterIndex, node, true)) {
 				return;
-			} else if (characterIndex > 0 && characterIndex + 1 < input.length()) {
-				Character letter = input.charAt(characterIndex);
+			} else if (characterIndex + 1 < input.length()) {
 				if (letter.equals(input.charAt(characterIndex - 1)) || letter.equals(input.charAt(characterIndex + 1))) {
 					searchAlongTree(input, characterIndex + 1, node);
 					return;
-				} else {
-					// TODO is it (realistically) possible for matches to be usable here? or is it just going to return one ~100% of the time?
-					// List<Entry<Integer, String>> matches = new ArrayList<Entry<Integer, String>>();
-					String sub = StringUtil.substr(input, characterIndex, input.length());
-					for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet() : ProfanityFilter.leets.entrySet()) {
-						Character c = entry.getKey();
-						if (!node.containsChild(c)) {
-							continue;
-						}
-						String[] ss = entry.getValue();
-						for (String leet : ss) {
-							if (sub.startsWith(leet)) {
-								String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(c) : ProfanityFilter.leets.get(c);
-								Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
-								int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()));
-								if (toSkip > 0) {
-									searchAlongTree(input, characterIndex + toSkip, node);
-								}
-							}
-						}
-					}
-				}
-				// Ignore white spaces
-				if (!node.isEnd()) {
-					if (Character.toString(letter).matches("[\\W_]")) {
-						searchAlongTree(input, characterIndex + 1, node);
-						return;
-					}
 				}
 			}
-			isSuspicionFound = false;
-			badWordStart = -1;
-			badWordEnd = -1;
 		}
+		isSuspicionFound = false;
+		badWordStart = -1;
+		badWordEnd = -1;
 	}
 
 	/**
@@ -424,15 +351,10 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			String[] ss = entry.getValue();
 			for (String leet : ss) {
 				if (sub.startsWith(leet)) {
-					String[] charmatch = ascii ? ProfanityFilter.ascii_leets.get(c) : ProfanityFilter.leets.get(c);
-					Arrays.sort(charmatch, (b, a) -> Integer.compare(a.length(), b.length()));
-					int toSkip = ProfanityFilter.toSkip(leet, StringUtil.substr(input, characterIndex, input.length()));
-					if (toSkip > 0) {
-						if (update) {
-							updateNode(c, input, characterIndex, node, toSkip);
-						}
-						return true;
+					if (update) {
+						updateNode(c, input, characterIndex, node, leet.length());
 					}
+					return true;
 				}
 			}
 		}
@@ -445,6 +367,18 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		json.put("blacklist", blacklist.toJSON());
 		json.put("whitelist", whitelist.toJSON());
 		return json;
+	}
+
+	/**
+	 * Identify the letters of userInput that should be marked as "*".
+	 *
+	 * @param badWordStart the bad word start
+	 * @param badWordEnd the bad word end
+	 */
+	private void unmarkAsterisk(int whitelistStart, int whitelistEnd) {
+		for (int i = whitelistStart; i <= whitelistEnd; i++) {
+			asteriskMark[i] = false;
+		}
 	}
 
 	/**
@@ -481,19 +415,15 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < input.length()
-					&& (ch.equals(input.charAt(characterIndex + 1)) || search(input, characterIndex + 1, node, false))) {
+			if (characterIndex > 0 && characterIndex + 1 < input.length() && ch.equals(input.charAt(characterIndex + 1))) {
 				searchAlongTree(input, characterIndex + 1, node);
-				return;
-			}
-			if (checkWhiteList(input)) {
 				return;
 			}
 			badWordEnd = characterIndex + toSkip - 1;
 			markAsterisk(badWordStart, badWordEnd);
+			checkWhiteList(input, 0); // after loop in filterbadwords?
 		}
-		node = node.getChildByLetter(ch);
-		searchAlongTree(input, characterIndex + toSkip, node);
+		searchAlongTree(input, characterIndex + toSkip, node.getChildByLetter(ch));
 	}
 
 	/**
