@@ -63,7 +63,7 @@ public class Filter {
 		Filter.fixList("endings.txt");
 		Filter.fixList("cleanwords.txt");
 
-		for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
+		/*for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
 			Filter.filter.blacklistWord(s);
 		}
 
@@ -71,7 +71,7 @@ public class Filter {
 			Filter.filter.whitelistWord(s);
 		}
 
-		Filter.save();
+		Filter.save();*/
 
 	}
 

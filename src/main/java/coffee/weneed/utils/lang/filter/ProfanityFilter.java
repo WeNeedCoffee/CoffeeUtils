@@ -150,8 +150,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	public void blacklistWord(String word) {
 		addToTree(word, 0, blacklist);
-		finishTree(word);
 		unwhitelistWord(word);
+		finishTree(word);
 	}
 
 	/**
@@ -227,6 +227,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		try {
 			while ((line = in.readLine()) != null) {
 				addToTree(badWordLine + line.toLowerCase(), 0, blacklist);
+				unwhitelistWord(badWordLine + line.toLowerCase());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

@@ -10,7 +10,6 @@ abilities
 ability
 able
 aboriginal
-abortion
 about
 above
 abraham
@@ -2515,8 +2514,6 @@ diana
 diane
 diary
 dice
-dicke
-dicks
 dictionaries
 dictionary
 did
