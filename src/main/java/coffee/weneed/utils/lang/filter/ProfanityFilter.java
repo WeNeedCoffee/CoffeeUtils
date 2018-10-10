@@ -322,12 +322,12 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			Character letter = input.charAt(characterIndex);
 			if (search(input, characterIndex, node, true)) {
 				return;
-			} else if (characterIndex + 1 < input.length()) {
+			} /*else if (characterIndex + 1 < input.length() && characterIndex - 1 >= 0) {
 				if (letter.equals(input.charAt(characterIndex - 1)) || letter.equals(input.charAt(characterIndex + 1))) {
 					searchAlongTree(input, characterIndex + 1, node);
 					return;
 				}
-			}
+			}*/
 			if (!node.isEnd()) {
 				if (Character.toString(letter).matches("[\\W_]")) {
 					searchAlongTree(input, characterIndex + 1, node);
