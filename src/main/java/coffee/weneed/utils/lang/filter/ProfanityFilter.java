@@ -327,7 +327,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 					searchAlongTree(input, characterIndex + 1, node);
 					return;
 				}
-			}*/
+				}*/
 			if (!node.isEnd()) {
 				if (Character.toString(letter).matches("[\\W_]")) {
 					searchAlongTree(input, characterIndex + 1, node);

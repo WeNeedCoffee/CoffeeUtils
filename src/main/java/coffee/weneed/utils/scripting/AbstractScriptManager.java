@@ -16,7 +16,7 @@ public abstract class AbstractScriptManager {
 	private static final ScriptEngineManager sem = new ScriptEngineManager();
 
 	protected static Invocable getInvocable(Path path) {
-		ScriptEngine se = getScriptEngine(path);
+		ScriptEngine se = AbstractScriptManager.getScriptEngine(path);
 		return se == null ? null : (Invocable) se;
 	}
 
