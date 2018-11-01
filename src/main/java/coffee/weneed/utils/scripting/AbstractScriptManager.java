@@ -15,12 +15,12 @@ public abstract class AbstractScriptManager {
 
 	private static final ScriptEngineManager sem = new ScriptEngineManager();
 
-	protected Invocable getInvocable(Path path) {
+	protected static Invocable getInvocable(Path path) {
 		ScriptEngine se = getScriptEngine(path);
 		return se == null ? null : (Invocable) se;
 	}
 
-	protected ScriptEngine getScriptEngine(Path path) {
+	protected static ScriptEngine getScriptEngine(Path path) {
 		FileReader fr = null;
 		try {
 			File script = path.toFile();
