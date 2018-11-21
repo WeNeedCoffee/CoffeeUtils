@@ -84,6 +84,29 @@ public class ArrayUtil {
 	}
 
 	/**
+	 * subarray
+	 *
+	 * @author Dalethium
+	 */
+	public static <T> T[] subarray(T[] arr, int startpos, int endpos) {
+		List<T> list = new ArrayList<>();
+		if (endpos >= arr.length || startpos < 0) {
+			throw new IndexOutOfBoundsException();
+		}
+		int i = 0;
+		for (T a : arr) {
+			if (i < startpos) {
+				continue;
+			}
+			if (i > endpos) {
+				break;
+			}
+			list.add(a);
+		}
+		return list.toArray(ArrayUtil.toArray(list));
+	}
+
+	/**
 	 * https://stackoverflow.com/questions/6522284/convert-a-generic-list-to-an-array
 	 * 
 	 * @author StackOverflow:atreys
