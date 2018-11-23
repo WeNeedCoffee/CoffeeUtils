@@ -68,7 +68,7 @@ public class ArrayUtil {
 		List<T> list = new ArrayList<>();
 		Collections.addAll(list, arr);
 		list.remove(pos); // IndexOutOfBoundsException
-		return list.toArray(ArrayUtil.toArray(list));
+		return ArrayUtil.toArray(list);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class ArrayUtil {
 			}
 			list.add(a);
 		}
-		return list.toArray(ArrayUtil.toArray(list));
+		return ArrayUtil.toArray(list);
 	}
 
 	/**
