@@ -16,8 +16,6 @@ public class NetUtil {
 	 * @return
 	 */
 	public static boolean isReachable(String addr, int openPort, int timeOutMillis) {
-		// Any Open port on other machine
-		// openPort = 22 - ssh, 80 or 443 - webserver, 25 - mailserver etc.
 		try {
 			try (Socket soc = new Socket()) {
 				soc.connect(new InetSocketAddress(addr, openPort), timeOutMillis);

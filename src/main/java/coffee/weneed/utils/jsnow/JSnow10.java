@@ -11,8 +11,8 @@ import coffee.weneed.utils.StringUtil;
  */
 public class JSnow10 {
 
-	public static char zero = '​';
-	public static char one = '‍';
+	public static char zero = '\u200B';
+	public static char one = '\u200D';
 
 	public static String decode(String s) {
 		return StringUtil.binToText(replaceAll(replaceAll(s, String.valueOf(one), "1"), String.valueOf(zero), "0"));
@@ -30,9 +30,9 @@ public class JSnow10 {
 		return str.replaceAll(escapeRegExp(find), replace);
 	}
 
-	public char z_zero = '​';
+	public char z_zero = '\u200B';
 
-	public char z_one = '‍';
+	public char z_one = '\u200D';
 
 	public char w_zero = ' ';
 
