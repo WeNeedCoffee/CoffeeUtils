@@ -57,11 +57,11 @@ public class Filter {
 		Filter.filter = new ProfanityFilter(true,
 				// new URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?_=" + System.currentTimeMillis()));
 				new File("./tree.json").toURI().toURL());
-		// System.out.println(Filter.test + " - " + Filter.filter.filterBadWords(Filter.test));
+		 System.out.println(Filter.test + " - " + Filter.filter.filterBadWords(Filter.test));
 		// System.out.println(new String(HexUtil.getBytesFromHex(HexUtil.getHexFromBytes(Filter.test.getBytes()))));
-		Filter.fixList("badwords.txt");
-		Filter.fixList("endings.txt");
-		Filter.fixList("cleanwords.txt");
+		//Filter.fixList("badwords.txt");
+		//Filter.fixList("endings.txt");
+		//Filter.fixList("cleanwords.txt");
 
 		/*for (String s : new String(LogicUtil.downloadUrl(new File("./badwords.txt").toURI().toURL())).split("\\n")) {
 			Filter.filter.blacklistWord(s);
