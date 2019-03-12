@@ -1,6 +1,10 @@
 package coffee.weneed.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -13,12 +17,35 @@ import java.text.Normalizer;
 // TODO credit/source
 public class StringUtil {
 
+	/***
+	 * Convert a string of 1's and 0's to a string of UTF-8 text
+	 * 
+	 * @param s string of 1's and 0's
+	 * @return decoded string
+	 * @author Daleth
+	 */
+	public static String binToText(String s) {
+		byte[] ret = new byte[s.length() / 8];
+		int i = 0;
+		for (String ss : explode(s, 8)) {
+			ret[i] = (byte) Integer.parseUnsignedInt(ss, 2);
+			i++;
+		}
+		try {
+			return new String(ret, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	/**
 	 * Combine.
 	 *
-	 * @param in the in
+	 * @param in    the in
 	 * @param index the index
-	 * @param sep the sep
+	 * @param sep   the sep
 	 * @return the string
 	 */
 	public static String combine(String[] in, int index, char sep) {
@@ -30,9 +57,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Counts the number of
-	 * <code>chr</code>'s in
-	 * <code>str</code>.
+	 * Counts the number of <code>chr</code>'s in <code>str</code>.
 	 *
 	 * @param str The string to check for instances of <code>chr</code>.
 	 * @param chr The character to check for.
@@ -48,11 +73,35 @@ public class StringUtil {
 		return ret;
 	}
 
+	/***
+	 * Explode a string into a list of smaller strings of a given size
+	 * 
+	 * @author Daleth
+	 * @param in        String to explode
+	 * @param chunksize size of chunks
+	 * @return exploded string list
+	 */
+	public static List<String> explode(String in, int chunksize) {
+		System.out.println(in);
+		List<String> ret = new ArrayList<>();
+		int t = 0;
+		double n = in.length() / chunksize;
+		n -= n % 1; // TODO Math.abs?
+		for (int i = 0; i <= n; i++) {
+			int e = i == n ? in.length() % chunksize : chunksize;
+			if (e == 0) {
+				break;
+			}
+			ret.add(substr(in, t, e));
+			t += e;
+		}
+		return ret;
+	}
+
 	/**
 	 * Gets the char.
 	 *
-	 * @author Dalethium
-	 * Gets the first character of the provided string.
+	 * @author Dalethium Gets the first character of the provided string.
 	 * @param s The string.
 	 * @return The first character of the provided string.
 	 * @see Character
@@ -62,13 +111,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * Gets a string padded from the left to
-	 * <code>length</code> by
+	 * Gets a string padded from the left to <code>length</code> by
 	 * <code>padchar</code>.
 	 *
-	 * @param in The input string to be padded.
+	 * @param in      The input string to be padded.
 	 * @param padchar The character to pad with.
-	 * @param length The length to pad to.
+	 * @param length  The length to pad to.
 	 * @return The padded string.
 	 */
 	public static final String getLeftPaddedStr(final String in, final char padchar, final int length) {
@@ -85,7 +133,7 @@ public class StringUtil {
 	 *
 	 * @param splitted the splitted
 	 * @param position the position
-	 * @param def the def
+	 * @param def      the def
 	 * @return the optional int arg
 	 */
 	public static int getOptionalIntArg(String[] splitted, int position, int def) {
@@ -100,13 +148,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * Gets a string padded from the right to
-	 * <code>length</code> by
+	 * Gets a string padded from the right to <code>length</code> by
 	 * <code>padchar</code>.
 	 *
-	 * @param in The input string to be padded.
+	 * @param in      The input string to be padded.
 	 * @param padchar The character to pad with.
-	 * @param length The length to pad to.
+	 * @param length  The length to pad to.
 	 * @return The padded string.
 	 */
 	public static final String getRightPaddedStr(final String in, final char padchar, final int length) {
@@ -144,10 +191,10 @@ public class StringUtil {
 	}
 
 	/**
-	 * Joins an array of strings starting from string
-	 * <code>start</code> with a space.
+	 * Joins an array of strings starting from string <code>start</code> with a
+	 * space.
 	 *
-	 * @param arr The array of strings to join.
+	 * @param arr   The array of strings to join.
 	 * @param start Starting from which string.
 	 * @return The joined strings.
 	 */
@@ -156,13 +203,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * Joins an array of strings starting from string
-	 * <code>start</code> with
+	 * Joins an array of strings starting from string <code>start</code> with
 	 * <code>sep</code> as a seperator.
 	 *
-	 * @param arr The array of strings to join.
+	 * @param arr   The array of strings to join.
 	 * @param start Starting from which string.
-	 * @param sep the sep
+	 * @param sep   the sep
 	 * @return The joined strings.
 	 */
 	public static final String joinStringFrom(final String arr[], final int start, final String sep) {
@@ -198,6 +244,7 @@ public class StringUtil {
 
 	/**
 	 * Normalizes <code>string</code> by removing all non ascii characters.
+	 * 
 	 * @param string The string to normalize.
 	 * @return Normalized ascii string.
 	 */
@@ -210,8 +257,8 @@ public class StringUtil {
 	 *
 	 * @author https://stackoverflow.com/questions/28916163/java-equivalent-of-php-substr
 	 * @param string the string
-	 * @param from the from
-	 * @param to the to
+	 * @param from   the from
+	 * @param to     the to
 	 * @return substring
 	 */
 	public static String substr(String string, int from, int to) {
@@ -244,5 +291,20 @@ public class StringUtil {
 				return s.substring(0, Math.abs(to));
 			}
 		}
+	}
+
+	/***
+	 * Convert a UTF-8 String to a string of 1's and 0's
+	 * 
+	 * @param in string to encode
+	 * @return string of 1's and 0's
+	 * @author Daleth
+	 */
+	public static String textToBin(String in) {
+		String ret = "";
+		for (byte b : in.getBytes(StandardCharsets.UTF_8)) {
+			ret += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
+		}
+		return ret;
 	}
 }
