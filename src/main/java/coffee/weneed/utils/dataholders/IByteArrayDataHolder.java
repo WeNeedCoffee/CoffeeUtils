@@ -11,12 +11,12 @@ public interface IByteArrayDataHolder {
 	 *
 	 * @param b the b
 	 */
-	public void fromByteArray(byte[] b);
+	void fromByteArray(byte[] b);
 
 	/**
 	 * To byte array.
 	 *
 	 * @return the byte[]
 	 */
-	public byte[] toByteArray();
+	byte[] toByteArray();
 }

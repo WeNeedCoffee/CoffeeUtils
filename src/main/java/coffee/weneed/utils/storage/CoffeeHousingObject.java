@@ -28,8 +28,12 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		super(parent);
 	}
 
-	/* (non-Javadoc)
-	 * @see coffee.weneed.utils.storage.ACoffeeHousingNode#deserialize(coffee.weneed.utils.io.CoffeeAccessor)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * coffee.weneed.utils.storage.ACoffeeHousingNode#deserialize(coffee.weneed.
+	 * utils.io.CoffeeAccessor)
 	 */
 	@Override
 	protected void deserialize(CoffeeAccessor ca) {
@@ -78,26 +82,29 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			String k = ca.readString();
 			ACoffeeHousingNode node = null;
 			switch (ca.readByte()) {
-				case (byte) 0x12: {
-					node = new CoffeeHousingObject(this);
-					node.deserialize(ca);
-					node.parent = this;
-					items.put(k, node);
-					break;
-				}
-				case (byte) 0x13: {
-					node = new CoffeeHousingList(this);
-					node.deserialize(ca);
-					node.parent = this;
-					items.put(k, node);
-					break;
-				}
+			case (byte) 0x12: {
+				node = new CoffeeHousingObject(this);
+				node.deserialize(ca);
+				node.parent = this;
+				items.put(k, node);
+				break;
+			}
+			case (byte) 0x13: {
+				node = new CoffeeHousingList(this);
+				node.deserialize(ca);
+				node.parent = this;
+				items.put(k, node);
+				break;
+			}
 			}
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[])
 	 */
 	@Override
 	public void fromByteArray(byte[] in) {
@@ -108,8 +115,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		ca.readByte();
 	}
 
-	/* (non-Javadoc)
-	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.
+	 * JSONObject)
 	 */
 	@Override
 	public void fromJSON(JSONObject json) {
@@ -117,8 +127,12 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.io.CoffeeWriter)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.
+	 * io.CoffeeWriter)
 	 */
 	@Override
 	protected void serialize(CoffeeWriter cw) {
@@ -227,15 +241,18 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * @param o the o
 	 */
 	public void setObject(String k, Object o) {
-		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double
-				|| o instanceof Short || o instanceof Character || o instanceof String || o instanceof ACoffeeHousingNode) {
+		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float
+				|| o instanceof Double || o instanceof Short || o instanceof Character || o instanceof String
+				|| o instanceof ACoffeeHousingNode) {
 			items.put(k, o);
 		} else {
 			// throw something
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see coffee.weneed.utils.dataholders.IByteArrayDataHolder#toByteArray()
 	 */
 	@Override
@@ -247,7 +264,9 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		return lew.getByteArray();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#toJSON()
 	 */
 	@Override

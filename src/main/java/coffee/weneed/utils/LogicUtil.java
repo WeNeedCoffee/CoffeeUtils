@@ -58,7 +58,7 @@ public class LogicUtil {
 	}
 
 	/**
-	 *  http://stackoverflow.com/questions/31582524/how-to-check-multiple-objects-for-nullity
+	 * http://stackoverflow.com/questions/31582524/how-to-check-multiple-objects-for-nullity
 	 *
 	 * @author StackOverflow:kamwo
 	 * @param objects the objects

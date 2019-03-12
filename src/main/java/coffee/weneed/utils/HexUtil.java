@@ -12,7 +12,8 @@ import java.io.ByteArrayOutputStream;
 public class HexUtil {
 
 	/** The Constant HEX. */
-	private static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	private static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+			'F' };
 
 	public static String bytesToHex(byte[] bytes) {
 		final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -109,7 +110,8 @@ public class HexUtil {
 	 * @return the opcode to string
 	 */
 	public static String getOpcodeToString(int op) {
-		return new StringBuilder().append("0x").append(StringUtil.getLeftPaddedStr(Integer.toHexString(op).toUpperCase(), '0', 4)).toString();
+		return new StringBuilder().append("0x")
+				.append(StringUtil.getLeftPaddedStr(Integer.toHexString(op).toUpperCase(), '0', 4)).toString();
 	}
 
 	/**

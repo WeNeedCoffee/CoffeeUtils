@@ -2,9 +2,9 @@ package coffee.weneed.utils.events;
 
 public interface IEvent {
 
-	public void cancel();
+	void cancel();
 
-	public int getType();
+	int getType();
 
-	public boolean isCancelled();
+	boolean isCancelled();
 }

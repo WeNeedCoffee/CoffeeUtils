@@ -13,7 +13,7 @@ public interface ICoded extends IByteArrayDataHolder {
 	 *
 	 * @param b the b
 	 */
-	public default void decode(byte[] b) {
+	default void decode(byte[] b) {
 		fromByteArray(getCodingProcess().decode(b));
 	}
 
@@ -22,7 +22,7 @@ public interface ICoded extends IByteArrayDataHolder {
 	 *
 	 * @return the byte[]
 	 */
-	public default byte[] encode() {
+	default byte[] encode() {
 		return getCodingProcess().encode(toByteArray());
 	}
 
@@ -31,6 +31,6 @@ public interface ICoded extends IByteArrayDataHolder {
 	 *
 	 * @return the coding process
 	 */
-	public CodingProcess getCodingProcess();
+	CodingProcess getCodingProcess();
 
 }

@@ -70,7 +70,9 @@ public class CoffeeWriter {
 		this.baos = baos;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

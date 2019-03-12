@@ -25,11 +25,13 @@ public class TimeUtil {
 	public static final int ONE_YEAR_MS = TimeUtil.ONE_DAY_MS * 365;
 
 	/**
-	 * Returns the elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 * Returns the elapsed days between <code>startMillis</code> and
+	 * <code>endMillis</code>.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
-	 * @return Elapsed days between <code>startMillis</code> and <code>endMillis</code>.
+	 * @param endMillis   the end millis
+	 * @return Elapsed days between <code>startMillis</code> and
+	 *         <code>endMillis</code>.
 	 */
 	public static int getDaysBetween(long startMillis, long endMillis) {
 		return TimeUtil.getHoursBetween(startMillis, endMillis) / 24;
@@ -39,7 +41,7 @@ public class TimeUtil {
 	 * Gets the hours between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the hours between
 	 */
 	public static int getHoursBetween(long startMillis, long endMillis) {
@@ -50,7 +52,7 @@ public class TimeUtil {
 	 * Gets the millis between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the millis between
 	 */
 	public static long getMillisBetween(long startMillis, long endMillis) {
@@ -61,7 +63,7 @@ public class TimeUtil {
 	 * Gets the minutes between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the minutes between
 	 */
 	public static int getMinutesBetween(long startMillis, long endMillis) {
@@ -69,10 +71,13 @@ public class TimeUtil {
 	}
 
 	/**
-	 * Creates a human readable string based on the time elapsed between <code>startMillis</code> and <code>endMillis</code>.
+	 * Creates a human readable string based on the time elapsed between
+	 * <code>startMillis</code> and <code>endMillis</code>.
+	 * 
 	 * @param startMillis The start time.
-	 * @param endMillis The end time.
-	 * @return Readable string of the time between <code>startMillis</code> and <code>endMillis</code>.
+	 * @param endMillis   The end time.
+	 * @return Readable string of the time between <code>startMillis</code> and
+	 *         <code>endMillis</code>.
 	 */
 	public static final String getReadableMillis(long startMillis, long endMillis) {
 		StringBuilder sb = new StringBuilder();
@@ -146,13 +151,15 @@ public class TimeUtil {
 	 * Gets the rounded days between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the rounded days between
 	 */
 	public static int getRoundedDaysBetween(long startMillis, long endMillis) {
 		return TimeUtil.getDaysBetween(startMillis, endMillis) % 24 > 11
-				? TimeUtil.getDaysBetween(startMillis, endMillis) + 24 - TimeUtil.getDaysBetween(startMillis, endMillis) % 24
-				: TimeUtil.getDaysBetween(startMillis, endMillis) - TimeUtil.getDaysBetween(startMillis, endMillis) % 24;
+				? TimeUtil.getDaysBetween(startMillis, endMillis) + 24
+						- TimeUtil.getDaysBetween(startMillis, endMillis) % 24
+				: TimeUtil.getDaysBetween(startMillis, endMillis)
+						- TimeUtil.getDaysBetween(startMillis, endMillis) % 24;
 
 	}
 
@@ -160,46 +167,52 @@ public class TimeUtil {
 	 * Gets the rounded hours between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the rounded hours between
 	 */
 	public static int getRoundedHoursBetween(long startMillis, long endMillis) {
 		return TimeUtil.getHoursBetween(startMillis, endMillis) % 60 > 29
-				? TimeUtil.getHoursBetween(startMillis, endMillis) + 60 - TimeUtil.getHoursBetween(startMillis, endMillis) % 60
-				: TimeUtil.getHoursBetween(startMillis, endMillis) - TimeUtil.getHoursBetween(startMillis, endMillis) % 60;
+				? TimeUtil.getHoursBetween(startMillis, endMillis) + 60
+						- TimeUtil.getHoursBetween(startMillis, endMillis) % 60
+				: TimeUtil.getHoursBetween(startMillis, endMillis)
+						- TimeUtil.getHoursBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
 	 * Gets the rounded minutes between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the rounded minutes between
 	 */
 	public static int getRoundedMinutesBetween(long startMillis, long endMillis) {
 		return TimeUtil.getMinutesBetween(startMillis, endMillis) % 60 > 29
-				? TimeUtil.getMinutesBetween(startMillis, endMillis) + 60 - TimeUtil.getMinutesBetween(startMillis, endMillis) % 60
-				: TimeUtil.getMinutesBetween(startMillis, endMillis) - TimeUtil.getMinutesBetween(startMillis, endMillis) % 60;
+				? TimeUtil.getMinutesBetween(startMillis, endMillis) + 60
+						- TimeUtil.getMinutesBetween(startMillis, endMillis) % 60
+				: TimeUtil.getMinutesBetween(startMillis, endMillis)
+						- TimeUtil.getMinutesBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
 	 * Gets the rounded seconds between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the rounded seconds between
 	 */
 	public static int getRoundedSecondsBetween(long startMillis, long endMillis) {
 		return TimeUtil.getSecondsBetween(startMillis, endMillis) % 60 > 29
-				? TimeUtil.getSecondsBetween(startMillis, endMillis) + 60 - TimeUtil.getSecondsBetween(startMillis, endMillis) % 60
-				: TimeUtil.getSecondsBetween(startMillis, endMillis) - TimeUtil.getSecondsBetween(startMillis, endMillis) % 60;
+				? TimeUtil.getSecondsBetween(startMillis, endMillis) + 60
+						- TimeUtil.getSecondsBetween(startMillis, endMillis) % 60
+				: TimeUtil.getSecondsBetween(startMillis, endMillis)
+						- TimeUtil.getSecondsBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
 	 * Gets the seconds between.
 	 *
 	 * @param startMillis the start millis
-	 * @param endMillis the end millis
+	 * @param endMillis   the end millis
 	 * @return the seconds between
 	 */
 	public static int getSecondsBetween(long startMillis, long endMillis) {
@@ -218,7 +231,7 @@ public class TimeUtil {
 	/**
 	 * Checks if is after.
 	 *
-	 * @param after the after
+	 * @param after  the after
 	 * @param before the before
 	 * @return true, if is after
 	 */

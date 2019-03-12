@@ -2,3 +2,6 @@
 /target/
 /.settings/
 /doc/
+/ips_in.txt
+/ips_reachable.txt
+/ips_unreachable.txt

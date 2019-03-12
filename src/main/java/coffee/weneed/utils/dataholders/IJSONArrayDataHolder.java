@@ -13,13 +13,13 @@ public interface IJSONArrayDataHolder {
 	 *
 	 * @param json the json
 	 */
-	public void fromJSON(JSONArray json);
+	void fromJSON(JSONArray json);
 
 	/**
 	 * To JSON.
 	 *
 	 * @return the JSON array
 	 */
-	public JSONArray toJSON();
+	JSONArray toJSON();
 
 }

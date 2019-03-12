@@ -13,12 +13,12 @@ public interface IJSONObjectDataHolder {
 	 *
 	 * @param json the json
 	 */
-	public void fromJSON(JSONObject json);
+	void fromJSON(JSONObject json);
 
 	/**
 	 * To JSON.
 	 *
 	 * @return the JSON object
 	 */
-	public JSONObject toJSON();
+	JSONObject toJSON();
 }

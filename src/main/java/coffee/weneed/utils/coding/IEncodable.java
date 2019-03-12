@@ -12,5 +12,5 @@ public interface IEncodable {
 	 * @param input the input
 	 * @return the byte[]
 	 */
-	public byte[] encode(byte[] input);
+	byte[] encode(byte[] input);
 }

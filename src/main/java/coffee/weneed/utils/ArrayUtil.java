@@ -10,7 +10,7 @@ public class ArrayUtil {
 
 	/**
 	 * https://github.com/haha01haha01/MapleLib/blob/master/WzLib/Util/WzTool.cs
-	 *  Creates an array with b appended to the end of a.
+	 * Creates an array with b appended to the end of a.
 	 *
 	 * @author C#: Snow, haha01haha01
 	 * @author Java: Dalethium
@@ -30,7 +30,7 @@ public class ArrayUtil {
 	 * https://stackoverflow.com/questions/10766492/what-is-the-simplest-way-to-reverse-an-arraylist
 	 *
 	 * @author StackOverflow:naomimyselfandi
-	 * @param <T> the generic type
+	 * @param      <T> the generic type
 	 * @param list the list
 	 * @return reversed list
 	 */
@@ -41,7 +41,9 @@ public class ArrayUtil {
 	}
 
 	/***
-	 * Sorts a array by the default arrays.sort and removes duplicate entries from the array.
+	 * Sorts a array by the default arrays.sort and removes duplicate entries from
+	 * the array.
+	 * 
 	 * @param input
 	 * @return sorted list
 	 */
@@ -59,8 +61,7 @@ public class ArrayUtil {
 	/**
 	 * Splice
 	 *
-	 * @author Dalethium
-	 * Removes the given item from a array.
+	 * @author Dalethium Removes the given item from a array.
 	 * @param arr An array to modify.
 	 * @return The inputed array minus the given item.
 	 */
@@ -74,8 +75,7 @@ public class ArrayUtil {
 	/**
 	 * Splice first.
 	 *
-	 * @author Dalethium
-	 * Removes the first item from a array.
+	 * @author Dalethium Removes the first item from a array.
 	 * @param arr An array to modify.
 	 * @return The inputed array minus the first item.
 	 */
@@ -108,7 +108,7 @@ public class ArrayUtil {
 
 	/**
 	 * https://stackoverflow.com/questions/6522284/convert-a-generic-list-to-an-array
-	 * 
+	 *
 	 * @author StackOverflow:atreys
 	 * @param list
 	 * @return array

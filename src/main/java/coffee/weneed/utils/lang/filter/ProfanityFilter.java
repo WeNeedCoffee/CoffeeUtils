@@ -36,7 +36,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		// TODO load from file
 		// TODO determine if more than 3 chars significantly affects speed
 		ProfanityFilter.leets.put(StringUtil.getChar("a"), new String[] { "@", "4", "/\\", "/-\\", "/_\\" });
-		ProfanityFilter.leets.put(StringUtil.getChar("b"), new String[] { "13", "18", "l3", "8", "|:", "|8", "|b", "lo", "|o", "|3" });
+		ProfanityFilter.leets.put(StringUtil.getChar("b"),
+				new String[] { "13", "18", "l3", "8", "|:", "|8", "|b", "lo", "|o", "|3" });
 		ProfanityFilter.leets.put(StringUtil.getChar("c"), new String[] { "k", "s", "<", "(", "[", "{" });
 		ProfanityFilter.leets.put(StringUtil.getChar("d"), new String[] { "|)", "o|", "|>", "<|", "|}", "|]" });
 		ProfanityFilter.leets.put(StringUtil.getChar("e"), new String[] { "3" });
@@ -49,8 +50,10 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		ProfanityFilter.leets.put(StringUtil.getChar("n"), new String[] { "|\\|", "/\\/", "/V" });
 		ProfanityFilter.leets.put(StringUtil.getChar("m"), new String[] { "/\\/\\", "|\\/|", "|\\/|", "|V|", "/V\\" });
 		ProfanityFilter.leets.put(StringUtil.getChar("s"), new String[] { "c", "5", "$", "z" });
-		ProfanityFilter.leets.put(StringUtil.getChar("u"), new String[] { "v", "|_|", "L|", "\\/", "\\_/", "\\_\\", "/_/" });
-		ProfanityFilter.leets.put(StringUtil.getChar("w"), new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
+		ProfanityFilter.leets.put(StringUtil.getChar("u"),
+				new String[] { "v", "|_|", "L|", "\\/", "\\_/", "\\_\\", "/_/" });
+		ProfanityFilter.leets.put(StringUtil.getChar("w"),
+				new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
 		ProfanityFilter.leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
 		ProfanityFilter.leets.put(StringUtil.getChar("z"), new String[] { "s" });
 		// TODO be able to register ks as x as well as x as ks
@@ -99,7 +102,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * Instantiates a new profanity filter.
 	 *
 	 * @param ascii the ascii
-	 * @param url the url
+	 * @param url   the url
 	 */
 	public ProfanityFilter(boolean ascii, URL tree) {
 		fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(tree))));
@@ -109,9 +112,9 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Adds the to tree.
 	 *
-	 * @param badWordLine the bad word line
-	 * @param characterIndex            : index of each letter in a bad word
-	 * @param node            that iterates through the tree
+	 * @param badWordLine    the bad word line
+	 * @param characterIndex : index of each letter in a bad word
+	 * @param node           that iterates through the tree
 	 */
 	private void addToTree(String badWordLine, int characterIndex, TreeNode node) {
 		if (characterIndex < badWordLine.length()) {
@@ -279,7 +282,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * Identify the letters of userInput that should be marked as "*".
 	 *
 	 * @param badWordStart the bad word start
-	 * @param badWordEnd the bad word end
+	 * @param badWordEnd   the bad word end
 	 */
 	private void markAsterisk(int badWordStart, int badWordEnd) {
 		for (int i = badWordStart; i <= badWordEnd; i++) {
@@ -290,11 +293,11 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Search.
 	 *
-	 * @param input the user input
+	 * @param input          the user input
 	 * @param characterIndex the character index
-	 * @param node the node
-	 * @param update the update
-	 * @param recur the recur
+	 * @param node           the node
+	 * @param update         the update
+	 * @param recur          the recur
 	 * @return true, if successful
 	 */
 	private boolean search(String input, int characterIndex, TreeNode node, boolean update) {
@@ -313,21 +316,21 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Search along tree.
 	 *
-	 * @param input the user input
+	 * @param input          the user input
 	 * @param characterIndex the character index
-	 * @param node the node
+	 * @param node           the node
 	 */
 	private void searchAlongTree(String input, int characterIndex, TreeNode node) {
 		if (characterIndex < input.length()) {
 			Character letter = input.charAt(characterIndex);
 			if (search(input, characterIndex, node, true)) {
 				return;
-			} /*else if (characterIndex + 1 < input.length() && characterIndex - 1 >= 0) {
-				if (letter.equals(input.charAt(characterIndex - 1)) || letter.equals(input.charAt(characterIndex + 1))) {
-					searchAlongTree(input, characterIndex + 1, node);
-					return;
-				}
-				}*/
+			} /*
+				 * else if (characterIndex + 1 < input.length() && characterIndex - 1 >= 0) { if
+				 * (letter.equals(input.charAt(characterIndex - 1)) ||
+				 * letter.equals(input.charAt(characterIndex + 1))) { searchAlongTree(input,
+				 * characterIndex + 1, node); return; } }
+				 */
 			if (!node.isEnd()) {
 				if (Character.toString(letter).matches("[\\W_]")) {
 					searchAlongTree(input, characterIndex + 1, node);
@@ -343,15 +346,16 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Search leet.
 	 *
-	 * @param input the user input
+	 * @param input          the user input
 	 * @param characterIndex the character index
-	 * @param node the node
-	 * @param update the update
+	 * @param node           the node
+	 * @param update         the update
 	 * @return true, if successful
 	 */
 	private boolean searchLeet(String input, int characterIndex, TreeNode node, boolean update) {
 		String sub = StringUtil.substr(input, characterIndex, input.length());
-		for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet() : ProfanityFilter.leets.entrySet()) {
+		for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet()
+				: ProfanityFilter.leets.entrySet()) {
 			Character c = entry.getKey();
 			if (!node.containsChild(c)) {
 				continue;
@@ -381,7 +385,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * Identify the letters of userInput that should be marked as "*".
 	 *
 	 * @param badWordStart the bad word start
-	 * @param badWordEnd the bad word end
+	 * @param badWordEnd   the bad word end
 	 */
 	private void unmarkAsterisk(int whitelistStart, int whitelistEnd) {
 		for (int i = whitelistStart; i <= whitelistEnd; i++) {
@@ -411,11 +415,11 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Update node.
 	 *
-	 * @param ch the ch
-	 * @param input the user input
+	 * @param ch             the ch
+	 * @param input          the user input
 	 * @param characterIndex the character index
-	 * @param node the node
-	 * @param toSkip the to skip
+	 * @param node           the node
+	 * @param toSkip         the to skip
 	 */
 	private void updateNode(Character ch, String input, int characterIndex, TreeNode node, int toSkip) {
 		if (isSuspicionFound == false) {
@@ -423,7 +427,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < input.length() && ch.equals(input.charAt(characterIndex + 1))) {
+			if (characterIndex > 0 && characterIndex + 1 < input.length()
+					&& ch.equals(input.charAt(characterIndex + 1))) {
 				searchAlongTree(input, characterIndex + 1, node);
 				return;
 			}

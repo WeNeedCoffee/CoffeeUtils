@@ -77,7 +77,9 @@ public class ByteArrayByteStream {
 		pos = (int) offset;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

@@ -10,7 +10,9 @@ import coffee.weneed.utils.coding.CodingStep;
  */
 public class Base64Step implements CodingStep {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see coffee.weneed.utils.crypt.IDecodable#decode(byte[])
 	 */
 	@Override
@@ -18,7 +20,9 @@ public class Base64Step implements CodingStep {
 		return Base64.getDecoder().decode(input);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see coffee.weneed.utils.crypt.IEncodable#encode(byte[])
 	 */
 	@Override

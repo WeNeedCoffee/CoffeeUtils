@@ -98,7 +98,9 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return new TreeNode(this, letter);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see coffee.weneed.utils.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
 	 */
 	@Override
@@ -212,7 +214,9 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see coffee.weneed.utils.IJSONObjectDataHolder#toJSON()
 	 */
 	@Override

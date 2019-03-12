@@ -10,11 +10,12 @@ import java.util.Set;
 // TODO: Auto-generated Javadoc
 /**
  * MultiKeyHashMap provides to store values with two level hierarchy of keys,
- * super key (K1) and sub key (K2). The objects are inserted using super and sub keys.
- * It is not mandatory to use both keys as hierarchy, user can use two keys to store
- * the values and use either of the key to retrieve it.
- * 
- * Original taken from  https://gist.github.com/prathabk/1587699 by Prathab K @ https://github.com/prathabk
+ * super key (K1) and sub key (K2). The objects are inserted using super and sub
+ * keys. It is not mandatory to use both keys as hierarchy, user can use two
+ * keys to store the values and use either of the key to retrieve it.
+ *
+ * Original taken from https://gist.github.com/prathabk/1587699 by Prathab K @
+ * https://github.com/prathabk
  *
  * @author Prathab K, Dalethium
  * @param <K1> the generic type
@@ -23,11 +24,11 @@ import java.util.Set;
  */
 public class MultiKeyMap<K1, K2, V> {
 
-	/**  Map structure holding another Map structure to implement MultiKeyHashMap. */
+	/** Map structure holding another Map structure to implement MultiKeyHashMap. */
 	private Map<K1, Map<K2, V>> mkMap;
 
 	/**
-	 *  Initializes the MultiKeyHashMap.
+	 * Initializes the MultiKeyHashMap.
 	 */
 	public MultiKeyMap() {
 		mkMap = new HashMap<>();
@@ -44,7 +45,8 @@ public class MultiKeyMap<K1, K2, V> {
 	}
 
 	/**
-	 * Returns <tt>true</tt> if value object is present for the specified (super)key K1.
+	 * Returns <tt>true</tt> if value object is present for the specified (super)key
+	 * K1.
 	 *
 	 * @param k1 key1 (super-key)
 	 * @return <tt>true</tt> if value object present
@@ -54,7 +56,8 @@ public class MultiKeyMap<K1, K2, V> {
 	}
 
 	/**
-	 * Returns <tt>true</tt> if value object is present for the specified (super)key K1 and (sub)key K2.
+	 * Returns <tt>true</tt> if value object is present for the specified (super)key
+	 * K1 and (sub)key K2.
 	 *
 	 * @param k1 key1 (super-key)
 	 * @param k2 key2 (sub-key)
@@ -81,8 +84,8 @@ public class MultiKeyMap<K1, K2, V> {
 	 * Gets the value object for the specified (super)key K1.
 	 *
 	 * @param k1 key1 (super-key)
-	 * @return HashMap structure contains the values for the key k1 if exists
-	 *         or <tt>null</tt> if does not exists
+	 * @return HashMap structure contains the values for the key k1 if exists or
+	 *         <tt>null</tt> if does not exists
 	 */
 	public Map<K2, V> get(K1 k1) {
 		return mkMap.get(k1);
@@ -138,9 +141,9 @@ public class MultiKeyMap<K1, K2, V> {
 	 *
 	 * @param k1 key1 (super-key)
 	 * @param k2 key2 (sub-key)
-	 * @param v value object
-	 * @return previous value associated with specified key, or <tt>null</tt>
-	 *         if there was no mapping for key.
+	 * @param v  value object
+	 * @return previous value associated with specified key, or <tt>null</tt> if
+	 *         there was no mapping for key.
 	 */
 	public V put(K1 k1, K2 k2, V v) {
 		Map<K2, V> k2Map = null;
@@ -196,8 +199,8 @@ public class MultiKeyMap<K1, K2, V> {
 	 *
 	 * @param k1 key1 (super-key)
 	 * @param k2 key2 (sub-key)
-	 * @return previous value associated with specified key, or <tt>null</tt>
-	 *         if there was no mapping for key.
+	 * @return previous value associated with specified key, or <tt>null</tt> if
+	 *         there was no mapping for key.
 	 */
 	public V remove(K1 k1, K2 k2) {
 		if (mkMap.containsKey(k1)) {

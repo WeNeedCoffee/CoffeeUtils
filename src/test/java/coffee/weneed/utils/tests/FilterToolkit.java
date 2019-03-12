@@ -92,7 +92,11 @@ public class FilterToolkit implements KeyListener {
 	public FilterToolkit() {
 		try {
 			FilterToolkit.filter = new ProfanityFilter(true,
-					/*new URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?" + System.currentTimeMillis())*/
+					/*
+					 * new URL(
+					 * "https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?"
+					 * + System.currentTimeMillis())
+					 */
 					new File("./tree.json").toURI().toURL());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -189,7 +193,9 @@ public class FilterToolkit implements KeyListener {
 		save();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
 	@Override
@@ -198,7 +204,9 @@ public class FilterToolkit implements KeyListener {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	 */
 	@Override
@@ -225,7 +233,9 @@ public class FilterToolkit implements KeyListener {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
 	 */
 	@Override
