@@ -19,7 +19,7 @@ public class StringUtil {
 
 	/***
 	 * Convert a string of 1's and 0's to a string of UTF-8 text
-	 * 
+	 *
 	 * @param s string of 1's and 0's
 	 * @return decoded string
 	 * @author Daleth
@@ -75,7 +75,7 @@ public class StringUtil {
 
 	/***
 	 * Explode a string into a list of smaller strings of a given size
-	 * 
+	 *
 	 * @author Daleth
 	 * @param in        String to explode
 	 * @param chunksize size of chunks
@@ -244,7 +244,7 @@ public class StringUtil {
 
 	/**
 	 * Normalizes <code>string</code> by removing all non ascii characters.
-	 * 
+	 *
 	 * @param string The string to normalize.
 	 * @return Normalized ascii string.
 	 */
@@ -295,7 +295,7 @@ public class StringUtil {
 
 	/***
 	 * Convert a UTF-8 String to a string of 1's and 0's
-	 * 
+	 *
 	 * @param in string to encode
 	 * @return string of 1's and 0's
 	 * @author Daleth

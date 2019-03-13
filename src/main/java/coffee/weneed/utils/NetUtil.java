@@ -8,7 +8,7 @@ public class NetUtil {
 
 	/***
 	 * https://stackoverflow.com/a/34228756
-	 * 
+	 *
 	 * @author https://stackoverflow.com/users/3368518/sourabh-bhat
 	 * @param addr
 	 * @param openPort

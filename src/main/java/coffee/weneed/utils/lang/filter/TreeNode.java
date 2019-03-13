@@ -100,7 +100,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see coffee.weneed.utils.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
 	 */
 	@Override
@@ -216,7 +216,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see coffee.weneed.utils.IJSONObjectDataHolder#toJSON()
 	 */
 	@Override

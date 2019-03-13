@@ -34,7 +34,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#add(int, java.lang.Object)
 	 */
 	@Override
@@ -44,7 +44,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#add(java.lang.Object)
 	 */
 	@Override
@@ -54,7 +54,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#addAll(java.util.Collection)
 	 */
 	@Override
@@ -64,7 +64,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#addAll(int, java.util.Collection)
 	 */
 	@Override
@@ -74,7 +74,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#clear()
 	 */
 	@Override
@@ -84,7 +84,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#contains(java.lang.Object)
 	 */
 	@Override
@@ -94,7 +94,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#containsAll(java.util.Collection)
 	 */
 	@Override
@@ -104,7 +104,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * coffee.weneed.utils.storage.ACoffeeHousingNode#deserialize(coffee.weneed.
 	 * utils.io.CoffeeAccessor)
@@ -117,7 +117,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[])
 	 */
@@ -129,7 +129,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.
 	 * JSONObject)
 	 */
@@ -141,7 +141,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#get(int)
 	 */
 	@Override
@@ -151,7 +151,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#indexOf(java.lang.Object)
 	 */
 	@Override
@@ -161,7 +161,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#isEmpty()
 	 */
 	@Override
@@ -171,7 +171,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#iterator()
 	 */
 	@Override
@@ -181,7 +181,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#lastIndexOf(java.lang.Object)
 	 */
 	@Override
@@ -191,7 +191,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#listIterator()
 	 */
 	@Override
@@ -201,7 +201,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#listIterator(int)
 	 */
 	@Override
@@ -211,7 +211,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#remove(int)
 	 */
 	@Override
@@ -221,7 +221,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#remove(java.lang.Object)
 	 */
 	@Override
@@ -231,7 +231,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#removeAll(java.util.Collection)
 	 */
 	@Override
@@ -241,7 +241,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#retainAll(java.util.Collection)
 	 */
 	@Override
@@ -251,7 +251,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.
 	 * io.CoffeeWriter)
@@ -264,7 +264,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#set(int, java.lang.Object)
 	 */
 	@Override
@@ -274,7 +274,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#size()
 	 */
 	@Override
@@ -284,7 +284,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#subList(int, int)
 	 */
 	@Override
@@ -294,7 +294,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#toArray()
 	 */
 	@Override
@@ -304,7 +304,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.List#toArray(java.lang.Object[])
 	 */
 	@Override
@@ -314,7 +314,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see coffee.weneed.utils.dataholders.IByteArrayDataHolder#toByteArray()
 	 */
 	@Override
@@ -324,7 +324,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#toJSON()
 	 */
 	@Override

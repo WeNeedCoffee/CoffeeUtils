@@ -188,7 +188,7 @@ public class CoffeeAccessor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

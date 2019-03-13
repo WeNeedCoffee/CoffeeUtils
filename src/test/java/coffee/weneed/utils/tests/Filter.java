@@ -71,11 +71,11 @@ public class Filter {
 		 * for (String s : new String(LogicUtil.downloadUrl(new
 		 * File("./badwords.txt").toURI().toURL())).split("\\n")) {
 		 * Filter.filter.blacklistWord(s); }
-		 * 
+		 *
 		 * for (String s : new String(LogicUtil.downloadUrl(new
 		 * File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
 		 * Filter.filter.whitelistWord(s); }
-		 * 
+		 *
 		 * Filter.save();
 		 */
 

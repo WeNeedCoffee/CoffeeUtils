@@ -238,7 +238,7 @@ public class BCrypt {
 	/**
 	 * Decode a string encoded using bcrypt's base64 scheme to a byte array. Note
 	 * that this is *not* compatible with the standard MIME-base64 encoding.
-	 * 
+	 *
 	 * @param s       the string to decode
 	 * @param maxolen the maximum number of bytes to decode
 	 * @return an array containing the decoded bytes
@@ -335,7 +335,7 @@ public class BCrypt {
 	/**
 	 * Generate a salt for use with the BCrypt.hashpw() method, selecting a
 	 * reasonable default for the number of hashing rounds to apply
-	 * 
+	 *
 	 * @return an encoded salt value
 	 */
 	public static String gensalt() {
@@ -344,7 +344,7 @@ public class BCrypt {
 
 	/**
 	 * Generate a salt for use with the BCrypt.hashpw() method
-	 * 
+	 *
 	 * @param log_rounds the log2 of the number of rounds of hashing to apply - the
 	 *                   work factor therefore increases as 2**log_rounds.
 	 * @return an encoded salt value
@@ -355,7 +355,7 @@ public class BCrypt {
 
 	/**
 	 * Generate a salt for use with the BCrypt.hashpw() method
-	 * 
+	 *
 	 * @param log_rounds the log2 of the number of rounds of hashing to apply - the
 	 *                   work factor therefore increases as 2**log_rounds.
 	 * @param random     an instance of SecureRandom to use
@@ -517,7 +517,7 @@ public class BCrypt {
 	 * Perform the "enhanced key schedule" step described by Provos and Mazieres in
 	 * "A Future-Adaptable Password Scheme"
 	 * http://www.openbsd.org/papers/bcrypt-paper.ps
-	 * 
+	 *
 	 * @param data salt information
 	 * @param key  password information
 	 */

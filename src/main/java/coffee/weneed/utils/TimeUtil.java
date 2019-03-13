@@ -73,7 +73,7 @@ public class TimeUtil {
 	/**
 	 * Creates a human readable string based on the time elapsed between
 	 * <code>startMillis</code> and <code>endMillis</code>.
-	 * 
+	 *
 	 * @param startMillis The start time.
 	 * @param endMillis   The end time.
 	 * @return Readable string of the time between <code>startMillis</code> and

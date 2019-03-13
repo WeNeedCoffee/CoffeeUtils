@@ -2,7 +2,7 @@ package coffee.weneed.utils.gaming;
 
 /**
  * Basic level curve class
- * 
+ *
  * @author Dalethium Some content is derived from RuneScape.
  */
 public class ExpCurve {

@@ -12,7 +12,7 @@ public class Base64Step implements CodingStep {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see coffee.weneed.utils.crypt.IDecodable#decode(byte[])
 	 */
 	@Override
@@ -22,7 +22,7 @@ public class Base64Step implements CodingStep {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see coffee.weneed.utils.crypt.IEncodable#encode(byte[])
 	 */
 	@Override

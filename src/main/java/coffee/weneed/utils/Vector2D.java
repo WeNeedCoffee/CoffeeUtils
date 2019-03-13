@@ -3,7 +3,7 @@ package coffee.weneed.utils;
 // TODO: Auto-generated Javadoc
 /**
  * A utility class for handling 2 dimensional coordinates.
- * 
+ *
  * @author Dalethium
  *
  */
