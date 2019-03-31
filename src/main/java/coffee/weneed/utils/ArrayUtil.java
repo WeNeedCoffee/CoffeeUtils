@@ -3,6 +3,7 @@ package coffee.weneed.utils;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,6 +41,17 @@ public class ArrayUtil {
 		return result;
 	}
 
+	/**
+	 * https://stackoverflow.com/questions/740299/how-do-i-sort-a-set-to-a-list-in-java
+	 * @param c
+	 * @return
+	 */
+	public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+	  List<T> list = new ArrayList<T>(c);
+	  java.util.Collections.sort(list);
+	  return list;
+	}
+	
 	/***
 	 * Sorts a array by the default arrays.sort and removes duplicate entries from
 	 * the array.
