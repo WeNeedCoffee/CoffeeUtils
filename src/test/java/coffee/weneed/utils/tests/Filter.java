@@ -24,8 +24,14 @@ public class Filter {
 	static String test = "Fucky me is so F_  . _ u CCky! fuck! FuCk! FFFUCK! F _UCK! FUUUCCCCKK!! FUCKIFY I KEEP MY FUCC! F U C K! F__U   C.K";
 
 	public static void fixList(String file) throws MalformedURLException {
-		List<String> s = ArrayUtil
-				.sortList(new String(LogicUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
+		List<String> s = null;
+		try {
+			s = ArrayUtil
+					.sortList(new String(LogicUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuilder sb = new StringBuilder();
 		for (String ssss : s) {
 			sb.append(ssss);

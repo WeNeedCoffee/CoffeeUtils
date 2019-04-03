@@ -15,8 +15,14 @@ import coffee.weneed.utils.NetUtil;
 public class PingTest {
 
 	public static void fixList(String file) throws MalformedURLException {
-		List<String> s = ArrayUtil
-				.sortList(new String(LogicUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
+		List<String> s = null;
+		try {
+			s = ArrayUtil
+					.sortList(new String(LogicUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		StringBuilder sb = new StringBuilder();
 		for (String ssss : s) {
 			sb.append(ssss);
@@ -71,8 +77,14 @@ public class PingTest {
 	 */
 	public static void main(String[] args) throws MalformedURLException {
 		fixList("ips_in.txt");
-		List<String> ips = ArrayUtil.sortList(
-				new String(LogicUtil.downloadUrl(new File("./" + "ips_in.txt").toURI().toURL())).split("\\n"));
+		List<String> ips = null;
+		try {
+			ips = ArrayUtil.sortList(
+					new String(LogicUtil.downloadUrl(new File("./" + "ips_in.txt").toURI().toURL())).split("\\n"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		List<String> reachable = new ArrayList<>();
 		List<String> unreachable = new ArrayList<>();
 		for (String s : ips) {

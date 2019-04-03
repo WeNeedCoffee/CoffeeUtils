@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import coffee.weneed.utils.LogicUtil;
@@ -105,7 +106,15 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param url   the url
 	 */
 	public ProfanityFilter(boolean ascii, URL tree) {
-		fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(tree))));
+		try {
+			fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(tree))));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.ascii = ascii;
 	}
 
