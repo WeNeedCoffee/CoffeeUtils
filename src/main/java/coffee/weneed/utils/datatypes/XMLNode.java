@@ -14,7 +14,7 @@ import org.xmlpull.v1.XmlPullParserException;
  */
 public class XMLNode {
 	private LinkedHashMap<String, String> attributes;
-	private List<XMLNode> children;
+	private List<XMLNode> nodes;
 	private String name;
 	private XMLNode parent;
 	private String text;
@@ -23,12 +23,12 @@ public class XMLNode {
 		this(name, null, null, null);
 	}
 
-	public XMLNode(String name, List<XMLNode> children) {
-		this(name, null, children, null);
+	public XMLNode(String name, List<XMLNode> nodes) {
+		this(name, null, nodes, null);
 	}
 
-	public XMLNode(String name, List<XMLNode> children, Map<String, String> attributes) {
-		this(name, null, children, attributes);
+	public XMLNode(String name, List<XMLNode> nodes, Map<String, String> attributes) {
+		this(name, null, nodes, attributes);
 	}
 
 	public XMLNode(String name, Map<String, String> attributes) {
@@ -39,14 +39,14 @@ public class XMLNode {
 		this(name, text, null, null);
 	}
 
-	public XMLNode(String name, String text, List<XMLNode> children) {
-		this(name, text, children, null);
+	public XMLNode(String name, String text, List<XMLNode> nodes) {
+		this(name, text, nodes, null);
 	}
 
-	private XMLNode(String name, String text, List<XMLNode> children, Map<String, String> attributes) {
+	private XMLNode(String name, String text, List<XMLNode> nodes, Map<String, String> attributes) {
 		this.name = name;
 		this.text = text;
-		this.children = children;
+		this.nodes = nodes;
 		this.attributes = attributes == null ? null : new LinkedHashMap<>(attributes);
 	}
 
@@ -83,11 +83,11 @@ public class XMLNode {
 		return this;
 	}
 
-	public XMLNode addChild(XMLNode node) {
-		if (children == null) {
-			children = new ArrayList<>();
+	public XMLNode addNode(XMLNode node) {
+		if (this.nodes == null) {
+			this.nodes = new ArrayList<>();
 		}
-		children.add(node);
+		this.nodes.add(node);
 		node.parent = this;
 		return this;
 	}
@@ -97,11 +97,11 @@ public class XMLNode {
 	}
 
 	public XMLNode addTextNode(String name, String text) {
-		return addChild(new XMLNode(name, text));
+		return addNode(new XMLNode(name, text));
 	}
 
-	public boolean containsChild(String name) {
-		return getFirstChildByName(name) != null;
+	public boolean containsNode(String name) {
+		return getFirstNodeByName(name) != null;
 	}
 
 	@Override
@@ -117,56 +117,44 @@ public class XMLNode {
 		return attributes;
 	}
 
-	public List<XMLNode> getChildren() {
-		return children;
+	public List<XMLNode> getNodes() {
+		return this.nodes;
 	}
 
-	public XMLNode[] getChildrensByName(String name) {
-		List<XMLNode> childrens = new ArrayList<>();
-		if (children == null) {
+	public XMLNode[] getNodesByName(String name) {
+		List<XMLNode> nodes = new ArrayList<>();
+		if (this.nodes == null) {
 			return null;
 		}
-		for (XMLNode child : children) {
-			if (child.name.equals(name)) {
-				childrens.add(child);
+		for (XMLNode node : this.nodes) {
+			if (node.name.equals(name)) {
+				nodes.add(node);
 			}
 		}
-		return childrens.toArray(new XMLNode[0]);
+		return nodes.toArray(new XMLNode[0]);
 	}
 
-	public XMLNode getFirstChildByAttribute(String key, String value) {
-		if (children == null) {
+	public XMLNode getFirstNodeByAttribute(String key, String value) {
+		if (this.nodes == null) {
 			return null;
 		}
-		for (XMLNode child : children) {
-			if (child.attributes != null) {
-				if (value.equals(child.attributes.get(key))) {
-					return child;
+		for (XMLNode node : this.nodes) {
+			if (node.attributes != null) {
+				if (value.equals(node.attributes.get(key))) {
+					return node;
 				}
 			}
 		}
 		return null;
 	}
 
-	public XMLNode getFirstChildByName(String name) {
-		if (children == null) {
+	public XMLNode getFirstNodeByName(String name) {
+		if (this.nodes == null) {
 			return null;
 		}
-		for (XMLNode child : children) {
-			if (child.name.equals(name)) {
-				return child;
-			}
-		}
-		return null;
-	}
-
-	public XMLNode getFirstChildByXmlns(String xmlns) {
-		if (children == null) {
-			return null;
-		}
-		for (XMLNode child : children) {
-			if (xmlns.equals(child.attributes.get("xmlns"))) {
-				return child;
+		for (XMLNode node : this.nodes) {
+			if (node.name.equals(name)) {
+				return node;
 			}
 		}
 		return null;
@@ -203,7 +191,7 @@ public class XMLNode {
 					childNode.addAttribute(parser.getAttributeName(i), parser.getAttributeValue(i));
 				}
 				if (Node != null) {
-					Node.addChild(childNode);
+					Node.addNode(childNode);
 				}
 				Node = childNode;
 				break;
@@ -237,12 +225,12 @@ public class XMLNode {
 		return this;
 	}
 
-	public XMLNode removeChild(XMLNode node) {
-		if (children != null) {
-			children.remove(node);
+	public XMLNode removeNode(XMLNode node) {
+		if (this.nodes != null) {
+			this.nodes.remove(node);
 			node.parent = null;
-			if (children.isEmpty()) {
-				children = null;
+			if (this.nodes.isEmpty()) {
+				this.nodes = null;
 			}
 		}
 		return this;
@@ -260,7 +248,7 @@ public class XMLNode {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("<");
-		if (text == null && children == null && attributes == null) {
+		if (text == null && this.nodes == null && attributes == null) {
 			return sb.append(name).append("/").append(">").toString();
 		}
 		sb.append(name);
@@ -271,10 +259,10 @@ public class XMLNode {
 		}
 		if (text != null) {
 			sb.append(">").append(text).append("</").append(name);
-		} else if (children != null) {
+		} else if (this.nodes != null) {
 			sb.append(">");
-			for (XMLNode child : children) {
-				sb.append(child);
+			for (XMLNode node : this.nodes) {
+				sb.append(node);
 			}
 			sb.append("</").append(name);
 		} else {
