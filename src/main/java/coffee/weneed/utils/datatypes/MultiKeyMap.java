@@ -1,4 +1,4 @@
-package coffee.weneed.utils;
+package coffee.weneed.utils.datatypes;
 
 import java.util.ArrayList;
 import java.util.HashMap;

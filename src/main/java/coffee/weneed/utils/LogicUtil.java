@@ -39,6 +39,10 @@ public class LogicUtil {
 		return mimeType;
 	}
 	
+	public static String getEnd(String file, String delimiter) {
+		String[] ss = file.split(delimiter);
+		return ss[ss.length - 1];
+	}
 	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
 	 *

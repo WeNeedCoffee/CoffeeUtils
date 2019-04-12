@@ -1,4 +1,6 @@
-package coffee.weneed.utils;
+package coffee.weneed.utils.datatypes;
+
+import coffee.weneed.utils.MathUtil;
 
 // TODO: Auto-generated Javadoc
 /**

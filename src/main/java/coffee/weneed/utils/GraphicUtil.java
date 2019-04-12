@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -25,6 +27,16 @@ public class GraphicUtil {
 	    } catch (IOException e) {
 	        throw new RuntimeException(e);
 	    }
+	}
+	
+	public static byte[] imageToBytes(BufferedImage image) throws IOException {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		ImageIO.write(image, "jpg", output);
+		return output.toByteArray();
+	}
+	
+	public static BufferedImage scaleDown(File image, int width, int height) throws IOException {
+		return scaleDown(ImageIO.read(image), width, height);
 	}
 	
 	public static BufferedImage scaleDown(String image, int width, int height) throws IOException {
