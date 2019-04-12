@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.List;
 
 import coffee.weneed.utils.ArrayUtil;
@@ -61,7 +62,7 @@ public class Filter {
 	 * @throws MalformedURLException the malformed URL exception
 	 */
 	public static void main(String[] args) throws MalformedURLException {
-		Filter.filter = new ProfanityFilter(true,
+		Filter.filter = new ProfanityFilter(new HashMap<>(),
 				// new
 				// URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?_="
 				// + System.currentTimeMillis()));

@@ -1,5 +1,7 @@
 package coffee.weneed.utils;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +27,18 @@ public class LogicUtil {
 		URL url = new URL(toDownload);
 		return LogicUtil.downloadUrl(url);
 	}
-
+	/**https://kalliphant.com/javamimetype_from_bytearr/
+	 * 
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getMimeType(byte data[]) throws Exception {		
+		InputStream is = new BufferedInputStream(new ByteArrayInputStream(data));
+		String mimeType = URLConnection.guessContentTypeFromStream(is);
+		return mimeType;
+	}
+	
 	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
 	 *

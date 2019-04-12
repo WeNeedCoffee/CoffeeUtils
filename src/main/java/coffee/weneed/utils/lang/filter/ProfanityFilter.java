@@ -25,12 +25,12 @@ import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
  */
 // TODO check words for middle dupes between endings like rim and rimming
 public class ProfanityFilter implements IJSONObjectDataHolder {
-
+	private static Map<Character, String[]> active_leets = new HashMap<>();
 	/** The leets. */
-	private static Map<Character, String[]> leets = new HashMap<>();
+	public static Map<Character, String[]> leets = new HashMap<>();
 
 	/** The ascii leets. */
-	private static Map<Character, String[]> ascii_leets = new HashMap<>();
+	public static Map<Character, String[]> ascii_leets = new HashMap<>();
 
 	static {
 		// TODO finish
@@ -87,16 +87,13 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 
 	private TreeNode whitelist;
 
-	/** The ascii. */
-	private boolean ascii;
-
 	/**
 	 * Instantiates a new profanity filter.
 	 *
 	 * @param ascii the ascii
 	 */
 	public ProfanityFilter(boolean ascii) {
-		this(ascii, null);
+		this(ascii ? ascii_leets : leets, null);
 	}
 
 	/**
@@ -105,7 +102,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param ascii the ascii
 	 * @param url   the url
 	 */
-	public ProfanityFilter(boolean ascii, URL tree) {
+	public ProfanityFilter(Map<Character, String[]> active_leets, URL tree) {
 		try {
 			fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(tree))));
 		} catch (JSONException e) {
@@ -115,7 +112,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.ascii = ascii;
 	}
 
 	/**
@@ -363,8 +359,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	private boolean searchLeet(String input, int characterIndex, TreeNode node, boolean update) {
 		String sub = StringUtil.substr(input, characterIndex, input.length());
-		for (Entry<Character, String[]> entry : ascii ? ProfanityFilter.ascii_leets.entrySet()
-				: ProfanityFilter.leets.entrySet()) {
+		for (Entry<Character, String[]> entry : active_leets.entrySet()) {
 			Character c = entry.getKey();
 			if (!node.containsChild(c)) {
 				continue;

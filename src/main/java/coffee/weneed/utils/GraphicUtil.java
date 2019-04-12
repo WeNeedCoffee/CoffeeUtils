@@ -6,8 +6,40 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class GraphicUtil {
+
+	/***
+	 * https://stackoverflow.com/questions/12705385/how-to-convert-a-byte-to-a-bufferedimage-in-java
+	 * @param imageData
+	 * @return
+	 */
+	public static BufferedImage createImageFromBytes(byte[] imageData) {
+	    ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+	    try {
+	        return ImageIO.read(bais);
+	    } catch (IOException e) {
+	        throw new RuntimeException(e);
+	    }
+	}
+	
+	public static BufferedImage scaleDown(String image, int width, int height) throws IOException {
+		return scaleDown(LogicUtil.downloadUrl(image), width, height);
+	}
+	
+	public static BufferedImage scaleDown(byte[] image, int width, int height) throws IOException {
+		return scaleDown(createImageFromBytes(image), width, height);
+	}
+	
+	public static BufferedImage scaleDown(BufferedImage image, int width, int height) throws IOException {
+		Dimension scaled = getScaledDimension(new Dimension(image.getWidth(), image.getHeight()), new Dimension(width, height));
+		return resizeImage(image, (int) Math.round(scaled.getWidth()), (int) Math.round(scaled.getHeight()));
+	}
+	
 	/**
 	 * https://www.journaldev.com/615/java-resize-image
 	 * @param image

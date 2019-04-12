@@ -26,7 +26,41 @@ public class ArrayUtil {
 		System.arraycopy(b, 0, result, a.length, b.length);
 		return result;
 	}
+/***https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts
+ * 
+ * @param source
+ * @param chunksize
+ * @return
+ */
+	public static List<byte[]> divideArray(byte[] source, int chunksize) {
 
+	    List<byte[]> result = new ArrayList<byte[]>();
+	    int start = 0;
+	    while (start < source.length) {
+	        int end = Math.min(source.length, start + chunksize);
+	        result.add(Arrays.copyOfRange(source, start, end));
+	        start += chunksize;
+	    }
+
+	    return result;
+	}
+	/***https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts
+	 * 
+	 * @param source
+	 * @param chunksize
+	 * @return
+	 */
+	  public static List<List<String>> divideList(List<String> source, int chunksize) {
+		    List<List<String>> result = new ArrayList<List<String>>();
+		    int start = 0;
+		    while (start < source.size()) {
+		      int end = Math.min(source.size(), start + chunksize);
+		      result.add(source.subList(start, end));
+		      start += chunksize;
+		    }
+		    return result;
+		  }
+	  
 	/**
 	 * https://stackoverflow.com/questions/10766492/what-is-the-simplest-way-to-reverse-an-arraylist
 	 *

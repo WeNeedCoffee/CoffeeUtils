@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -91,7 +92,8 @@ public class FilterToolkit implements KeyListener {
 	 */
 	public FilterToolkit() {
 		try {
-			FilterToolkit.filter = new ProfanityFilter(true,
+			//ProfanityFilter.ascii_leets
+			FilterToolkit.filter = new ProfanityFilter(new HashMap<>(),
 					/*
 					 * new URL(
 					 * "https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?"
