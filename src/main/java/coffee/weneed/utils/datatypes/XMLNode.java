@@ -83,17 +83,17 @@ public class XMLNode {
 		return this;
 	}
 
-	public XMLNode addNode(XMLNode node) {
-		if (this.nodes == null) {
-			this.nodes = new ArrayList<>();
-		}
-		this.nodes.add(node);
-		node.parent = this;
-		return this;
-	}
-
 	public XMLNode addEmptyNode(String name) {
 		return addTextNode(name, null);
+	}
+
+	public XMLNode addNode(XMLNode node) {
+		if (nodes == null) {
+			nodes = new ArrayList<>();
+		}
+		nodes.add(node);
+		node.parent = this;
+		return this;
 	}
 
 	public XMLNode addTextNode(String name, String text) {
@@ -117,8 +117,38 @@ public class XMLNode {
 		return attributes;
 	}
 
+	public XMLNode getFirstNodeByAttribute(String key, String value) {
+		if (nodes == null) {
+			return null;
+		}
+		for (XMLNode node : nodes) {
+			if (node.attributes != null) {
+				if (value.equals(node.attributes.get(key))) {
+					return node;
+				}
+			}
+		}
+		return null;
+	}
+
+	public XMLNode getFirstNodeByName(String name) {
+		if (nodes == null) {
+			return null;
+		}
+		for (XMLNode node : nodes) {
+			if (node.name.equals(name)) {
+				return node;
+			}
+		}
+		return null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public List<XMLNode> getNodes() {
-		return this.nodes;
+		return nodes;
 	}
 
 	public XMLNode[] getNodesByName(String name) {
@@ -132,36 +162,6 @@ public class XMLNode {
 			}
 		}
 		return nodes.toArray(new XMLNode[0]);
-	}
-
-	public XMLNode getFirstNodeByAttribute(String key, String value) {
-		if (this.nodes == null) {
-			return null;
-		}
-		for (XMLNode node : this.nodes) {
-			if (node.attributes != null) {
-				if (value.equals(node.attributes.get(key))) {
-					return node;
-				}
-			}
-		}
-		return null;
-	}
-
-	public XMLNode getFirstNodeByName(String name) {
-		if (this.nodes == null) {
-			return null;
-		}
-		for (XMLNode node : this.nodes) {
-			if (node.name.equals(name)) {
-				return node;
-			}
-		}
-		return null;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public XMLNode getParent() {
@@ -226,11 +226,11 @@ public class XMLNode {
 	}
 
 	public XMLNode removeNode(XMLNode node) {
-		if (this.nodes != null) {
-			this.nodes.remove(node);
+		if (nodes != null) {
+			nodes.remove(node);
 			node.parent = null;
-			if (this.nodes.isEmpty()) {
-				this.nodes = null;
+			if (nodes.isEmpty()) {
+				nodes = null;
 			}
 		}
 		return this;
@@ -248,7 +248,7 @@ public class XMLNode {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("<");
-		if (text == null && this.nodes == null && attributes == null) {
+		if (text == null && nodes == null && attributes == null) {
 			return sb.append(name).append(" /").append(">").toString();
 		}
 		sb.append(name);
@@ -259,9 +259,9 @@ public class XMLNode {
 		}
 		if (text != null) {
 			sb.append(">").append(text).append("</").append(name);
-		} else if (this.nodes != null) {
+		} else if (nodes != null) {
 			sb.append(">");
-			for (XMLNode node : this.nodes) {
+			for (XMLNode node : nodes) {
 				sb.append(node);
 			}
 			sb.append("</").append(name);

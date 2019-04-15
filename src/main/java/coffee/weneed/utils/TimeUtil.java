@@ -155,11 +155,7 @@ public class TimeUtil {
 	 * @return the rounded days between
 	 */
 	public static int getRoundedDaysBetween(long startMillis, long endMillis) {
-		return TimeUtil.getDaysBetween(startMillis, endMillis) % 24 > 11
-				? TimeUtil.getDaysBetween(startMillis, endMillis) + 24
-						- TimeUtil.getDaysBetween(startMillis, endMillis) % 24
-				: TimeUtil.getDaysBetween(startMillis, endMillis)
-						- TimeUtil.getDaysBetween(startMillis, endMillis) % 24;
+		return TimeUtil.getDaysBetween(startMillis, endMillis) % 24 > 11 ? TimeUtil.getDaysBetween(startMillis, endMillis) + 24 - TimeUtil.getDaysBetween(startMillis, endMillis) % 24 : TimeUtil.getDaysBetween(startMillis, endMillis) - TimeUtil.getDaysBetween(startMillis, endMillis) % 24;
 
 	}
 
@@ -171,11 +167,7 @@ public class TimeUtil {
 	 * @return the rounded hours between
 	 */
 	public static int getRoundedHoursBetween(long startMillis, long endMillis) {
-		return TimeUtil.getHoursBetween(startMillis, endMillis) % 60 > 29
-				? TimeUtil.getHoursBetween(startMillis, endMillis) + 60
-						- TimeUtil.getHoursBetween(startMillis, endMillis) % 60
-				: TimeUtil.getHoursBetween(startMillis, endMillis)
-						- TimeUtil.getHoursBetween(startMillis, endMillis) % 60;
+		return TimeUtil.getHoursBetween(startMillis, endMillis) % 60 > 29 ? TimeUtil.getHoursBetween(startMillis, endMillis) + 60 - TimeUtil.getHoursBetween(startMillis, endMillis) % 60 : TimeUtil.getHoursBetween(startMillis, endMillis) - TimeUtil.getHoursBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
@@ -186,11 +178,7 @@ public class TimeUtil {
 	 * @return the rounded minutes between
 	 */
 	public static int getRoundedMinutesBetween(long startMillis, long endMillis) {
-		return TimeUtil.getMinutesBetween(startMillis, endMillis) % 60 > 29
-				? TimeUtil.getMinutesBetween(startMillis, endMillis) + 60
-						- TimeUtil.getMinutesBetween(startMillis, endMillis) % 60
-				: TimeUtil.getMinutesBetween(startMillis, endMillis)
-						- TimeUtil.getMinutesBetween(startMillis, endMillis) % 60;
+		return TimeUtil.getMinutesBetween(startMillis, endMillis) % 60 > 29 ? TimeUtil.getMinutesBetween(startMillis, endMillis) + 60 - TimeUtil.getMinutesBetween(startMillis, endMillis) % 60 : TimeUtil.getMinutesBetween(startMillis, endMillis) - TimeUtil.getMinutesBetween(startMillis, endMillis) % 60;
 	}
 
 	/**
@@ -201,11 +189,7 @@ public class TimeUtil {
 	 * @return the rounded seconds between
 	 */
 	public static int getRoundedSecondsBetween(long startMillis, long endMillis) {
-		return TimeUtil.getSecondsBetween(startMillis, endMillis) % 60 > 29
-				? TimeUtil.getSecondsBetween(startMillis, endMillis) + 60
-						- TimeUtil.getSecondsBetween(startMillis, endMillis) % 60
-				: TimeUtil.getSecondsBetween(startMillis, endMillis)
-						- TimeUtil.getSecondsBetween(startMillis, endMillis) % 60;
+		return TimeUtil.getSecondsBetween(startMillis, endMillis) % 60 > 29 ? TimeUtil.getSecondsBetween(startMillis, endMillis) + 60 - TimeUtil.getSecondsBetween(startMillis, endMillis) % 60 : TimeUtil.getSecondsBetween(startMillis, endMillis) - TimeUtil.getSecondsBetween(startMillis, endMillis) % 60;
 	}
 
 	/**

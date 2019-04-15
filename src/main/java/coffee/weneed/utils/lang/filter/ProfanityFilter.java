@@ -37,8 +37,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		// TODO load from file
 		// TODO determine if more than 3 chars significantly affects speed
 		ProfanityFilter.leets.put(StringUtil.getChar("a"), new String[] { "@", "4", "/\\", "/-\\", "/_\\" });
-		ProfanityFilter.leets.put(StringUtil.getChar("b"),
-				new String[] { "13", "18", "l3", "8", "|:", "|8", "|b", "lo", "|o", "|3" });
+		ProfanityFilter.leets.put(StringUtil.getChar("b"), new String[] { "13", "18", "l3", "8", "|:", "|8", "|b", "lo", "|o", "|3" });
 		ProfanityFilter.leets.put(StringUtil.getChar("c"), new String[] { "k", "s", "<", "(", "[", "{" });
 		ProfanityFilter.leets.put(StringUtil.getChar("d"), new String[] { "|)", "o|", "|>", "<|", "|}", "|]" });
 		ProfanityFilter.leets.put(StringUtil.getChar("e"), new String[] { "3" });
@@ -51,10 +50,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		ProfanityFilter.leets.put(StringUtil.getChar("n"), new String[] { "|\\|", "/\\/", "/V" });
 		ProfanityFilter.leets.put(StringUtil.getChar("m"), new String[] { "/\\/\\", "|\\/|", "|\\/|", "|V|", "/V\\" });
 		ProfanityFilter.leets.put(StringUtil.getChar("s"), new String[] { "c", "5", "$", "z" });
-		ProfanityFilter.leets.put(StringUtil.getChar("u"),
-				new String[] { "v", "|_|", "L|", "\\/", "\\_/", "\\_\\", "/_/" });
-		ProfanityFilter.leets.put(StringUtil.getChar("w"),
-				new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
+		ProfanityFilter.leets.put(StringUtil.getChar("u"), new String[] { "v", "|_|", "L|", "\\/", "\\_/", "\\_\\", "/_/" });
+		ProfanityFilter.leets.put(StringUtil.getChar("w"), new String[] { "\\/\\/", "(/\\)", "\\^/", "|^|", "\\X/", "\\\\'", "'//", "VV" });
 		ProfanityFilter.leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
 		ProfanityFilter.leets.put(StringUtil.getChar("z"), new String[] { "s" });
 		// TODO be able to register ks as x as well as x as ks
@@ -431,8 +428,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < input.length()
-					&& ch.equals(input.charAt(characterIndex + 1))) {
+			if (characterIndex > 0 && characterIndex + 1 < input.length() && ch.equals(input.charAt(characterIndex + 1))) {
 				searchAlongTree(input, characterIndex + 1, node);
 				return;
 			}

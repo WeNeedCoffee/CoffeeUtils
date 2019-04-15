@@ -241,9 +241,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * @param o the o
 	 */
 	public void setObject(String k, Object o) {
-		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float
-				|| o instanceof Double || o instanceof Short || o instanceof Character || o instanceof String
-				|| o instanceof ACoffeeHousingNode) {
+		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof Character || o instanceof String || o instanceof ACoffeeHousingNode) {
 			items.put(k, o);
 		} else {
 			// throw something

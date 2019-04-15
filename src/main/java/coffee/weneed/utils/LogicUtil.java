@@ -20,36 +20,21 @@ public class LogicUtil {
 	 * @author Dalethium
 	 * @param toDownload the to download
 	 * @return byte array
-	 * @throws IOException 
+	 * @throws IOException
 	 * @see coffee.weneed.utils.LogicUtil#downloadUrl(URL)
 	 */
 	public static byte[] downloadUrl(String toDownload) throws IOException {
 		URL url = new URL(toDownload);
 		return LogicUtil.downloadUrl(url);
 	}
-	/**https://kalliphant.com/javamimetype_from_bytearr/
-	 * 
-	 * @param data
-	 * @return
-	 * @throws Exception
-	 */
-	public static String getMimeType(byte data[]) throws Exception {		
-		InputStream is = new BufferedInputStream(new ByteArrayInputStream(data));
-		String mimeType = URLConnection.guessContentTypeFromStream(is);
-		return mimeType;
-	}
-	
-	public static String getEnd(String file, String delimiter) {
-		String[] ss = file.split(delimiter);
-		return ss[ss.length - 1];
-	}
+
 	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
 	 *
 	 * @author StackOverflow:ron-reiter
 	 * @param toDownload the to download
 	 * @return byte array
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static byte[] downloadUrl(URL toDownload) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -67,6 +52,24 @@ public class LogicUtil {
 		}
 		stream.close();
 		return outputStream.toByteArray();
+	}
+
+	public static String getEnd(String file, String delimiter) {
+		String[] ss = file.split(delimiter);
+		return ss[ss.length - 1];
+	}
+
+	/**
+	 * https://kalliphant.com/javamimetype_from_bytearr/
+	 *
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getMimeType(byte data[]) throws Exception {
+		InputStream is = new BufferedInputStream(new ByteArrayInputStream(data));
+		String mimeType = URLConnection.guessContentTypeFromStream(is);
+		return mimeType;
 	}
 
 	/**

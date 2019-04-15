@@ -12,7 +12,7 @@ import coffee.weneed.utils.StringUtil;
 public class JSnow10 {
 
 	public static char zero = '\u200B';
-	
+
 	public static char one = '\u200D';
 
 	public static char z_zero = '\u200B';
