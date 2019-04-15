@@ -249,7 +249,7 @@ public class XMLNode {
 	public String toString() {
 		StringBuilder sb = new StringBuilder("<");
 		if (text == null && this.nodes == null && attributes == null) {
-			return sb.append(name).append("/").append(">").toString();
+			return sb.append(name).append(" /").append(">").toString();
 		}
 		sb.append(name);
 		if (attributes != null) {
@@ -266,7 +266,7 @@ public class XMLNode {
 			}
 			sb.append("</").append(name);
 		} else {
-			sb.append("/");
+			sb.append(" /");
 		}
 		return sb.append(">").toString();
 	}

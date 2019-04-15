@@ -10,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -37,6 +38,10 @@ public class GraphicUtil {
 	
 	public static BufferedImage scaleDown(File image, int width, int height) throws IOException {
 		return scaleDown(ImageIO.read(image), width, height);
+	}
+	
+	public static BufferedImage scaleDown(URL image, int width, int height) throws IOException {
+		return scaleDown(LogicUtil.downloadUrl(image), width, height);
 	}
 	
 	public static BufferedImage scaleDown(String image, int width, int height) throws IOException {
