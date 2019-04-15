@@ -3,6 +3,8 @@ package coffee.weneed.utils;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URLConnection;
 
 // TODO: Auto-generated Javadoc
@@ -11,6 +13,17 @@ import java.net.URLConnection;
  */
 public class LogicUtil {
 
+	/**
+	 * https://stackoverflow.com/questions/1149703/how-can-i-convert-a-stack-trace-to-a-string
+	 * @param e
+	 * @return
+	 */
+	public static String getStackTrace(Throwable e) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		e.printStackTrace(pw);
+		return sw.toString(); // stack trace as a string
+	}
 	/**
 	 * https://kalliphant.com/javamimetype_from_bytearr/
 	 *

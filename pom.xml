@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -40,13 +41,28 @@
 		</dependency>
 		<dependency>
 			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-logging</artifactId>
+			<version>1.69.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-monitoring</artifactId>
+			<version>1.69.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-vision</artifactId>
 			<version>1.69.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.googlecode.objectify</groupId>
-			<artifactId>objectify</artifactId>
-			<version>6.0.3</version>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-errorreporting</artifactId>
+			<version>0.87.0-beta</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-trace</artifactId>
+			<version>0.87.0-beta</version>
 		</dependency>
 	</dependencies>
 </project>
