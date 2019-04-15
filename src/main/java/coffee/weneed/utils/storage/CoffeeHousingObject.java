@@ -319,7 +319,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			bytes.put(s, tbytes.get(s));
 		}
 		for (String s : tbyte_arrays.keySet()) {
-			byte_arrays.put(s, HexUtil.getHexFromBytes(tbyte_arrays.get(s)));
+			byte_arrays.put(s, HexUtil.bytesToHex(tbyte_arrays.get(s)));
 		}
 		for (String s : tints.keySet()) {
 			ints.put(s, tints.get(s));

@@ -98,10 +98,10 @@ public class ByteArrayByteStream {
 		if (arr.length - pos > 0) {
 			byte[] now = new byte[arr.length - pos];
 			System.arraycopy(arr, pos, now, 0, arr.length - pos);
-			nows = HexUtil.toHumanReadableString(now);
+			nows = HexUtil.bytesToHex(now);
 		}
 		if (b) {
-			return "All: " + HexUtil.toHumanReadableString(arr) + "\nNow: " + nows;
+			return "All: " + HexUtil.bytesToHex(arr) + "\nNow: " + nows;
 		}
 		return "Data: " + nows;
 	}

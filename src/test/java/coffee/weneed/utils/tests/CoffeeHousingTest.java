@@ -35,12 +35,12 @@ public class CoffeeHousingTest {
 		p.setObject("p1", p1);
 		p.setObject("p3", p3);
 		byte[] pb = p.toByteArray();
-		System.out.println(HexUtil.toHumanReadableString(pb));
+		System.out.println(HexUtil.bytesToHex(pb));
 		System.out.println(p.toJSON().toString());
 		p = new CoffeeHousingObject(null);
 		p.fromByteArray(pb);
 		pb = p.toByteArray();
-		System.out.println(HexUtil.toHumanReadableString(pb));
+		System.out.println(HexUtil.bytesToHex(pb));
 		System.out.println(p.toJSON().toString());
 
 	}

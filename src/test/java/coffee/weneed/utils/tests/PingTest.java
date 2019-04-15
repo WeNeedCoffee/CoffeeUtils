@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import coffee.weneed.utils.ArrayUtil;
-import coffee.weneed.utils.LogicUtil;
 import coffee.weneed.utils.NetUtil;
 
 public class PingTest {
@@ -17,8 +16,7 @@ public class PingTest {
 	public static void fixList(String file) throws MalformedURLException {
 		List<String> s = null;
 		try {
-			s = ArrayUtil
-					.sortList(new String(LogicUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
+			s = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -79,8 +77,7 @@ public class PingTest {
 		fixList("ips_in.txt");
 		List<String> ips = null;
 		try {
-			ips = ArrayUtil.sortList(
-					new String(LogicUtil.downloadUrl(new File("./" + "ips_in.txt").toURI().toURL())).split("\\n"));
+			ips = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + "ips_in.txt").toURI().toURL())).split("\\n"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,8 +102,7 @@ public class PingTest {
 				unreachable.add(st);
 				System.out.print("Failure. ");
 			}
-			System.out.print("Valid ips: " + reachable.size() + " - Invalid Ips: " + unreachable.size()
-					+ " - Remaining: " + (ips.size() - (reachable.size() + unreachable.size())));
+			System.out.print("Valid ips: " + reachable.size() + " - Invalid Ips: " + unreachable.size() + " - Remaining: " + (ips.size() - (reachable.size() + unreachable.size())));
 			System.out.println();
 		}
 

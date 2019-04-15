@@ -21,7 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import coffee.weneed.utils.LogicUtil;
+import coffee.weneed.utils.NetUtil;
 import coffee.weneed.utils.lang.filter.ProfanityFilter;
 
 // TODO: Auto-generated Javadoc
@@ -92,7 +92,7 @@ public class FilterToolkit implements KeyListener {
 	 */
 	public FilterToolkit() {
 		try {
-			//ProfanityFilter.ascii_leets
+			// ProfanityFilter.ascii_leets
 			FilterToolkit.filter = new ProfanityFilter(new HashMap<>(),
 					/*
 					 * new URL(
@@ -190,7 +190,7 @@ public class FilterToolkit implements KeyListener {
 
 	private void fix() throws MalformedURLException {
 		try {
-			for (String s : new String(LogicUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
+			for (String s : new String(NetUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
 				FilterToolkit.filter.whitelistWord(s);
 			}
 		} catch (IOException e) {

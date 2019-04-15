@@ -108,10 +108,10 @@ public class GraphicUtil {
 	}
 
 	public static BufferedImage scaleDown(String image, int width, int height) throws IOException {
-		return scaleDown(LogicUtil.downloadUrl(image), width, height);
+		return scaleDown(NetUtil.downloadUrl(image), width, height);
 	}
 
 	public static BufferedImage scaleDown(URL image, int width, int height) throws IOException {
-		return scaleDown(LogicUtil.downloadUrl(image), width, height);
+		return scaleDown(NetUtil.downloadUrl(image), width, height);
 	}
 }

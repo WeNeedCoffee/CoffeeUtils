@@ -110,6 +110,11 @@ public class StringUtil {
 		return s.charAt(0);
 	}
 
+	public static String getEnd(String in, String delimiter) {
+		String[] ss = in.split(delimiter);
+		return ss[ss.length - 1];
+	}
+
 	/**
 	 * Gets a string padded from the left to <code>length</code> by
 	 * <code>padchar</code>.

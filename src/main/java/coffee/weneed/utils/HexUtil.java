@@ -12,16 +12,16 @@ import java.io.ByteArrayOutputStream;
 public class HexUtil {
 
 	/** The Constant HEX. */
-	private static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+	private static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
 	public static String bytesToHex(byte[] bytes) {
-		final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
 		char[] hexChars = new char[bytes.length * 2];
 		int v;
 		for (int j = 0; j < bytes.length; j++) {
 			v = bytes[j] & 0xFF;
-			hexChars[j * 2] = hexArray[v >>> 4];
-			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+			hexChars[j * 2] = HEX[v >>> 4];
+			hexChars[j * 2 + 1] = HEX[v & 0x0F];
 		}
 		return new String(hexChars);
 	}
@@ -65,122 +65,5 @@ public class HexUtil {
 			}
 		}
 		return baos.toByteArray();
-	}
-
-	/**
-	 * Converts raw hex string to bytes.
-	 *
-	 * @param hexString the hex string
-	 * @return bytes
-	 * @see getHexFromBytes
-	 */
-	public static byte[] getBytesFromHex(String hexString) {
-		if (hexString.length() % 2 == 1) {
-			throw new IllegalArgumentException("Invalid length");
-		}
-		int len = hexString.length() / 2;
-		byte[] bytes = new byte[len];
-		for (int i = 0; i < len; i++) {
-			int index = i * 2;
-			bytes[i] = (byte) Integer.parseInt(hexString.substring(index, index + 2), 16);
-		}
-		return bytes;
-	}
-
-	/**
-	 * Converts bytes to raw hex string.
-	 *
-	 * @param digest the digest
-	 * @return Hex string
-	 * @see getBytesFromHex
-	 */
-	public static String getHexFromBytes(byte[] digest) {
-		StringBuffer hexString = new StringBuffer();
-		for (byte element : digest) {
-			hexString.append(Integer.toHexString(0xFF & element));
-		}
-		return hexString.toString();
-	}
-
-	/**
-	 * Gets the opcode to string.
-	 *
-	 * @param op the op
-	 * @return the opcode to string
-	 */
-	public static String getOpcodeToString(int op) {
-		return new StringBuilder().append("0x").append(StringUtil.getLeftPaddedStr(Integer.toHexString(op).toUpperCase(), '0', 4)).toString();
-	}
-
-	/**
-	 * To human readable string.
-	 *
-	 * @param byteValue the byte value
-	 * @return the string
-	 */
-	public static final String toHumanReadableString(byte byteValue) {
-		int tmp = byteValue << 8;
-		char[] retstr = { HexUtil.HEX[tmp >> 12 & 0xF], HexUtil.HEX[tmp >> 8 & 0xF] };
-		return String.valueOf(retstr);
-	}
-
-	/**
-	 * To human readable string.
-	 *
-	 * @param bytes the bytes
-	 * @return the string
-	 */
-	public static final String toHumanReadableString(byte[] bytes) {
-		StringBuilder hexed = new StringBuilder();
-		for (byte b : bytes) {
-			hexed.append(HexUtil.toHumanReadableString(b));
-			hexed.append(' ');
-		}
-		return hexed.substring(0, hexed.length() - 1);
-	}
-
-	/**
-	 * To human readable string.
-	 *
-	 * @param intValue the int value
-	 * @return the string
-	 */
-	public static final String toHumanReadableString(int intValue) {
-		return Integer.toHexString(intValue);
-	}
-
-	/**
-	 * To human readable string from ascii.
-	 *
-	 * @param bytes the bytes
-	 * @return the string
-	 */
-	public static final String toHumanReadableStringFromAscii(byte[] bytes) {
-		char[] ret = new char[bytes.length];
-		for (int x = 0; x < bytes.length; x++) {
-			if (bytes[x] < 32 && bytes[x] >= 0) {
-				ret[x] = '.';
-			} else {
-				int chr = bytes[x] & 0xFF;
-				ret[x] = (char) chr;
-			}
-		}
-		return String.valueOf(ret);
-	}
-
-	/**
-	 * To human readable string padded string from ascii.
-	 *
-	 * @param bytes the bytes
-	 * @return the string
-	 */
-	public static final String toHumanReadableStringPaddedStringFromAscii(byte[] bytes) {
-		String str = HexUtil.toHumanReadableStringFromAscii(bytes);
-		StringBuilder ret = new StringBuilder(str.length() * 3);
-		for (int i = 0; i < str.length(); i++) {
-			ret.append(str.charAt(i));
-			ret.append("  ");
-		}
-		return ret.toString();
 	}
 }

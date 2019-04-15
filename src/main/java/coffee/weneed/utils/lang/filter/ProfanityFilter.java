@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import coffee.weneed.utils.LogicUtil;
+import coffee.weneed.utils.NetUtil;
 import coffee.weneed.utils.StringUtil;
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 
@@ -101,7 +101,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	public ProfanityFilter(Map<Character, String[]> active_leets, URL tree) {
 		try {
-			fromJSON(new JSONObject(new String(LogicUtil.downloadUrl(tree))));
+			fromJSON(new JSONObject(new String(NetUtil.downloadUrl(tree))));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

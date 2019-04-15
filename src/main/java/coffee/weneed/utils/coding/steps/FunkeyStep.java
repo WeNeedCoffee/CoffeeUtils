@@ -6,7 +6,7 @@ public class FunkeyStep extends Base64Step {
 
 	private char[][] cols;
 
-	public FunkeyStep(char[] code, char[][] cols) {
+	public FunkeyStep(char[] code, char[][] cols) throws IllegalArgumentException {
 		int len = code.length;
 		for (char[] col : cols) {
 			if (col.length != len) {

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import coffee.weneed.utils.ArrayUtil;
-import coffee.weneed.utils.LogicUtil;
+import coffee.weneed.utils.NetUtil;
 import coffee.weneed.utils.lang.filter.ProfanityFilter;
 
 // TODO: Auto-generated Javadoc
@@ -27,8 +27,7 @@ public class Filter {
 	public static void fixList(String file) throws MalformedURLException {
 		List<String> s = null;
 		try {
-			s = ArrayUtil
-					.sortList(new String(LogicUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
+			s = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

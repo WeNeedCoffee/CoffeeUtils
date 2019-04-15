@@ -77,7 +77,7 @@ public class CoffeeWriter {
 	 */
 	@Override
 	public final String toString() {
-		return HexUtil.toHumanReadableString(getByteArray());
+		return HexUtil.bytesToHex(getByteArray());
 	}
 
 	/**

@@ -156,7 +156,6 @@ public class TimeUtil {
 	 */
 	public static int getRoundedDaysBetween(long startMillis, long endMillis) {
 		return TimeUtil.getDaysBetween(startMillis, endMillis) % 24 > 11 ? TimeUtil.getDaysBetween(startMillis, endMillis) + 24 - TimeUtil.getDaysBetween(startMillis, endMillis) % 24 : TimeUtil.getDaysBetween(startMillis, endMillis) - TimeUtil.getDaysBetween(startMillis, endMillis) % 24;
-
 	}
 
 	/**

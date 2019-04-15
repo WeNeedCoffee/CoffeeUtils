@@ -379,7 +379,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 			bytes.put(String.valueOf(i), tbytes.get(i));
 		}
 		for (int i : tbyte_arrays.keySet()) {
-			byte_arrays.put(String.valueOf(i), HexUtil.getHexFromBytes(tbyte_arrays.get(i)));
+			byte_arrays.put(String.valueOf(i), HexUtil.bytesToHex(tbyte_arrays.get(i)));
 		}
 		for (int i : tints.keySet()) {
 			ints.put(String.valueOf(i), tints.get(i));
