@@ -259,7 +259,7 @@ public class FilterToolkit implements KeyListener {
 		f.delete();
 		try {
 			FileOutputStream s = new FileOutputStream(f);
-			s.write(FilterToolkit.filter.toJSON().toString(1).getBytes());
+			s.write(FilterToolkit.filter.toJSON().toString().getBytes());
 			s.flush();
 			s.close();
 		} catch (FileNotFoundException e) {
