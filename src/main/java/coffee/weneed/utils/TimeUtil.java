@@ -149,7 +149,7 @@ public class TimeUtil {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Creates a human readable string based on the time elapsed between
 	 * <code>startMillis</code> and <code>endMillis</code>.
@@ -162,9 +162,9 @@ public class TimeUtil {
 	public static final String getReadableMillisShort(long startMillis, long endMillis) {
 		Duration d = Duration.between(Instant.ofEpochMilli(startMillis), Instant.ofEpochMilli(endMillis));
 		String days = d.toDays() > 9 ? String.valueOf(d.toDays()) : "0" + d.toDays();
-		String hours = d.toHours() - (d.toDays() * 24) > 9 ? String.valueOf(d.toHours() - (d.toDays() * 24)) : "0" +  (d.toHours() - (d.toDays() * 24));
-		String minutes = d.toMinutes() - (d.toHours() * 60) > 9 ? String.valueOf(d.toMinutes() - (d.toHours() * 60)) : "0" + (d.toMinutes() - (d.toHours() * 60));
-		String seconds = d.getSeconds() - (d.toMinutes() * 60) < 0 ? "00" : d.getSeconds() - (d.toMinutes() * 60) > 9 ? String.valueOf(d.getSeconds() - (d.toMinutes() * 60)) : "0" + (d.getSeconds() - (d.toMinutes() * 60));
+		String hours = d.toHours() - d.toDays() * 24 > 9 ? String.valueOf(d.toHours() - d.toDays() * 24) : "0" + (d.toHours() - d.toDays() * 24);
+		String minutes = d.toMinutes() - d.toHours() * 60 > 9 ? String.valueOf(d.toMinutes() - d.toHours() * 60) : "0" + (d.toMinutes() - d.toHours() * 60);
+		String seconds = d.getSeconds() - d.toMinutes() * 60 < 0 ? "00" : d.getSeconds() - d.toMinutes() * 60 > 9 ? String.valueOf(d.getSeconds() - d.toMinutes() * 60) : "0" + (d.getSeconds() - d.toMinutes() * 60);
 		return "" + days + ":" + hours + ":" + minutes + ":" + seconds + "";
 	}
 

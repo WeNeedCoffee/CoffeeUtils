@@ -1,6 +1,8 @@
-package coffee.weneed.utils;
+package coffee.weneed.utils.datatypes;
 
-public class CoffeeEntry<K, V> implements ICoffeeEntry<K, V> {
+import java.util.Map.Entry;
+
+public class CoffeeEntry<K, V> implements Entry<K, V> {
 	private K key;
 	private V value;
 
@@ -19,7 +21,6 @@ public class CoffeeEntry<K, V> implements ICoffeeEntry<K, V> {
 		return value;
 	}
 
-	@Override
 	public K setKey(K key) {
 		K k = this.key;
 		this.key = key;

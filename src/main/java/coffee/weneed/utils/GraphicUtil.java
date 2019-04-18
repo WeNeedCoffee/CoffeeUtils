@@ -47,19 +47,13 @@ public class GraphicUtil {
 		int new_width = original_width;
 		int new_height = original_height;
 
-		// first check if we need to scale width
 		if (original_width > bound_width) {
-			// scale width to fit
 			new_width = bound_width;
-			// scale height to maintain aspect ratio
 			new_height = new_width * original_height / original_width;
 		}
 
-		// then check if we need to scale even with the new height
 		if (new_height > bound_height) {
-			// scale height to fit instead
 			new_height = bound_height;
-			// scale width to maintain aspect ratio
 			new_width = new_height * original_width / original_height;
 		}
 
@@ -84,8 +78,6 @@ public class GraphicUtil {
 		final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		final Graphics2D graphics2D = bufferedImage.createGraphics();
 		graphics2D.setComposite(AlphaComposite.Src);
-		// below three lines are for RenderingHints for better image quality at cost of
-		// higher processing time
 		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 		graphics2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

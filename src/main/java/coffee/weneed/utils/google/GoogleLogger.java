@@ -13,21 +13,17 @@ public class GoogleLogger {
 
 	public void log() {
 		// Instantiates a client
-	    Logging logging = LoggingOptions.getDefaultInstance().getService();
+		Logging logging = LoggingOptions.getDefaultInstance().getService();
 
-	    // The name of the log to write to
-	    String logName = "";  // "my-log";
+		// The name of the log to write to
+		String logName = ""; // "my-log";
 
-	    // The data to write to the log
-	    String text = "Hello, world!";
+		// The data to write to the log
+		String text = "Hello, world!";
 
-	    LogEntry entry = LogEntry.newBuilder(StringPayload.of(text))
-	        .setSeverity(Severity.ERROR)
-	        .setLogName(logName)
-	        .setResource(MonitoredResource.newBuilder("global").build())
-	        .build();
+		LogEntry entry = LogEntry.newBuilder(StringPayload.of(text)).setSeverity(Severity.ERROR).setLogName(logName).setResource(MonitoredResource.newBuilder("global").build()).build();
 
-	    // Writes the log entry asynchronously
-	    logging.write(Collections.singleton(entry));
+		// Writes the log entry asynchronously
+		logging.write(Collections.singleton(entry));
 	}
 }
