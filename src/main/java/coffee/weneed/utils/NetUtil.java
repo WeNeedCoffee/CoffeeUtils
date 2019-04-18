@@ -8,6 +8,9 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class NetUtil {
 
 	/**
@@ -50,6 +53,18 @@ public class NetUtil {
 		return outputStream.toByteArray();
 	}
 
+	public static double checkProxy(String ip, String contact) throws IOException {
+		JSONObject json = null;
+		try {
+			json = new JSONObject(new String(NetUtil.downloadUrl("http://check.getipintel.net/check.php?ip=" + ip + "&contact=" + contact + "&flags=f&format=json")));
+		} catch (JSONException e) {
+			return -1;
+		}
+		if (!json.optString("status", "failure").equalsIgnoreCase("success")) {
+			return -1;
+		}
+		return Double.valueOf(json.optString("result", "1"));
+	}
 	/***
 	 * https://stackoverflow.com/a/34228756
 	 *
