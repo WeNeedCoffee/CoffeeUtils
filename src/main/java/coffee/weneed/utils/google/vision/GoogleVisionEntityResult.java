@@ -1,4 +1,4 @@
-package coffee.weneed.utils.google;
+package coffee.weneed.utils.google.vision;
 
 import org.json.JSONObject;
 
