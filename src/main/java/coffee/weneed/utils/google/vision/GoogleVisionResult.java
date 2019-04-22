@@ -14,7 +14,11 @@ import com.google.cloud.vision.v1p3beta1.WebDetection.WebPage;
 
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 import coffee.weneed.utils.datatypes.CoffeeEntry;
-
+/**
+ * 
+ * @author Daleth
+ *
+ */
 public class GoogleVisionResult implements IJSONObjectDataHolder {
 	private List<GoogleVisionEntityResult> descriptions = new ArrayList<>();
 	private List<String> labels = new ArrayList<>();
