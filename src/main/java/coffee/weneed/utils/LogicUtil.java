@@ -28,7 +28,7 @@ public class LogicUtil {
 
 	/**
 	 * https://stackoverflow.com/questions/1149703/how-can-i-convert-a-stack-trace-to-a-string
-	 * 
+	 *
 	 * @param e
 	 * @return
 	 */

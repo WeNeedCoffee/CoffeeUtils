@@ -81,7 +81,7 @@ public class ArrayUtil {
 	 * https://stackoverflow.com/questions/10766492/what-is-the-simplest-way-to-reverse-an-arraylist
 	 *
 	 * @author StackOverflow:naomimyselfandi
-	 * @param      <T> the generic type
+	 * @param <T>  the generic type
 	 * @param list the list
 	 * @return reversed list
 	 */

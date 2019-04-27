@@ -15,6 +15,7 @@ public class RegexFormatter extends Formatter {
 	public RegexFormatter(String format) {
 		this.format = format;
 	}
+
 	@Override
 	public synchronized String format(LogRecord record) {
 		dat.setTime(record.getMillis());
