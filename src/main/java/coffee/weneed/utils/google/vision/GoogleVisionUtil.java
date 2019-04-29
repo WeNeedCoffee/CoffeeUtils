@@ -1,4 +1,4 @@
-package coffee.weneed.utils;
+package coffee.weneed.utils.google.vision;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +13,7 @@ import com.google.cloud.vision.v1p3beta1.Image;
 import com.google.cloud.vision.v1p3beta1.ImageAnnotatorClient;
 import com.google.protobuf.ByteString;
 
-import coffee.weneed.utils.google.vision.GoogleVisionResult;
+import coffee.weneed.utils.NetUtil;
 
 public class GoogleVisionUtil {
 	public static GoogleVisionResult detectImage(URL url) throws IOException {
@@ -30,6 +30,8 @@ public class GoogleVisionUtil {
 				return new GoogleVisionResult(url.toString(), res.getWebDetection());
 			}
 			System.out.printf("Error: %s\n", res.getError().getMessage());
+			return null;
+		} catch (Exception e) {
 			return null;
 		}
 	}
