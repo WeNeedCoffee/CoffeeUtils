@@ -88,7 +88,7 @@ public class FileUtil {
 		return ch2 == -1;
 	}
 
-	public void deleteDuplicate(File directory, File f) throws IOException {
+	public static void deleteDuplicate(File directory, File f) throws IOException {
 		if (directory.isDirectory()) {
 			for (File file : directory.listFiles()) {
 				if (!file.getName().equals(f.getName()) && contentEquals(f, file)) {
@@ -97,8 +97,19 @@ public class FileUtil {
 			}
 		}
 	}
+	
+	public static boolean canWrite(File file) throws IOException {
+		if (file.isDirectory()) {
+			 throw new IOException("File is directory.");
+		} else if (file.exists()) {
+			throw new IOException("File already exists");
+		} else if (!file.canWrite()) {
+			throw new IOException("Can't write to the file");
+		}
+		return true;
+	}
 
-	public void deleteDuplicates(File directory) throws IOException {
+	public static void deleteDuplicates(File directory) throws IOException {
 		for (File d : directory.listFiles()) {
 			if (d.isDirectory()) {
 				deleteDuplicates(d);
