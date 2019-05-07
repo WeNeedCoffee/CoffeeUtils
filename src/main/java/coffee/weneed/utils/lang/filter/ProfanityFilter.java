@@ -103,10 +103,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		try {
 			fromJSON(new JSONObject(new String(NetUtil.downloadUrl(tree))));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

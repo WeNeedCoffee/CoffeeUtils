@@ -128,7 +128,7 @@ public class GraphicUtil {
 
 	/**
 	 * https://javabeat.net/java-image-format/
-	 * 
+	 *
 	 * @param file
 	 * @return
 	 * @throws IOException

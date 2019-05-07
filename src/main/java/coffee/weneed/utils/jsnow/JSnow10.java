@@ -27,7 +27,7 @@ public class JSnow10 {
 
 	/**
 	 * new String(decode(s), StandardCharsets.UTF_8)
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public class JSnow10 {
 
 	/**
 	 * encode(s.getBytes(StandardCharsets.UTF_8))
-	 * 
+	 *
 	 * @param in
 	 * @return
 	 */

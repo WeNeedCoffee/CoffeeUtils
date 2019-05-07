@@ -101,7 +101,6 @@ public class FilterToolkit implements KeyListener {
 					 */
 					new File("./tree.json").toURI().toURL());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		frame = new JFrame("Filter TookKit");
@@ -132,7 +131,6 @@ public class FilterToolkit implements KeyListener {
 				try {
 					fix();
 				} catch (MalformedURLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				System.out.println("Done!");
@@ -194,7 +192,6 @@ public class FilterToolkit implements KeyListener {
 				FilterToolkit.filter.whitelistWord(s);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		save();
@@ -247,7 +244,6 @@ public class FilterToolkit implements KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -263,10 +259,8 @@ public class FilterToolkit implements KeyListener {
 			s.flush();
 			s.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

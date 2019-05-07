@@ -36,10 +36,8 @@ public class ListTest {
 			st.flush();
 			st.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -79,7 +77,6 @@ public class ListTest {
 		try {
 			nms = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + "names_in.txt").toURI().toURL())).split("\\n"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		List<String> names = new ArrayList<>();

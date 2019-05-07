@@ -18,7 +18,6 @@ public class PingTest {
 		try {
 			s = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		StringBuilder sb = new StringBuilder();
@@ -34,10 +33,8 @@ public class PingTest {
 			st.flush();
 			st.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -58,10 +55,8 @@ public class PingTest {
 			st.flush();
 			st.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -79,7 +74,6 @@ public class PingTest {
 		try {
 			ips = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + "ips_in.txt").toURI().toURL())).split("\\n"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		List<String> reachable = new ArrayList<>();

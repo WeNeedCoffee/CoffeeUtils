@@ -81,7 +81,7 @@ public class NetUtil {
 
 	/***
 	 * https://www.rgagnon.com/javadetails/java-0452.html
-	 * 
+	 *
 	 * @param hostName
 	 * @return
 	 * @throws NamingException
@@ -120,7 +120,7 @@ public class NetUtil {
 
 	/***
 	 * https://www.rgagnon.com/javadetails/java-0452.html
-	 * 
+	 *
 	 * @param hostName
 	 * @return
 	 * @throws NamingException
@@ -148,7 +148,7 @@ public class NetUtil {
 
 	/***
 	 * https://www.rgagnon.com/javadetails/java-0452.html
-	 * 
+	 *
 	 * @param address
 	 * @return
 	 */
