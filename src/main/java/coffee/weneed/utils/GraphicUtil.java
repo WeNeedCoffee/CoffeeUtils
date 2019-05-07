@@ -11,8 +11,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 public class GraphicUtil {
 
@@ -31,6 +34,21 @@ public class GraphicUtil {
 		}
 	}
 
+	public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+            imageString = java.util.Base64.getEncoder().encodeToString(imageBytes);
+
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageString;
+    }
 	/**
 	 * https://stackoverflow.com/questions/10245220/java-image-resize-maintain-aspect-ratio
 	 *
@@ -65,7 +83,23 @@ public class GraphicUtil {
 		ImageIO.write(image, "jpg", output);
 		return output.toByteArray();
 	}
-
+	/**
+	 * https://javabeat.net/java-image-format/
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public String getImageType(File file) throws IOException {
+		File imageFile = file;
+		ImageInputStream imageInputStream = ImageIO.createImageInputStream(imageFile);
+		Iterator<ImageReader> imageReadersList = ImageIO.getImageReaders(imageInputStream);
+		if (!imageReadersList.hasNext()) {
+			throw new RuntimeException("Image Readers Not Found!!!");
+		}
+		String reader = imageReadersList.next().getFormatName();
+		imageInputStream.close();
+		return reader;
+	}
 	/**
 	 * https://www.journaldev.com/615/java-resize-image
 	 *
