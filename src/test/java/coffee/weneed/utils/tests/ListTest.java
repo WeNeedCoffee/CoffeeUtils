@@ -20,31 +20,12 @@ public class ListTest {
 		try {
 			s = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		StringBuilder sb = new StringBuilder();
-		for (String ssss : s) {
-			sb.append(ssss);
-			sb.append("\n");
-		}
-		File f = new File(file);
-		f.delete();
-		try {
-			FileOutputStream st = new FileOutputStream(f);
-			st.write(sb.substring(0, sb.length() - 1).replace("\r", "").replace("\t", "").getBytes());
-			st.flush();
-			st.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		listToFile(file, s);
 	}
 
 	public static void listToFile(String file, List<String> s) throws MalformedURLException {
-
 		StringBuilder sb = new StringBuilder();
 		for (String ssss : s) {
 			sb.append(ssss);
@@ -62,7 +43,6 @@ public class ListTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

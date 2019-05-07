@@ -1,26 +1,21 @@
 package coffee.weneed.utils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Hashtable;
-
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -125,105 +120,15 @@ public class NetUtil {
 	 * @return
 	 * @throws NamingException
 	 */
-	public static boolean hasMX(String hostName) throws NamingException {
-		return getMX(hostName) != null && getMX(hostName).size() > 0;
-	}
-
-	private static int hear(BufferedReader in) throws IOException {
-		String line = null;
-		int res = 0;
-		while ((line = in.readLine()) != null) {
-			String pfx = line.substring(0, 3);
-			try {
-				res = Integer.parseInt(pfx);
-			} catch (Exception ex) {
-				res = -1;
-			}
-			if (line.charAt(3) != '-') {
-				break;
-			}
-		}
-		return res;
-	}
-
-	/***
-	 * https://www.rgagnon.com/javadetails/java-0452.html
-	 *
-	 * @param address
-	 * @return
-	 */
-	public static boolean isEmailValid(String address) {
-		int pos = address.indexOf('@');
-		if (pos == -1) {
-			return false;
-		}
-		String domain = address.substring(++pos);
-		ArrayList<String> mxList = null;
+	public static boolean hasMX(String hostName) {
 		try {
-			mxList = getMX(domain);
-		} catch (NamingException ex) {
+			return getMX(hostName) != null && getMX(hostName).size() > 0;
+		} catch (NamingException e) {
 			return false;
 		}
-		if (mxList.size() == 0) {
-			return false;
-		}
-		for (int mx = 0; mx < mxList.size(); mx++) {
-			boolean valid = false;
-			try {
-				int res;
-				Socket skt = new Socket(mxList.get(mx), 25);
-				BufferedReader rdr = new BufferedReader(new InputStreamReader(skt.getInputStream()));
-				BufferedWriter wtr = new BufferedWriter(new OutputStreamWriter(skt.getOutputStream()));
-				res = hear(rdr);
-				if (res != 220) {
-					rdr.close();
-					wtr.close();
-					skt.close();
-					throw new Exception("Invalid header");
-				}
-				say(wtr, "EHLO lilith.cloud");
-
-				res = hear(rdr);
-				if (res != 250) {
-					rdr.close();
-					wtr.close();
-					skt.close();
-					throw new Exception("Not ESMTP");
-				}
-				say(wtr, "MAIL FROM: <spam@lilith.cloud>");
-				res = hear(rdr);
-				if (res != 250) {
-					rdr.close();
-					wtr.close();
-					skt.close();
-					throw new Exception("Sender rejected");
-				}
-				say(wtr, "RCPT TO: <" + address + ">");
-				res = hear(rdr);
-				say(wtr, "RSET");
-				hear(rdr);
-				say(wtr, "QUIT");
-				hear(rdr);
-				if (res != 250) {
-					rdr.close();
-					wtr.close();
-					skt.close();
-					throw new Exception("Address is not valid!");
-				}
-				valid = true;
-				rdr.close();
-				wtr.close();
-				skt.close();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			} finally {
-				if (valid) {
-					return true;
-				}
-			}
-		}
-		return false;
+		
 	}
+
 
 	/***
 	 * https://stackoverflow.com/a/34228756
@@ -280,10 +185,13 @@ public class NetUtil {
 		}
 		return ret;
 	}
-
-	private static void say(BufferedWriter wr, String text) throws IOException {
-		wr.write(text + "\r\n");
-		wr.flush();
-		return;
+	
+	public static boolean isHostnameValid(String host) {
+		try {
+			InetAddress adr = InetAddress.getByName(host);
+			return adr.getHostName() != null;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }
