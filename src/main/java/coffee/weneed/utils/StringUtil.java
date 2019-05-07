@@ -25,19 +25,22 @@ public class StringUtil {
 	 * @author Daleth
 	 */
 	public static String binToText(String s) {
+		try {
+			return new String(binToArr(s), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static byte[] binToArr(String s) {
 		byte[] ret = new byte[s.length() / 8];
 		int i = 0;
 		for (String ss : explode(s, 8)) {
 			ret[i] = (byte) Integer.parseUnsignedInt(ss, 2);
 			i++;
 		}
-		try {
-			return new String(ret, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return ret;
 	}
 
 	/**
@@ -82,7 +85,6 @@ public class StringUtil {
 	 * @return exploded string list
 	 */
 	public static List<String> explode(String in, int chunksize) {
-		System.out.println(in);
 		List<String> ret = new ArrayList<>();
 		int t = 0;
 		double n = in.length() / chunksize;
@@ -303,11 +305,14 @@ public class StringUtil {
 	 *
 	 * @param in string to encode
 	 * @return string of 1's and 0's
-	 * @author Daleth
 	 */
 	public static String textToBin(String in) {
+		return arrToBin(in.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public static String arrToBin(byte[] in) {
 		String ret = "";
-		for (byte b : in.getBytes(StandardCharsets.UTF_8)) {
+		for (byte b : in) {
 			ret += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
 		}
 		return ret;

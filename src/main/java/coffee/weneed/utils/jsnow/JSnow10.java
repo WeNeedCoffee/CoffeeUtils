@@ -6,8 +6,10 @@ import coffee.weneed.utils.StringUtil;
  * Encode strings into invisible zero width strings Based off
  * https://github.com/beardog108/snow10/
  *
- * @author Daleth
+ * @author Daleth, beardog108
  *
+ * encode(s.getBytes(StandardCharsets.UTF_8))
+ * new String(decode(s), StandardCharsets.UTF_8)
  */
 public class JSnow10 {
 
@@ -23,12 +25,21 @@ public class JSnow10 {
 
 	public static char w_one = '\t';
 
-	public static String decode(String s) {
-		return StringUtil.binToText(replaceAll(replaceAll(s, String.valueOf(one), "1"), String.valueOf(zero), "0"));
+	/**
+	 * new String(decode(s), StandardCharsets.UTF_8)
+	 * @param s
+	 * @return
+	 */
+	public static byte[] decode(String s) {
+		return StringUtil.binToArr(replaceAll(replaceAll(s, String.valueOf(one), "1"), String.valueOf(zero), "0"));
 	}
-
-	public static String encode(String s) {
-		return replaceAll(replaceAll(StringUtil.textToBin(s), "1", String.valueOf(one)), "0", String.valueOf(zero));
+	/**
+	 * encode(s.getBytes(StandardCharsets.UTF_8))
+	 * @param in
+	 * @return
+	 */
+	public static String encode(byte[] in) {
+		return replaceAll(replaceAll(StringUtil.arrToBin(in), "1", String.valueOf(one)), "0", String.valueOf(zero));
 	}
 
 	public static String escapeRegExp(String str) {
