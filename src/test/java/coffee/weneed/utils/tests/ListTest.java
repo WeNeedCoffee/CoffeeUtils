@@ -13,6 +13,8 @@ import coffee.weneed.utils.NetUtil;
 
 public class ListTest {
 
+	public static final String starter = "Eve";
+
 	public static void fixList(String file) throws MalformedURLException {
 		List<String> s = null;
 		try {
@@ -65,7 +67,6 @@ public class ListTest {
 
 	}
 
-	public static final String starter = "Eve";
 	/**
 	 * The main method.
 	 *

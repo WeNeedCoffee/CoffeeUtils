@@ -108,22 +108,6 @@ public class ArrayUtil {
 		}
 		return ret;
 	}
-	
-	/***
-	 * Sorts a array by the default arrays.sort and removes duplicate entries from
-	 * the array.
-	 *
-	 * @param input
-	 * @return sorted list
-	 */
-	public static <T> List<T> toList(T[] input) {
-		List<T> ret = new ArrayList<>();
-		for (T o : input) {
-			ret.add(o);
-		}
-		return ret;
-	}
-
 
 	/**
 	 * Splice
@@ -187,5 +171,20 @@ public class ArrayUtil {
 			toR[i] = list.get(i);
 		}
 		return toR;
+	}
+
+	/***
+	 * Sorts a array by the default arrays.sort and removes duplicate entries from
+	 * the array.
+	 *
+	 * @param input
+	 * @return sorted list
+	 */
+	public static <T> List<T> toList(T[] input) {
+		List<T> ret = new ArrayList<>();
+		for (T o : input) {
+			ret.add(o);
+		}
+		return ret;
 	}
 }

@@ -54,42 +54,6 @@ public class NetUtil {
 	}
 
 	/**
-	 * https://www.dev2qa.com/check-valid-www-domain-and-hostname-java-examples/
-	 * addStr : A domain string. return : true means addStr is a valid domain name,
-	 * false means addStr is not a valide domain name.
-	 */
-	public static boolean isValidDomain(String addStr) {
-		boolean ret = true;
-		if ("".equals(addStr) || addStr == null) {
-			ret = false;
-		} else if (addStr.startsWith("-") || addStr.endsWith("-")) {
-			ret = false;
-		} else if (addStr.indexOf(".") == -1) {
-			ret = false;
-		} else {
-			String domainEle[] = addStr.split("\\.");
-			int size = domainEle.length;
-			for (int i = 0; i < size; i++) {
-				String domainEleStr = domainEle[i];
-				if ("".equals(domainEleStr.trim())) {
-					return false;
-				}
-			}
-			char[] domainChar = addStr.toCharArray();
-			size = domainChar.length;
-			for (int i = 0; i < size; i++) {
-				char eleChar = domainChar[i];
-				String charStr = String.valueOf(eleChar);
-				if (!".".equals(charStr) && !"-".equals(charStr) && !charStr.matches("[a-zA-Z]") && !charStr.matches("[0-9]")) {
-					ret = false;
-					break;
-				}
-			}
-		}
-		return ret;
-	}
-
-	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
 	 *
 	 * @author StackOverflow:ron-reiter
@@ -117,6 +81,46 @@ public class NetUtil {
 
 	/***
 	 * https://www.rgagnon.com/javadetails/java-0452.html
+	 * 
+	 * @param hostName
+	 * @return
+	 * @throws NamingException
+	 */
+	public static ArrayList<String> getMX(String hostName) throws NamingException {
+		Hashtable<String, String> env = new Hashtable<>();
+		env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
+		DirContext ictx = new InitialDirContext(env);
+		Attributes attrs = ictx.getAttributes(hostName, new String[] { "MX" });
+		Attribute attr = attrs.get("MX");
+		if (attr == null || attr.size() == 0) {
+			attrs = ictx.getAttributes(hostName, new String[] { "A" });
+			attr = attrs.get("A");
+			if (attr == null) {
+				throw new NamingException("No match for name '" + hostName + "'");
+			}
+		}
+		ArrayList<String> res = new ArrayList<>();
+		NamingEnumeration<?> en = attr.getAll();
+
+		while (en.hasMore()) {
+			String mailhost;
+			String x = (String) en.next();
+			String f[] = x.split(" ");
+			if (f.length == 1) {
+				mailhost = f[0];
+			} else if (f[1].endsWith(".")) {
+				mailhost = f[1].substring(0, f[1].length() - 1);
+			} else {
+				mailhost = f[1];
+			}
+			res.add(mailhost);
+		}
+		return res;
+	}
+
+	/***
+	 * https://www.rgagnon.com/javadetails/java-0452.html
+	 * 
 	 * @param hostName
 	 * @return
 	 * @throws NamingException
@@ -135,63 +139,24 @@ public class NetUtil {
 			} catch (Exception ex) {
 				res = -1;
 			}
-			if (line.charAt(3) != '-')
+			if (line.charAt(3) != '-') {
 				break;
-		}
-		return res;
-	}
-
-	private static void say(BufferedWriter wr, String text) throws IOException {
-		wr.write(text + "\r\n");
-		wr.flush();
-		return;
-	}
-
-	/***
-	 * https://www.rgagnon.com/javadetails/java-0452.html
-	 * @param hostName
-	 * @return
-	 * @throws NamingException
-	 */
-	public static ArrayList<String> getMX(String hostName) throws NamingException {
-		Hashtable<String, String> env = new Hashtable<>();
-		env.put("java.naming.factory.initial", "com.sun.jndi.dns.DnsContextFactory");
-		DirContext ictx = new InitialDirContext(env);
-		Attributes attrs = ictx.getAttributes(hostName, new String[] { "MX" });
-		Attribute attr = attrs.get("MX");
-		if ((attr == null) || (attr.size() == 0)) {
-			attrs = ictx.getAttributes(hostName, new String[] { "A" });
-			attr = attrs.get("A");
-			if (attr == null)
-				throw new NamingException("No match for name '" + hostName + "'");
-		}
-		ArrayList<String> res = new ArrayList<String>();
-		NamingEnumeration<?> en = attr.getAll();
-
-		while (en.hasMore()) {
-			String mailhost;
-			String x = (String) en.next();
-			String f[] = x.split(" ");
-			if (f.length == 1)
-				mailhost = f[0];
-			else if (f[1].endsWith("."))
-				mailhost = f[1].substring(0, (f[1].length() - 1));
-			else
-				mailhost = f[1];
-			res.add(mailhost);
+			}
 		}
 		return res;
 	}
 
 	/***
 	 * https://www.rgagnon.com/javadetails/java-0452.html
+	 * 
 	 * @param address
 	 * @return
 	 */
 	public static boolean isEmailValid(String address) {
 		int pos = address.indexOf('@');
-		if (pos == -1)
+		if (pos == -1) {
 			return false;
+		}
 		String domain = address.substring(++pos);
 		ArrayList<String> mxList = null;
 		try {
@@ -199,13 +164,14 @@ public class NetUtil {
 		} catch (NamingException ex) {
 			return false;
 		}
-		if (mxList.size() == 0)
+		if (mxList.size() == 0) {
 			return false;
+		}
 		for (int mx = 0; mx < mxList.size(); mx++) {
 			boolean valid = false;
 			try {
 				int res;
-				Socket skt = new Socket((String) mxList.get(mx), 25);
+				Socket skt = new Socket(mxList.get(mx), 25);
 				BufferedReader rdr = new BufferedReader(new InputStreamReader(skt.getInputStream()));
 				BufferedWriter wtr = new BufferedWriter(new OutputStreamWriter(skt.getOutputStream()));
 				res = hear(rdr);
@@ -251,8 +217,9 @@ public class NetUtil {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			} finally {
-				if (valid)
+				if (valid) {
 					return true;
+				}
 			}
 		}
 		return false;
@@ -276,5 +243,47 @@ public class NetUtil {
 		} catch (IOException ex) {
 			return false;
 		}
+	}
+
+	/**
+	 * https://www.dev2qa.com/check-valid-www-domain-and-hostname-java-examples/
+	 * addStr : A domain string. return : true means addStr is a valid domain name,
+	 * false means addStr is not a valide domain name.
+	 */
+	public static boolean isValidDomain(String addStr) {
+		boolean ret = true;
+		if ("".equals(addStr) || addStr == null) {
+			ret = false;
+		} else if (addStr.startsWith("-") || addStr.endsWith("-")) {
+			ret = false;
+		} else if (addStr.indexOf(".") == -1) {
+			ret = false;
+		} else {
+			String domainEle[] = addStr.split("\\.");
+			int size = domainEle.length;
+			for (int i = 0; i < size; i++) {
+				String domainEleStr = domainEle[i];
+				if ("".equals(domainEleStr.trim())) {
+					return false;
+				}
+			}
+			char[] domainChar = addStr.toCharArray();
+			size = domainChar.length;
+			for (int i = 0; i < size; i++) {
+				char eleChar = domainChar[i];
+				String charStr = String.valueOf(eleChar);
+				if (!".".equals(charStr) && !"-".equals(charStr) && !charStr.matches("[a-zA-Z]") && !charStr.matches("[0-9]")) {
+					ret = false;
+					break;
+				}
+			}
+		}
+		return ret;
+	}
+
+	private static void say(BufferedWriter wr, String text) throws IOException {
+		wr.write(text + "\r\n");
+		wr.flush();
+		return;
 	}
 }

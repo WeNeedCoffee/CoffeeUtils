@@ -17,6 +17,24 @@ import java.util.List;
 // TODO credit/source
 public class StringUtil {
 
+	public static String arrToBin(byte[] in) {
+		String ret = "";
+		for (byte b : in) {
+			ret += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
+		}
+		return ret;
+	}
+
+	public static byte[] binToArr(String s) {
+		byte[] ret = new byte[s.length() / 8];
+		int i = 0;
+		for (String ss : explode(s, 8)) {
+			ret[i] = (byte) Integer.parseUnsignedInt(ss, 2);
+			i++;
+		}
+		return ret;
+	}
+
 	/***
 	 * Convert a string of 1's and 0's to a string of UTF-8 text
 	 *
@@ -31,16 +49,6 @@ public class StringUtil {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	public static byte[] binToArr(String s) {
-		byte[] ret = new byte[s.length() / 8];
-		int i = 0;
-		for (String ss : explode(s, 8)) {
-			ret[i] = (byte) Integer.parseUnsignedInt(ss, 2);
-			i++;
-		}
-		return ret;
 	}
 
 	/**
@@ -308,13 +316,5 @@ public class StringUtil {
 	 */
 	public static String textToBin(String in) {
 		return arrToBin(in.getBytes(StandardCharsets.UTF_8));
-	}
-
-	public static String arrToBin(byte[] in) {
-		String ret = "";
-		for (byte b : in) {
-			ret += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
-		}
-		return ret;
 	}
 }

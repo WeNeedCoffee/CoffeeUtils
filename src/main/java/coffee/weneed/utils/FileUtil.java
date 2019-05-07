@@ -8,6 +8,17 @@ import java.io.InputStream;
 
 public class FileUtil {
 
+	public static boolean canWrite(File file) throws IOException {
+		if (file.isDirectory()) {
+			throw new IOException("File is directory.");
+		} else if (file.exists()) {
+			throw new IOException("File already exists");
+		} else if (!file.canWrite()) {
+			throw new IOException("Can't write to the file");
+		}
+		return true;
+	}
+
 	/**
 	 * Compares the contents of two files to determine if they are equal or not.
 	 * <p>
@@ -96,17 +107,6 @@ public class FileUtil {
 				}
 			}
 		}
-	}
-	
-	public static boolean canWrite(File file) throws IOException {
-		if (file.isDirectory()) {
-			 throw new IOException("File is directory.");
-		} else if (file.exists()) {
-			throw new IOException("File already exists");
-		} else if (!file.canWrite()) {
-			throw new IOException("Can't write to the file");
-		}
-		return true;
 	}
 
 	public static void deleteDuplicates(File directory) throws IOException {

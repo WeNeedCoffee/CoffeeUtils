@@ -8,8 +8,8 @@ import coffee.weneed.utils.StringUtil;
  *
  * @author Daleth, beardog108
  *
- * encode(s.getBytes(StandardCharsets.UTF_8))
- * new String(decode(s), StandardCharsets.UTF_8)
+ *         encode(s.getBytes(StandardCharsets.UTF_8)) new String(decode(s),
+ *         StandardCharsets.UTF_8)
  */
 public class JSnow10 {
 
@@ -27,14 +27,17 @@ public class JSnow10 {
 
 	/**
 	 * new String(decode(s), StandardCharsets.UTF_8)
+	 * 
 	 * @param s
 	 * @return
 	 */
 	public static byte[] decode(String s) {
 		return StringUtil.binToArr(replaceAll(replaceAll(s, String.valueOf(one), "1"), String.valueOf(zero), "0"));
 	}
+
 	/**
 	 * encode(s.getBytes(StandardCharsets.UTF_8))
+	 * 
 	 * @param in
 	 * @return
 	 */
