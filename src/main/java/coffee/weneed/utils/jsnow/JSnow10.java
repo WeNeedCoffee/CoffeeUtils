@@ -6,10 +6,8 @@ import coffee.weneed.utils.StringUtil;
  * Encode strings into invisible zero width strings Based off
  * https://github.com/beardog108/snow10/
  *
- * @author Daleth, beardog108
- *
- *         encode(s.getBytes(StandardCharsets.UTF_8)) new String(decode(s),
- *         StandardCharsets.UTF_8)
+ * @author Daleth, beardog108 encode(s.getBytes(StandardCharsets.UTF_8)) new
+ *         String(decode(s), StandardCharsets.UTF_8)
  */
 public class JSnow10 {
 

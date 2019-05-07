@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -185,30 +184,30 @@ public class XMLNode {
 		XMLNode Node = returnClass ? this : null;
 		while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
 			switch (parser.getEventType()) {
-			case XmlPullParser.START_TAG:
-				XMLNode childNode = Node == null ? setName(parser.getName()) : new XMLNode(parser.getName());
-				for (int i = 0; i < parser.getAttributeCount(); i++) {
-					childNode.addAttribute(parser.getAttributeName(i), parser.getAttributeValue(i));
-				}
-				if (Node != null) {
-					Node.addNode(childNode);
-				}
-				Node = childNode;
-				break;
-			case XmlPullParser.END_TAG:
-				if (Node != null) {
-					XMLNode parent = Node.parent;
-					if (parent != null) {
-						Node = parent;
-						break;
+				case XmlPullParser.START_TAG:
+					XMLNode childNode = Node == null ? setName(parser.getName()) : new XMLNode(parser.getName());
+					for (int i = 0; i < parser.getAttributeCount(); i++) {
+						childNode.addAttribute(parser.getAttributeName(i), parser.getAttributeValue(i));
 					}
-				}
-				return returnClass ? this : Node;
-			case XmlPullParser.TEXT:
-				if (Node != null) {
-					Node.text = parser.getText();
-				}
-				break;
+					if (Node != null) {
+						Node.addNode(childNode);
+					}
+					Node = childNode;
+					break;
+				case XmlPullParser.END_TAG:
+					if (Node != null) {
+						XMLNode parent = Node.parent;
+						if (parent != null) {
+							Node = parent;
+							break;
+						}
+					}
+					return returnClass ? this : Node;
+				case XmlPullParser.TEXT:
+					if (Node != null) {
+						Node.text = parser.getText();
+					}
+					break;
 			}
 			parser.next();
 		}

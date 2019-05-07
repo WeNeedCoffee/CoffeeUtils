@@ -126,9 +126,17 @@ public class NetUtil {
 		} catch (NamingException e) {
 			return false;
 		}
-		
+
 	}
 
+	public static boolean isHostnameValid(String host) {
+		try {
+			InetAddress adr = InetAddress.getByName(host);
+			return adr.getHostName() != null;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	/***
 	 * https://stackoverflow.com/a/34228756
@@ -152,8 +160,8 @@ public class NetUtil {
 
 	/**
 	 * https://www.dev2qa.com/check-valid-www-domain-and-hostname-java-examples/
-	 * addStr : A domain string. return : true means addStr is a valid domain name,
-	 * false means addStr is not a valide domain name.
+	 * addStr : A domain string. return : true means addStr is a valid domain
+	 * name, false means addStr is not a valide domain name.
 	 */
 	public static boolean isValidDomain(String addStr) {
 		boolean ret = true;
@@ -184,14 +192,5 @@ public class NetUtil {
 			}
 		}
 		return ret;
-	}
-	
-	public static boolean isHostnameValid(String host) {
-		try {
-			InetAddress adr = InetAddress.getByName(host);
-			return adr.getHostName() != null;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 }

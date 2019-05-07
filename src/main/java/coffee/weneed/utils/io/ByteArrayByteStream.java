@@ -1,7 +1,6 @@
 package coffee.weneed.utils.io;
 
 import java.io.IOException;
-
 import coffee.weneed.utils.HexUtil;
 
 // TODO: Auto-generated Javadoc

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.cloud.vision.v1p3beta1.AnnotateImageRequest;
 import com.google.cloud.vision.v1p3beta1.AnnotateImageResponse;
 import com.google.cloud.vision.v1p3beta1.BatchAnnotateImagesResponse;
@@ -12,7 +11,6 @@ import com.google.cloud.vision.v1p3beta1.Feature;
 import com.google.cloud.vision.v1p3beta1.Image;
 import com.google.cloud.vision.v1p3beta1.ImageAnnotatorClient;
 import com.google.protobuf.ByteString;
-
 import coffee.weneed.utils.NetUtil;
 
 public class GoogleVisionUtil {

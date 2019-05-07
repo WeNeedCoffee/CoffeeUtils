@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
-
 import coffee.weneed.utils.HexUtil;
 
 // TODO: Auto-generated Javadoc

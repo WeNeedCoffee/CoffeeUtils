@@ -2,9 +2,7 @@ package coffee.weneed.utils.lang.filter;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
-
 import org.json.JSONObject;
-
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 
 // TODO: Auto-generated Javadoc
@@ -101,7 +99,8 @@ public class TreeNode implements IJSONObjectDataHolder {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see coffee.weneed.utils.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
+	 * @see
+	 * coffee.weneed.utils.IJSONObjectDataHolder#fromJSON(org.json.JSONObject)
 	 */
 	@Override
 	public void fromJSON(JSONObject json) {

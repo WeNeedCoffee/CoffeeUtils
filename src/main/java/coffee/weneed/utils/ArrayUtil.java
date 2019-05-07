@@ -92,8 +92,8 @@ public class ArrayUtil {
 	}
 
 	/***
-	 * Sorts a array by the default arrays.sort and removes duplicate entries from
-	 * the array.
+	 * Sorts a array by the default arrays.sort and removes duplicate entries
+	 * from the array.
 	 *
 	 * @param input
 	 * @return sorted list
@@ -174,8 +174,8 @@ public class ArrayUtil {
 	}
 
 	/***
-	 * Sorts a array by the default arrays.sort and removes duplicate entries from
-	 * the array.
+	 * Sorts a array by the default arrays.sort and removes duplicate entries
+	 * from the array.
 	 *
 	 * @param input
 	 * @return sorted list

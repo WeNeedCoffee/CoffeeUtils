@@ -2,23 +2,18 @@ package coffee.weneed.utils.google.vision;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.google.cloud.vision.v1p3beta1.WebDetection;
 import com.google.cloud.vision.v1p3beta1.WebDetection.WebEntity;
 import com.google.cloud.vision.v1p3beta1.WebDetection.WebImage;
 import com.google.cloud.vision.v1p3beta1.WebDetection.WebLabel;
 import com.google.cloud.vision.v1p3beta1.WebDetection.WebPage;
-
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 import coffee.weneed.utils.datatypes.CoffeeEntry;
 
 /**
- *
  * @author Daleth
- *
  */
 public class GoogleVisionResult implements IJSONObjectDataHolder {
 	private List<GoogleVisionEntityResult> descriptions = new ArrayList<>();

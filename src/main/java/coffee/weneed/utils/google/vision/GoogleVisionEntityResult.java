@@ -1,9 +1,7 @@
 package coffee.weneed.utils.google.vision;
 
 import org.json.JSONObject;
-
 import com.google.cloud.vision.v1p3beta1.WebDetection.WebEntity;
-
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 
 public class GoogleVisionEntityResult implements IJSONObjectDataHolder {

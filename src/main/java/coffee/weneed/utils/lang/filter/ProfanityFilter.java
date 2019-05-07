@@ -9,10 +9,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import coffee.weneed.utils.NetUtil;
 import coffee.weneed.utils.StringUtil;
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
@@ -326,10 +324,11 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			if (search(input, characterIndex, node, true)) {
 				return;
 			} /*
-				 * else if (characterIndex + 1 < input.length() && characterIndex - 1 >= 0) { if
+				 * else if (characterIndex + 1 < input.length() &&
+				 * characterIndex - 1 >= 0) { if
 				 * (letter.equals(input.charAt(characterIndex - 1)) ||
-				 * letter.equals(input.charAt(characterIndex + 1))) { searchAlongTree(input,
-				 * characterIndex + 1, node); return; } }
+				 * letter.equals(input.charAt(characterIndex + 1))) {
+				 * searchAlongTree(input, characterIndex + 1, node); return; } }
 				 */
 			if (!node.isEnd()) {
 				if (Character.toString(letter).matches("[\\W_]")) {

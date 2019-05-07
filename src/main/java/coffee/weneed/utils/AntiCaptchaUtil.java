@@ -1,7 +1,6 @@
 package coffee.weneed.utils;
 
 import java.net.URL;
-
 import com.anti_captcha.AnticaptchaBase;
 import com.anti_captcha.Api.FunCaptcha;
 import com.anti_captcha.Helper.DebugHelper;

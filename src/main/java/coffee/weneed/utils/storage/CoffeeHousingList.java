@@ -7,9 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-
 import org.json.JSONObject;
-
 import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.io.CoffeeAccessor;
 import coffee.weneed.utils.io.CoffeeWriter;
@@ -119,7 +117,8 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[])
+	 * coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[]
+	 * )
 	 */
 	@Override
 	public void fromByteArray(byte[] b) {
@@ -130,7 +129,8 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.
+	 * @see
+	 * coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.
 	 * JSONObject)
 	 */
 	@Override
@@ -253,8 +253,8 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.
-	 * io.CoffeeWriter)
+	 * coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.
+	 * utils. io.CoffeeWriter)
 	 */
 	@Override
 	protected void serialize(CoffeeWriter lew) {

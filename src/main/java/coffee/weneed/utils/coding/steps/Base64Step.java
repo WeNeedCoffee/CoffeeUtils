@@ -1,7 +1,6 @@
 package coffee.weneed.utils.coding.steps;
 
 import java.util.Base64;
-
 import coffee.weneed.utils.coding.CodingStep;
 
 // TODO: Auto-generated Javadoc

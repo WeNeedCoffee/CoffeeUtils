@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
-
 import coffee.weneed.utils.ArrayUtil;
 import coffee.weneed.utils.NetUtil;
 import coffee.weneed.utils.lang.filter.ProfanityFilter;

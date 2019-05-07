@@ -12,9 +12,8 @@ import java.util.Set;
  * MultiKeyHashMap provides to store values with two level hierarchy of keys,
  * super key (K1) and sub key (K2). The objects are inserted using super and sub
  * keys. It is not mandatory to use both keys as hierarchy, user can use two
- * keys to store the values and use either of the key to retrieve it.
- *
- * Original taken from https://gist.github.com/prathabk/1587699 by Prathab K @
+ * keys to store the values and use either of the key to retrieve it. Original
+ * taken from https://gist.github.com/prathabk/1587699 by Prathab K @
  * https://github.com/prathabk
  *
  * @author Prathab K, Dalethium
@@ -24,7 +23,9 @@ import java.util.Set;
  */
 public class MultiKeyMap<K1, K2, V> {
 
-	/** Map structure holding another Map structure to implement MultiKeyHashMap. */
+	/**
+	 * Map structure holding another Map structure to implement MultiKeyHashMap.
+	 */
 	private Map<K1, Map<K2, V>> mkMap;
 
 	/**
@@ -45,8 +46,8 @@ public class MultiKeyMap<K1, K2, V> {
 	}
 
 	/**
-	 * Returns <tt>true</tt> if value object is present for the specified (super)key
-	 * K1.
+	 * Returns <tt>true</tt> if value object is present for the specified
+	 * (super)key K1.
 	 *
 	 * @param k1 key1 (super-key)
 	 * @return <tt>true</tt> if value object present
@@ -56,8 +57,8 @@ public class MultiKeyMap<K1, K2, V> {
 	}
 
 	/**
-	 * Returns <tt>true</tt> if value object is present for the specified (super)key
-	 * K1 and (sub)key K2.
+	 * Returns <tt>true</tt> if value object is present for the specified
+	 * (super)key K1 and (sub)key K2.
 	 *
 	 * @param k1 key1 (super-key)
 	 * @param k2 key2 (sub-key)

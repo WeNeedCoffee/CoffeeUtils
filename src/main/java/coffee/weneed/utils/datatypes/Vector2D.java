@@ -7,7 +7,6 @@ import coffee.weneed.utils.MathUtil;
  * A utility class for handling 2 dimensional coordinates.
  *
  * @author Dalethium
- *
  */
 // TODO This should be rewritten and extended from java.awt.Point
 public class Vector2D {

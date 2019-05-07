@@ -1,18 +1,18 @@
 package coffee.weneed.utils.crypt;
 
-//Copyright (c) 2006 Damien Miller <djm@mindrot.org>
+// Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 //
-//Permission to use, copy, modify, and distribute this software for any
-//purpose with or without fee is hereby granted, provided that the above
-//copyright notice and this permission notice appear in all copies.
+// Permission to use, copy, modify, and distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
 //
-//THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-//WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-//MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-//ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-//WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-//ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-//OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
@@ -87,8 +87,8 @@ public class BCrypt {
 	static private final byte index_64[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, -1, -1, -1, -1, -1, -1, -1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, -1, -1, -1, -1, -1, -1, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, -1, -1, -1, -1, -1 };
 
 	/**
-	 * Look up the 3 bits base64-encoded by the specified character, range-checking
-	 * againt conversion table.
+	 * Look up the 3 bits base64-encoded by the specified character,
+	 * range-checking againt conversion table.
 	 *
 	 * @param x the base64-encoded value
 	 * @return the decoded value of x
@@ -112,8 +112,9 @@ public class BCrypt {
 	}
 
 	/**
-	 * Decode a string encoded using bcrypt's base64 scheme to a byte array. Note
-	 * that this is *not* compatible with the standard MIME-base64 encoding.
+	 * Decode a string encoded using bcrypt's base64 scheme to a byte array.
+	 * Note that this is *not* compatible with the standard MIME-base64
+	 * encoding.
 	 *
 	 * @param s       the string to decode
 	 * @param maxolen the maximum number of bytes to decode
@@ -167,8 +168,9 @@ public class BCrypt {
 	}
 
 	/**
-	 * Encode a byte array using bcrypt's slightly-modified base64 encoding scheme.
-	 * Note that this is *not* compatible with the standard MIME-base64 encoding.
+	 * Encode a byte array using bcrypt's slightly-modified base64 encoding
+	 * scheme. Note that this is *not* compatible with the standard MIME-base64
+	 * encoding.
 	 *
 	 * @param d   the byte array to encode
 	 * @param len the number of bytes to encode
@@ -221,8 +223,8 @@ public class BCrypt {
 	/**
 	 * Generate a salt for use with the BCrypt.hashpw() method
 	 *
-	 * @param log_rounds the log2 of the number of rounds of hashing to apply - the
-	 *                   work factor therefore increases as 2**log_rounds.
+	 * @param log_rounds the log2 of the number of rounds of hashing to apply -
+	 *                   the work factor therefore increases as 2**log_rounds.
 	 * @return an encoded salt value
 	 */
 	public static String gensalt(int log_rounds) {
@@ -232,8 +234,8 @@ public class BCrypt {
 	/**
 	 * Generate a salt for use with the BCrypt.hashpw() method
 	 *
-	 * @param log_rounds the log2 of the number of rounds of hashing to apply - the
-	 *                   work factor therefore increases as 2**log_rounds.
+	 * @param log_rounds the log2 of the number of rounds of hashing to apply -
+	 *                   the work factor therefore increases as 2**log_rounds.
 	 * @param random     an instance of SecureRandom to use
 	 * @return an encoded salt value
 	 */
@@ -348,8 +350,8 @@ public class BCrypt {
 	 *
 	 * @param password   the password to hash
 	 * @param salt       the binary salt to hash with the password
-	 * @param log_rounds the binary logarithm of the number of rounds of hashing to
-	 *                   apply
+	 * @param log_rounds the binary logarithm of the number of rounds of hashing
+	 *                   to apply
 	 * @return an array containing the binary hashed password
 	 */
 	private byte[] crypt_raw(byte password[], byte salt[], int log_rounds) {
@@ -390,8 +392,8 @@ public class BCrypt {
 	}
 
 	/**
-	 * Perform the "enhanced key schedule" step described by Provos and Mazieres in
-	 * "A Future-Adaptable Password Scheme"
+	 * Perform the "enhanced key schedule" step described by Provos and Mazieres
+	 * in "A Future-Adaptable Password Scheme"
 	 * http://www.openbsd.org/papers/bcrypt-paper.ps
 	 *
 	 * @param data salt information

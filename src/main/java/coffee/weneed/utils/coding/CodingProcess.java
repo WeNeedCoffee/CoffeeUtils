@@ -2,7 +2,6 @@ package coffee.weneed.utils.coding;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import coffee.weneed.utils.ArrayUtil;
 
 // TODO: Auto-generated Javadoc

@@ -1,7 +1,6 @@
 package coffee.weneed.utils.tests;
 
 import java.nio.charset.StandardCharsets;
-
 import coffee.weneed.utils.jsnow.JSnow10;
 
 public class JSnowTest {

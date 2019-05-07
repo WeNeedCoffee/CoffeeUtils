@@ -22,16 +22,16 @@ public class FileUtil {
 	/**
 	 * Compares the contents of two files to determine if they are equal or not.
 	 * <p>
-	 * This method checks to see if the two files are different lengths or if they
-	 * point to the same file, before resorting to byte-by-byte comparison of the
-	 * contents.
+	 * This method checks to see if the two files are different lengths or if
+	 * they point to the same file, before resorting to byte-by-byte comparison
+	 * of the contents.
 	 * <p>
 	 * Code origin: Avalon, org.apache.commons.io
 	 *
 	 * @param file1 the first file
 	 * @param file2 the second file
-	 * @return true if the content of the files are equal or they both don't exist,
-	 *         false otherwise
+	 * @return true if the content of the files are equal or they both don't
+	 *         exist, false otherwise
 	 * @throws IOException in case of an I/O error
 	 */
 	public static boolean contentEquals(final File file1, final File file2) throws IOException {
@@ -62,7 +62,8 @@ public class FileUtil {
 	}
 
 	/**
-	 * Compares the contents of two Streams to determine if they are equal or not.
+	 * Compares the contents of two Streams to determine if they are equal or
+	 * not.
 	 * <p>
 	 * This method buffers the input internally using
 	 * <code>BufferedInputStream</code> if they are not already buffered. Code

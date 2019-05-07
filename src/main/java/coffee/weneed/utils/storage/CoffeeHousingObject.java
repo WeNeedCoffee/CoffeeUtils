@@ -2,9 +2,7 @@ package coffee.weneed.utils.storage;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.json.JSONObject;
-
 import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.io.ByteArrayByteStream;
 import coffee.weneed.utils.io.CoffeeAccessor;
@@ -82,20 +80,20 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			String k = ca.readString();
 			ACoffeeHousingNode node = null;
 			switch (ca.readByte()) {
-			case (byte) 0x12: {
-				node = new CoffeeHousingObject(this);
-				node.deserialize(ca);
-				node.parent = this;
-				items.put(k, node);
-				break;
-			}
-			case (byte) 0x13: {
-				node = new CoffeeHousingList(this);
-				node.deserialize(ca);
-				node.parent = this;
-				items.put(k, node);
-				break;
-			}
+				case (byte) 0x12: {
+					node = new CoffeeHousingObject(this);
+					node.deserialize(ca);
+					node.parent = this;
+					items.put(k, node);
+					break;
+				}
+				case (byte) 0x13: {
+					node = new CoffeeHousingList(this);
+					node.deserialize(ca);
+					node.parent = this;
+					items.put(k, node);
+					break;
+				}
 			}
 		}
 	}
@@ -104,7 +102,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[])
+	 * coffee.weneed.utils.dataholders.IByteArrayDataHolder#fromByteArray(byte[]
+	 * )
 	 */
 	@Override
 	public void fromByteArray(byte[] in) {
@@ -118,7 +117,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.
+	 * @see
+	 * coffee.weneed.utils.dataholders.IJSONObjectDataHolder#fromJSON(org.json.
 	 * JSONObject)
 	 */
 	@Override
@@ -131,8 +131,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.utils.
-	 * io.CoffeeWriter)
+	 * coffee.weneed.utils.storage.ACoffeeHousingNode#serialize(coffee.weneed.
+	 * utils. io.CoffeeWriter)
 	 */
 	@Override
 	protected void serialize(CoffeeWriter cw) {
