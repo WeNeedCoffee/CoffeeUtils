@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
-import coffee.weneed.utils.HexUtil;
+import coffee.weneed.utils.StringUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -76,7 +76,7 @@ public class CoffeeWriter {
 	 */
 	@Override
 	public final String toString() {
-		return HexUtil.bytesToHex(getByteArray());
+		return StringUtil.bytesToHex(getByteArray());
 	}
 
 	/**

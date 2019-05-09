@@ -3,9 +3,9 @@ package coffee.weneed.utils.storage;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
-import coffee.weneed.utils.HexUtil;
 import coffee.weneed.utils.LogicUtil;
 import coffee.weneed.utils.MathUtil;
+import coffee.weneed.utils.StringUtil;
 import coffee.weneed.utils.io.ByteArrayByteStream;
 import coffee.weneed.utils.io.CoffeeAccessor;
 import coffee.weneed.utils.io.CoffeeWriter;
@@ -19,11 +19,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	/** The items. */
 	protected Map<String, Object> items = new HashMap<>();
 
-	/**
-	 * Instantiates a new coffee housing object.
-	 */
 	public CoffeeHousingObject() {
-
+		super();
 	}
 
 	/**
@@ -97,8 +94,12 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	@Override
 	public void fromByteArray(byte[] in) {
 		CoffeeAccessor ca = null;
-		if (parent == null) {
-			ca = new CoffeeAccessor(new ByteArrayByteStream(LogicUtil.decompress(in)));
+		if (compress) {
+			try {
+				ca = new CoffeeAccessor(new ByteArrayByteStream(LogicUtil.decompress(in)));
+			} catch (Exception e) {
+				ca = new CoffeeAccessor(new ByteArrayByteStream(in));
+			}
 		} else {
 			ca = new CoffeeAccessor(new ByteArrayByteStream(in));
 		}
@@ -144,7 +145,6 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 						}
 					}
 				}
-
 				if (k.equals("numbers")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof Number) {
@@ -155,11 +155,10 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 				if (k.equals("byte_arrays")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof String) {
-							items.put(sk, HexUtil.hexToBytes((String) obj.get(sk)));
+							items.put(sk, StringUtil.hexToBytes((String) obj.get(sk)));
 						}
 					}
 				}
-
 			}
 		}
 	}
@@ -289,7 +288,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		cw.write((byte) 0x10);
 		serialize(cw);
 		cw.write((byte) 0x11);
-		if (parent == null) {
+		if (compress) {
 			return LogicUtil.compress(cw.getByteArray());
 		} else {
 			return cw.getByteArray();
@@ -330,7 +329,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			numbers.put(s, tnumbers.get(s));
 		}
 		for (String s : tbyte_arrays.keySet()) {
-			byte_arrays.put(s, HexUtil.bytesToHex(tbyte_arrays.get(s)));
+			byte_arrays.put(s, StringUtil.bytesToHex(tbyte_arrays.get(s)));
 		}
 		for (String s : tchars.keySet()) {
 			chars.put(s, tchars.get(s));

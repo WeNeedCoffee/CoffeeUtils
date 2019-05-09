@@ -1,14 +1,17 @@
 package coffee.weneed.utils.coding.steps;
 
-public class FunkeyStep extends Base64Step {
+import coffee.weneed.utils.coding.ICodingStep;
 
-	private char[] code;
+public class FunkeyStep implements ICodingStep {
 
-	private char[][] cols;
+	private byte[] code;
 
-	public FunkeyStep(char[] code, char[][] cols) throws IllegalArgumentException {
+	private byte[][] cols;
+
+	// TODO broken
+	private FunkeyStep(byte[] code, byte[][] cols) throws IllegalArgumentException {
 		int len = code.length;
-		for (char[] col : cols) {
+		for (byte[] col : cols) {
 			if (col.length != len) {
 				throw new IllegalArgumentException("All character array lengths must be the same.");
 			}
@@ -20,10 +23,9 @@ public class FunkeyStep extends Base64Step {
 	@Override
 	public byte[] decode(byte[] in) {
 		int col = 0;
-		char[] arr = new String(super.decode(in)).toCharArray();
-		char[] ret = new char[arr.length];
+		byte[] ret = new byte[in.length];
 		int pos = 0;
-		for (char character : arr) {
+		for (byte character : in) {
 			for (int i = 0; i < 256; i++) {
 				if (cols[col][i] == character) {
 					ret[pos++] = code[i];
@@ -36,17 +38,16 @@ public class FunkeyStep extends Base64Step {
 			}
 		}
 
-		return super.decode(new String(ret).getBytes());
+		return ret;
 
 	}
 
 	@Override
 	public byte[] encode(byte[] in) {
 		int col = 0;
-		char[] arr = new String(super.encode(in)).toCharArray();
-		char[] ret = new char[arr.length];
+		byte[] ret = new byte[in.length];
 		int pos = 0;
-		for (char character : arr) {
+		for (byte character : in) {
 			for (int i = 0; i < 256; i++) {
 				if (code[i] == character) {
 					ret[pos++] = cols[col][i];
@@ -58,6 +59,6 @@ public class FunkeyStep extends Base64Step {
 				col = 0;
 			}
 		}
-		return super.encode(new String(ret).getBytes());
+		return ret;
 	}
 }

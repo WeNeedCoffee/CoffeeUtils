@@ -11,18 +11,18 @@ import coffee.weneed.utils.ArrayUtil;
 public class CodingProcess {
 
 	/** The steps. */
-	private List<CodingStep> steps = new ArrayList<>();
+	private List<ICodingStep> steps = new ArrayList<>();
 
 	/** The rsteps. */
-	private List<CodingStep> rsteps = new ArrayList<>();
+	private List<ICodingStep> rsteps = new ArrayList<>();
 
 	/**
 	 * Instantiates a new crypt process.
 	 *
 	 * @param s the s
 	 */
-	public CodingProcess(CodingStep... s) {
-		for (CodingStep e : s) {
+	public CodingProcess(ICodingStep... s) {
+		for (ICodingStep e : s) {
 			steps.add(e);
 		}
 		rsteps = ArrayUtil.reverse(steps);
@@ -36,8 +36,8 @@ public class CodingProcess {
 	 */
 	public byte[] decode(byte[] input) {
 		byte[] h = input;
-		for (CodingStep s : new ArrayList<>(rsteps)) {
-			h = s.encode(h);
+		for (ICodingStep s : new ArrayList<>(rsteps)) {
+			h = s.decode(h);
 		}
 		return h;
 	}
@@ -50,7 +50,7 @@ public class CodingProcess {
 	 */
 	public byte[] encode(byte[] input) {
 		byte[] h = input;
-		for (CodingStep s : new ArrayList<>(steps)) {
+		for (ICodingStep s : new ArrayList<>(steps)) {
 			h = s.encode(h);
 		}
 		return h;

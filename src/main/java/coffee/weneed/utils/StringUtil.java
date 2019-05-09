@@ -1,5 +1,6 @@
 package coffee.weneed.utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
@@ -16,6 +17,9 @@ import java.util.List;
  */
 // TODO credit/source
 public class StringUtil {
+
+	/** The Constant HEX. */
+	static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
 	public static String arrToBin(byte[] in) {
 		String ret = "";
@@ -49,6 +53,18 @@ public class StringUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static String bytesToHex(byte[] bytes) {
+
+		char[] hexChars = new char[bytes.length * 2];
+		int v;
+		for (int j = 0; j < bytes.length; j++) {
+			v = bytes[j] & 0xFF;
+			hexChars[j * 2] = StringUtil.HEX[v >>> 4];
+			hexChars[j * 2 + 1] = StringUtil.HEX[v & 0x0F];
+		}
+		return new String(hexChars);
 	}
 
 	/**
@@ -177,6 +193,47 @@ public class StringUtil {
 			builder.append(padchar);
 		}
 		return builder.toString();
+	}
+
+	/**
+	 * Gets the byte array from hex string.
+	 *
+	 * @param hex the hex
+	 * @return the byte array from hex string
+	 */
+	public static byte[] hexToBytes(String hex) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		int nexti = 0;
+		int nextb = 0;
+		boolean highoc = true;
+		outer: while (true) {
+			int number = -1;
+			while (number == -1) {
+				if (nexti == hex.length()) {
+					break outer;
+				}
+				char chr = hex.charAt(nexti);
+				if (chr >= '0' && chr <= '9') {
+					number = chr - '0';
+				} else if (chr >= 'a' && chr <= 'f') {
+					number = chr - 'a' + 10;
+				} else if (chr >= 'A' && chr <= 'F') {
+					number = chr - 'A' + 10;
+				} else {
+					number = -1;
+				}
+				nexti++;
+			}
+			if (highoc) {
+				nextb = number << 4;
+				highoc = false;
+			} else {
+				nextb |= number;
+				highoc = true;
+				baos.write(nextb);
+			}
+		}
+		return baos.toByteArray();
 	}
 
 	/**

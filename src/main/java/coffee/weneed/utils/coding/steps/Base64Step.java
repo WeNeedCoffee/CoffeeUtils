@@ -1,13 +1,13 @@
 package coffee.weneed.utils.coding.steps;
 
 import java.util.Base64;
-import coffee.weneed.utils.coding.CodingStep;
+import coffee.weneed.utils.coding.ICodingStep;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Base64Step.
  */
-public class Base64Step implements CodingStep {
+public class Base64Step implements ICodingStep {
 
 	/*
 	 * (non-Javadoc)

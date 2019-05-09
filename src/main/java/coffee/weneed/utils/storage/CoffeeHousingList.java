@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import org.json.JSONObject;
-import coffee.weneed.utils.HexUtil;
+import coffee.weneed.utils.StringUtil;
 import coffee.weneed.utils.io.CoffeeAccessor;
 import coffee.weneed.utils.io.CoffeeWriter;
 
@@ -379,7 +379,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 			bytes.put(String.valueOf(i), tbytes.get(i));
 		}
 		for (int i : tbyte_arrays.keySet()) {
-			byte_arrays.put(String.valueOf(i), HexUtil.bytesToHex(tbyte_arrays.get(i)));
+			byte_arrays.put(String.valueOf(i), StringUtil.bytesToHex(tbyte_arrays.get(i)));
 		}
 		for (int i : tints.keySet()) {
 			ints.put(String.valueOf(i), tints.get(i));
