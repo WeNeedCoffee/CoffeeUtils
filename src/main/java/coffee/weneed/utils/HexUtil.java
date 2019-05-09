@@ -32,7 +32,7 @@ public class HexUtil {
 	 * @param hex the hex
 	 * @return the byte array from hex string
 	 */
-	public static byte[] getByteArrayFromHexString(String hex) {
+	public static byte[] hexToBytes(String hex) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		int nexti = 0;
 		int nextb = 0;

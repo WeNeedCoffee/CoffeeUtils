@@ -6,6 +6,13 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URLConnection;
+import java.util.Arrays;
+import coffee.weneed.utils.io.ByteArrayByteStream;
+import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeWriter;
+import net.jpountz.lz4.LZ4Compressor;
+import net.jpountz.lz4.LZ4Factory;
+import net.jpountz.lz4.LZ4FastDecompressor;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,6 +33,30 @@ public class LogicUtil {
 		return mimeType;
 	}
 
+	public static byte[] decompress(byte[] in) {
+		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
+		LZ4Factory factory = LZ4Factory.fastestInstance();
+		LZ4FastDecompressor decompressor = factory.fastDecompressor();
+		int compressedLength = ca.readSmart().intValue();
+		int decompressedLength = ca.readSmart().intValue();
+		byte[] restored = new byte[decompressedLength];
+		decompressor.decompress(ca.readBytes(compressedLength), 0, restored, 0, decompressedLength);
+		return restored;		
+	}
+	
+	public static byte[] compress(byte[] data) {
+		CoffeeWriter cw = new CoffeeWriter();
+		LZ4Factory factory = LZ4Factory.fastestInstance();
+		LZ4Compressor compressor = factory.fastCompressor();
+		int maxCompressedLength = compressor.maxCompressedLength(data.length);
+		byte[] compressed = new byte[maxCompressedLength];
+		int compressedLength = compressor.compress(data, 0, data.length, compressed, 0, maxCompressedLength);
+		compressed = Arrays.copyOf(compressed, compressedLength);
+		cw.writeSmart(compressed.length);
+		cw.writeSmart(data.length);
+		cw.write(compressed);
+		return cw.getByteArray();
+	}
 	/**
 	 * https://stackoverflow.com/questions/1149703/how-can-i-convert-a-stack-trace-to-a-string
 	 *

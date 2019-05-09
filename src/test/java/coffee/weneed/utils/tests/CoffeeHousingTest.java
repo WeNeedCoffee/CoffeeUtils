@@ -16,24 +16,25 @@ public class CoffeeHousingTest {
 	 */
 	public static void main(String[] args) {
 		CoffeeHousingObject p = new CoffeeHousingObject(null);
-		p.setObject("1", 1L);
-		p.setObject("2", "1L");
-		p.setObject("3", (byte) 0x01);
+		p.setNumber("1", 1L);
+		p.setString("2", "1L");
+		p.setNumber("3", (byte) 0x01);
+		p.setByteArray("4", "oof.ca".getBytes());
 		CoffeeHousingObject p1 = new CoffeeHousingObject(null);
-		p1.setObject("1", 1L);
-		p1.setObject("2", "1L");
-		p1.setObject("3", (byte) 0x01);
+		p1.setNumber("1", 1.006d);
+		p1.setString("2", "1L");
+		p1.setNumber("3", (byte) 0x01);
 		CoffeeHousingObject p2 = new CoffeeHousingObject(null);
-		p2.setObject("1", 1L);
-		p2.setObject("2", "1L");
-		p2.setObject("3", (byte) 0x01);
+		p2.setNumber("1", 1.04f);
+		p2.setString("2", "1L");
+		p2.setNumber("3", (byte) 0x01);
 		CoffeeHousingObject p3 = new CoffeeHousingObject(null);
-		p3.setObject("1", 1L);
-		p3.setObject("2", "1L");
-		p3.setObject("3", (byte) 0x01);
-		p1.setObject("p2", p2);
-		p.setObject("p1", p1);
-		p.setObject("p3", p3);
+		p3.setNumber("1", 1f);
+		p3.setString("2", "1L");
+		p3.setNumber("3", (byte) 0x01);
+		p1.setChild("p2", p2);
+		p.setChild("p1", p1);
+		p.setChild("p3", p3);
 		byte[] pb = p.toByteArray();
 		System.out.println(HexUtil.bytesToHex(pb));
 		System.out.println(p.toJSON().toString());
@@ -42,6 +43,5 @@ public class CoffeeHousingTest {
 		pb = p.toByteArray();
 		System.out.println(HexUtil.bytesToHex(pb));
 		System.out.println(p.toJSON().toString());
-
 	}
 }
