@@ -149,6 +149,10 @@ public class spam {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+
+		// sortList(de.getPath());
+		// sortList(dd.getPath());
+		/// *
 		em = ArrayUtil.toList(new String(NetUtil.downloadUrl(ee.toURI().toURL())).split("\\n"));
 		em1 = ArrayUtil.toList(new String(NetUtil.downloadUrl(eme.toURI().toURL())).split("\\n"));
 		emd = ArrayUtil.toList(new String(NetUtil.downloadUrl(ed.toURI().toURL())).split("\\n"));
@@ -157,6 +161,7 @@ public class spam {
 		check();
 		sortList(de.getPath());
 		sortList(dd.getPath());
+		// */
 	}
 
 	public static void sortList(String file) throws MalformedURLException {

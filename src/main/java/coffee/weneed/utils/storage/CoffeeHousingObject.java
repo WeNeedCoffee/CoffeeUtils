@@ -21,12 +21,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 
 	/**
 	 * Instantiates a new coffee housing object.
-	 *
 	 */
 	public CoffeeHousingObject() {
-		
+
 	}
-	
+
 	/**
 	 * Instantiates a new coffee housing object.
 	 *
@@ -122,10 +121,12 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			Object o = json.get(k);
 			if (o instanceof JSONObject) {
 				JSONObject obj = (JSONObject) o;
-				
+
 				if (k.equals("strings")) {
 					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof String) items.put(sk, obj.getString(sk));
+						if (obj.get(sk) instanceof String) {
+							items.put(sk, obj.getString(sk));
+						}
 					}
 				}
 				if (k.equals("children")) {
@@ -143,20 +144,44 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 						}
 					}
 				}
-				
+
 				if (k.equals("numbers")) {
 					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof Number) items.put(sk, MathUtil.smartNumber((Number) obj.get(sk)));
+						if (obj.get(sk) instanceof Number) {
+							items.put(sk, MathUtil.smartNumber((Number) obj.get(sk)));
+						}
 					}
 				}
 				if (k.equals("byte_arrays")) {
 					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof String) items.put(sk, HexUtil.hexToBytes((String) obj.get(sk)));
+						if (obj.get(sk) instanceof String) {
+							items.put(sk, HexUtil.hexToBytes((String) obj.get(sk)));
+						}
 					}
 				}
-				
+
 			}
 		}
+	}
+
+	public Object get(String k) {
+		return items.get(k);
+	}
+
+	public byte[] getByteArray(String k) {
+		return (byte[]) items.get(k);
+	}
+
+	public ACoffeeHousingNode getChild(String k) {
+		return (ACoffeeHousingNode) items.get(k);
+	}
+
+	public Number getNumber(String k) {
+		return (Number) items.get(k);
+	}
+
+	public String getString(String k) {
+		return (String) items.get(k);
 	}
 
 	/*
@@ -226,42 +251,14 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 *
 	 * @param k the k
 	 * @param o the o
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public void set(String k, Object o) throws Exception  {
+	public void set(String k, Object o) throws Exception {
 		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode) {
 			items.put(k, o);
 		} else {
 			throw new Exception("Unsupported data type");
 		}
-	}
-	
-	public Number getNumber(String k) {
-		return (Number) items.get(k);
-	}
-	
-	public String getString(String k) {
-		return (String) items.get(k);
-	}
-	
-	public byte[] getByteArray(String k) {
-		return (byte[]) items.get(k);
-	}
-	
-	public ACoffeeHousingNode getChild(String k) {
-		return (ACoffeeHousingNode) items.get(k);
-	}
-	
-	public Object get(String k) {
-		return items.get(k);
-	}
-	
-	public void setNumber(String k, Number n) {
-		items.put(k, MathUtil.smartNumber(n));
-	}
-	
-	public void setString(String k, String s) {
-		items.put(k, s);
 	}
 
 	public void setByteArray(String k, byte[] b) {
@@ -272,6 +269,15 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		chn.parent = this;
 		items.put(k, chn);
 	}
+
+	public void setNumber(String k, Number n) {
+		items.put(k, MathUtil.smartNumber(n));
+	}
+
+	public void setString(String k, String s) {
+		items.put(k, s);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *

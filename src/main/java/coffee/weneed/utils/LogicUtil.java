@@ -20,30 +20,6 @@ import net.jpountz.lz4.LZ4FastDecompressor;
  */
 public class LogicUtil {
 
-	/**
-	 * https://kalliphant.com/javamimetype_from_bytearr/
-	 *
-	 * @param data
-	 * @return
-	 * @throws Exception
-	 */
-	public static String getMimeType(byte data[]) throws Exception {
-		InputStream is = new BufferedInputStream(new ByteArrayInputStream(data));
-		String mimeType = URLConnection.guessContentTypeFromStream(is);
-		return mimeType;
-	}
-
-	public static byte[] decompress(byte[] in) {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
-		LZ4Factory factory = LZ4Factory.fastestInstance();
-		LZ4FastDecompressor decompressor = factory.fastDecompressor();
-		int compressedLength = ca.readSmart().intValue();
-		int decompressedLength = ca.readSmart().intValue();
-		byte[] restored = new byte[decompressedLength];
-		decompressor.decompress(ca.readBytes(compressedLength), 0, restored, 0, decompressedLength);
-		return restored;		
-	}
-	
 	public static byte[] compress(byte[] data) {
 		CoffeeWriter cw = new CoffeeWriter();
 		LZ4Factory factory = LZ4Factory.fastestInstance();
@@ -57,6 +33,31 @@ public class LogicUtil {
 		cw.write(compressed);
 		return cw.getByteArray();
 	}
+
+	public static byte[] decompress(byte[] in) {
+		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
+		LZ4Factory factory = LZ4Factory.fastestInstance();
+		LZ4FastDecompressor decompressor = factory.fastDecompressor();
+		int compressedLength = ca.readSmart().intValue();
+		int decompressedLength = ca.readSmart().intValue();
+		byte[] restored = new byte[decompressedLength];
+		decompressor.decompress(ca.readBytes(compressedLength), 0, restored, 0, decompressedLength);
+		return restored;
+	}
+
+	/**
+	 * https://kalliphant.com/javamimetype_from_bytearr/
+	 *
+	 * @param data
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getMimeType(byte data[]) throws Exception {
+		InputStream is = new BufferedInputStream(new ByteArrayInputStream(data));
+		String mimeType = URLConnection.guessContentTypeFromStream(is);
+		return mimeType;
+	}
+
 	/**
 	 * https://stackoverflow.com/questions/1149703/how-can-i-convert-a-stack-trace-to-a-string
 	 *

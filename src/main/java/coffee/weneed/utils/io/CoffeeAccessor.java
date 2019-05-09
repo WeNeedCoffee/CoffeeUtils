@@ -51,31 +51,6 @@ public class CoffeeAccessor {
 		return bs.getPosition();
 	}
 
-	public final Number readSmart() {
-		switch (readByte()) {
-			case 0: {
-				return readByte();
-			}
-			case 1: {
-				return readShort();
-			}
-			case 2: {
-				return readInt();
-			}
-			case 3: {
-				return readLong();
-			}
-			case 4: {
-				return readFloat();
-			}
-			case 5: {
-				return readDouble();
-			}
-			default: {
-				return Long.MAX_VALUE + Long.MAX_VALUE;
-			}
-		}
-	}
 	/**
 	 * Read byte.
 	 *
@@ -177,6 +152,32 @@ public class CoffeeAccessor {
 		int byte1 = bs.readByte();
 		int byte2 = bs.readByte();
 		return (short) ((byte2 << 8) + byte1);
+	}
+
+	public final Number readSmart() {
+		switch (readByte()) {
+			case 0: {
+				return readByte();
+			}
+			case 1: {
+				return readShort();
+			}
+			case 2: {
+				return readInt();
+			}
+			case 3: {
+				return readLong();
+			}
+			case 4: {
+				return readFloat();
+			}
+			case 5: {
+				return readDouble();
+			}
+			default: {
+				return Long.MAX_VALUE + Long.MAX_VALUE;
+			}
+		}
 	}
 
 	/**

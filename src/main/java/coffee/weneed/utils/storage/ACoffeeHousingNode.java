@@ -13,13 +13,14 @@ public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONO
 
 	/** The parent. */
 	protected ACoffeeHousingNode parent;
+
 	/**
 	 * Instantiates a new a coffee housing node.
 	 */
 	public ACoffeeHousingNode() {
-		this.parent = null;
+		parent = null;
 	}
-	
+
 	/**
 	 * Instantiates a new a coffee housing node.
 	 *

@@ -126,30 +126,6 @@ public class CoffeeWriter {
 		writeInt(Float.floatToIntBits(f));
 	}
 
-	public final void writeSmart(Number n) {
-		if (n.doubleValue() % 1 == 0) {
-			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
-				write((byte) 0);
-				write(n.byteValue());
-			} else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE) {
-				write((byte) 1);
-				writeShort(n.shortValue());
-			} else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE) {
-				write((byte) 2);
-				writeInt(n.intValue());
-			} else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE) {
-				write((byte) 3);
-				writeLong(n.longValue());
-			}
-		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
-			write((byte) 4);
-			writeFloat(n.floatValue());
-		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
-			write((byte) 5);
-			writeDouble(n.doubleValue());
-		}
-	}
-
 	/**
 	 * Write int.
 	 *
@@ -234,6 +210,30 @@ public class CoffeeWriter {
 	public final void writeShort(short i) {
 		write((byte) (i & 0xFF));
 		write((byte) (i >>> 8 & 0xFF));
+	}
+
+	public final void writeSmart(Number n) {
+		if (n.doubleValue() % 1 == 0) {
+			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
+				write((byte) 0);
+				write(n.byteValue());
+			} else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE) {
+				write((byte) 1);
+				writeShort(n.shortValue());
+			} else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE) {
+				write((byte) 2);
+				writeInt(n.intValue());
+			} else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE) {
+				write((byte) 3);
+				writeLong(n.longValue());
+			}
+		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
+			write((byte) 4);
+			writeFloat(n.floatValue());
+		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
+			write((byte) 5);
+			writeDouble(n.doubleValue());
+		}
 	}
 
 	/**

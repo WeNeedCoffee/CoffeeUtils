@@ -22,25 +22,6 @@ public class MathUtil {
 		}
 		return sum / m.length;
 	}
-	
-	public static Object smartNumber(Number n) {
-		if (n.doubleValue() % 1 == 0) {
-			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
-				return n.byteValue();
-			} else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE) {
-				return n.shortValue();
-			} else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE) {
-				return n.intValue();
-			} else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE) {
-				return n.longValue();
-			} 
-		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
-			return n.floatValue();
-		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
-			return n.doubleValue();
-		}
-		return null;
-	}
 
 	/**
 	 * Gets the median.
@@ -87,5 +68,24 @@ public class MathUtil {
 		} else {
 			return d < 0 ? -(i + 1) : i + 1;
 		}
+	}
+
+	public static Object smartNumber(Number n) {
+		if (n.doubleValue() % 1 == 0) {
+			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
+				return n.byteValue();
+			} else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE) {
+				return n.shortValue();
+			} else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE) {
+				return n.intValue();
+			} else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE) {
+				return n.longValue();
+			}
+		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
+			return n.floatValue();
+		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
+			return n.doubleValue();
+		}
+		return null;
 	}
 }
