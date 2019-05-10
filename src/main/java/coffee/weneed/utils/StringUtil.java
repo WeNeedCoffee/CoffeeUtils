@@ -1,7 +1,6 @@
 package coffee.weneed.utils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -21,15 +20,7 @@ public class StringUtil {
 	/** The Constant HEX. */
 	static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
-	public static String arrToBin(byte[] in) {
-		String ret = "";
-		for (byte b : in) {
-			ret += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
-		}
-		return ret;
-	}
-
-	public static byte[] binToArr(String s) {
+	public static byte[] binToBytes(String s) {
 		byte[] ret = new byte[s.length() / 8];
 		int i = 0;
 		for (String ss : explode(s, 8)) {
@@ -47,12 +38,15 @@ public class StringUtil {
 	 * @author Daleth
 	 */
 	public static String binToText(String s) {
-		try {
-			return new String(binToArr(s), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		return new String(binToBytes(s), StandardCharsets.UTF_8);
+	}
+
+	public static String bytesToBin(byte[] in) {
+		String ret = "";
+		for (byte b : in) {
+			ret += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
 		}
-		return null;
+		return ret;
 	}
 
 	public static String bytesToHex(byte[] bytes) {
@@ -372,6 +366,6 @@ public class StringUtil {
 	 * @return string of 1's and 0's
 	 */
 	public static String textToBin(String in) {
-		return arrToBin(in.getBytes(StandardCharsets.UTF_8));
+		return bytesToBin(in.getBytes(StandardCharsets.UTF_8));
 	}
 }

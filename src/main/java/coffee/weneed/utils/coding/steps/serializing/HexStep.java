@@ -1,7 +1,7 @@
-package coffee.weneed.utils.coding.steps;
+package coffee.weneed.utils.coding.steps.serializing;
 
 import coffee.weneed.utils.StringUtil;
-import coffee.weneed.utils.coding.ICodingStep;
+import coffee.weneed.utils.coding.steps.ICodingStep;
 
 public class HexStep implements ICodingStep {
 
@@ -13,6 +13,11 @@ public class HexStep implements ICodingStep {
 	@Override
 	public byte[] encode(byte[] input) {
 		return StringUtil.bytesToHex(input).getBytes();
+	}
+
+	@Override
+	public int getID() {
+		return 6;
 	}
 
 }

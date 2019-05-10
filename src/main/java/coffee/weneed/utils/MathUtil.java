@@ -81,8 +81,6 @@ public class MathUtil {
 			} else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE) {
 				return n.longValue();
 			}
-		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
-			return n.floatValue();
 		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
 			return n.doubleValue();
 		}

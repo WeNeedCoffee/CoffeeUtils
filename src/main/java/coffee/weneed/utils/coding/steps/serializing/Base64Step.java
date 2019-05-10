@@ -1,7 +1,7 @@
-package coffee.weneed.utils.coding.steps;
+package coffee.weneed.utils.coding.steps.serializing;
 
 import java.util.Base64;
-import coffee.weneed.utils.coding.ICodingStep;
+import coffee.weneed.utils.coding.steps.ICodingStep;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -27,6 +27,11 @@ public class Base64Step implements ICodingStep {
 	@Override
 	public byte[] encode(byte[] input) {
 		return Base64.getEncoder().encode(input);
+	}
+
+	@Override
+	public int getID() {
+		return 4;
 	}
 
 }

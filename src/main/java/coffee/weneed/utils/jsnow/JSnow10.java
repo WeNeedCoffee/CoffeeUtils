@@ -30,7 +30,7 @@ public class JSnow10 {
 	 * @return
 	 */
 	public static byte[] decode(String s) {
-		return StringUtil.binToArr(replaceAll(replaceAll(s, String.valueOf(one), "1"), String.valueOf(zero), "0"));
+		return StringUtil.binToBytes(replaceAll(replaceAll(s, String.valueOf(one), "1"), String.valueOf(zero), "0"));
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class JSnow10 {
 	 * @return
 	 */
 	public static String encode(byte[] in) {
-		return replaceAll(replaceAll(StringUtil.arrToBin(in), "1", String.valueOf(one)), "0", String.valueOf(zero));
+		return replaceAll(replaceAll(StringUtil.bytesToBin(in), "1", String.valueOf(one)), "0", String.valueOf(zero));
 	}
 
 	public static String escapeRegExp(String str) {

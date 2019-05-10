@@ -20,6 +20,15 @@ public class CoffeeAccessor {
 	 *
 	 * @param bs the bs
 	 */
+	public CoffeeAccessor(byte[] in) {
+		this(new ByteArrayByteStream(in));
+	}
+
+	/**
+	 * Instantiates a new little endian accessor.
+	 *
+	 * @param bs the bs
+	 */
 	public CoffeeAccessor(ByteArrayByteStream bs) {
 		this.bs = bs;
 	}
@@ -49,6 +58,10 @@ public class CoffeeAccessor {
 	 */
 	public final long getPosition() {
 		return bs.getPosition();
+	}
+
+	public final byte[] getRemainingBytes() {
+		return bs.getRemainingBytes();
 	}
 
 	/**

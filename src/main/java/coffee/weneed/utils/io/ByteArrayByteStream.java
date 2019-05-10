@@ -1,6 +1,7 @@
 package coffee.weneed.utils.io;
 
 import java.io.IOException;
+import coffee.weneed.utils.ArrayUtil;
 import coffee.weneed.utils.StringUtil;
 
 // TODO: Auto-generated Javadoc
@@ -54,6 +55,10 @@ public class ByteArrayByteStream {
 	 */
 	public long getPosition() {
 		return pos;
+	}
+
+	public byte[] getRemainingBytes() {
+		return ArrayUtil.copyOf(arr, pos);
 	}
 
 	/**

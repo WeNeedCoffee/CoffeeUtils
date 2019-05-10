@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import coffee.weneed.utils.ArrayUtil;
 import coffee.weneed.utils.NetUtil;
@@ -27,7 +28,7 @@ public class spam {
 	static int i = 0;
 
 	public static void check() {
-		int i = 0;
+		int i = em1.size() + emd.size();
 		FileWriter frde = null;
 		FileWriter frdd = null;
 		FileWriter freme = null;
@@ -40,6 +41,7 @@ public class spam {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		em = em.subList(i - 10, em.size());
 		for (String s : em) {
 			i++;
 			boolean deadd = false;
@@ -48,6 +50,9 @@ public class spam {
 			boolean emdd = false;
 			String domain = StringUtil.getEnd(s, "@");
 			if (em1.contains(s) || emd.contains(s)) {
+				String perc = Float.toString(i * 100.0f / em.size());
+				perc = perc.length() >= 6 ? perc.substring(0, 6) : perc;
+				System.out.println("Total processed: " + i + " (" + perc + "%) Total Valid Emails: " + em1.size() + " Total Dead Emails: " + emd.size() + " Total Valid Domains: " + exists.size() + " Total Dead Domains: " + dead.size() + " " + (emdd ? "Email was Dead. " : em11 ? "Email was valid. " : "Email was Dead. "));
 				continue;
 			}
 			if (dead.contains(domain)) {
@@ -153,11 +158,23 @@ public class spam {
 		// sortList(de.getPath());
 		// sortList(dd.getPath());
 		/// *
-		em = ArrayUtil.toList(new String(NetUtil.downloadUrl(ee.toURI().toURL())).split("\\n"));
-		em1 = ArrayUtil.toList(new String(NetUtil.downloadUrl(eme.toURI().toURL())).split("\\n"));
-		emd = ArrayUtil.toList(new String(NetUtil.downloadUrl(ed.toURI().toURL())).split("\\n"));
-		exists = ArrayUtil.toList(new String(NetUtil.downloadUrl(de.toURI().toURL())).split("\\n"));
-		dead = ArrayUtil.toList(new String(NetUtil.downloadUrl(dd.toURI().toURL())).split("\\n"));
+		System.out.println("Total processed: 1");
+
+		em = ArrayUtil.toList(new String(NetUtil.downloadUrl(ee.toURI().toURL()), StandardCharsets.UTF_8).split("\\n"));
+
+		System.out.println("Total processed: 2");
+		em1 = ArrayUtil.toList(new String(NetUtil.downloadUrl(eme.toURI().toURL()), StandardCharsets.UTF_8).split("\\n"));
+
+		System.out.println("Total processed: 3");
+		emd = ArrayUtil.toList(new String(NetUtil.downloadUrl(ed.toURI().toURL()), StandardCharsets.UTF_8).split("\\n"));
+
+		System.out.println("Total processed: 4");
+		exists = ArrayUtil.toList(new String(NetUtil.downloadUrl(de.toURI().toURL()), StandardCharsets.UTF_8).split("\\n"));
+
+		System.out.println("Total processed: 5");
+		dead = ArrayUtil.toList(new String(NetUtil.downloadUrl(dd.toURI().toURL()), StandardCharsets.UTF_8).split("\\n"));
+
+		System.out.println("Total processed: 6");
 		check();
 		sortList(de.getPath());
 		sortList(dd.getPath());

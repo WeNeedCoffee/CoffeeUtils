@@ -3,6 +3,7 @@ package coffee.weneed.utils.coding;
 import java.util.ArrayList;
 import java.util.List;
 import coffee.weneed.utils.ArrayUtil;
+import coffee.weneed.utils.coding.steps.ICodingStep;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,8 +34,9 @@ public class CodingProcess {
 	 *
 	 * @param input the input
 	 * @return the byte[]
+	 * @throws Exception
 	 */
-	public byte[] decode(byte[] input) {
+	public byte[] decode(byte[] input) throws Exception {
 		byte[] h = input;
 		for (ICodingStep s : new ArrayList<>(rsteps)) {
 			h = s.decode(h);
@@ -47,8 +49,9 @@ public class CodingProcess {
 	 *
 	 * @param input the input
 	 * @return the byte[]
+	 * @throws Exception
 	 */
-	public byte[] encode(byte[] input) {
+	public byte[] encode(byte[] input) throws Exception {
 		byte[] h = input;
 		for (ICodingStep s : new ArrayList<>(steps)) {
 			h = s.encode(h);

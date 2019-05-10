@@ -3,7 +3,6 @@ package coffee.weneed.utils.storage;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONObject;
-import coffee.weneed.utils.LogicUtil;
 import coffee.weneed.utils.MathUtil;
 import coffee.weneed.utils.StringUtil;
 import coffee.weneed.utils.io.ByteArrayByteStream;
@@ -93,16 +92,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	@Override
 	public void fromByteArray(byte[] in) {
-		CoffeeAccessor ca = null;
-		if (compress) {
-			try {
-				ca = new CoffeeAccessor(new ByteArrayByteStream(LogicUtil.decompress(in)));
-			} catch (Exception e) {
-				ca = new CoffeeAccessor(new ByteArrayByteStream(in));
-			}
-		} else {
-			ca = new CoffeeAccessor(new ByteArrayByteStream(in));
-		}
+		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
 		ca.readByte();
 		ca.readByte();
 		deserialize(ca);
@@ -288,11 +278,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		cw.write((byte) 0x10);
 		serialize(cw);
 		cw.write((byte) 0x11);
-		if (compress) {
-			return LogicUtil.compress(cw.getByteArray());
-		} else {
-			return cw.getByteArray();
-		}
+		return cw.getByteArray();
 	}
 
 	/*
@@ -316,7 +302,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		for (String k : items.keySet()) {
 			Object o = items.get(k);
 			if (o instanceof Byte || o instanceof Short || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double) {
-				numbers.put(k, o);
+				numbers.put(k, MathUtil.smartNumber((Number) o));
 			} else if (o instanceof byte[]) {
 				tbyte_arrays.put(k, (byte[]) o);
 			} else if (o instanceof String) {

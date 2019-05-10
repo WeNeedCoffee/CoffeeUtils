@@ -1,10 +1,29 @@
 package coffee.weneed.utils.tests;
 
-import coffee.weneed.utils.StringUtil;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.json.JSONObject;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.Stopwatch;
+import org.junit.runner.Description;
+import coffee.weneed.utils.NetUtil;
+import coffee.weneed.utils.TimeUtil;
 import coffee.weneed.utils.coding.CodingProcess;
-import coffee.weneed.utils.coding.steps.Base64Step;
-import coffee.weneed.utils.coding.steps.CompressionStep;
-import coffee.weneed.utils.coding.steps.HexStep;
+import coffee.weneed.utils.coding.steps.compressing.BZip2Step;
+import coffee.weneed.utils.coding.steps.compressing.LZA4Step;
+import coffee.weneed.utils.coding.steps.compressing.XZipStep;
 import coffee.weneed.utils.storage.CoffeeHousingObject;
 
 // TODO: Auto-generated Javadoc
@@ -12,49 +31,176 @@ import coffee.weneed.utils.storage.CoffeeHousingObject;
  * The Class CoffeeHousingTest.
  */
 public class CoffeeHousingTest {
+	static Map<String, Long> timing = new HashMap<>();
+	private static JSONObject json;
+	private static CoffeeHousingObject e;
+	private static byte[] ee;
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
+	private static CodingProcess cbzip;
+	private static CodingProcess cxzip;
+	private static CodingProcess clz4a;
+
+	public static final void addTiming(String k, long v) {
+		timing.put(k, v);
+	}
+
+	@AfterClass
+	public static void end() {
+		Comparator<Entry<String, Long>> valueComparator = new Comparator<Entry<String, Long>>() {
+			@Override
+			public int compare(Entry<String, Long> e1, Entry<String, Long> e2) {
+				long v1 = e1.getValue();
+				long v2 = e2.getValue();
+				return Long.compare(v1, v2);
+			}
+		};
+		List<Entry<String, Long>> listOfEntries = new ArrayList<>(timing.entrySet());
+		Collections.sort(listOfEntries, valueComparator);
+
+		for (Entry<String, Long> e : listOfEntries) {
+			System.out.println(TimeUtil.getReadableMillisTiny(e.getValue()) + " on " + e.getKey());
+		}
+
+	}
+
+	@BeforeClass
+	public static void setup() {
+		e = new CoffeeHousingObject();
+		try {
+			json = new JSONObject(NetUtil.downloadUrl(new File("CoffeeHousingTest.json").toURI().toURL()));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		e.fromJSON(json);
+		ee = e.toByteArray();
+		cbzip = new CodingProcess(new BZip2Step());
+		cxzip = new CodingProcess(new XZipStep());
+		clz4a = new CodingProcess(new LZA4Step());
+	}
+
+	@Rule
+	public Stopwatch stopwatch = new Stopwatch() {
+		@Override
+		protected void finished(long nanos, Description description) {
+			addTiming(description.getMethodName(), nanos);
+		}
+	};
+
+	public CoffeeHousingObject generateCoffeeHousing(int amount, int ra, int rb, int rc) {
 		CoffeeHousingObject p = new CoffeeHousingObject();
 		p.setNumber("1", 1L);
-		p.setString("2", "1L");
+		p.setString("2", "test");
 		p.setNumber("3", (byte) 0x01);
-		p.setByteArray("4", "oof.ca".getBytes());
-		CoffeeHousingObject p1 = new CoffeeHousingObject();
-		p1.setNumber("1", 1.006d);
-		p1.setString("2", "1L");
-		p1.setNumber("3", (byte) 0x01);
-		CoffeeHousingObject p2 = new CoffeeHousingObject();
-		p2.setNumber("1", 1.04f);
-		p2.setString("2", "1L");
-		p2.setNumber("3", (byte) 0x01);
-		CoffeeHousingObject p3 = new CoffeeHousingObject();
-		p3.setNumber("1", 1f);
-		p3.setString("2", "1L");
-		p3.setNumber("3", (byte) 0x01);
-		p1.setChild("p2", p2);
-		p.setChild("p1", p1);
-		p.setChild("p3", p3);
-		byte[] pb = p.toByteArray();
-		System.out.println(StringUtil.bytesToHex(pb));
-		System.out.println(p.toJSON().toString());
-		p = new CoffeeHousingObject();
-		p.fromByteArray(pb);
-		pb = p.toByteArray();
-		System.out.println(StringUtil.bytesToHex(pb));
-		System.out.println(p.toJSON().toString());
+		p.setNumber("3", 1.0d);
+		p.setByteArray("4", "test.test".getBytes());
+		for (int i = 0; i < amount; i++) {
+			CoffeeHousingObject p1 = new CoffeeHousingObject();
+			p1.setNumber(RandomStringUtils.randomAlphabetic(ra), RandomUtils.nextDouble());
+			p1.setString(RandomStringUtils.randomAlphabetic(ra), new String(RandomStringUtils.randomAlphabetic(rb)));
+			p1.setNumber(RandomStringUtils.randomAlphabetic(ra), RandomUtils.nextInt());
+			p1.setByteArray(RandomStringUtils.randomAlphabetic(ra), RandomUtils.nextBytes(rc));
+			p.setChild(RandomStringUtils.randomAlphabetic(ra) + i, p1);
+		}
+		return p;
+	}
 
-		CodingProcess proc = new CodingProcess(new CompressionStep(), new Base64Step(), new HexStep());
-		pb = proc.encode(pb);
-		System.out.println(new String(pb));
-		pb = proc.decode(pb);
-		System.out.println(StringUtil.bytesToHex(pb));
-		p = new CoffeeHousingObject();
-		p.fromByteArray(pb);
-		System.out.println(p.toJSON().toString());
+	@Test
+	public void generateRandom() {
+		generateCoffeeHousing(1024, 8, 16, 32);
+	}
+
+	@Test
+	public void testBytes() {
+		CoffeeHousingObject p = new CoffeeHousingObject();
+		p.fromByteArray(ee);
+	}
+
+	@Test
+	public void testBZIP() throws Exception {
+		cbzip.decode(cbzip.encode(ee));
+	}
+
+	@Test
+	public void testJSON() {
+		CoffeeHousingObject p = new CoffeeHousingObject();
+		p.fromJSON(json);
+	}
+
+	@Test
+	public void testLZ4A() throws Exception {
+		clz4a.decode(clz4a.encode(ee));
+	}
+
+	@Test
+	public void testToBytes() {
+		e.toByteArray();
+	}
+
+	@Test
+	public void testToJSON() {
+		e.toJSON();
+	}
+
+	@Test
+	public void testXZIP() throws Exception {
+		cxzip.decode(cxzip.encode(ee));
+	}
+
+	@Test
+	public void zips() {
+		int rt = 0;
+		int bt = 0;
+		int xt = 0;
+		int lt = 0;
+		long rl = 0;
+		long bl = 0;
+		long xl = 0;
+		long ll = 0;
+		long rv = 0;
+		long bv = 0;
+		long xv = 0;
+		long lv = 0;
+		for (int n = 0; n < 16; n++) {
+			rt++;
+			long time = System.currentTimeMillis();
+			CoffeeHousingObject p = generateCoffeeHousing(1024, 8, 16, 32);
+			byte[] pb = p.toByteArray();
+			rl += System.currentTimeMillis() - time;
+			try {
+				bt++;
+				xt++;
+				lt++;
+				int r = pb.length;
+				rv += r;
+				time = System.currentTimeMillis();
+				int b = new CodingProcess(new BZip2Step()).encode(pb).length;
+				bl += System.currentTimeMillis() - time;
+				bv += b;
+				time = System.currentTimeMillis();
+				int x = new CodingProcess(new XZipStep()).encode(pb).length;
+				xl += System.currentTimeMillis() - time;
+				xv += x;
+				time = System.currentTimeMillis();
+				int l = new CodingProcess(new LZA4Step()).encode(pb).length;
+				ll += System.currentTimeMillis() - time;
+				lv += l;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		double bat = 1.0d * bl / bt;
+		double xat = 1.0d * xl / xt;
+		double lat = 1.0d * ll / lt;
+		double rat = 1.0d * rl / rt;
+
+		float ba = 1.0f * bv / bt;
+		float xa = 1.0f * xv / xt;
+		float la = 1.0f * lv / lt;
+		float ra = 1.0f * rv / rt;
+		System.out.println("Raw average: " + ra + " in " + rat + "ms");
+		System.out.println("Bzip2 average: " + ba + " in " + bat + "ms");
+		System.out.println("XZip average: " + xa + " in " + xat + "ms");
+		System.out.println("LZA4 average: " + la + " in " + lat + "ms");
 	}
 }

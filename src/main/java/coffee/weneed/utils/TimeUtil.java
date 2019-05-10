@@ -2,6 +2,7 @@ package coffee.weneed.utils;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -166,6 +167,23 @@ public class TimeUtil {
 		String minutes = d.toMinutes() - d.toHours() * 60 > 9 ? String.valueOf(d.toMinutes() - d.toHours() * 60) : "0" + (d.toMinutes() - d.toHours() * 60);
 		String seconds = d.getSeconds() - d.toMinutes() * 60 < 0 ? "00" : d.getSeconds() - d.toMinutes() * 60 > 9 ? String.valueOf(d.getSeconds() - d.toMinutes() * 60) : "0" + (d.getSeconds() - d.toMinutes() * 60);
 		return "" + days + ":" + hours + ":" + minutes + ":" + seconds + "";
+	}
+
+	public static final String getReadableMillisTiny(long nanos) {
+		Duration d = Duration.of(nanos, ChronoUnit.NANOS);
+		if (d.toDays() >= 1) {
+			return d.toDays() + "." + 24 / (d.toHours() % 24) + " days";
+		} else if (d.toHours() >= 1) {
+			return d.toHours() + "." + 60 / (d.toMinutes() % 60) + " hours";
+		} else if (d.toMinutes() >= 1) {
+			return d.toMinutes() + "." + 60 / (d.getSeconds() % 60) + " minutes";
+		} else if (d.getSeconds() >= 1) {
+			return d.getSeconds() + "." + 1000000000 / d.getNano() + " seconds";
+		} else if (d.getNano() >= 1000000) {
+			return d.getNano() / 1000000.0d + " ms";
+		} else {
+			return d.getNano() + " ns";
+		}
 	}
 
 	/**

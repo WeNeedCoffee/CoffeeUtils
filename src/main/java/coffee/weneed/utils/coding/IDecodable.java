@@ -12,5 +12,5 @@ public interface IDecodable {
 	 * @param input the input
 	 * @return the byte[]
 	 */
-	byte[] decode(byte[] input);
+	byte[] decode(byte[] input) throws Exception;
 }

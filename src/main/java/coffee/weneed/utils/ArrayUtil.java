@@ -39,6 +39,13 @@ public class ArrayUtil {
 		return result;
 	}
 
+	public static byte[] copyOf(byte[] original, int offset) {
+		int newLength = original.length - offset;
+		byte[] copy = new byte[newLength];
+		System.arraycopy(original, offset, copy, 0, newLength);
+		return copy;
+	}
+
 	/***
 	 * https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts
 	 *
