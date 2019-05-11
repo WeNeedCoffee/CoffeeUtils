@@ -41,6 +41,7 @@ public class spam {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		int se = em.size();
 		em = em.subList(i - 10, em.size());
 		for (String s : em) {
 			i++;
@@ -111,7 +112,7 @@ public class spam {
 					e.printStackTrace();
 				}
 			}
-			String perc = Float.toString(i * 100.0f / em.size());
+			String perc = Float.toString(i * 100.0f / se);
 			perc = perc.length() >= 6 ? perc.substring(0, 6) : perc;
 			System.out.println("Total processed: " + i + " (" + perc + "%) Total Valid Emails: " + em1.size() + " Total Dead Emails: " + emd.size() + " Total Valid Domains: " + exists.size() + " Total Dead Domains: " + dead.size() + " " + (emdd ? "Email was Dead. " : em11 ? "Email was valid. " : "Email was Dead. "));
 		}

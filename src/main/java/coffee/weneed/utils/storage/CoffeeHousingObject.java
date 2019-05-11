@@ -1,7 +1,9 @@
 package coffee.weneed.utils.storage;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import coffee.weneed.utils.MathUtil;
 import coffee.weneed.utils.StringUtil;
@@ -54,11 +56,15 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		}
 		e = ca.readSmart().intValue();
 		for (int i = 0; i < e; i++) {
-			items.put(ca.readString(), ca.readChar());
+			items.put(ca.readString(), ca.readString());
 		}
 		e = ca.readSmart().intValue();
 		for (int i = 0; i < e; i++) {
-			items.put(ca.readString(), ca.readString());
+			items.put(ca.readString(), new JSONObject(ca.readString()));
+		}
+		e = ca.readSmart().intValue();
+		for (int i = 0; i < e; i++) {
+			items.put(ca.readString(), new JSONArray(ca.readString()));
 		}
 		e = ca.readSmart().intValue();
 		for (int i = 0; i < e; i++) {
@@ -112,15 +118,13 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			Object o = json.get(k);
 			if (o instanceof JSONObject) {
 				JSONObject obj = (JSONObject) o;
-
 				if (k.equals("strings")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof String) {
 							items.put(sk, obj.getString(sk));
 						}
 					}
-				}
-				if (k.equals("children")) {
+				} else if (k.equals("children")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof JSONObject) {
 							if (obj.getJSONObject(sk).getInt("type") == 1) {
@@ -134,21 +138,32 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 							}
 						}
 					}
-				}
-				if (k.equals("numbers")) {
+				} else if (k.equals("numbers")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof Number) {
 							items.put(sk, MathUtil.smartNumber((Number) obj.get(sk)));
 						}
 					}
-				}
-				if (k.equals("byte_arrays")) {
+				} else if (k.equals("byte_arrays")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof String) {
-							items.put(sk, StringUtil.hexToBytes((String) obj.get(sk)));
+							items.put(sk, StringUtil.hexToBytes((String) obj.getString(sk)));
+						}
+					}
+				} else if (k.equals("json_objects")) {
+					for (String sk : obj.keySet()) {
+						if (obj.get(sk) instanceof JSONObject) {
+							items.put(sk, (JSONObject) obj.getJSONObject(sk));
+						}
+					}
+				} else if (k.equals("json_arrays")) {
+					for (String sk : obj.keySet()) {
+						if (obj.get(sk) instanceof JSONArray) {
+							items.put(sk, (JSONArray) obj.getJSONArray(sk));
 						}
 					}
 				}
+			
 			}
 		}
 	}
@@ -185,22 +200,24 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		cw.write((byte) 0x12);
 		Map<String, Number> numbers = new HashMap<>();
 		Map<String, byte[]> byte_arrays = new HashMap<>();
-		Map<String, Character> chars = new HashMap<>();
 		Map<String, String> strings = new HashMap<>();
+		Map<String, String> jsonos = new HashMap<>();
+		Map<String, String> jsonas = new HashMap<>();
 		Map<String, ACoffeeHousingNode> children = new HashMap<>();
-
 		for (String k : items.keySet()) {
 			Object o = items.get(k);
 			if (o instanceof Byte || o instanceof Short || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double) {
 				numbers.put(k, (Number) o);
 			} else if (o instanceof byte[]) {
 				byte_arrays.put(k, (byte[]) o);
-			} else if (o instanceof Character) {
-				chars.put(k, (char) o);
 			} else if (o instanceof String) {
 				strings.put(k, (String) o);
 			} else if (o instanceof ACoffeeHousingNode) {
 				children.put(k, (ACoffeeHousingNode) o);
+			} else if (o instanceof JSONObject) {
+				jsonos.put(k, ((JSONObject) o).toString());
+			} else if (o instanceof JSONArray) {
+				jsonas.put(k, ((JSONArray) o).toString());
 			}
 		}
 		cw.writeSmart(numbers.size());
@@ -216,23 +233,45 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			cw.writeSmart(bs.length);
 			cw.write(bs);
 		}
-		cw.writeSmart(chars.size());
-		for (String s : chars.keySet()) {
-			char c = chars.get(s);
-			cw.writeString(s);
-			cw.writeChar(c);
-		}
 		cw.writeSmart(strings.size());
 		for (String s : strings.keySet()) {
 			String ss = strings.get(s);
 			cw.writeString(s);
 			cw.writeString(ss);
 		}
+		cw.writeSmart(jsonos.size());
+		for (String s : jsonos.keySet()) {
+			String ss = jsonos.get(s);
+			cw.writeString(s);
+			cw.writeString(ss.toString());
+		}
+		cw.writeSmart(jsonas.size());
+		for (String s : jsonas.keySet()) {
+			String ss = jsonas.get(s);
+			cw.writeString(s);
+			cw.writeString(ss.toString());
+		}
 		cw.writeSmart(children.size());
 		for (String s : children.keySet()) {
 			cw.writeString(s);
 			children.get(s).serialize(cw);
 		}
+	}
+	
+	protected void save(File folder) { 
+		/*
+		 * lists can only contain objects
+		 * objects can contain lists or objects
+		 * objects hold data
+		 * lists do not hold data
+		 * \LIST\OBJECT\OBJECT.json -- contains all data within an object
+		 * object data is held within the folder named after the object, not the parent folder
+		 * \LIST\OBJECT1\OBJECT1.json RIGHT
+		 * \LIST\OBJECT1.json WRONG
+		 */
+		if (!folder.exists()) folder.mkdir();
+		if (!folder.isDirectory()) return;
+		new File(folder.getPath() + File.separator + folder.getName() + ".json");
 	}
 
 	/**
@@ -243,7 +282,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * @throws Exception
 	 */
 	public void set(String k, Object o) throws Exception {
-		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode) {
+		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode || o instanceof JSONObject 
+				|| o instanceof JSONArray) {
 			items.put(k, o);
 		} else {
 			throw new Exception("Unsupported data type");
@@ -254,6 +294,14 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		items.put(k, b);
 	}
 
+	public void setJSONObject(String k, JSONObject o) {
+		items.put(k, o);
+	}
+	
+	public void setJSONArray(String k, JSONArray a) {
+		items.put(k, a);
+	}
+	
 	public void setChild(String k, ACoffeeHousingNode chn) {
 		chn.parent = this;
 		items.put(k, chn);
@@ -291,42 +339,27 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		JSONObject json = new JSONObject();
 		JSONObject numbers = new JSONObject();
 		JSONObject byte_arrays = new JSONObject();
-		JSONObject chars = new JSONObject();
 		JSONObject strings = new JSONObject();
+		JSONObject objects = new JSONObject();
+		JSONObject arrays = new JSONObject();
 		JSONObject children = new JSONObject();
-		Map<String, Number> tnumbers = new HashMap<>();
-		Map<String, byte[]> tbyte_arrays = new HashMap<>();
-		Map<String, Character> tchars = new HashMap<>();
-		Map<String, String> tstrings = new HashMap<>();
-		Map<String, ACoffeeHousingNode> tchildren = new HashMap<>();
+		json.put("type", 1);
 		for (String k : items.keySet()) {
 			Object o = items.get(k);
 			if (o instanceof Byte || o instanceof Short || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double) {
 				numbers.put(k, MathUtil.smartNumber((Number) o));
 			} else if (o instanceof byte[]) {
-				tbyte_arrays.put(k, (byte[]) o);
+				byte_arrays.put(k, StringUtil.bytesToHex((byte[]) o));
 			} else if (o instanceof String) {
-				tstrings.put(k, (String) o);
+				strings.put(k, (String) o);
 			} else if (o instanceof ACoffeeHousingNode) {
-				tchildren.put(k, (ACoffeeHousingNode) o);
+				children.put(k, ((ACoffeeHousingNode) o).toJSON());
+			} else if (o instanceof JSONObject) {
+				objects.put(k, (JSONObject) o);
+			} else if (o instanceof JSONArray) {
+				arrays.put(k, (JSONArray) o);
 			}
 		}
-		for (String s : tnumbers.keySet()) {
-			numbers.put(s, tnumbers.get(s));
-		}
-		for (String s : tbyte_arrays.keySet()) {
-			byte_arrays.put(s, StringUtil.bytesToHex(tbyte_arrays.get(s)));
-		}
-		for (String s : tchars.keySet()) {
-			chars.put(s, tchars.get(s));
-		}
-		for (String s : tstrings.keySet()) {
-			strings.put(s, tstrings.get(s));
-		}
-		for (String s : tchildren.keySet()) {
-			children.put(s, tchildren.get(s).toJSON());
-		}
-		json.put("type", 1);
 		if (numbers.length() > 0) {
 			json.put("numbers", numbers);
 		}
@@ -335,6 +368,12 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		}
 		if (strings.length() > 0) {
 			json.put("strings", strings);
+		}
+		if (objects.length() > 0) {
+			json.put("json_objects", objects);
+		}
+		if (arrays.length() > 0) {
+			json.put("json_arrays", arrays);
 		}
 		if (children.length() > 0) {
 			json.put("children", children);
