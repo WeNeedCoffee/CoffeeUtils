@@ -16,13 +16,18 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GraphicUtil.
+ */
 public class GraphicUtil {
 
-	/***
+	/**
+	 * *
 	 * https://stackoverflow.com/questions/12705385/how-to-convert-a-byte-to-a-bufferedimage-in-java
 	 *
-	 * @param imageData
-	 * @return
+	 * @param imageData the image data
+	 * @return the buffered image
 	 */
 	public static BufferedImage createImageFromBytes(byte[] imageData) {
 		ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
@@ -33,6 +38,13 @@ public class GraphicUtil {
 		}
 	}
 
+	/**
+	 * Encode to string.
+	 *
+	 * @param image the image
+	 * @param type the type
+	 * @return the string
+	 */
 	public static String encodeToString(BufferedImage image, String type) {
 		String imageString = null;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -52,9 +64,9 @@ public class GraphicUtil {
 	/**
 	 * https://stackoverflow.com/questions/10245220/java-image-resize-maintain-aspect-ratio
 	 *
-	 * @param imgSize
-	 * @param boundary
-	 * @return
+	 * @param imgSize the img size
+	 * @param boundary the boundary
+	 * @return the scaled dimension
 	 */
 	public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
 
@@ -78,6 +90,13 @@ public class GraphicUtil {
 		return new Dimension(new_width, new_height);
 	}
 
+	/**
+	 * Image to bytes.
+	 *
+	 * @param image the image
+	 * @return the byte[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static byte[] imageToBytes(BufferedImage image) throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		ImageIO.write(image, "jpg", output);
@@ -87,10 +106,10 @@ public class GraphicUtil {
 	/**
 	 * https://www.journaldev.com/615/java-resize-image
 	 *
-	 * @param image
-	 * @param width
-	 * @param height
-	 * @return
+	 * @param image the image
+	 * @param width the width
+	 * @param height the height
+	 * @return the buffered image
 	 */
 	public static BufferedImage resizeImage(final Image image, int width, int height) {
 		final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -104,23 +123,68 @@ public class GraphicUtil {
 		return bufferedImage;
 	}
 
+	/**
+	 * Scale down.
+	 *
+	 * @param image the image
+	 * @param width the width
+	 * @param height the height
+	 * @return the buffered image
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static BufferedImage scaleDown(BufferedImage image, int width, int height) throws IOException {
 		Dimension scaled = getScaledDimension(new Dimension(image.getWidth(), image.getHeight()), new Dimension(width, height));
 		return resizeImage(image, (int) Math.round(scaled.getWidth()), (int) Math.round(scaled.getHeight()));
 	}
 
+	/**
+	 * Scale down.
+	 *
+	 * @param image the image
+	 * @param width the width
+	 * @param height the height
+	 * @return the buffered image
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static BufferedImage scaleDown(byte[] image, int width, int height) throws IOException {
 		return scaleDown(createImageFromBytes(image), width, height);
 	}
 
+	/**
+	 * Scale down.
+	 *
+	 * @param image the image
+	 * @param width the width
+	 * @param height the height
+	 * @return the buffered image
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static BufferedImage scaleDown(File image, int width, int height) throws IOException {
 		return scaleDown(ImageIO.read(image), width, height);
 	}
 
+	/**
+	 * Scale down.
+	 *
+	 * @param image the image
+	 * @param width the width
+	 * @param height the height
+	 * @return the buffered image
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static BufferedImage scaleDown(String image, int width, int height) throws IOException {
 		return scaleDown(NetUtil.downloadUrl(image), width, height);
 	}
 
+	/**
+	 * Scale down.
+	 *
+	 * @param image the image
+	 * @param width the width
+	 * @param height the height
+	 * @return the buffered image
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static BufferedImage scaleDown(URL image, int width, int height) throws IOException {
 		return scaleDown(NetUtil.downloadUrl(image), width, height);
 	}
@@ -128,9 +192,9 @@ public class GraphicUtil {
 	/**
 	 * https://javabeat.net/java-image-format/
 	 *
-	 * @param file
-	 * @return
-	 * @throws IOException
+	 * @param file the file
+	 * @return the image type
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public String getImageType(File file) throws IOException {
 		File imageFile = file;

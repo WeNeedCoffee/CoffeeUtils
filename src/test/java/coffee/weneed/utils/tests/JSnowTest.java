@@ -3,6 +3,10 @@ package coffee.weneed.utils.tests;
 import java.nio.charset.StandardCharsets;
 import coffee.weneed.utils.jsnow.JSnow10;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JSnowTest.
+ */
 public class JSnowTest {
 	/**
 	 * The main method.

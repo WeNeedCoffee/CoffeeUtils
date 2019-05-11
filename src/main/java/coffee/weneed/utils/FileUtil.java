@@ -6,8 +6,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FileUtil.
+ */
 public class FileUtil {
 
+	/**
+	 * Can write.
+	 *
+	 * @param file the file
+	 * @return true, if successful
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static boolean canWrite(File file) throws IOException {
 		if (file.isDirectory()) {
 			throw new IOException("File is directory.");
@@ -73,8 +84,8 @@ public class FileUtil {
 	 * @param input2 the second stream
 	 * @return true if the content of the streams are equal or they both don't
 	 *         exist, false otherwise
-	 * @throws NullPointerException if either input is null
 	 * @throws IOException          if an I/O error occurs
+	 * @throws NullPointerException if either input is null
 	 */
 	public static boolean contentEquals(InputStream input1, InputStream input2) throws IOException {
 		if (input1 == input2) {
@@ -100,6 +111,13 @@ public class FileUtil {
 		return ch2 == -1;
 	}
 
+	/**
+	 * Delete duplicate.
+	 *
+	 * @param directory the directory
+	 * @param f the f
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void deleteDuplicate(File directory, File f) throws IOException {
 		if (directory.isDirectory()) {
 			for (File file : directory.listFiles()) {
@@ -110,6 +128,12 @@ public class FileUtil {
 		}
 	}
 
+	/**
+	 * Delete duplicates.
+	 *
+	 * @param directory the directory
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void deleteDuplicates(File directory) throws IOException {
 		for (File d : directory.listFiles()) {
 			if (d.isDirectory()) {

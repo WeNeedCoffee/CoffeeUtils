@@ -13,7 +13,19 @@ import com.google.cloud.vision.v1p3beta1.ImageAnnotatorClient;
 import com.google.protobuf.ByteString;
 import coffee.weneed.utils.NetUtil;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GoogleVisionUtil.
+ */
 public class GoogleVisionUtil {
+	
+	/**
+	 * Detect image.
+	 *
+	 * @param url the url
+	 * @return the google vision result
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static GoogleVisionResult detectImage(URL url) throws IOException {
 		ArrayList<AnnotateImageRequest> requests = new ArrayList<>();
 		Image img = Image.newBuilder().setContent(ByteString.copyFrom(NetUtil.downloadUrl(url))).build();

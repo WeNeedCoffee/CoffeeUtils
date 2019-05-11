@@ -2,12 +2,25 @@ package coffee.weneed.utils.coding.steps.cyphering;
 
 import coffee.weneed.utils.coding.steps.ICodingStep;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FunkeyStep.
+ */
 public class FunkeyStep implements ICodingStep {
 
+	/** The code. */
 	private byte[] code;
 
+	/** The cols. */
 	private byte[][] cols;
 
+	/**
+	 * Instantiates a new funkey step.
+	 *
+	 * @param code the code
+	 * @param cols the cols
+	 * @throws IllegalArgumentException the illegal argument exception
+	 */
 	// TODO broken
 	private FunkeyStep(byte[] code, byte[][] cols) throws IllegalArgumentException {
 		int len = code.length;
@@ -20,6 +33,12 @@ public class FunkeyStep implements ICodingStep {
 		this.cols = cols;
 	}
 
+	/**
+	 * Decode.
+	 *
+	 * @param in the in
+	 * @return the byte[]
+	 */
 	@Override
 	public byte[] decode(byte[] in) {
 		int col = 0;
@@ -42,6 +61,12 @@ public class FunkeyStep implements ICodingStep {
 
 	}
 
+	/**
+	 * Encode.
+	 *
+	 * @param in the in
+	 * @return the byte[]
+	 */
 	@Override
 	public byte[] encode(byte[] in) {
 		int col = 0;
@@ -62,6 +87,11 @@ public class FunkeyStep implements ICodingStep {
 		return ret;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	@Override
 	public int getID() {
 		return 3;

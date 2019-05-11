@@ -12,21 +12,54 @@ import coffee.weneed.utils.ArrayUtil;
 import coffee.weneed.utils.NetUtil;
 import coffee.weneed.utils.StringUtil;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class spam.
+ */
 public class spam {
+	
+	/** The ee. */
 	static File ee = new File("emails_out.txt");
+	
+	/** The ll. */
 	static File ll = new File("lists_out.txt");
+	
+	/** The ed. */
 	static File ed = new File("emails_dead.txt");
+	
+	/** The de. */
 	static File de = new File("domains_exists.txt");
+	
+	/** The eme. */
 	static File eme = new File("emails_exists.txt");
+	
+	/** The dd. */
 	static File dd = new File("domains_dead.txt");
+	
+	/** The em. */
 	static List<String> em;
+	
+	/** The ls. */
 	static List<String> ls;
+	
+	/** The exists. */
 	static List<String> exists;
+	
+	/** The dead. */
 	static List<String> dead;
+	
+	/** The em 1. */
 	static List<String> em1;
+	
+	/** The emd. */
 	static List<String> emd;
+	
+	/** The i. */
 	static int i = 0;
 
+	/**
+	 * Check.
+	 */
 	public static void check() {
 		int i = em1.size() + emd.size();
 		FileWriter frde = null;
@@ -126,6 +159,13 @@ public class spam {
 		}
 	}
 
+	/**
+	 * List to file.
+	 *
+	 * @param file the file
+	 * @param s the s
+	 * @throws MalformedURLException the malformed URL exception
+	 */
 	public static void listToFile(String file, List<String> s) throws MalformedURLException {
 
 		StringBuilder sb = new StringBuilder();
@@ -152,7 +192,7 @@ public class spam {
 	 * The main method.
 	 *
 	 * @param args the arguments
-	 * @throws IOException
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void main(String[] args) throws IOException {
 
@@ -182,6 +222,12 @@ public class spam {
 		// */
 	}
 
+	/**
+	 * Sort list.
+	 *
+	 * @param file the file
+	 * @throws MalformedURLException the malformed URL exception
+	 */
 	public static void sortList(String file) throws MalformedURLException {
 		List<String> s = null;
 		try {

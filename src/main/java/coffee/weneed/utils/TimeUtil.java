@@ -169,6 +169,12 @@ public class TimeUtil {
 		return "" + days + ":" + hours + ":" + minutes + ":" + seconds + "";
 	}
 
+	/**
+	 * Gets the readable millis tiny.
+	 *
+	 * @param nanos the nanos
+	 * @return the readable millis tiny
+	 */
 	public static final String getReadableMillisTiny(long nanos) {
 		Duration d = Duration.of(nanos, ChronoUnit.NANOS);
 		if (d.toDays() >= 1) {

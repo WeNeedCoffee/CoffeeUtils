@@ -23,6 +23,12 @@ public class Filter {
 	/** The test. */
 	static String test = "Fucky me is so F_  . _ u CCky! fuck! FuCk! FFFUCK! F _UCK! FUUUCCCCKK!! FUCKIFY I KEEP MY FUCC! F U C K! F__U   C.K";
 
+	/**
+	 * Fix list.
+	 *
+	 * @param file the file
+	 * @throws MalformedURLException the malformed URL exception
+	 */
 	public static void fixList(String file) throws MalformedURLException {
 		List<String> s = null;
 		try {

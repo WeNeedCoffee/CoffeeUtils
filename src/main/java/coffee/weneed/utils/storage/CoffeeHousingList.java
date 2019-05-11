@@ -30,6 +30,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		super(parent);
 	}
 
+	/**
+	 * Adds the.
+	 *
+	 * @param index the index
+	 * @param element the element
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -40,6 +46,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		items.add(index, element);
 	}
 
+	/**
+	 * Adds the.
+	 *
+	 * @param e the e
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -50,6 +62,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.add(e);
 	}
 
+	/**
+	 * Adds the all.
+	 *
+	 * @param c the c
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -60,6 +78,13 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.addAll(c);
 	}
 
+	/**
+	 * Adds the all.
+	 *
+	 * @param index the index
+	 * @param c the c
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -70,6 +95,9 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.addAll(index, c);
 	}
 
+	/**
+	 * Clear.
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -80,6 +108,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		items.clear();
 	}
 
+	/**
+	 * Contains.
+	 *
+	 * @param o the o
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -90,6 +124,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.contains(o);
 	}
 
+	/**
+	 * Contains all.
+	 *
+	 * @param c the c
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -100,6 +140,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.containsAll(c);
 	}
 
+	/**
+	 * Deserialize.
+	 *
+	 * @param lea the lea
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -113,6 +158,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	}
 
+	/**
+	 * From byte array.
+	 *
+	 * @param b the b
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -126,6 +176,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	}
 
+	/**
+	 * From JSON.
+	 *
+	 * @param json the json
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -139,6 +194,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	}
 
+	/**
+	 * Gets the.
+	 *
+	 * @param index the index
+	 * @return the object
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -149,6 +210,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.get(index);
 	}
 
+	/**
+	 * Index of.
+	 *
+	 * @param o the o
+	 * @return the int
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -159,6 +226,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.indexOf(o);
 	}
 
+	/**
+	 * Checks if is empty.
+	 *
+	 * @return true, if is empty
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -169,6 +241,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.isEmpty();
 	}
 
+	/**
+	 * Iterator.
+	 *
+	 * @return the iterator
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -179,6 +256,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.iterator();
 	}
 
+	/**
+	 * Last index of.
+	 *
+	 * @param o the o
+	 * @return the int
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -189,6 +272,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.lastIndexOf(o);
 	}
 
+	/**
+	 * List iterator.
+	 *
+	 * @return the list iterator
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -199,6 +287,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.listIterator();
 	}
 
+	/**
+	 * List iterator.
+	 *
+	 * @param index the index
+	 * @return the list iterator
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -209,6 +303,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.listIterator(index);
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param index the index
+	 * @return the object
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -219,6 +319,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.remove(index);
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param o the o
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -229,6 +335,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.remove(o);
 	}
 
+	/**
+	 * Removes the all.
+	 *
+	 * @param c the c
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -239,6 +351,12 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.removeAll(c);
 	}
 
+	/**
+	 * Retain all.
+	 *
+	 * @param c the c
+	 * @return true, if successful
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -249,6 +367,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.retainAll(c);
 	}
 
+	/**
+	 * Serialize.
+	 *
+	 * @param lew the lew
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -262,6 +385,13 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 
 	}
 
+	/**
+	 * Sets the.
+	 *
+	 * @param index the index
+	 * @param element the element
+	 * @return the object
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -272,6 +402,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.set(index, element);
 	}
 
+	/**
+	 * Size.
+	 *
+	 * @return the int
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -282,6 +417,13 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.size();
 	}
 
+	/**
+	 * Sub list.
+	 *
+	 * @param fromIndex the from index
+	 * @param toIndex the to index
+	 * @return the list
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -292,6 +434,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.subList(fromIndex, toIndex);
 	}
 
+	/**
+	 * To array.
+	 *
+	 * @return the object[]
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -302,6 +449,13 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.toArray();
 	}
 
+	/**
+	 * To array.
+	 *
+	 * @param <T> the generic type
+	 * @param a the a
+	 * @return the t[]
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -312,6 +466,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return items.toArray(a);
 	}
 
+	/**
+	 * To byte array.
+	 *
+	 * @return the byte[]
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -322,6 +481,11 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		return null;
 	}
 
+	/**
+	 * To JSON.
+	 *
+	 * @return the JSON object
+	 */
 	/*
 	 * (non-Javadoc)
 	 *

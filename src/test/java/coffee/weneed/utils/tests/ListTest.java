@@ -10,10 +10,21 @@ import java.util.List;
 import coffee.weneed.utils.ArrayUtil;
 import coffee.weneed.utils.NetUtil;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ListTest.
+ */
 public class ListTest {
 
+	/** The Constant starter. */
 	public static final String starter = "Eve";
 
+	/**
+	 * Fix list.
+	 *
+	 * @param file the file
+	 * @throws MalformedURLException the malformed URL exception
+	 */
 	public static void fixList(String file) throws MalformedURLException {
 		List<String> s = null;
 		try {
@@ -24,6 +35,13 @@ public class ListTest {
 		listToFile(file, s);
 	}
 
+	/**
+	 * List to file.
+	 *
+	 * @param file the file
+	 * @param s the s
+	 * @throws MalformedURLException the malformed URL exception
+	 */
 	public static void listToFile(String file, List<String> s) throws MalformedURLException {
 		StringBuilder sb = new StringBuilder();
 		for (String ssss : s) {

@@ -184,6 +184,11 @@ public class FilterToolkit implements KeyListener {
 
 	}
 
+	/**
+	 * Fix.
+	 *
+	 * @throws MalformedURLException the malformed URL exception
+	 */
 	private void fix() throws MalformedURLException {
 		try {
 			for (String s : new String(NetUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
@@ -195,6 +200,11 @@ public class FilterToolkit implements KeyListener {
 		save();
 	}
 
+	/**
+	 * Key pressed.
+	 *
+	 * @param e the e
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -206,6 +216,11 @@ public class FilterToolkit implements KeyListener {
 
 	}
 
+	/**
+	 * Key released.
+	 *
+	 * @param e the e
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -235,6 +250,11 @@ public class FilterToolkit implements KeyListener {
 		}
 	}
 
+	/**
+	 * Key typed.
+	 *
+	 * @param e the e
+	 */
 	/*
 	 * (non-Javadoc)
 	 *

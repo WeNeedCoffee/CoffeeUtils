@@ -20,6 +20,12 @@ public class StringUtil {
 	/** The Constant HEX. */
 	static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
+	/**
+	 * Bin to bytes.
+	 *
+	 * @param s the s
+	 * @return the byte[]
+	 */
 	public static byte[] binToBytes(String s) {
 		byte[] ret = new byte[s.length() / 8];
 		int i = 0;
@@ -30,17 +36,24 @@ public class StringUtil {
 		return ret;
 	}
 
-	/***
-	 * Convert a string of 1's and 0's to a string of UTF-8 text
+	/**
+	 * *
+	 * Convert a string of 1's and 0's to a string of UTF-8 text.
 	 *
+	 * @author Daleth
 	 * @param s string of 1's and 0's
 	 * @return decoded string
-	 * @author Daleth
 	 */
 	public static String binToText(String s) {
 		return new String(binToBytes(s), StandardCharsets.UTF_8);
 	}
 
+	/**
+	 * Bytes to bin.
+	 *
+	 * @param in the in
+	 * @return the string
+	 */
 	public static String bytesToBin(byte[] in) {
 		String ret = "";
 		for (byte b : in) {
@@ -49,6 +62,12 @@ public class StringUtil {
 		return ret;
 	}
 
+	/**
+	 * Bytes to hex.
+	 *
+	 * @param bytes the bytes
+	 * @return the string
+	 */
 	public static String bytesToHex(byte[] bytes) {
 
 		char[] hexChars = new char[bytes.length * 2];
@@ -94,8 +113,9 @@ public class StringUtil {
 		return ret;
 	}
 
-	/***
-	 * Explode a string into a list of smaller strings of a given size
+	/**
+	 * *
+	 * Explode a string into a list of smaller strings of a given size.
 	 *
 	 * @author Daleth
 	 * @param in        String to explode
@@ -130,6 +150,13 @@ public class StringUtil {
 		return s.charAt(0);
 	}
 
+	/**
+	 * Gets the end.
+	 *
+	 * @param in the in
+	 * @param delimiter the delimiter
+	 * @return the end
+	 */
 	public static String getEnd(String in, String delimiter) {
 		String[] ss = in.split(delimiter);
 		return ss[ss.length - 1];
@@ -359,8 +386,9 @@ public class StringUtil {
 		}
 	}
 
-	/***
-	 * Convert a UTF-8 String to a string of 1's and 0's
+	/**
+	 * *
+	 * Convert a UTF-8 String to a string of 1's and 0's.
 	 *
 	 * @param in string to encode
 	 * @return string of 1's and 0's

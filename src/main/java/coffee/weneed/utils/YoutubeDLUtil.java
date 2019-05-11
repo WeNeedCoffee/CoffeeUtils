@@ -1,5 +1,8 @@
 package coffee.weneed.utils;
 
+/**
+ * The Class YoutubeDLUtil.
+ */
 public class YoutubeDLUtil {
 
 	/*

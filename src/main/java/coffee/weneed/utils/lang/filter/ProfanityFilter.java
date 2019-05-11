@@ -23,6 +23,8 @@ import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
  */
 // TODO check words for middle dupes between endings like rim and rimming
 public class ProfanityFilter implements IJSONObjectDataHolder {
+	
+	/** The active leets. */
 	private static Map<Character, String[]> active_leets = new HashMap<>();
 	/** The leets. */
 	public static Map<Character, String[]> leets = new HashMap<>();
@@ -78,8 +80,10 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/** The is suspicion found. */
 	private boolean isSuspicionFound;
 
+	/** The blacklist. */
 	private TreeNode blacklist;
 
+	/** The whitelist. */
 	private TreeNode whitelist;
 
 	/**
@@ -94,8 +98,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Instantiates a new profanity filter.
 	 *
-	 * @param ascii the ascii
-	 * @param url   the url
+	 * @param active_leets the active leets
+	 * @param tree the tree
 	 */
 	public ProfanityFilter(Map<Character, String[]> active_leets, URL tree) {
 		try {
@@ -159,7 +163,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Builds the dictionary tree from JSONURL.
 	 *
-	 * @param toDownload the to download
+	 * @param json the json
+	 * @return the tree node
 	 */
 	public TreeNode buildDictionaryTreeFromJSON(JSONObject json) {
 		TreeNode n = new TreeNode();
@@ -167,6 +172,12 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		return n;
 	}
 
+	/**
+	 * Check white list.
+	 *
+	 * @param input the input
+	 * @param start the start
+	 */
 	private void checkWhiteList(String input, int start) {
 		if (input.isEmpty() || input.length() < start) {
 			return;
@@ -177,6 +188,15 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		}
 	}
 
+	/**
+	 * Check white list.
+	 *
+	 * @param input the input
+	 * @param n the n
+	 * @param start the start
+	 * @param spot the spot
+	 * @param orig the orig
+	 */
 	private void checkWhiteList(String input, TreeNode n, int start, int spot, String orig) {
 		if (n.isEnd()) {
 			unmarkAsterisk(start, start + spot - 1);
@@ -246,6 +266,11 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		}
 	}
 
+	/**
+	 * From JSON.
+	 *
+	 * @param json the json
+	 */
 	@Override
 	public void fromJSON(JSONObject json) {
 		blacklist = buildDictionaryTreeFromJSON(json.getJSONObject("blacklist"));
@@ -295,7 +320,6 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param characterIndex the character index
 	 * @param node           the node
 	 * @param update         the update
-	 * @param recur          the recur
 	 * @return true, if successful
 	 */
 	private boolean search(String input, int characterIndex, TreeNode node, boolean update) {
@@ -371,6 +395,11 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		return false;
 	}
 
+	/**
+	 * To JSON.
+	 *
+	 * @return the JSON object
+	 */
 	@Override
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
@@ -382,8 +411,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	/**
 	 * Identify the letters of userInput that should be marked as "*".
 	 *
-	 * @param badWordStart the bad word start
-	 * @param badWordEnd   the bad word end
+	 * @param whitelistStart the whitelist start
+	 * @param whitelistEnd the whitelist end
 	 */
 	private void unmarkAsterisk(int whitelistStart, int whitelistEnd) {
 		for (int i = whitelistStart; i <= whitelistEnd; i++) {

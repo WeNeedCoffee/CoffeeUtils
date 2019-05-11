@@ -1,5 +1,8 @@
 package coffee.weneed.utils;
 
+/**
+ * The Class VideoUtil.
+ */
 public class VideoUtil {
 
 	/*

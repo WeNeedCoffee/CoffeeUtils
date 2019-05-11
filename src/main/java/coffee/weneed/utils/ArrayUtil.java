@@ -7,13 +7,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ArrayUtil.
+ */
 public class ArrayUtil {
 
 	/**
 	 * https://stackoverflow.com/questions/740299/how-do-i-sort-a-set-to-a-list-in-java
 	 *
-	 * @param c
-	 * @return
+	 * @param <T> the generic type
+	 * @param c the c
+	 * @return the list
 	 */
 	public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
 		List<T> list = new ArrayList<>(c);
@@ -27,6 +32,7 @@ public class ArrayUtil {
 	 *
 	 * @author C#: Snow, haha01haha01
 	 * @author Java: Dalethium
+	 * @param <T> the generic type
 	 * @param a first array
 	 * @param b second array
 	 * @return An array with b appended to the end of a.
@@ -39,6 +45,13 @@ public class ArrayUtil {
 		return result;
 	}
 
+	/**
+	 * Copy of.
+	 *
+	 * @param original the original
+	 * @param offset the offset
+	 * @return the byte[]
+	 */
 	public static byte[] copyOf(byte[] original, int offset) {
 		int newLength = original.length - offset;
 		byte[] copy = new byte[newLength];
@@ -46,12 +59,13 @@ public class ArrayUtil {
 		return copy;
 	}
 
-	/***
+	/**
+	 * *
 	 * https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts
 	 *
-	 * @param source
-	 * @param chunksize
-	 * @return
+	 * @param source the source
+	 * @param chunksize the chunksize
+	 * @return the list
 	 */
 	public static List<byte[]> divideArray(byte[] source, int chunksize) {
 
@@ -66,12 +80,13 @@ public class ArrayUtil {
 		return result;
 	}
 
-	/***
+	/**
+	 * *
 	 * https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts
 	 *
-	 * @param source
-	 * @param chunksize
-	 * @return
+	 * @param source the source
+	 * @param chunksize the chunksize
+	 * @return the list
 	 */
 	public static List<List<String>> divideList(List<String> source, int chunksize) {
 		List<List<String>> result = new ArrayList<>();
@@ -98,11 +113,13 @@ public class ArrayUtil {
 		return result;
 	}
 
-	/***
+	/**
+	 * *
 	 * Sorts a array by the default arrays.sort and removes duplicate entries
 	 * from the array.
 	 *
-	 * @param input
+	 * @param <T> the generic type
+	 * @param input the input
 	 * @return sorted list
 	 */
 	public static <T> List<T> sortList(T[] input) {
@@ -117,10 +134,12 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * Splice
+	 * Splice.
 	 *
 	 * @author Dalethium Removes the given item from a array.
+	 * @param <T> the generic type
 	 * @param arr An array to modify.
+	 * @param pos the pos
 	 * @return The inputed array minus the given item.
 	 */
 	public static <T> T[] splice(T[] arr, int pos) {
@@ -134,6 +153,7 @@ public class ArrayUtil {
 	 * Splice first.
 	 *
 	 * @author Dalethium Removes the first item from a array.
+	 * @param <T> the generic type
 	 * @param arr An array to modify.
 	 * @return The inputed array minus the first item.
 	 */
@@ -142,9 +162,14 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * subarray
+	 * subarray.
 	 *
 	 * @author Dalethium
+	 * @param <T> the generic type
+	 * @param arr the arr
+	 * @param startpos the startpos
+	 * @param endpos the endpos
+	 * @return the t[]
 	 */
 	public static <T> T[] subarray(T[] arr, int startpos, int endpos) {
 		List<T> list = new ArrayList<>();
@@ -168,7 +193,8 @@ public class ArrayUtil {
 	 * https://stackoverflow.com/questions/6522284/convert-a-generic-list-to-an-array
 	 *
 	 * @author StackOverflow:atreys
-	 * @param list
+	 * @param <T> the generic type
+	 * @param list the list
 	 * @return array
 	 */
 	@SuppressWarnings("unchecked")
@@ -180,11 +206,13 @@ public class ArrayUtil {
 		return toR;
 	}
 
-	/***
+	/**
+	 * *
 	 * Sorts a array by the default arrays.sort and removes duplicate entries
 	 * from the array.
 	 *
-	 * @param input
+	 * @param <T> the generic type
+	 * @param input the input
 	 * @return sorted list
 	 */
 	public static <T> List<T> toList(T[] input) {

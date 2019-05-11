@@ -16,9 +16,9 @@ public class LogicUtil {
 	/**
 	 * https://kalliphant.com/javamimetype_from_bytearr/
 	 *
-	 * @param data
-	 * @return
-	 * @throws Exception
+	 * @param data the data
+	 * @return the mime type
+	 * @throws Exception the exception
 	 */
 	public static String getMimeType(byte data[]) throws Exception {
 		InputStream is = new BufferedInputStream(new ByteArrayInputStream(data));
@@ -29,8 +29,8 @@ public class LogicUtil {
 	/**
 	 * https://stackoverflow.com/questions/1149703/how-can-i-convert-a-stack-trace-to-a-string
 	 *
-	 * @param e
-	 * @return
+	 * @param e the e
+	 * @return the stack trace
 	 */
 	public static String getStackTrace(Throwable e) {
 		StringWriter sw = new StringWriter();

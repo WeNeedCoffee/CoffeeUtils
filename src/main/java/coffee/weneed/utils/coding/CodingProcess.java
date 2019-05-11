@@ -34,7 +34,7 @@ public class CodingProcess {
 	 *
 	 * @param input the input
 	 * @return the byte[]
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	public byte[] decode(byte[] input) throws Exception {
 		byte[] h = input;
@@ -49,7 +49,7 @@ public class CodingProcess {
 	 *
 	 * @param input the input
 	 * @return the byte[]
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	public byte[] encode(byte[] input) throws Exception {
 		byte[] h = input;

@@ -70,6 +70,12 @@ public class MathUtil {
 		}
 	}
 
+	/**
+	 * Smart number.
+	 *
+	 * @param n the n
+	 * @return the object
+	 */
 	public static Object smartNumber(Number n) {
 		if (n.doubleValue() % 1 == 0) {
 			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {

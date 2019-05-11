@@ -18,7 +18,7 @@ public class CoffeeAccessor {
 	/**
 	 * Instantiates a new little endian accessor.
 	 *
-	 * @param bs the bs
+	 * @param in the in
 	 */
 	public CoffeeAccessor(byte[] in) {
 		this(new ByteArrayByteStream(in));
@@ -60,6 +60,11 @@ public class CoffeeAccessor {
 		return bs.getPosition();
 	}
 
+	/**
+	 * Gets the remaining bytes.
+	 *
+	 * @return the remaining bytes
+	 */
 	public final byte[] getRemainingBytes() {
 		return bs.getRemainingBytes();
 	}
@@ -167,6 +172,11 @@ public class CoffeeAccessor {
 		return (short) ((byte2 << 8) + byte1);
 	}
 
+	/**
+	 * Read smart.
+	 *
+	 * @return the number
+	 */
 	public final Number readSmart() {
 		switch (readByte()) {
 			case 0: {
@@ -224,6 +234,11 @@ public class CoffeeAccessor {
 		seek(getPosition() + num);
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	/*
 	 * (non-Javadoc)
 	 *

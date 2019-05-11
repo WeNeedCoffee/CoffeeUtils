@@ -31,19 +31,41 @@ import coffee.weneed.utils.storage.CoffeeHousingObject;
  * The Class CoffeeHousingTest.
  */
 public class CoffeeHousingTest {
+	
+	/** The timing. */
 	static Map<String, Long> timing = new HashMap<>();
+	
+	/** The json. */
 	private static JSONObject json;
+	
+	/** The e. */
 	private static CoffeeHousingObject e;
+	
+	/** The ee. */
 	private static byte[] ee;
 
+	/** The cbzip. */
 	private static CodingProcess cbzip;
+	
+	/** The cxzip. */
 	private static CodingProcess cxzip;
+	
+	/** The clz 4 a. */
 	private static CodingProcess clz4a;
 
+	/**
+	 * Adds the timing.
+	 *
+	 * @param k the k
+	 * @param v the v
+	 */
 	public static final void addTiming(String k, long v) {
 		timing.put(k, v);
 	}
 
+	/**
+	 * End.
+	 */
 	@AfterClass
 	public static void end() {
 		Comparator<Entry<String, Long>> valueComparator = new Comparator<Entry<String, Long>>() {
@@ -63,6 +85,9 @@ public class CoffeeHousingTest {
 
 	}
 
+	/**
+	 * Setup.
+	 */
 	@BeforeClass
 	public static void setup() {
 		e = new CoffeeHousingObject();
@@ -79,6 +104,7 @@ public class CoffeeHousingTest {
 		clz4a = new CodingProcess(new LZA4Step());
 	}
 
+	/** The stopwatch. */
 	@Rule
 	public Stopwatch stopwatch = new Stopwatch() {
 		@Override
@@ -87,6 +113,15 @@ public class CoffeeHousingTest {
 		}
 	};
 
+	/**
+	 * Generate coffee housing.
+	 *
+	 * @param amount the amount
+	 * @param ra the ra
+	 * @param rb the rb
+	 * @param rc the rc
+	 * @return the coffee housing object
+	 */
 	public CoffeeHousingObject generateCoffeeHousing(int amount, int ra, int rb, int rc) {
 		CoffeeHousingObject p = new CoffeeHousingObject();
 		p.setNumber("1", 1L);
@@ -105,48 +140,81 @@ public class CoffeeHousingTest {
 		return p;
 	}
 
+	/**
+	 * Generate random.
+	 */
 	@Test
 	public void generateRandom() {
 		generateCoffeeHousing(1024, 8, 16, 32);
 	}
 
+	/**
+	 * Test bytes.
+	 */
 	@Test
 	public void testBytes() {
 		CoffeeHousingObject p = new CoffeeHousingObject();
 		p.fromByteArray(ee);
 	}
 
+	/**
+	 * Test BZIP.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testBZIP() throws Exception {
 		cbzip.decode(cbzip.encode(ee));
 	}
 
+	/**
+	 * Test JSON.
+	 */
 	@Test
 	public void testJSON() {
 		CoffeeHousingObject p = new CoffeeHousingObject();
 		p.fromJSON(json);
 	}
 
+	/**
+	 * Test LZ 4 A.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testLZ4A() throws Exception {
 		clz4a.decode(clz4a.encode(ee));
 	}
 
+	/**
+	 * Test to bytes.
+	 */
 	@Test
 	public void testToBytes() {
 		e.toByteArray();
 	}
 
+	/**
+	 * Test to JSON.
+	 */
 	@Test
 	public void testToJSON() {
 		e.toJSON();
 	}
 
+	/**
+	 * Test XZIP.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Test
 	public void testXZIP() throws Exception {
 		cxzip.decode(cxzip.encode(ee));
 	}
 
+	/**
+	 * Zips.
+	 */
 	@Test
 	public void zips() {
 		int rt = 0;

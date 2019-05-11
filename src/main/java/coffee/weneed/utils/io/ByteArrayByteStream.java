@@ -57,6 +57,11 @@ public class ByteArrayByteStream {
 		return pos;
 	}
 
+	/**
+	 * Gets the remaining bytes.
+	 *
+	 * @return the remaining bytes
+	 */
 	public byte[] getRemainingBytes() {
 		return ArrayUtil.copyOf(arr, pos);
 	}
@@ -81,6 +86,11 @@ public class ByteArrayByteStream {
 		pos = (int) offset;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	/*
 	 * (non-Javadoc)
 	 *

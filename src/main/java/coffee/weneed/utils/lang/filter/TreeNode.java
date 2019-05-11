@@ -45,7 +45,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 	/**
 	 * Instantiates a new tree node.
 	 *
-	 * @param letter the letter
+	 * @param in the in
 	 */
 	public TreeNode(JSONObject in) {
 		this();
@@ -55,6 +55,7 @@ public class TreeNode implements IJSONObjectDataHolder {
 	/**
 	 * Instantiates a new tree node.
 	 *
+	 * @param parent the parent
 	 * @param letter the letter
 	 */
 	public TreeNode(TreeNode parent, Character letter) {
@@ -82,6 +83,11 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return node.containsKey(letter);
 	}
 
+	/**
+	 * Copy.
+	 *
+	 * @return the tree node
+	 */
 	public TreeNode copy() {
 		return new TreeNode(toJSON());
 	}
@@ -96,6 +102,11 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return new TreeNode(this, letter);
 	}
 
+	/**
+	 * From JSON.
+	 *
+	 * @param json the json
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -155,7 +166,6 @@ public class TreeNode implements IJSONObjectDataHolder {
 	/**
 	 * Contains child.
 	 *
-	 * @param letter the letter
 	 * @return true, if successful
 	 */
 	public boolean isEmpty() {
@@ -171,6 +181,11 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return isEnd;
 	}
 
+	/**
+	 * Removes the child.
+	 *
+	 * @param letter the letter
+	 */
 	public void removeChild(Character letter) {
 		node.remove(letter);
 	}
@@ -213,6 +228,11 @@ public class TreeNode implements IJSONObjectDataHolder {
 		return false;
 	}
 
+	/**
+	 * To JSON.
+	 *
+	 * @return the JSON object
+	 */
 	/*
 	 * (non-Javadoc)
 	 *

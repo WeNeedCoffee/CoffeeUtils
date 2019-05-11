@@ -9,6 +9,12 @@ import coffee.weneed.utils.coding.steps.ICodingStep;
  */
 public class Base64Step implements ICodingStep {
 
+	/**
+	 * Decode.
+	 *
+	 * @param input the input
+	 * @return the byte[]
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -19,6 +25,12 @@ public class Base64Step implements ICodingStep {
 		return Base64.getDecoder().decode(input);
 	}
 
+	/**
+	 * Encode.
+	 *
+	 * @param input the input
+	 * @return the byte[]
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -29,6 +41,11 @@ public class Base64Step implements ICodingStep {
 		return Base64.getEncoder().encode(input);
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	@Override
 	public int getID() {
 		return 4;

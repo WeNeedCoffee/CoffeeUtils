@@ -16,7 +16,19 @@ import net.jpountz.lz4.LZ4Compressor;
 import net.jpountz.lz4.LZ4Factory;
 import net.jpountz.lz4.LZ4FastDecompressor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CompressionUtil.
+ */
 public class CompressionUtil {
+	
+	/**
+	 * Bzip 2.
+	 *
+	 * @param uncompressed the uncompressed
+	 * @return the byte[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static byte[] bzip2(byte[] uncompressed) throws IOException {
 		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(uncompressed));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -32,6 +44,12 @@ public class CompressionUtil {
 		return cw.getByteArray();
 	}
 
+	/**
+	 * Delz 4.
+	 *
+	 * @param in the in
+	 * @return the byte[]
+	 */
 	public static byte[] delz4(byte[] in) {
 		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
 		LZ4Factory factory = LZ4Factory.fastestInstance();
@@ -48,6 +66,7 @@ public class CompressionUtil {
 	 *
 	 * @param compressed The compressed array, <strong>without</strong> the
 	 *                   header.
+	 * @return the byte[]
 	 * @throws IOException If there is an error decompressing the array.
 	 */
 	public static byte[] dexzip(byte[] compressed) throws IOException {
@@ -60,6 +79,12 @@ public class CompressionUtil {
 		return buffer;
 	}
 
+	/**
+	 * Lz 4.
+	 *
+	 * @param data the data
+	 * @return the byte[]
+	 */
 	public static byte[] lz4(byte[] data) {
 		CoffeeWriter cw = new CoffeeWriter();
 		LZ4Factory factory = LZ4Factory.fastestInstance();
@@ -73,6 +98,13 @@ public class CompressionUtil {
 		return cw.getByteArray();
 	}
 
+	/**
+	 * Unbzip 2.
+	 *
+	 * @param in the in
+	 * @return the byte[]
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static byte[] unbzip2(byte[] in) throws IOException {
 		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
 		int len = ca.readSmart().intValue();

@@ -19,8 +19,20 @@ import javax.naming.directory.InitialDirContext;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NetUtil.
+ */
 public class NetUtil {
 
+	/**
+	 * Check proxy.
+	 *
+	 * @param ip the ip
+	 * @param contact the contact
+	 * @return the double
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static double checkProxy(String ip, String contact) throws IOException {
 		JSONObject json = null;
 		try {
@@ -40,7 +52,7 @@ public class NetUtil {
 	 * @author Dalethium
 	 * @param toDownload the to download
 	 * @return byte array
-	 * @throws IOException
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @see coffee.weneed.utils.NetUtil#downloadUrl(URL)
 	 */
 	public static byte[] downloadUrl(String toDownload) throws IOException {
@@ -54,7 +66,7 @@ public class NetUtil {
 	 * @author StackOverflow:ron-reiter
 	 * @param toDownload the to download
 	 * @return byte array
-	 * @throws IOException
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static byte[] downloadUrl(URL toDownload) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -74,12 +86,13 @@ public class NetUtil {
 		return outputStream.toByteArray();
 	}
 
-	/***
+	/**
+	 * *
 	 * https://www.rgagnon.com/javadetails/java-0452.html
 	 *
-	 * @param hostName
-	 * @return
-	 * @throws NamingException
+	 * @param hostName the host name
+	 * @return the mx
+	 * @throws NamingException the naming exception
 	 */
 	public static ArrayList<String> getMX(String hostName) throws NamingException {
 		Hashtable<String, String> env = new Hashtable<>();
@@ -113,12 +126,12 @@ public class NetUtil {
 		return res;
 	}
 
-	/***
+	/**
+	 * *
 	 * https://www.rgagnon.com/javadetails/java-0452.html
 	 *
-	 * @param hostName
-	 * @return
-	 * @throws NamingException
+	 * @param hostName the host name
+	 * @return true, if successful
 	 */
 	public static boolean hasMX(String hostName) {
 		try {
@@ -129,6 +142,12 @@ public class NetUtil {
 
 	}
 
+	/**
+	 * Checks if is hostname valid.
+	 *
+	 * @param host the host
+	 * @return true, if is hostname valid
+	 */
 	public static boolean isHostnameValid(String host) {
 		try {
 			InetAddress adr = InetAddress.getByName(host);
@@ -138,14 +157,15 @@ public class NetUtil {
 		}
 	}
 
-	/***
+	/**
+	 * *
 	 * https://stackoverflow.com/a/34228756
 	 *
 	 * @author https://stackoverflow.com/users/3368518/sourabh-bhat
-	 * @param addr
-	 * @param openPort
-	 * @param timeOutMillis
-	 * @return
+	 * @param addr the addr
+	 * @param openPort the open port
+	 * @param timeOutMillis the time out millis
+	 * @return true, if is reachable
 	 */
 	public static boolean isReachable(String addr, int openPort, int timeOutMillis) {
 		try {
@@ -162,6 +182,9 @@ public class NetUtil {
 	 * https://www.dev2qa.com/check-valid-www-domain-and-hostname-java-examples/
 	 * addStr : A domain string. return : true means addStr is a valid domain
 	 * name, false means addStr is not a valide domain name.
+	 *
+	 * @param addStr the add str
+	 * @return true, if is valid domain
 	 */
 	public static boolean isValidDomain(String addStr) {
 		boolean ret = true;

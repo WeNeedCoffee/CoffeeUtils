@@ -12,7 +12,7 @@ public interface ICoded extends IByteArrayDataHolder {
 	 * Decode.
 	 *
 	 * @param b the b
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	default void decode(byte[] b) throws Exception {
 		fromByteArray(getCodingProcess().decode(b));
@@ -22,7 +22,7 @@ public interface ICoded extends IByteArrayDataHolder {
 	 * Encode.
 	 *
 	 * @return the byte[]
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	default byte[] encode() throws Exception {
 		return getCodingProcess().encode(toByteArray());

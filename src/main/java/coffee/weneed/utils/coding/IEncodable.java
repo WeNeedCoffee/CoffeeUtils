@@ -11,6 +11,7 @@ public interface IEncodable {
 	 *
 	 * @param input the input
 	 * @return the byte[]
+	 * @throws Exception the exception
 	 */
 	byte[] encode(byte[] input) throws Exception;
 }

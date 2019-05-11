@@ -20,6 +20,9 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	/** The items. */
 	protected Map<String, Object> items = new HashMap<>();
 
+	/**
+	 * Instantiates a new coffee housing object.
+	 */
 	public CoffeeHousingObject() {
 		super();
 	}
@@ -33,6 +36,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		super(parent);
 	}
 
+	/**
+	 * Deserialize.
+	 *
+	 * @param ca the ca
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -89,6 +97,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		}
 	}
 
+	/**
+	 * From byte array.
+	 *
+	 * @param in the in
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -105,6 +118,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		ca.readByte();
 	}
 
+	/**
+	 * From JSON.
+	 *
+	 * @param json the json
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -168,26 +186,61 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		}
 	}
 
+	/**
+	 * Gets the.
+	 *
+	 * @param k the k
+	 * @return the object
+	 */
 	public Object get(String k) {
 		return items.get(k);
 	}
 
+	/**
+	 * Gets the byte array.
+	 *
+	 * @param k the k
+	 * @return the byte array
+	 */
 	public byte[] getByteArray(String k) {
 		return (byte[]) items.get(k);
 	}
 
+	/**
+	 * Gets the child.
+	 *
+	 * @param k the k
+	 * @return the child
+	 */
 	public ACoffeeHousingNode getChild(String k) {
 		return (ACoffeeHousingNode) items.get(k);
 	}
 
+	/**
+	 * Gets the number.
+	 *
+	 * @param k the k
+	 * @return the number
+	 */
 	public Number getNumber(String k) {
 		return (Number) items.get(k);
 	}
 
+	/**
+	 * Gets the string.
+	 *
+	 * @param k the k
+	 * @return the string
+	 */
 	public String getString(String k) {
 		return (String) items.get(k);
 	}
 
+	/**
+	 * Serialize.
+	 *
+	 * @param cw the cw
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -258,6 +311,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		}
 	}
 	
+	/**
+	 * Save.
+	 *
+	 * @param folder the folder
+	 */
 	protected void save(File folder) { 
 		/*
 		 * lists can only contain objects
@@ -279,7 +337,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 *
 	 * @param k the k
 	 * @param o the o
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 	public void set(String k, Object o) throws Exception {
 		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode || o instanceof JSONObject 
@@ -290,31 +348,72 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		}
 	}
 
+	/**
+	 * Sets the byte array.
+	 *
+	 * @param k the k
+	 * @param b the b
+	 */
 	public void setByteArray(String k, byte[] b) {
 		items.put(k, b);
 	}
 
+	/**
+	 * Sets the JSON object.
+	 *
+	 * @param k the k
+	 * @param o the o
+	 */
 	public void setJSONObject(String k, JSONObject o) {
 		items.put(k, o);
 	}
 	
+	/**
+	 * Sets the JSON array.
+	 *
+	 * @param k the k
+	 * @param a the a
+	 */
 	public void setJSONArray(String k, JSONArray a) {
 		items.put(k, a);
 	}
 	
+	/**
+	 * Sets the child.
+	 *
+	 * @param k the k
+	 * @param chn the chn
+	 */
 	public void setChild(String k, ACoffeeHousingNode chn) {
 		chn.parent = this;
 		items.put(k, chn);
 	}
 
+	/**
+	 * Sets the number.
+	 *
+	 * @param k the k
+	 * @param n the n
+	 */
 	public void setNumber(String k, Number n) {
 		items.put(k, MathUtil.smartNumber(n));
 	}
 
+	/**
+	 * Sets the string.
+	 *
+	 * @param k the k
+	 * @param s the s
+	 */
 	public void setString(String k, String s) {
 		items.put(k, s);
 	}
 
+	/**
+	 * To byte array.
+	 *
+	 * @return the byte[]
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -329,6 +428,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		return cw.getByteArray();
 	}
 
+	/**
+	 * To JSON.
+	 *
+	 * @return the JSON object
+	 */
 	/*
 	 * (non-Javadoc)
 	 *

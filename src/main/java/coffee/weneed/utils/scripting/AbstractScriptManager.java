@@ -10,15 +10,32 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AbstractScriptManager.
+ */
 public abstract class AbstractScriptManager {
 
+	/** The Constant sem. */
 	private static final ScriptEngineManager sem = new ScriptEngineManager();
 
+	/**
+	 * Gets the invocable.
+	 *
+	 * @param path the path
+	 * @return the invocable
+	 */
 	protected static Invocable getInvocable(Path path) {
 		ScriptEngine se = AbstractScriptManager.getScriptEngine(path);
 		return se == null ? null : (Invocable) se;
 	}
 
+	/**
+	 * Gets the script engine.
+	 *
+	 * @param path the path
+	 * @return the script engine
+	 */
 	protected static ScriptEngine getScriptEngine(Path path) {
 		FileReader fr = null;
 		try {

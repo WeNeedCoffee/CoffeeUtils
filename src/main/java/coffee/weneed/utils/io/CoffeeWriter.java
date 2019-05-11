@@ -69,6 +69,11 @@ public class CoffeeWriter {
 		this.baos = baos;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	/*
 	 * (non-Javadoc)
 	 *
@@ -212,6 +217,11 @@ public class CoffeeWriter {
 		write((byte) (i >>> 8 & 0xFF));
 	}
 
+	/**
+	 * Write smart.
+	 *
+	 * @param n the n
+	 */
 	public final void writeSmart(Number n) {
 		if (n.doubleValue() % 1 == 0) {
 			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
