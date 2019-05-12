@@ -20,6 +20,16 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>daleths-repo</id>
+			<url>http://dalethium.com/jenkins/plugin/repository/everything</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 	<name>CoffeeUtils</name>
 	<url>https://github.com/WeNeedCoffee/CoffeeUtils</url>
 	<description>Generic utilities</description>
@@ -32,7 +42,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20170516</version>
+			<version>20180813</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.kxml</groupId>
@@ -46,10 +56,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.anti_captcha</groupId>
-			<artifactId>anti_captcha</artifactId>
+			<artifactId>AntiCaptcha</artifactId>
 			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/AntiCaptcha.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.lz4</groupId>
