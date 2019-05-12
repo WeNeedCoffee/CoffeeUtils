@@ -137,7 +137,7 @@ public class GoogleVisionEntityResult implements IJSONObjectDataHolder {
 		JSONObject json = new JSONObject();
 		json.put("description", getDescription());
 		json.put("id", getID());
-		json.put("score", getScore());
+		json.put("score", Float.toString(getScore()));
 		return json;
 	}
 }
