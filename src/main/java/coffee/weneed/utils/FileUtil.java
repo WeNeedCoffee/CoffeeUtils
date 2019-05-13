@@ -3,15 +3,45 @@ package coffee.weneed.utils;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FileUtil.
  */
 public class FileUtil {
-
+	/**
+	 * List to file.
+	 *
+	 * @param file the file
+	 * @param s    the s
+	 * @throws MalformedURLException the malformed URL exception
+	 */
+	public static void listToFile(String file, List<String> s) throws MalformedURLException {
+		StringBuilder sb = new StringBuilder();
+		for (String ssss : s) {
+			sb.append(ssss);
+			sb.append("\n");
+		}
+		File f = new File(file);
+		f.delete();
+		try {
+			FileOutputStream st = new FileOutputStream(f);
+			st.write(sb.substring(0, sb.length() - 1).replace("\r", "").replace("\t", "").getBytes());
+			st.flush();
+			st.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Can write.
 	 *

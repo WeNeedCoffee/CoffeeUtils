@@ -1,14 +1,9 @@
 package coffee.weneed.utils.tests;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.List;
-import coffee.weneed.utils.ArrayUtil;
-import coffee.weneed.utils.NetUtil;
+import org.junit.Test;
 import coffee.weneed.utils.lang.filter.ProfanityFilter;
 
 // TODO: Auto-generated Javadoc
@@ -23,87 +18,10 @@ public class Filter {
 	/** The test. */
 	static String test = "Fucky me is so F_  . _ u CCky! fuck! FuCk! FFFUCK! F _UCK! FUUUCCCCKK!! FUCKIFY I KEEP MY FUCC! F U C K! F__U   C.K";
 
-	/**
-	 * Fix list.
-	 *
-	 * @param file the file
-	 * @throws MalformedURLException the malformed URL exception
-	 */
-	public static void fixList(String file) throws MalformedURLException {
-		List<String> s = null;
-		try {
-			s = ArrayUtil.sortList(new String(NetUtil.downloadUrl(new File("./" + file).toURI().toURL())).split("\\n"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		StringBuilder sb = new StringBuilder();
-		for (String ssss : s) {
-			sb.append(ssss);
-			sb.append("\n");
-		}
-		File f = new File(file);
-		f.delete();
-		try {
-			FileOutputStream st = new FileOutputStream(f);
-			st.write(sb.substring(0, sb.length() - 1).replace("\r", "").replace("\t", "").getBytes());
-			st.flush();
-			st.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 * @throws MalformedURLException the malformed URL exception
-	 */
-	public static void main(String[] args) throws MalformedURLException {
-		Filter.filter = new ProfanityFilter(new HashMap<>(),
-				// new
-				// URL("https://raw.githubusercontent.com/WeNeedCoffee/CoffeeUtils/master/tree.json?_="
-				// + System.currentTimeMillis()));
-				new File("./tree.json").toURI().toURL());
+	@Test
+	public void filtertest() throws MalformedURLException {
+		Filter.filter = new ProfanityFilter(new HashMap<>(), new File("./tree.json").toURI().toURL());
 		System.out.println(Filter.test + " - " + Filter.filter.filterBadWords(Filter.test));
-		// System.out.println(new
-		// String(HexUtil.getBytesFromHex(HexUtil.getHexFromBytes(Filter.test.getBytes()))));
-		// Filter.fixList("badwords.txt");
-		// Filter.fixList("endings.txt");
-		// Filter.fixList("cleanwords.txt");
-
-		/*
-		 * for (String s : new String(LogicUtil.downloadUrl(new
-		 * File("./badwords.txt").toURI().toURL())).split("\\n")) {
-		 * Filter.filter.blacklistWord(s); }
-		 *
-		 * for (String s : new String(LogicUtil.downloadUrl(new
-		 * File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
-		 * Filter.filter.whitelistWord(s); }
-		 *
-		 * Filter.save();
-		 */
-
 	}
 
-	/**
-	 * Save.
-	 */
-	public static void save() {
-		File f = new File("tree.json");
-		f.delete();
-		try {
-			FileOutputStream s = new FileOutputStream(f);
-			s.write(Filter.filter.toJSON().toString(1).getBytes());
-			s.flush();
-			s.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
