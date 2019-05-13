@@ -20,6 +20,14 @@ public class StringUtil {
 	/** The Constant HEX. */
 	static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
+	public static String escapeUnicode(String s) {
+		StringBuilder b = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			b.append("\\u").append(Integer.toHexString(c).toUpperCase());
+		}
+		return b.toString();
+	}
+
 	/**
 	 * Bin to bytes.
 	 *
@@ -37,8 +45,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * *
-	 * Convert a string of 1's and 0's to a string of UTF-8 text.
+	 * * Convert a string of 1's and 0's to a string of UTF-8 text.
 	 *
 	 * @author Daleth
 	 * @param s string of 1's and 0's
@@ -114,8 +121,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * *
-	 * Explode a string into a list of smaller strings of a given size.
+	 * * Explode a string into a list of smaller strings of a given size.
 	 *
 	 * @author Daleth
 	 * @param in        String to explode
@@ -153,7 +159,7 @@ public class StringUtil {
 	/**
 	 * Gets the end.
 	 *
-	 * @param in the in
+	 * @param in        the in
 	 * @param delimiter the delimiter
 	 * @return the end
 	 */
@@ -387,8 +393,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * *
-	 * Convert a UTF-8 String to a string of 1's and 0's.
+	 * * Convert a UTF-8 String to a string of 1's and 0's.
 	 *
 	 * @param in string to encode
 	 * @return string of 1's and 0's

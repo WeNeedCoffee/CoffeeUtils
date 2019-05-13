@@ -19,7 +19,7 @@ public class XZipStep implements ICodingStep {
 	 */
 	@Override
 	public byte[] decode(byte[] input) throws IOException {
-		return CompressionUtil.dexzip(input);
+		return CompressionUtil.unxzip(input);
 	}
 
 	/**

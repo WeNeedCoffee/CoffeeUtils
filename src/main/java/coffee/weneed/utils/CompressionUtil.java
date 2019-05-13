@@ -69,7 +69,7 @@ public class CompressionUtil {
 	 * @return the byte[]
 	 * @throws IOException If there is an error decompressing the array.
 	 */
-	public static byte[] dexzip(byte[] compressed) throws IOException {
+	public static byte[] unxzip(byte[] compressed) throws IOException {
 		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(compressed));
 		int len = ca.readSmart().intValue();
 		SingleXZInputStream xzInputStream = new SingleXZInputStream(new ByteArrayInputStream(ca.getRemainingBytes()));
