@@ -16,33 +16,6 @@ import java.util.List;
  */
 public class FileUtil {
 	/**
-	 * List to file.
-	 *
-	 * @param file the file
-	 * @param s    the s
-	 * @throws MalformedURLException the malformed URL exception
-	 */
-	public static void listToFile(String file, List<String> s) throws MalformedURLException {
-		StringBuilder sb = new StringBuilder();
-		for (String ssss : s) {
-			sb.append(ssss);
-			sb.append("\n");
-		}
-		File f = new File(file);
-		f.delete();
-		try {
-			FileOutputStream st = new FileOutputStream(f);
-			st.write(sb.substring(0, sb.length() - 1).replace("\r", "").replace("\t", "").getBytes());
-			st.flush();
-			st.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
 	 * Can write.
 	 *
 	 * @param file the file
@@ -163,6 +136,33 @@ public class FileUtil {
 			} else {
 				deleteDuplicate(directory, d);
 			}
+		}
+	}
+
+	/**
+	 * List to file.
+	 *
+	 * @param file the file
+	 * @param s    the s
+	 * @throws MalformedURLException the malformed URL exception
+	 */
+	public static void listToFile(String file, List<String> s) throws MalformedURLException {
+		StringBuilder sb = new StringBuilder();
+		for (String ssss : s) {
+			sb.append(ssss);
+			sb.append("\n");
+		}
+		File f = new File(file);
+		f.delete();
+		try {
+			FileOutputStream st = new FileOutputStream(f);
+			st.write(sb.substring(0, sb.length() - 1).replace("\r", "").replace("\t", "").getBytes());
+			st.flush();
+			st.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
