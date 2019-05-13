@@ -21,7 +21,7 @@ import net.jpountz.lz4.LZ4FastDecompressor;
  * The Class CompressionUtil.
  */
 public class CompressionUtil {
-	
+
 	/**
 	 * Bzip 2.
 	 *
@@ -61,25 +61,6 @@ public class CompressionUtil {
 	}
 
 	/**
-	 * Debzip2s the compressed array and places the result into the decompressed
-	 * array.
-	 *
-	 * @param compressed The compressed array, <strong>without</strong> the
-	 *                   header.
-	 * @return the byte[]
-	 * @throws IOException If there is an error decompressing the array.
-	 */
-	public static byte[] unxzip(byte[] compressed) throws IOException {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(compressed));
-		int len = ca.readSmart().intValue();
-		SingleXZInputStream xzInputStream = new SingleXZInputStream(new ByteArrayInputStream(ca.getRemainingBytes()));
-		byte[] buffer = new byte[len];
-		xzInputStream.read(buffer, 0, len);
-		xzInputStream.close();
-		return buffer;
-	}
-
-	/**
 	 * Lz 4.
 	 *
 	 * @param data the data
@@ -112,6 +93,25 @@ public class CompressionUtil {
 		byte[] buffer = new byte[len];
 		bzIn.read(buffer, 0, len);
 		bzIn.close();
+		return buffer;
+	}
+
+	/**
+	 * Debzip2s the compressed array and places the result into the decompressed
+	 * array.
+	 *
+	 * @param compressed The compressed array, <strong>without</strong> the
+	 *                   header.
+	 * @return the byte[]
+	 * @throws IOException If there is an error decompressing the array.
+	 */
+	public static byte[] unxzip(byte[] compressed) throws IOException {
+		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(compressed));
+		int len = ca.readSmart().intValue();
+		SingleXZInputStream xzInputStream = new SingleXZInputStream(new ByteArrayInputStream(ca.getRemainingBytes()));
+		byte[] buffer = new byte[len];
+		xzInputStream.read(buffer, 0, len);
+		xzInputStream.close();
 		return buffer;
 	}
 

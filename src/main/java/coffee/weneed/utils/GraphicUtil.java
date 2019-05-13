@@ -42,7 +42,7 @@ public class GraphicUtil {
 	 * Encode to string.
 	 *
 	 * @param image the image
-	 * @param type the type
+	 * @param type  the type
 	 * @return the string
 	 */
 	public static String encodeToString(BufferedImage image, String type) {
@@ -64,7 +64,7 @@ public class GraphicUtil {
 	/**
 	 * https://stackoverflow.com/questions/10245220/java-image-resize-maintain-aspect-ratio
 	 *
-	 * @param imgSize the img size
+	 * @param imgSize  the img size
 	 * @param boundary the boundary
 	 * @return the scaled dimension
 	 */
@@ -106,8 +106,8 @@ public class GraphicUtil {
 	/**
 	 * https://www.journaldev.com/615/java-resize-image
 	 *
-	 * @param image the image
-	 * @param width the width
+	 * @param image  the image
+	 * @param width  the width
 	 * @param height the height
 	 * @return the buffered image
 	 */
@@ -126,8 +126,8 @@ public class GraphicUtil {
 	/**
 	 * Scale down.
 	 *
-	 * @param image the image
-	 * @param width the width
+	 * @param image  the image
+	 * @param width  the width
 	 * @param height the height
 	 * @return the buffered image
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -140,8 +140,8 @@ public class GraphicUtil {
 	/**
 	 * Scale down.
 	 *
-	 * @param image the image
-	 * @param width the width
+	 * @param image  the image
+	 * @param width  the width
 	 * @param height the height
 	 * @return the buffered image
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -153,8 +153,8 @@ public class GraphicUtil {
 	/**
 	 * Scale down.
 	 *
-	 * @param image the image
-	 * @param width the width
+	 * @param image  the image
+	 * @param width  the width
 	 * @param height the height
 	 * @return the buffered image
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -166,8 +166,8 @@ public class GraphicUtil {
 	/**
 	 * Scale down.
 	 *
-	 * @param image the image
-	 * @param width the width
+	 * @param image  the image
+	 * @param width  the width
 	 * @param height the height
 	 * @return the buffered image
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -179,8 +179,8 @@ public class GraphicUtil {
 	/**
 	 * Scale down.
 	 *
-	 * @param image the image
-	 * @param width the width
+	 * @param image  the image
+	 * @param width  the width
 	 * @param height the height
 	 * @return the buffered image
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -200,9 +200,8 @@ public class GraphicUtil {
 		File imageFile = file;
 		ImageInputStream imageInputStream = ImageIO.createImageInputStream(imageFile);
 		Iterator<ImageReader> imageReadersList = ImageIO.getImageReaders(imageInputStream);
-		if (!imageReadersList.hasNext()) {
+		if (!imageReadersList.hasNext())
 			throw new RuntimeException("Image Readers Not Found!!!");
-		}
 		String reader = imageReadersList.next().getFormatName();
 		imageInputStream.close();
 		return reader;

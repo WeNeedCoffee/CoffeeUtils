@@ -63,8 +63,8 @@ public class JSnow10 {
 	/**
 	 * Replace all.
 	 *
-	 * @param str the str
-	 * @param find the find
+	 * @param str     the str
+	 * @param find    the find
 	 * @param replace the replace
 	 * @return the string
 	 */

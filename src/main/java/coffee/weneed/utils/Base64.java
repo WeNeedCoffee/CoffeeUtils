@@ -1,41 +1,43 @@
 package coffee.weneed.utils;
 
+import java.io.IOException;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Base64.
  */
 // TODO source
 public class Base64 {
-	
+
 	/**
 	 * The Class InputStream.
 	 */
 	public static class InputStream extends java.io.FilterInputStream {
-		
+
 		/** The encode. */
 		private boolean encode;
-		
+
 		/** The position. */
 		private int position;
-		
+
 		/** The buffer. */
 		private byte[] buffer;
-		
+
 		/** The buffer length. */
 		private int bufferLength;
-		
+
 		/** The num sig bytes. */
 		private int numSigBytes;
-		
+
 		/** The line length. */
 		private int lineLength;
-		
+
 		/** The break lines. */
 		private boolean breakLines;
-		
+
 		/** The options. */
 		private int options;
-		
+
 		/** The decodabet. */
 		private byte[] decodabet;
 
@@ -51,7 +53,7 @@ public class Base64 {
 		/**
 		 * Instantiates a new input stream.
 		 *
-		 * @param in the in
+		 * @param in      the in
 		 * @param options the options
 		 */
 		public InputStream(java.io.InputStream in, int options) {
@@ -91,9 +93,8 @@ public class Base64 {
 						encode3to4(b3, 0, numBinaryBytes, buffer, 0, options);
 						position = 0;
 						numSigBytes = 4;
-					} else {
+					} else
 						return -1;
-					}
 				} else {
 					byte[] b4 = new byte[4];
 					int i = 0;
@@ -110,17 +111,15 @@ public class Base64 {
 					if (i == 4) {
 						numSigBytes = decode4to3(b4, 0, buffer, 0, options);
 						position = 0;
-					} else if (i == 0) {
+					} else if (i == 0)
 						return -1;
-					} else {
+					else
 						throw new java.io.IOException("Improperly padded Base64 input.");
-					}
 				}
 			}
 			if (position >= 0) {
-				if (position >= numSigBytes) {
+				if (position >= numSigBytes)
 					return -1;
-				}
 				if (encode && breakLines && lineLength >= MAX_LINE_LENGTH) {
 					lineLength = 0;
 					return '\n';
@@ -132,17 +131,16 @@ public class Base64 {
 					}
 					return b & 0xFF;
 				}
-			} else {
+			} else
 				throw new java.io.IOException("Error in Base64 code reading stream.");
-			}
 		}
 
 		/**
 		 * Read.
 		 *
 		 * @param dest the dest
-		 * @param off the off
-		 * @param len the len
+		 * @param off  the off
+		 * @param len  the len
 		 * @return the int
 		 * @throws IOException Signals that an I/O exception has occurred.
 		 */
@@ -154,9 +152,9 @@ public class Base64 {
 				b = read();
 				if (b >= 0) {
 					dest[off + i] = (byte) b;
-				} else if (i == 0) {
+				} else if (i == 0)
 					return -1;
-				} else {
+				else {
 					break;
 				}
 			}
@@ -168,34 +166,34 @@ public class Base64 {
 	 * The Class OutputStream.
 	 */
 	public static class OutputStream extends java.io.FilterOutputStream {
-		
+
 		/** The encode. */
 		private boolean encode;
-		
+
 		/** The position. */
 		private int position;
-		
+
 		/** The buffer. */
 		private byte[] buffer;
-		
+
 		/** The buffer length. */
 		private int bufferLength;
-		
+
 		/** The line length. */
 		private int lineLength;
-		
+
 		/** The break lines. */
 		private boolean breakLines;
-		
+
 		/** The b 4. */
 		private byte[] b4;
-		
+
 		/** The suspend encoding. */
 		private boolean suspendEncoding;
-		
+
 		/** The options. */
 		private int options;
-		
+
 		/** The decodabet. */
 		private byte[] decodabet;
 
@@ -211,7 +209,7 @@ public class Base64 {
 		/**
 		 * Instantiates a new output stream.
 		 *
-		 * @param out the out
+		 * @param out     the out
 		 * @param options the options
 		 */
 		public OutputStream(java.io.OutputStream out, int options) {
@@ -251,9 +249,8 @@ public class Base64 {
 				if (encode) {
 					out.write(encode3to4(b4, buffer, position, options));
 					position = 0;
-				} else {
+				} else
 					throw new java.io.IOException("Base64 input not properly padded.");
-				}
 			}
 		}
 
@@ -278,8 +275,8 @@ public class Base64 {
 		 * Write.
 		 *
 		 * @param theBytes the the bytes
-		 * @param off the off
-		 * @param len the len
+		 * @param off      the off
+		 * @param len      the len
 		 * @throws IOException Signals that an I/O exception has occurred.
 		 */
 		@Override
@@ -324,67 +321,66 @@ public class Base64 {
 						out.write(b4, 0, len);
 						position = 0;
 					}
-				} else if (decodabet[theByte & 0x7f] != WHITE_SPACE_ENC) {
+				} else if (decodabet[theByte & 0x7f] != WHITE_SPACE_ENC)
 					throw new java.io.IOException("Invalid character in Base64 data.");
-				}
 			}
 		}
 	}
 
 	/** The Constant NO_OPTIONS. */
 	public final static int NO_OPTIONS = 0;
-	
+
 	/** The Constant ENCODE. */
 	public final static int ENCODE = 1;
-	
+
 	/** The Constant DECODE. */
 	public final static int DECODE = 0;
-	
+
 	/** The Constant GZIP. */
 	public final static int GZIP = 2;
-	
+
 	/** The Constant DONT_GUNZIP. */
 	public final static int DONT_GUNZIP = 4;
-	
+
 	/** The Constant DO_BREAK_LINES. */
 	public final static int DO_BREAK_LINES = 8;
-	
+
 	/** The Constant URL_SAFE. */
 	public final static int URL_SAFE = 16;
-	
+
 	/** The Constant ORDERED. */
 	public final static int ORDERED = 32;
-	
+
 	/** The Constant MAX_LINE_LENGTH. */
 	private final static int MAX_LINE_LENGTH = 76;
-	
+
 	/** The Constant EQUALS_SIGN. */
 	private final static byte EQUALS_SIGN = (byte) '=';
-	
+
 	/** The Constant NEW_LINE. */
 	private final static byte NEW_LINE = (byte) '\n';
-	
+
 	/** The Constant PREFERRED_ENCODING. */
 	private final static String PREFERRED_ENCODING = "US-ASCII";
-	
+
 	/** The Constant WHITE_SPACE_ENC. */
 	private final static byte WHITE_SPACE_ENC = -5;
-	
+
 	/** The Constant EQUALS_SIGN_ENC. */
 	private final static byte EQUALS_SIGN_ENC = -1;
-	
+
 	/** The Constant _STANDARD_ALPHABET. */
 	private final static byte[] _STANDARD_ALPHABET = { (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) '+', (byte) '/'
 	};
-	
+
 	/** The Constant _STANDARD_DECODABET. */
 	private final static byte[] _STANDARD_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, -5, -5, -9, -9, -5, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -5, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, 62, -9, -9, -9, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -9, -9, -9, -1, -9, -9, -9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -9, -9, -9, -9, -9, -9, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9
 	};
-	
+
 	/** The Constant _URL_SAFE_ALPHABET. */
 	private final static byte[] _URL_SAFE_ALPHABET = { (byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) '-', (byte) '_'
 	};
-	
+
 	/** The Constant _URL_SAFE_DECODABET. */
 	private final static byte[] _URL_SAFE_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, -5, -5, -9, -9, -5, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -5, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, 62, -9, -9, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -9, -9, -9, -1, -9, -9, -9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -9, -9, -9, -9, 63, -9, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9, -9
 	};
@@ -413,25 +409,22 @@ public class Base64 {
 	/**
 	 * Decode.
 	 *
-	 * @param source the source
-	 * @param off the off
-	 * @param len the len
+	 * @param source  the source
+	 * @param off     the off
+	 * @param len     the len
 	 * @param options the options
 	 * @return the byte[]
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static byte[] decode(byte[] source, int off, int len, int options) throws java.io.IOException {
-		if (source == null) {
+		if (source == null)
 			throw new NullPointerException("Cannot decode null source array.");
-		}
-		if (off < 0 || off + len > source.length) {
+		if (off < 0 || off + len > source.length)
 			throw new IllegalArgumentException(String.format("Source array with length %d cannot have offset of %d and process %d bytes.", source.length, off, len));
-		}
-		if (len == 0) {
+		if (len == 0)
 			return new byte[0];
-		} else if (len < 4) {
+		else if (len < 4)
 			throw new IllegalArgumentException("Base64-encoded string must have at least four characters, but length specified was " + len);
-		}
 		byte[] DECODABET = getDecodabet(options);
 		int len34 = len * 3 / 4;
 		byte[] outBuff = new byte[len34];
@@ -453,9 +446,8 @@ public class Base64 {
 						}
 					}
 				}
-			} else {
+			} else
 				throw new java.io.IOException(String.format("Bad Base64 input character decimal %d in array position %d", source[i] & 0xFF, i));
-			}
 		}
 		byte[] out = new byte[outBuffPosn];
 		System.arraycopy(outBuff, 0, out, 0, outBuffPosn);
@@ -476,15 +468,14 @@ public class Base64 {
 	/**
 	 * Decode.
 	 *
-	 * @param s the s
+	 * @param s       the s
 	 * @param options the options
 	 * @return the byte[]
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static byte[] decode(String s, int options) throws java.io.IOException {
-		if (s == null) {
+		if (s == null)
 			throw new NullPointerException("Input string was null.");
-		}
 		byte[] bytes;
 		try {
 			bytes = s.getBytes(PREFERRED_ENCODING);
@@ -537,26 +528,22 @@ public class Base64 {
 	/**
 	 * Decode 4 to 3.
 	 *
-	 * @param source the source
-	 * @param srcOffset the src offset
+	 * @param source      the source
+	 * @param srcOffset   the src offset
 	 * @param destination the destination
-	 * @param destOffset the dest offset
-	 * @param options the options
+	 * @param destOffset  the dest offset
+	 * @param options     the options
 	 * @return the int
 	 */
 	private static int decode4to3(byte[] source, int srcOffset, byte[] destination, int destOffset, int options) {
-		if (source == null) {
+		if (source == null)
 			throw new NullPointerException("Source array was null.");
-		}
-		if (destination == null) {
+		if (destination == null)
 			throw new NullPointerException("Destination array was null.");
-		}
-		if (srcOffset < 0 || srcOffset + 3 >= source.length) {
+		if (srcOffset < 0 || srcOffset + 3 >= source.length)
 			throw new IllegalArgumentException(String.format("Source array with length %d cannot have offset of %d and still process four bytes.", source.length, srcOffset));
-		}
-		if (destOffset < 0 || destOffset + 2 >= destination.length) {
+		if (destOffset < 0 || destOffset + 2 >= destination.length)
 			throw new IllegalArgumentException(String.format("Destination array with length %d cannot have offset of %d and still store three bytes.", destination.length, destOffset));
-		}
 		byte[] DECODABET = getDecodabet(options);
 		if (source[srcOffset + 2] == EQUALS_SIGN) {
 			int outBuff = (DECODABET[source[srcOffset]] & 0xFF) << 18 | (DECODABET[source[srcOffset + 1]] & 0xFF) << 12;
@@ -579,7 +566,7 @@ public class Base64 {
 	/**
 	 * Encode.
 	 *
-	 * @param raw the raw
+	 * @param raw     the raw
 	 * @param encoded the encoded
 	 */
 	public static void encode(java.nio.ByteBuffer raw, java.nio.ByteBuffer encoded) {
@@ -596,7 +583,7 @@ public class Base64 {
 	/**
 	 * Encode.
 	 *
-	 * @param raw the raw
+	 * @param raw     the raw
 	 * @param encoded the encoded
 	 */
 	public static void encode(java.nio.ByteBuffer raw, java.nio.CharBuffer encoded) {
@@ -615,10 +602,10 @@ public class Base64 {
 	/**
 	 * Encode 3 to 4.
 	 *
-	 * @param b4 the b 4
-	 * @param threeBytes the three bytes
+	 * @param b4          the b 4
+	 * @param threeBytes  the three bytes
 	 * @param numSigBytes the num sig bytes
-	 * @param options the options
+	 * @param options     the options
 	 * @return the byte[]
 	 */
 	private static byte[] encode3to4(byte[] b4, byte[] threeBytes, int numSigBytes, int options) {
@@ -629,12 +616,12 @@ public class Base64 {
 	/**
 	 * Encode 3 to 4.
 	 *
-	 * @param source the source
-	 * @param srcOffset the src offset
+	 * @param source      the source
+	 * @param srcOffset   the src offset
 	 * @param numSigBytes the num sig bytes
 	 * @param destination the destination
-	 * @param destOffset the dest offset
-	 * @param options the options
+	 * @param destOffset  the dest offset
+	 * @param options     the options
 	 * @return the byte[]
 	 */
 	private static byte[] encode3to4(byte[] source, int srcOffset, int numSigBytes, byte[] destination, int destOffset, int options) {
@@ -684,7 +671,7 @@ public class Base64 {
 	/**
 	 * Encode bytes.
 	 *
-	 * @param source the source
+	 * @param source  the source
 	 * @param options the options
 	 * @return the string
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -697,8 +684,8 @@ public class Base64 {
 	 * Encode bytes.
 	 *
 	 * @param source the source
-	 * @param off the off
-	 * @param len the len
+	 * @param off    the off
+	 * @param len    the len
 	 * @return the string
 	 */
 	public static String encodeBytes(byte[] source, int off, int len) {
@@ -715,9 +702,9 @@ public class Base64 {
 	/**
 	 * Encode bytes.
 	 *
-	 * @param source the source
-	 * @param off the off
-	 * @param len the len
+	 * @param source  the source
+	 * @param off     the off
+	 * @param len     the len
 	 * @param options the options
 	 * @return the string
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -750,26 +737,22 @@ public class Base64 {
 	/**
 	 * Encode bytes to bytes.
 	 *
-	 * @param source the source
-	 * @param off the off
-	 * @param len the len
+	 * @param source  the source
+	 * @param off     the off
+	 * @param len     the len
 	 * @param options the options
 	 * @return the byte[]
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static byte[] encodeBytesToBytes(byte[] source, int off, int len, int options) throws java.io.IOException {
-		if (source == null) {
+		if (source == null)
 			throw new NullPointerException("Cannot serialize a null array.");
-		}
-		if (off < 0) {
+		if (off < 0)
 			throw new IllegalArgumentException("Cannot have negative offset: " + off);
-		}
-		if (len < 0) {
+		if (len < 0)
 			throw new IllegalArgumentException("Cannot have length offset: " + len);
-		}
-		if (off + len > source.length) {
+		if (off + len > source.length)
 			throw new IllegalArgumentException(String.format("Cannot have offset of %d and length of %d with array of length %d", off, len, source.length));
-		}
 		if ((options & GZIP) != 0) {
 			java.io.ByteArrayOutputStream baos = null;
 			java.util.zip.GZIPOutputStream gzos = null;
@@ -825,9 +808,8 @@ public class Base64 {
 				byte[] finalOut = new byte[e];
 				System.arraycopy(outBuff, 0, finalOut, 0, e);
 				return finalOut;
-			} else {
+			} else
 				return outBuff;
-			}
 		}
 	}
 
@@ -846,14 +828,13 @@ public class Base64 {
 	 * Encode object.
 	 *
 	 * @param serializableObject the serializable object
-	 * @param options the options
+	 * @param options            the options
 	 * @return the string
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static String encodeObject(java.io.Serializable serializableObject, int options) throws java.io.IOException {
-		if (serializableObject == null) {
+		if (serializableObject == null)
 			throw new NullPointerException("Cannot serialize a null object.");
-		}
 		java.io.ByteArrayOutputStream baos = null;
 		java.io.OutputStream b64os = null;
 		java.util.zip.GZIPOutputStream gzos = null;
@@ -902,13 +883,12 @@ public class Base64 {
 	 * @return the alphabet
 	 */
 	private final static byte[] getAlphabet(int options) {
-		if ((options & URL_SAFE) == URL_SAFE) {
+		if ((options & URL_SAFE) == URL_SAFE)
 			return _URL_SAFE_ALPHABET;
-		} else if ((options & ORDERED) == ORDERED) {
+		else if ((options & ORDERED) == ORDERED)
 			return _ORDERED_ALPHABET;
-		} else {
+		else
 			return _STANDARD_ALPHABET;
-		}
 	}
 
 	/**
@@ -918,13 +898,12 @@ public class Base64 {
 	 * @return the decodabet
 	 */
 	private final static byte[] getDecodabet(int options) {
-		if ((options & URL_SAFE) == URL_SAFE) {
+		if ((options & URL_SAFE) == URL_SAFE)
 			return _URL_SAFE_DECODABET;
-		} else if ((options & ORDERED) == ORDERED) {
+		else if ((options & ORDERED) == ORDERED)
 			return _ORDERED_DECODABET;
-		} else {
+		else
 			return _STANDARD_DECODABET;
-		}
 	}
 
 	/**

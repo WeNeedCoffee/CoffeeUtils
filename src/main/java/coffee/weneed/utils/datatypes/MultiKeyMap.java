@@ -130,9 +130,8 @@ public class MultiKeyMap<K1, K2, V> {
 	 */
 	public V getBySubKey(K2 k2) {
 		for (Map<K2, V> m : mkMap.values()) {
-			if (m.containsKey(k2)) {
+			if (m.containsKey(k2))
 				return m.get(k2);
-			}
 		}
 		return null;
 	}

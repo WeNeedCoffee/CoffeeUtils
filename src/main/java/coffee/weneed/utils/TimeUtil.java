@@ -177,19 +177,18 @@ public class TimeUtil {
 	 */
 	public static final String getReadableMillisTiny(long nanos) {
 		Duration d = Duration.of(nanos, ChronoUnit.NANOS);
-		if (d.toDays() >= 1) {
+		if (d.toDays() >= 1)
 			return d.toDays() + "." + 24 / (d.toHours() % 24) + " days";
-		} else if (d.toHours() >= 1) {
+		else if (d.toHours() >= 1)
 			return d.toHours() + "." + 60 / (d.toMinutes() % 60) + " hours";
-		} else if (d.toMinutes() >= 1) {
+		else if (d.toMinutes() >= 1)
 			return d.toMinutes() + "." + 60 / (d.getSeconds() % 60) + " minutes";
-		} else if (d.getSeconds() >= 1) {
+		else if (d.getSeconds() >= 1)
 			return d.getSeconds() + "." + 1000000000 / d.getNano() + " seconds";
-		} else if (d.getNano() >= 1000000) {
+		else if (d.getNano() >= 1000000)
 			return d.getNano() / 1000000.0d + " ms";
-		} else {
+		else
 			return d.getNano() + " ns";
-		}
 	}
 
 	/**
@@ -264,9 +263,8 @@ public class TimeUtil {
 	 * @return true, if is after
 	 */
 	public static boolean isAfter(long after, long before) {
-		if (after < before) {
+		if (after < before)
 			return true;
-		}
 		return false;
 	}
 
@@ -287,9 +285,8 @@ public class TimeUtil {
 	 * @return true if input is less than Integer.MAX_VALUE
 	 */
 	public static boolean isUnixTime(long input) {
-		if (input < Integer.MAX_VALUE) {
+		if (input < Integer.MAX_VALUE)
 			return true;
-		}
 		return false;
 	}
 

@@ -17,7 +17,7 @@ public class ArrayUtil {
 	 * https://stackoverflow.com/questions/740299/how-do-i-sort-a-set-to-a-list-in-java
 	 *
 	 * @param <T> the generic type
-	 * @param c the c
+	 * @param c   the c
 	 * @return the list
 	 */
 	public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
@@ -33,8 +33,8 @@ public class ArrayUtil {
 	 * @author C#: Snow, haha01haha01
 	 * @author Java: Dalethium
 	 * @param <T> the generic type
-	 * @param a first array
-	 * @param b second array
+	 * @param a   first array
+	 * @param b   second array
 	 * @return An array with b appended to the end of a.
 	 */
 	public static <T> T[] combine(T[] a, T[] b) {
@@ -49,7 +49,7 @@ public class ArrayUtil {
 	 * Copy of.
 	 *
 	 * @param original the original
-	 * @param offset the offset
+	 * @param offset   the offset
 	 * @return the byte[]
 	 */
 	public static byte[] copyOf(byte[] original, int offset) {
@@ -63,7 +63,7 @@ public class ArrayUtil {
 	 * *
 	 * https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts
 	 *
-	 * @param source the source
+	 * @param source    the source
 	 * @param chunksize the chunksize
 	 * @return the list
 	 */
@@ -84,7 +84,7 @@ public class ArrayUtil {
 	 * *
 	 * https://stackoverflow.com/questions/3405195/divide-array-into-smaller-parts
 	 *
-	 * @param source the source
+	 * @param source    the source
 	 * @param chunksize the chunksize
 	 * @return the list
 	 */
@@ -114,11 +114,10 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * *
-	 * Sorts a array by the default arrays.sort and removes duplicate entries
+	 * * Sorts a array by the default arrays.sort and removes duplicate entries
 	 * from the array.
 	 *
-	 * @param <T> the generic type
+	 * @param <T>   the generic type
 	 * @param input the input
 	 * @return sorted list
 	 */
@@ -165,17 +164,16 @@ public class ArrayUtil {
 	 * subarray.
 	 *
 	 * @author Dalethium
-	 * @param <T> the generic type
-	 * @param arr the arr
+	 * @param <T>      the generic type
+	 * @param arr      the arr
 	 * @param startpos the startpos
-	 * @param endpos the endpos
+	 * @param endpos   the endpos
 	 * @return the t[]
 	 */
 	public static <T> T[] subarray(T[] arr, int startpos, int endpos) {
 		List<T> list = new ArrayList<>();
-		if (endpos >= arr.length || startpos < 0) {
+		if (endpos >= arr.length || startpos < 0)
 			throw new IndexOutOfBoundsException();
-		}
 		int i = 0;
 		for (T a : arr) {
 			if (i < startpos) {
@@ -193,7 +191,7 @@ public class ArrayUtil {
 	 * https://stackoverflow.com/questions/6522284/convert-a-generic-list-to-an-array
 	 *
 	 * @author StackOverflow:atreys
-	 * @param <T> the generic type
+	 * @param <T>  the generic type
 	 * @param list the list
 	 * @return array
 	 */
@@ -207,11 +205,10 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * *
-	 * Sorts a array by the default arrays.sort and removes duplicate entries
+	 * * Sorts a array by the default arrays.sort and removes duplicate entries
 	 * from the array.
 	 *
-	 * @param <T> the generic type
+	 * @param <T>   the generic type
 	 * @param input the input
 	 * @return sorted list
 	 */

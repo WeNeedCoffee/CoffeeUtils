@@ -33,7 +33,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	/**
 	 * Adds the.
 	 *
-	 * @param index the index
+	 * @param index   the index
 	 * @param element the element
 	 */
 	/*
@@ -82,7 +82,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	 * Adds the all.
 	 *
 	 * @param index the index
-	 * @param c the c
+	 * @param c     the c
 	 * @return true, if successful
 	 */
 	/*
@@ -388,7 +388,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	/**
 	 * Sets the.
 	 *
-	 * @param index the index
+	 * @param index   the index
 	 * @param element the element
 	 * @return the object
 	 */
@@ -421,7 +421,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	 * Sub list.
 	 *
 	 * @param fromIndex the from index
-	 * @param toIndex the to index
+	 * @param toIndex   the to index
 	 * @return the list
 	 */
 	/*
@@ -453,7 +453,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	 * To array.
 	 *
 	 * @param <T> the generic type
-	 * @param a the a
+	 * @param a   the a
 	 * @return the t[]
 	 */
 	/*

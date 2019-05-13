@@ -63,11 +63,10 @@ public class MathUtil {
 		double dAbs = Math.abs(d);
 		int i = (int) dAbs;
 		double result = dAbs - i;
-		if (result < 0.5) {
+		if (result < 0.5)
 			return d < 0 ? -i : i;
-		} else {
+		else
 			return d < 0 ? -(i + 1) : i + 1;
-		}
 	}
 
 	/**
@@ -78,18 +77,16 @@ public class MathUtil {
 	 */
 	public static Object smartNumber(Number n) {
 		if (n.doubleValue() % 1 == 0) {
-			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
+			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE)
 				return n.byteValue();
-			} else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE) {
+			else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE)
 				return n.shortValue();
-			} else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE) {
+			else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE)
 				return n.intValue();
-			} else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE) {
+			else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE)
 				return n.longValue();
-			}
-		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
+		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE)
 			return n.doubleValue();
-		}
 		return null;
 	}
 }

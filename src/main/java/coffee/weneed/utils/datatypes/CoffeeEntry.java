@@ -10,17 +10,17 @@ import java.util.Map.Entry;
  * @param <V> the value type
  */
 public class CoffeeEntry<K, V> implements Entry<K, V> {
-	
+
 	/** The key. */
 	private K key;
-	
+
 	/** The value. */
 	private V value;
 
 	/**
 	 * Instantiates a new coffee entry.
 	 *
-	 * @param key the key
+	 * @param key   the key
 	 * @param value the value
 	 */
 	public CoffeeEntry(K key, V value) {

@@ -9,13 +9,13 @@ import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
  * The Class GoogleVisionEntityResult.
  */
 public class GoogleVisionEntityResult implements IJSONObjectDataHolder {
-	
+
 	/** The description. */
 	private String description;
-	
+
 	/** The id. */
 	private String id;
-	
+
 	/** The score. */
 	private float score;
 
@@ -32,8 +32,8 @@ public class GoogleVisionEntityResult implements IJSONObjectDataHolder {
 	 * Instantiates a new google vision entity result.
 	 *
 	 * @param description the description
-	 * @param id the id
-	 * @param score the score
+	 * @param id          the id
+	 * @param score       the score
 	 */
 	public GoogleVisionEntityResult(String description, String id, float score) {
 		setDescription(description);

@@ -53,7 +53,7 @@ public class PingTest {
 	 * List to file.
 	 *
 	 * @param file the file
-	 * @param s the s
+	 * @param s    the s
 	 * @throws MalformedURLException the malformed URL exception
 	 */
 	public static void listToFile(String file, List<String> s) throws MalformedURLException {

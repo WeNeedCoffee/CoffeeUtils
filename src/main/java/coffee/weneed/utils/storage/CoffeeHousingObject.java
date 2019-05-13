@@ -50,9 +50,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	@Override
 	protected void deserialize(CoffeeAccessor ca) {
-		if (ca.available() < 2) { // byte for terminator
+		if (ca.available() < 2)
 			return;
-		}
 		items.clear();
 		int e = ca.readSmart().intValue();
 		for (int i = 0; i < e; i++) {
@@ -165,23 +164,23 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 				} else if (k.equals("byte_arrays")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof String) {
-							items.put(sk, StringUtil.hexToBytes((String) obj.getString(sk)));
+							items.put(sk, StringUtil.hexToBytes(obj.getString(sk)));
 						}
 					}
 				} else if (k.equals("json_objects")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof JSONObject) {
-							items.put(sk, (JSONObject) obj.getJSONObject(sk));
+							items.put(sk, obj.getJSONObject(sk));
 						}
 					}
 				} else if (k.equals("json_arrays")) {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof JSONArray) {
-							items.put(sk, (JSONArray) obj.getJSONArray(sk));
+							items.put(sk, obj.getJSONArray(sk));
 						}
 					}
 				}
-			
+
 			}
 		}
 	}
@@ -234,6 +233,27 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	public String getString(String k) {
 		return (String) items.get(k);
+	}
+
+	/**
+	 * Save.
+	 *
+	 * @param folder the folder
+	 */
+	protected void save(File folder) {
+		/*
+		 * lists can only contain objects objects can contain lists or objects
+		 * objects hold data lists do not hold data \LIST\OBJECT\OBJECT.json --
+		 * contains all data within an object object data is held within the
+		 * folder named after the object, not the parent folder
+		 * \LIST\OBJECT1\OBJECT1.json RIGHT \LIST\OBJECT1.json WRONG
+		 */
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+		if (!folder.isDirectory())
+			return;
+		new File(folder.getPath() + File.separator + folder.getName() + ".json");
 	}
 
 	/**
@@ -310,27 +330,6 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			children.get(s).serialize(cw);
 		}
 	}
-	
-	/**
-	 * Save.
-	 *
-	 * @param folder the folder
-	 */
-	protected void save(File folder) { 
-		/*
-		 * lists can only contain objects
-		 * objects can contain lists or objects
-		 * objects hold data
-		 * lists do not hold data
-		 * \LIST\OBJECT\OBJECT.json -- contains all data within an object
-		 * object data is held within the folder named after the object, not the parent folder
-		 * \LIST\OBJECT1\OBJECT1.json RIGHT
-		 * \LIST\OBJECT1.json WRONG
-		 */
-		if (!folder.exists()) folder.mkdir();
-		if (!folder.isDirectory()) return;
-		new File(folder.getPath() + File.separator + folder.getName() + ".json");
-	}
 
 	/**
 	 * Sets the object.
@@ -340,12 +339,10 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * @throws Exception the exception
 	 */
 	public void set(String k, Object o) throws Exception {
-		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode || o instanceof JSONObject 
-				|| o instanceof JSONArray) {
+		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode || o instanceof JSONObject || o instanceof JSONArray) {
 			items.put(k, o);
-		} else {
+		} else
 			throw new Exception("Unsupported data type");
-		}
 	}
 
 	/**
@@ -359,15 +356,16 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	}
 
 	/**
-	 * Sets the JSON object.
+	 * Sets the child.
 	 *
-	 * @param k the k
-	 * @param o the o
+	 * @param k   the k
+	 * @param chn the chn
 	 */
-	public void setJSONObject(String k, JSONObject o) {
-		items.put(k, o);
+	public void setChild(String k, ACoffeeHousingNode chn) {
+		chn.parent = this;
+		items.put(k, chn);
 	}
-	
+
 	/**
 	 * Sets the JSON array.
 	 *
@@ -377,16 +375,15 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	public void setJSONArray(String k, JSONArray a) {
 		items.put(k, a);
 	}
-	
+
 	/**
-	 * Sets the child.
+	 * Sets the JSON object.
 	 *
 	 * @param k the k
-	 * @param chn the chn
+	 * @param o the o
 	 */
-	public void setChild(String k, ACoffeeHousingNode chn) {
-		chn.parent = this;
-		items.put(k, chn);
+	public void setJSONObject(String k, JSONObject o) {
+		items.put(k, o);
 	}
 
 	/**
@@ -455,13 +452,13 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			} else if (o instanceof byte[]) {
 				byte_arrays.put(k, StringUtil.bytesToHex((byte[]) o));
 			} else if (o instanceof String) {
-				strings.put(k, (String) o);
+				strings.put(k, o);
 			} else if (o instanceof ACoffeeHousingNode) {
 				children.put(k, ((ACoffeeHousingNode) o).toJSON());
 			} else if (o instanceof JSONObject) {
-				objects.put(k, (JSONObject) o);
+				objects.put(k, o);
 			} else if (o instanceof JSONArray) {
-				arrays.put(k, (JSONArray) o);
+				arrays.put(k, o);
 			}
 		}
 		if (numbers.length() > 0) {

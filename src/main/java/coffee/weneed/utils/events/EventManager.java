@@ -65,7 +65,7 @@ public class EventManager {
 	/**
 	 * Register before handler.
 	 *
-	 * @param event the event
+	 * @param event   the event
 	 * @param handler the handler
 	 */
 	public void registerBeforeHandler(int event, IBeforeEventHandler handler) {
@@ -81,7 +81,7 @@ public class EventManager {
 	/**
 	 * Register handler.
 	 *
-	 * @param event the event
+	 * @param event   the event
 	 * @param handler the handler
 	 */
 	public void registerHandler(int event, IEventHandler handler) {
@@ -97,7 +97,7 @@ public class EventManager {
 	/**
 	 * Removes the before handler.
 	 *
-	 * @param event the event
+	 * @param event   the event
 	 * @param handler the handler
 	 */
 	public void removeBeforeHandler(int event, IBeforeEventHandler handler) {
@@ -110,7 +110,7 @@ public class EventManager {
 	/**
 	 * Removes the handler.
 	 *
-	 * @param event the event
+	 * @param event   the event
 	 * @param handler the handler
 	 */
 	public void removeHandler(int event, IEventHandler handler) {

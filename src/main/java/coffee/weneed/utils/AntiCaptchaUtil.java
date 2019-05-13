@@ -10,29 +10,29 @@ import com.anti_captcha.Helper.DebugHelper;
  * The Class AntiCaptchaUtil.
  */
 public class AntiCaptchaUtil {
-	
+
 	/**
 	 * The Enum ProxyTypeOption.
 	 */
 	public enum ProxyTypeOption {
-		
+
 		/** The http. */
-		HTTP, 
- /** The socks4. */
- SOCKS4, 
- /** The socks5. */
- SOCKS5, 
- /** The none. */
- NONE
+		HTTP,
+		/** The socks4. */
+		SOCKS4,
+		/** The socks5. */
+		SOCKS5,
+		/** The none. */
+		NONE
 	}
 
 	/**
 	 * Fun captcha.
 	 *
-	 * @param url the url
-	 * @param user_agent the user agent
+	 * @param url         the url
+	 * @param user_agent  the user agent
 	 * @param captcha_key the captcha key
-	 * @param public_key the public key
+	 * @param public_key  the public key
 	 * @return the string
 	 * @throws Exception the exception
 	 */
@@ -43,15 +43,15 @@ public class AntiCaptchaUtil {
 	/**
 	 * Fun captcha.
 	 *
-	 * @param url the url
-	 * @param user_agent the user agent
+	 * @param url         the url
+	 * @param user_agent  the user agent
 	 * @param captcha_key the captcha key
-	 * @param public_key the public key
-	 * @param proxy the proxy
-	 * @param proxy_ip the proxy ip
-	 * @param proxy_port the proxy port
-	 * @param proxy_user the proxy user
-	 * @param proxy_pass the proxy pass
+	 * @param public_key  the public key
+	 * @param proxy       the proxy
+	 * @param proxy_ip    the proxy ip
+	 * @param proxy_port  the proxy port
+	 * @param proxy_user  the proxy user
+	 * @param proxy_pass  the proxy pass
 	 * @return the string
 	 * @throws Exception the exception
 	 */
@@ -69,12 +69,11 @@ public class AntiCaptchaUtil {
 			api.setProxyLogin(proxy_user);
 			api.setProxyPassword(proxy_pass);
 		}
-		if (!api.createTask().booleanValue()) {
+		if (!api.createTask().booleanValue())
 			throw new Exception("API v2 send failed. " + api.getErrorMessage());
-		} else if (!api.waitForResult().booleanValue()) {
+		else if (!api.waitForResult().booleanValue())
 			throw new Exception("Could not solve the captcha." + api.getErrorMessage());
-		} else {
+		else
 			return api.getTaskSolution().getToken();
-		}
 	}
 }

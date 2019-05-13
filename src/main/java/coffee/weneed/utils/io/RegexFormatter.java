@@ -15,7 +15,7 @@ public class RegexFormatter extends Formatter {
 	/** The format. */
 	// format string for printing the log record
 	private String format;
-	
+
 	/** The dat. */
 	private final Date dat = new Date();
 

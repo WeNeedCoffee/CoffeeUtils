@@ -47,7 +47,7 @@ public class ExpCurve {
 	/**
 	 * Gets the experience to level.
 	 *
-	 * @param xp the xp
+	 * @param xp    the xp
 	 * @param level the level
 	 * @return the experience to level
 	 */
@@ -65,9 +65,8 @@ public class ExpCurve {
 	public int getLevel(int xp) {
 		int i = 0;
 		while (true) {
-			if (getExperience(i + 1) > xp) {
+			if (getExperience(i + 1) > xp)
 				return i;
-			}
 			i++;
 		}
 	}

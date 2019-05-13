@@ -20,13 +20,12 @@ public class FileUtil {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static boolean canWrite(File file) throws IOException {
-		if (file.isDirectory()) {
+		if (file.isDirectory())
 			throw new IOException("File is directory.");
-		} else if (file.exists()) {
+		else if (file.exists())
 			throw new IOException("File already exists");
-		} else if (!file.canWrite()) {
+		else if (!file.canWrite())
 			throw new IOException("Can't write to the file");
-		}
 		return true;
 	}
 
@@ -47,25 +46,20 @@ public class FileUtil {
 	 */
 	public static boolean contentEquals(final File file1, final File file2) throws IOException {
 		final boolean file1Exists = file1.exists();
-		if (file1Exists != file2.exists()) {
+		if (file1Exists != file2.exists())
 			return false;
-		}
 
-		if (!file1Exists) {
+		if (!file1Exists)
 			return true;
-		}
 
-		if (file1.isDirectory() || file2.isDirectory()) {
+		if (file1.isDirectory() || file2.isDirectory())
 			throw new IOException("Can't compare directories, only files");
-		}
 
-		if (file1.length() != file2.length()) {
+		if (file1.length() != file2.length())
 			return false;
-		}
 
-		if (file1.getCanonicalFile().equals(file2.getCanonicalFile())) {
+		if (file1.getCanonicalFile().equals(file2.getCanonicalFile()))
 			return true;
-		}
 
 		try (InputStream input1 = new FileInputStream(file1); InputStream input2 = new FileInputStream(file2)) {
 			return contentEquals(input1, input2);
@@ -88,9 +82,8 @@ public class FileUtil {
 	 * @throws NullPointerException if either input is null
 	 */
 	public static boolean contentEquals(InputStream input1, InputStream input2) throws IOException {
-		if (input1 == input2) {
+		if (input1 == input2)
 			return true;
-		}
 		if (!(input1 instanceof BufferedInputStream)) {
 			input1 = new BufferedInputStream(input1);
 		}
@@ -101,9 +94,8 @@ public class FileUtil {
 		int ch = input1.read();
 		while (-1 != ch) {
 			final int ch2 = input2.read();
-			if (ch != ch2) {
+			if (ch != ch2)
 				return false;
-			}
 			ch = input1.read();
 		}
 
@@ -115,7 +107,7 @@ public class FileUtil {
 	 * Delete duplicate.
 	 *
 	 * @param directory the directory
-	 * @param f the f
+	 * @param f         the f
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static void deleteDuplicate(File directory, File f) throws IOException {

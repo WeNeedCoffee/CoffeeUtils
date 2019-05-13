@@ -18,7 +18,7 @@ import coffee.weneed.utils.NetUtil;
  * The Class GoogleVisionUtil.
  */
 public class GoogleVisionUtil {
-	
+
 	/**
 	 * Detect image.
 	 *
@@ -36,9 +36,8 @@ public class GoogleVisionUtil {
 			BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
 			List<AnnotateImageResponse> responses = response.getResponsesList();
 			AnnotateImageResponse res = responses.get(0);
-			if (!res.hasError()) {
+			if (!res.hasError())
 				return new GoogleVisionResult(url.toString(), res.getWebDetection());
-			}
 			System.out.printf("Error: %s\n", res.getError().getMessage());
 			return null;
 		} catch (Exception e) {

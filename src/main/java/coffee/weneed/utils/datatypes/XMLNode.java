@@ -13,19 +13,19 @@ import org.xmlpull.v1.XmlPullParserException;
  * Self Explanatory.
  */
 public class XMLNode {
-	
+
 	/** The attributes. */
 	private LinkedHashMap<String, String> attributes;
-	
+
 	/** The nodes. */
 	private List<XMLNode> nodes;
-	
+
 	/** The name. */
 	private String name;
-	
+
 	/** The parent. */
 	private XMLNode parent;
-	
+
 	/** The text. */
 	private String text;
 
@@ -41,7 +41,7 @@ public class XMLNode {
 	/**
 	 * Instantiates a new XML node.
 	 *
-	 * @param name the name
+	 * @param name  the name
 	 * @param nodes the nodes
 	 */
 	public XMLNode(String name, List<XMLNode> nodes) {
@@ -51,8 +51,8 @@ public class XMLNode {
 	/**
 	 * Instantiates a new XML node.
 	 *
-	 * @param name the name
-	 * @param nodes the nodes
+	 * @param name       the name
+	 * @param nodes      the nodes
 	 * @param attributes the attributes
 	 */
 	public XMLNode(String name, List<XMLNode> nodes, Map<String, String> attributes) {
@@ -62,7 +62,7 @@ public class XMLNode {
 	/**
 	 * Instantiates a new XML node.
 	 *
-	 * @param name the name
+	 * @param name       the name
 	 * @param attributes the attributes
 	 */
 	public XMLNode(String name, Map<String, String> attributes) {
@@ -82,8 +82,8 @@ public class XMLNode {
 	/**
 	 * Instantiates a new XML node.
 	 *
-	 * @param name the name
-	 * @param text the text
+	 * @param name  the name
+	 * @param text  the text
 	 * @param nodes the nodes
 	 */
 	public XMLNode(String name, String text, List<XMLNode> nodes) {
@@ -93,9 +93,9 @@ public class XMLNode {
 	/**
 	 * Instantiates a new XML node.
 	 *
-	 * @param name the name
-	 * @param text the text
-	 * @param nodes the nodes
+	 * @param name       the name
+	 * @param text       the text
+	 * @param nodes      the nodes
 	 * @param attributes the attributes
 	 */
 	private XMLNode(String name, String text, List<XMLNode> nodes, Map<String, String> attributes) {
@@ -108,8 +108,8 @@ public class XMLNode {
 	/**
 	 * Instantiates a new XML node.
 	 *
-	 * @param name the name
-	 * @param text the text
+	 * @param name       the name
+	 * @param text       the text
 	 * @param attributes the attributes
 	 */
 	public XMLNode(String name, String text, Map<String, String> attributes) {
@@ -119,9 +119,10 @@ public class XMLNode {
 	/**
 	 * Instantiates a new XML node.
 	 *
-	 * @param name the name
+	 * @param name   the name
 	 * @param parser the parser
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException            Signals that an I/O exception has
+	 *                                occurred.
 	 * @throws XmlPullParserException the xml pull parser exception
 	 */
 	public XMLNode(String name, XmlPullParser parser) throws IOException, XmlPullParserException {
@@ -132,7 +133,7 @@ public class XMLNode {
 	/**
 	 * Adds the attribute.
 	 *
-	 * @param key the key
+	 * @param key   the key
 	 * @param value the value
 	 * @return the XML node
 	 */
@@ -147,7 +148,7 @@ public class XMLNode {
 	/**
 	 * Adds the attribute.
 	 *
-	 * @param key the key
+	 * @param key   the key
 	 * @param value the value
 	 * @return the XML node
 	 */
@@ -162,7 +163,7 @@ public class XMLNode {
 	/**
 	 * Adds the attribute.
 	 *
-	 * @param key the key
+	 * @param key   the key
 	 * @param value the value
 	 * @return the XML node
 	 */
@@ -253,19 +254,17 @@ public class XMLNode {
 	/**
 	 * Gets the first node by attribute.
 	 *
-	 * @param key the key
+	 * @param key   the key
 	 * @param value the value
 	 * @return the first node by attribute
 	 */
 	public XMLNode getFirstNodeByAttribute(String key, String value) {
-		if (nodes == null) {
+		if (nodes == null)
 			return null;
-		}
 		for (XMLNode node : nodes) {
 			if (node.attributes != null) {
-				if (value.equals(node.attributes.get(key))) {
+				if (value.equals(node.attributes.get(key)))
 					return node;
-				}
 			}
 		}
 		return null;
@@ -278,13 +277,11 @@ public class XMLNode {
 	 * @return the first node by name
 	 */
 	public XMLNode getFirstNodeByName(String name) {
-		if (nodes == null) {
+		if (nodes == null)
 			return null;
-		}
 		for (XMLNode node : nodes) {
-			if (node.name.equals(name)) {
+			if (node.name.equals(name))
 				return node;
-			}
 		}
 		return null;
 	}
@@ -315,9 +312,8 @@ public class XMLNode {
 	 */
 	public XMLNode[] getNodesByName(String name) {
 		List<XMLNode> nodes = new ArrayList<>();
-		if (this.nodes == null) {
+		if (this.nodes == null)
 			return null;
-		}
 		for (XMLNode node : this.nodes) {
 			if (node.name.equals(name)) {
 				nodes.add(node);
@@ -360,7 +356,8 @@ public class XMLNode {
 	 * @param parser the parser
 	 * @return the XML node
 	 * @throws XmlPullParserException the xml pull parser exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException            Signals that an I/O exception has
+	 *                                occurred.
 	 */
 	public XMLNode read(XmlPullParser parser) throws XmlPullParserException, IOException {
 		return read(parser, true);
@@ -369,11 +366,12 @@ public class XMLNode {
 	/**
 	 * Read.
 	 *
-	 * @param parser the parser
+	 * @param parser      the parser
 	 * @param returnClass the return class
 	 * @return the XML node
 	 * @throws XmlPullParserException the xml pull parser exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException            Signals that an I/O exception has
+	 *                                occurred.
 	 */
 	private XMLNode read(XmlPullParser parser, boolean returnClass) throws XmlPullParserException, IOException {
 		XMLNode Node = returnClass ? this : null;
@@ -470,9 +468,8 @@ public class XMLNode {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("<");
-		if (text == null && nodes == null && attributes == null) {
+		if (text == null && nodes == null && attributes == null)
 			return sb.append(name).append(" /").append(">").toString();
-		}
 		sb.append(name);
 		if (attributes != null) {
 			for (Map.Entry<String, String> entry : attributes.entrySet()) {

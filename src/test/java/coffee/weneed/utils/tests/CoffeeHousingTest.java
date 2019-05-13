@@ -31,25 +31,25 @@ import coffee.weneed.utils.storage.CoffeeHousingObject;
  * The Class CoffeeHousingTest.
  */
 public class CoffeeHousingTest {
-	
+
 	/** The timing. */
 	static Map<String, Long> timing = new HashMap<>();
-	
+
 	/** The json. */
 	private static JSONObject json;
-	
+
 	/** The e. */
 	private static CoffeeHousingObject e;
-	
+
 	/** The ee. */
 	private static byte[] ee;
 
 	/** The cbzip. */
 	private static CodingProcess cbzip;
-	
+
 	/** The cxzip. */
 	private static CodingProcess cxzip;
-	
+
 	/** The clz 4 a. */
 	private static CodingProcess clz4a;
 
@@ -117,9 +117,9 @@ public class CoffeeHousingTest {
 	 * Generate coffee housing.
 	 *
 	 * @param amount the amount
-	 * @param ra the ra
-	 * @param rb the rb
-	 * @param rc the rc
+	 * @param ra     the ra
+	 * @param rb     the rb
+	 * @param rc     the rc
 	 * @return the coffee housing object
 	 */
 	public CoffeeHousingObject generateCoffeeHousing(int amount, int ra, int rb, int rc) {

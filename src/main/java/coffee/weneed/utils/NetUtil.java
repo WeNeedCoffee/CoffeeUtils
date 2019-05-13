@@ -28,7 +28,7 @@ public class NetUtil {
 	/**
 	 * Check proxy.
 	 *
-	 * @param ip the ip
+	 * @param ip      the ip
 	 * @param contact the contact
 	 * @return the double
 	 * @throws IOException Signals that an I/O exception has occurred.
@@ -40,9 +40,8 @@ public class NetUtil {
 		} catch (JSONException e) {
 			return -1;
 		}
-		if (!json.optString("status", "failure").equalsIgnoreCase("success")) {
+		if (!json.optString("status", "failure").equalsIgnoreCase("success"))
 			return -1;
-		}
 		return Double.valueOf(json.optString("result", "1"));
 	}
 
@@ -87,8 +86,7 @@ public class NetUtil {
 	}
 
 	/**
-	 * *
-	 * https://www.rgagnon.com/javadetails/java-0452.html
+	 * * https://www.rgagnon.com/javadetails/java-0452.html
 	 *
 	 * @param hostName the host name
 	 * @return the mx
@@ -103,9 +101,8 @@ public class NetUtil {
 		if (attr == null || attr.size() == 0) {
 			attrs = ictx.getAttributes(hostName, new String[] { "A" });
 			attr = attrs.get("A");
-			if (attr == null) {
+			if (attr == null)
 				throw new NamingException("No match for name '" + hostName + "'");
-			}
 		}
 		ArrayList<String> res = new ArrayList<>();
 		NamingEnumeration<?> en = attr.getAll();
@@ -127,8 +124,7 @@ public class NetUtil {
 	}
 
 	/**
-	 * *
-	 * https://www.rgagnon.com/javadetails/java-0452.html
+	 * * https://www.rgagnon.com/javadetails/java-0452.html
 	 *
 	 * @param hostName the host name
 	 * @return true, if successful
@@ -158,12 +154,11 @@ public class NetUtil {
 	}
 
 	/**
-	 * *
-	 * https://stackoverflow.com/a/34228756
+	 * * https://stackoverflow.com/a/34228756
 	 *
 	 * @author https://stackoverflow.com/users/3368518/sourabh-bhat
-	 * @param addr the addr
-	 * @param openPort the open port
+	 * @param addr          the addr
+	 * @param openPort      the open port
 	 * @param timeOutMillis the time out millis
 	 * @return true, if is reachable
 	 */
@@ -199,9 +194,8 @@ public class NetUtil {
 			int size = domainEle.length;
 			for (int i = 0; i < size; i++) {
 				String domainEleStr = domainEle[i];
-				if ("".equals(domainEleStr.trim())) {
+				if ("".equals(domainEleStr.trim()))
 					return false;
-				}
 			}
 			char[] domainChar = addStr.toCharArray();
 			size = domainChar.length;

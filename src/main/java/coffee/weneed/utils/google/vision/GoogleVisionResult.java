@@ -19,28 +19,28 @@ import coffee.weneed.utils.datatypes.CoffeeEntry;
  * @author Daleth
  */
 public class GoogleVisionResult implements IJSONObjectDataHolder {
-	
+
 	/** The descriptions. */
 	private List<GoogleVisionEntityResult> descriptions = new ArrayList<>();
-	
+
 	/** The labels. */
 	private List<String> labels = new ArrayList<>();
-	
+
 	/** The matching pages. */
 	private List<CoffeeEntry<String, String>> matching_pages = new ArrayList<>();
-	
+
 	/** The partial image matches. */
 	private List<String> partial_image_matches = new ArrayList<>();
-	
+
 	/** The full image matches. */
 	private List<String> full_image_matches = new ArrayList<>();
-	
+
 	/** The similar images. */
 	private List<String> similar_images = new ArrayList<>();
-	
+
 	/** The image. */
 	private String image;
-	
+
 	/** The timestamp. */
 	private long timestamp;
 
@@ -57,7 +57,7 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 * Instantiates a new google vision result.
 	 *
 	 * @param image the image
-	 * @param web the web
+	 * @param web   the web
 	 */
 	public GoogleVisionResult(String image, WebDetection web) {
 		this.image = image;

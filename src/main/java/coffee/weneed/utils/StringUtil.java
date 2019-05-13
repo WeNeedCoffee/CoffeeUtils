@@ -20,14 +20,6 @@ public class StringUtil {
 	/** The Constant HEX. */
 	static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
-	public static String escapeUnicode(String s) {
-		StringBuilder b = new StringBuilder();
-		for (char c : s.toCharArray()) {
-			b.append("\\u").append(Integer.toHexString(c).toUpperCase());
-		}
-		return b.toString();
-	}
-
 	/**
 	 * Bin to bytes.
 	 *
@@ -118,6 +110,14 @@ public class StringUtil {
 			}
 		}
 		return ret;
+	}
+
+	public static String escapeUnicode(String s) {
+		StringBuilder b = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			b.append("\\u").append(Integer.toHexString(c).toUpperCase());
+		}
+		return b.toString();
 	}
 
 	/**
@@ -272,9 +272,8 @@ public class StringUtil {
 	 */
 	public static boolean isNumber(String s) {
 		for (char c : s.toCharArray()) {
-			if (!Character.isDigit(c)) {
+			if (!Character.isDigit(c))
 				return false;
-			}
 		}
 		return true;
 	}
@@ -365,30 +364,26 @@ public class StringUtil {
 			if (Math.abs(from) > Math.abs(to)) {
 				String s = string.substring(string.length() - Math.abs(from));
 				return s.substring(s.length() - Math.abs(to));
-			} else {
+			} else
 				return "";
-			}
 		} else if (from >= 0 && to < 0) {
 			String s = string.substring(from);
-			if (Math.abs(to) >= s.length()) {
+			if (Math.abs(to) >= s.length())
 				return "";
-			} else {
+			else
 				return s.substring(0, s.length() - Math.abs(to));
-			}
 
 		} else if (from < 0 && to >= 0) {
 			String s = string.substring(string.length() - Math.abs(from));
-			if (to >= s.length()) {
+			if (to >= s.length())
 				return s;
-			}
 			return s.substring(0, to);
 		} else {
 			String s = string.substring(Math.abs(from));
-			if (to >= s.length()) {
+			if (to >= s.length())
 				return s;
-			} else {
+			else
 				return s.substring(0, Math.abs(to));
-			}
 		}
 	}
 

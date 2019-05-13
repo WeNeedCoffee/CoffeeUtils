@@ -114,9 +114,8 @@ public class ByteArrayByteStream {
 			System.arraycopy(arr, pos, now, 0, arr.length - pos);
 			nows = StringUtil.bytesToHex(now);
 		}
-		if (b) {
+		if (b)
 			return "All: " + StringUtil.bytesToHex(arr) + "\nNow: " + nows;
-		}
 		return "Data: " + nows;
 	}
 }
