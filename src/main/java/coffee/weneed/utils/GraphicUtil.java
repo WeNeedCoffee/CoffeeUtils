@@ -62,6 +62,24 @@ public class GraphicUtil {
 	}
 
 	/**
+	 * https://javabeat.net/java-image-format/
+	 *
+	 * @param file the file
+	 * @return the image type
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static String getImageType(File file) throws IOException {
+		File imageFile = file;
+		ImageInputStream imageInputStream = ImageIO.createImageInputStream(imageFile);
+		Iterator<ImageReader> imageReadersList = ImageIO.getImageReaders(imageInputStream);
+		if (!imageReadersList.hasNext())
+			throw new RuntimeException("Image Readers Not Found!!!");
+		String reader = imageReadersList.next().getFormatName();
+		imageInputStream.close();
+		return reader;
+	}
+
+	/**
 	 * https://stackoverflow.com/questions/10245220/java-image-resize-maintain-aspect-ratio
 	 *
 	 * @param imgSize  the img size
@@ -187,23 +205,5 @@ public class GraphicUtil {
 	 */
 	public static BufferedImage scaleDown(URL image, int width, int height) throws IOException {
 		return scaleDown(NetUtil.downloadUrl(image), width, height);
-	}
-
-	/**
-	 * https://javabeat.net/java-image-format/
-	 *
-	 * @param file the file
-	 * @return the image type
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static String getImageType(File file) throws IOException {
-		File imageFile = file;
-		ImageInputStream imageInputStream = ImageIO.createImageInputStream(imageFile);
-		Iterator<ImageReader> imageReadersList = ImageIO.getImageReaders(imageInputStream);
-		if (!imageReadersList.hasNext())
-			throw new RuntimeException("Image Readers Not Found!!!");
-		String reader = imageReadersList.next().getFormatName();
-		imageInputStream.close();
-		return reader;
 	}
 }

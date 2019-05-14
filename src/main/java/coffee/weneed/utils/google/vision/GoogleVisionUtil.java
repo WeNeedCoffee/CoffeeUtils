@@ -21,11 +21,12 @@ public class GoogleVisionUtil {
 
 	/**
 	 * Detect image.
+	 * 
 	 * @author Daleth
 	 * @param url the url
 	 * @return the google vision result
-	 * @throws IOException 
-	 * @throws GoogleVisionException 
+	 * @throws IOException
+	 * @throws GoogleVisionException
 	 */
 	public static GoogleVisionResult detectImage(URL url) throws IOException, GoogleVisionException {
 		ArrayList<AnnotateImageRequest> requests = new ArrayList<>();

@@ -48,16 +48,6 @@ public class StringUtil {
 	}
 
 	/**
-	 * @author Daleth
-	 * @param s
-	 * @return
-	 */
-	public static boolean isBlank(String s) {
-		if (s == null) return true;
-		if (s.replace("\t", "").replace("\r", "").replace("\n", "").trim().isEmpty()) return true;
-		return false;
-	}
-	/**
 	 * Bytes to bin.
 	 *
 	 * @param in the in
@@ -271,6 +261,19 @@ public class StringUtil {
 			}
 		}
 		return baos.toByteArray();
+	}
+
+	/**
+	 * @author Daleth
+	 * @param s
+	 * @return
+	 */
+	public static boolean isBlank(String s) {
+		if (s == null)
+			return true;
+		if (s.replace("\t", "").replace("\r", "").replace("\n", "").trim().isEmpty())
+			return true;
+		return false;
 	}
 
 	/**
