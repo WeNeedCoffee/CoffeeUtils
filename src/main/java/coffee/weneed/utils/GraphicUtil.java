@@ -196,7 +196,7 @@ public class GraphicUtil {
 	 * @return the image type
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public String getImageType(File file) throws IOException {
+	public static String getImageType(File file) throws IOException {
 		File imageFile = file;
 		ImageInputStream imageInputStream = ImageIO.createImageInputStream(imageFile);
 		Iterator<ImageReader> imageReadersList = ImageIO.getImageReaders(imageInputStream);

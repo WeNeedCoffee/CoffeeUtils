@@ -21,12 +21,13 @@ public class GoogleVisionUtil {
 
 	/**
 	 * Detect image.
-	 *
+	 * @author Daleth
 	 * @param url the url
 	 * @return the google vision result
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException 
+	 * @throws GoogleVisionException 
 	 */
-	public static GoogleVisionResult detectImage(URL url) throws IOException {
+	public static GoogleVisionResult detectImage(URL url) throws IOException, GoogleVisionException {
 		ArrayList<AnnotateImageRequest> requests = new ArrayList<>();
 		Image img = Image.newBuilder().setContent(ByteString.copyFrom(NetUtil.downloadUrl(url))).build();
 		Feature feat = Feature.newBuilder().setType(Feature.Type.WEB_DETECTION).build();
@@ -38,10 +39,7 @@ public class GoogleVisionUtil {
 			AnnotateImageResponse res = responses.get(0);
 			if (!res.hasError())
 				return new GoogleVisionResult(url.toString(), res.getWebDetection());
-			System.out.printf("Error: %s\n", res.getError().getMessage());
-			return null;
-		} catch (Exception e) {
-			return null;
+			throw new GoogleVisionException(String.format("Error: %s\n", res.getError().getMessage()));
 		}
 	}
 }
