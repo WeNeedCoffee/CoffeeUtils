@@ -272,7 +272,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	protected void serialize(CoffeeWriter cw) {
 		cw.write((byte) 0x12);
 		Map<String, Number> numbers = new HashMap<>();
-		Map<String, byte[]> byte_arrays = new HashMap<>();
+		Map<String, byte[]> byteArrays = new HashMap<>();
 		Map<String, String> strings = new HashMap<>();
 		Map<String, String> jsonos = new HashMap<>();
 		Map<String, String> jsonas = new HashMap<>();
@@ -282,7 +282,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			if (o instanceof Byte || o instanceof Short || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double) {
 				numbers.put(k, (Number) o);
 			} else if (o instanceof byte[]) {
-				byte_arrays.put(k, (byte[]) o);
+				byteArrays.put(k, (byte[]) o);
 			} else if (o instanceof String) {
 				strings.put(k, (String) o);
 			} else if (o instanceof ACoffeeHousingNode) {
@@ -299,9 +299,9 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			cw.writeString(s);
 			cw.writeSmart(b);
 		}
-		cw.writeSmart(byte_arrays.size());
-		for (String s : byte_arrays.keySet()) {
-			byte[] bs = byte_arrays.get(s);
+		cw.writeSmart(byteArrays.size());
+		for (String s : byteArrays.keySet()) {
+			byte[] bs = byteArrays.get(s);
 			cw.writeString(s);
 			cw.writeSmart(bs.length);
 			cw.write(bs);
@@ -341,8 +341,9 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	public void set(String k, Object o) throws Exception {
 		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode || o instanceof JSONObject || o instanceof JSONArray) {
 			items.put(k, o);
-		} else
+		} else {
 			throw new Exception("Unsupported data type");
+		}
 	}
 
 	/**

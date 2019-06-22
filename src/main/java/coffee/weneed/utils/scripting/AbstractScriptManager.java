@@ -17,7 +17,7 @@ import javax.script.ScriptException;
 public abstract class AbstractScriptManager {
 
 	/** The Constant sem. */
-	private static final ScriptEngineManager sem = new ScriptEngineManager();
+	private static final ScriptEngineManager SCRIPT_ENGINE_MANAGER = new ScriptEngineManager();
 
 	/**
 	 * Gets the invocable.
@@ -42,7 +42,7 @@ public abstract class AbstractScriptManager {
 			File script = path.toFile();
 			if (!script.exists())
 				return null;
-			ScriptEngine engine = AbstractScriptManager.sem.getEngineByName("nashorn");
+			ScriptEngine engine = AbstractScriptManager.SCRIPT_ENGINE_MANAGER.getEngineByName("nashorn");
 			fr = new FileReader(script);
 			engine.eval("load('nashorn:mozilla_compat.js')");
 			engine.eval(fr);

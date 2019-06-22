@@ -495,7 +495,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		JSONObject bytes = new JSONObject();
-		JSONObject byte_arrays = new JSONObject();
+		JSONObject byteArrays = new JSONObject();
 		JSONObject ints = new JSONObject();
 		JSONObject longs = new JSONObject();
 		JSONObject floats = new JSONObject();
@@ -505,7 +505,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		JSONObject strings = new JSONObject();
 		JSONObject children = new JSONObject();
 		Map<Integer, Byte> tbytes = new HashMap<>();
-		Map<Integer, byte[]> tbyte_arrays = new HashMap<>();
+		Map<Integer, byte[]> tbyteArrays = new HashMap<>();
 		Map<Integer, Integer> tints = new HashMap<>();
 		Map<Integer, Long> tlongs = new HashMap<>();
 		Map<Integer, Float> tfloats = new HashMap<>();
@@ -519,7 +519,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 			if (o instanceof Byte) {
 				tbytes.put(k, (byte) o);
 			} else if (o instanceof byte[]) {
-				tbyte_arrays.put(k, (byte[]) o);
+				tbyteArrays.put(k, (byte[]) o);
 			} else if (o instanceof Integer) {
 				tints.put(k, (int) o);
 			} else if (o instanceof Long) {
@@ -542,8 +542,8 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		for (int i : tbytes.keySet()) {
 			bytes.put(String.valueOf(i), tbytes.get(i));
 		}
-		for (int i : tbyte_arrays.keySet()) {
-			byte_arrays.put(String.valueOf(i), StringUtil.bytesToHex(tbyte_arrays.get(i)));
+		for (int i : tbyteArrays.keySet()) {
+			byteArrays.put(String.valueOf(i), StringUtil.bytesToHex(tbyteArrays.get(i)));
 		}
 		for (int i : tints.keySet()) {
 			ints.put(String.valueOf(i), tints.get(i));
@@ -573,8 +573,8 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		if (bytes.length() > 0) {
 			json.put("bytes", bytes);
 		}
-		if (byte_arrays.length() > 0) {
-			json.put("byte_arrays", byte_arrays);
+		if (byteArrays.length() > 0) {
+			json.put("byte_arrays", byteArrays);
 		}
 		if (ints.length() > 0) {
 			json.put("ints", ints);

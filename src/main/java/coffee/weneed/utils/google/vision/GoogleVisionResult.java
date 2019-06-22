@@ -27,16 +27,16 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	private List<String> labels = new ArrayList<>();
 
 	/** The matching pages. */
-	private List<CoffeeEntry<String, String>> matching_pages = new ArrayList<>();
+	private List<CoffeeEntry<String, String>> matchingPages = new ArrayList<>();
 
 	/** The partial image matches. */
-	private List<String> partial_image_matches = new ArrayList<>();
+	private List<String> partialImageMatches = new ArrayList<>();
 
 	/** The full image matches. */
-	private List<String> full_image_matches = new ArrayList<>();
+	private List<String> fullImageMatches = new ArrayList<>();
 
 	/** The similar images. */
-	private List<String> similar_images = new ArrayList<>();
+	private List<String> similarImages = new ArrayList<>();
 
 	/** The image. */
 	private String image;
@@ -93,30 +93,30 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 				continue;
 			}
 			JSONObject obj = (JSONObject) o;
-			matching_pages.add(new CoffeeEntry<>(obj.getString("url"), obj.getString("title")));
+			matchingPages.add(new CoffeeEntry<>(obj.getString("url"), obj.getString("title")));
 		}
 
 		for (Object o : json.optJSONArray("partial_image_matches")) {
 			if (o instanceof JSONObject) {
-				partial_image_matches.add(((JSONObject) o).getString("url"));
+				partialImageMatches.add(((JSONObject) o).getString("url"));
 			} else if (o instanceof String) {
-				partial_image_matches.add((String) o);
+				partialImageMatches.add((String) o);
 			}
 		}
 
 		for (Object o : json.optJSONArray("full_image_matches")) {
 			if (o instanceof JSONObject) {
-				full_image_matches.add(((JSONObject) o).getString("url"));
+				fullImageMatches.add(((JSONObject) o).getString("url"));
 			} else if (o instanceof String) {
-				full_image_matches.add((String) o);
+				fullImageMatches.add((String) o);
 			}
 		}
 
 		for (Object o : json.optJSONArray("similar_images") != null ? json.optJSONArray("similar_images") : json.optJSONArray("similar_image")) {
 			if (o instanceof JSONObject) {
-				similar_images.add(((JSONObject) o).getString("url"));
+				similarImages.add(((JSONObject) o).getString("url"));
 			} else if (o instanceof String) {
-				similar_images.add((String) o);
+				similarImages.add((String) o);
 			}
 		}
 	}
@@ -134,16 +134,16 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 			labels.add(label.getLabel());
 		}
 		for (WebPage page : annotation.getPagesWithMatchingImagesList()) {
-			matching_pages.add(new CoffeeEntry<>(page.getUrl(), page.getPageTitle()));
+			matchingPages.add(new CoffeeEntry<>(page.getUrl(), page.getPageTitle()));
 		}
 		for (WebImage image : annotation.getPartialMatchingImagesList()) {
-			partial_image_matches.add(image.getUrl());
+			partialImageMatches.add(image.getUrl());
 		}
 		for (WebImage image : annotation.getFullMatchingImagesList()) {
-			full_image_matches.add(image.getUrl());
+			fullImageMatches.add(image.getUrl());
 		}
 		for (WebImage image : annotation.getVisuallySimilarImagesList()) {
-			similar_images.add(image.getUrl());
+			similarImages.add(image.getUrl());
 		}
 	}
 
@@ -161,8 +161,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @return the full image matches
 	 */
-	public List<String> getFull_image_matches() {
-		return full_image_matches;
+	public List<String> getFullImageMatches() {
+		return fullImageMatches;
 	}
 
 	/**
@@ -188,8 +188,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @return the matching pages
 	 */
-	public List<CoffeeEntry<String, String>> getMatching_pages() {
-		return matching_pages;
+	public List<CoffeeEntry<String, String>> getMatchingPages() {
+		return matchingPages;
 	}
 
 	/**
@@ -197,8 +197,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @return the partial image matches
 	 */
-	public List<String> getPartial_image_matches() {
-		return partial_image_matches;
+	public List<String> getPartialImageMatches() {
+		return partialImageMatches;
 	}
 
 	/**
@@ -206,8 +206,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @return the similar images
 	 */
-	public List<String> getSimilar_images() {
-		return similar_images;
+	public List<String> getSimilarImages() {
+		return similarImages;
 	}
 
 	/**
@@ -233,8 +233,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @param full_image_matches the new full image matches
 	 */
-	public void setFull_image_matches(List<String> full_image_matches) {
-		this.full_image_matches = full_image_matches;
+	public void setFullImageMatches(List<String> full_image_matches) {
+		this.fullImageMatches = full_image_matches;
 	}
 
 	/**
@@ -260,8 +260,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @param matching_pages the matching pages
 	 */
-	public void setMatching_pages(List<CoffeeEntry<String, String>> matching_pages) {
-		this.matching_pages = matching_pages;
+	public void setMatchingPages(List<CoffeeEntry<String, String>> matching_pages) {
+		this.matchingPages = matching_pages;
 	}
 
 	/**
@@ -269,8 +269,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @param partial_image_matches the new partial image matches
 	 */
-	public void setPartial_image_matches(List<String> partial_image_matches) {
-		this.partial_image_matches = partial_image_matches;
+	public void setPartialImageMatches(List<String> partial_image_matches) {
+		this.partialImageMatches = partial_image_matches;
 	}
 
 	/**
@@ -278,8 +278,8 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 *
 	 * @param similar_images the new similar images
 	 */
-	public void setSimilar_images(List<String> similar_images) {
-		this.similar_images = similar_images;
+	public void setSimilarImages(List<String> similar_images) {
+		this.similarImages = similar_images;
 	}
 
 	/**
@@ -312,22 +312,22 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 		}
 		json.put("labels", array);
 		array = new JSONArray();
-		for (CoffeeEntry<String, String> s : matching_pages) {
+		for (CoffeeEntry<String, String> s : matchingPages) {
 			array.put(new JSONObject().put("url", s.getKey()).put("title", s.getValue()));
 		}
 		json.put("matching_pages", array);
 		array = new JSONArray();
-		for (String s : partial_image_matches) {
+		for (String s : partialImageMatches) {
 			array.put(s);
 		}
 		json.put("partial_image_matches", array);
 		array = new JSONArray();
-		for (String s : full_image_matches) {
+		for (String s : fullImageMatches) {
 			array.put(s);
 		}
 		json.put("full_image_matches", array);
 		array = new JSONArray();
-		for (String s : similar_images) {
+		for (String s : similarImages) {
 			array.put(s);
 		}
 		json.put("similar_images", array);

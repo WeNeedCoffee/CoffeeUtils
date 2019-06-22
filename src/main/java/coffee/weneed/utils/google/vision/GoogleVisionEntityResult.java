@@ -24,7 +24,7 @@ public class GoogleVisionEntityResult implements IJSONObjectDataHolder {
 	 *
 	 * @param json the json
 	 */
-	public GoogleVisionEntityResult(JSONObject json) {
+	public GoogleVisionEntityResult(final JSONObject json) {
 		fromJSON(json);
 	}
 
@@ -36,9 +36,9 @@ public class GoogleVisionEntityResult implements IJSONObjectDataHolder {
 	 * @param score       the score
 	 */
 	public GoogleVisionEntityResult(String description, String id, float score) {
-		setDescription(description);
-		setID(id);
-		setScore(score);
+		this.description = description;
+		this.id = id;
+		this.score = score;
 	}
 
 	/**

@@ -146,7 +146,7 @@ public class TimeUtil {
 			sb.append((int) elapsedSeconds);
 			sb.append(" second" + (elapsedSeconds > 1 ? "s" : "") + ".");
 		} else {
-			sb.append("None.");
+			sb.append("Now.");
 		}
 		return sb.toString();
 	}

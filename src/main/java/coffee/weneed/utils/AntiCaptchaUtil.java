@@ -30,50 +30,51 @@ public class AntiCaptchaUtil {
 	 * Fun captcha.
 	 *
 	 * @param url         the url
-	 * @param user_agent  the user agent
-	 * @param captcha_key the captcha key
-	 * @param public_key  the public key
+	 * @param userAgent  the user agent
+	 * @param captchaKey the captcha key
+	 * @param publicKey  the public key
 	 * @return the string
 	 * @throws Exception the exception
 	 */
-	public static String funCaptcha(String url, String user_agent, String captcha_key, String public_key) throws Exception {
-		return funCaptcha(url, user_agent, captcha_key, public_key, ProxyTypeOption.NONE, null, -1, null, null);
+	public static String funCaptcha(String url, String userAgent, String captchaKey, String publicKey) throws Exception {
+		return funCaptcha(url, userAgent, captchaKey, publicKey, ProxyTypeOption.NONE, null, -1, null, null);
 	}
 
 	/**
 	 * Fun captcha.
 	 *
 	 * @param url         the url
-	 * @param user_agent  the user agent
-	 * @param captcha_key the captcha key
-	 * @param public_key  the public key
+	 * @param userAgent  the user agent
+	 * @param captchakey the captcha key
+	 * @param publicKey  the public key
 	 * @param proxy       the proxy
-	 * @param proxy_ip    the proxy ip
-	 * @param proxy_port  the proxy port
-	 * @param proxy_user  the proxy user
-	 * @param proxy_pass  the proxy pass
+	 * @param proxyIP    the proxy ip
+	 * @param proxyPort  the proxy port
+	 * @param proxyUser  the proxy user
+	 * @param proxyPass  the proxy pass
 	 * @return the string
 	 * @throws Exception the exception
 	 */
-	public static String funCaptcha(String url, String user_agent, String captcha_key, String public_key, ProxyTypeOption proxy, String proxy_ip, int proxy_port, String proxy_user, String proxy_pass) throws Exception {
+	public static String funCaptcha(String url, String userAgent, String captchaKey, String publicKey, ProxyTypeOption proxy, String proxyIP, int proxyPort, String proxyUser, String proxyPass) throws Exception {
 		DebugHelper.setVerboseMode(true);
 		FunCaptcha api = new FunCaptcha();
-		api.setClientKey(captcha_key);
+		api.setClientKey(captchaKey);
 		api.setWebsiteUrl(new URL(url));
-		api.setWebsitePublicKey(public_key);
-		api.setUserAgent(user_agent);
+		api.setWebsitePublicKey(publicKey);
+		api.setUserAgent(userAgent);
 		if (!proxy.equals(ProxyTypeOption.NONE)) {
 			api.setProxyType(AnticaptchaBase.ProxyTypeOption.valueOf(proxy.toString()));
-			api.setProxyAddress(proxy_ip);
-			api.setProxyPort(proxy_port);
-			api.setProxyLogin(proxy_user);
-			api.setProxyPassword(proxy_pass);
+			api.setProxyAddress(proxyIP);
+			api.setProxyPort(proxyPort);
+			api.setProxyLogin(proxyUser);
+			api.setProxyPassword(proxyPass);
 		}
-		if (!api.createTask().booleanValue())
+		if (!api.createTask().booleanValue()) {
 			throw new Exception("API v2 send failed. " + api.getErrorMessage());
-		else if (!api.waitForResult().booleanValue())
+		} else if (!api.waitForResult().booleanValue()) {
 			throw new Exception("Could not solve the captcha." + api.getErrorMessage());
-		else
+		} else {
 			return api.getTaskSolution().getToken();
+		}
 	}
 }

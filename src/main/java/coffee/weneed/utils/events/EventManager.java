@@ -24,7 +24,7 @@ public class EventManager {
 	 */
 	public void fireEvent(IEvent event) {
 		for (IBeforeEventHandler e : beforeHandlers.get(event.getType())) {
-			e.HandleBeforeEvent(event);
+			e.handleBeforeEvent(event);
 		}
 		if (!event.isCancelled()) {
 			for (IEventHandler e : handlers.get(event.getType())) {

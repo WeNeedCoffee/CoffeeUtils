@@ -19,16 +19,16 @@ public class JSnow10 {
 	public static char one = '\u200D';
 
 	/** The z zero. */
-	public static char z_zero = '\u200B';
+	public static char zZero = '\u200B';
 
 	/** The z one. */
-	public static char z_one = '\u200D';
+	public static char zOne = '\u200D';
 
 	/** The w zero. */
-	public static char w_zero = ' ';
+	public static char wZero = ' ';
 
 	/** The w one. */
-	public static char w_one = '\t';
+	public static char wOne = '\t';
 
 	/**
 	 * new String(decode(s), StandardCharsets.UTF_8)
@@ -43,11 +43,11 @@ public class JSnow10 {
 	/**
 	 * encode(s.getBytes(StandardCharsets.UTF_8))
 	 *
-	 * @param in the in
+	 * @param toEncode the in
 	 * @return the string
 	 */
-	public static String encode(byte[] in) {
-		return replaceAll(replaceAll(StringUtil.bytesToBin(in), "1", String.valueOf(one)), "0", String.valueOf(zero));
+	public static String encode(final byte[] toEncode) {
+		return replaceAll(replaceAll(StringUtil.bytesToBin(toEncode), "1", String.valueOf(one)), "0", String.valueOf(zero));
 	}
 
 	/**

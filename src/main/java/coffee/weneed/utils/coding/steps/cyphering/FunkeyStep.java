@@ -6,7 +6,7 @@ import coffee.weneed.utils.coding.steps.ICodingStep;
 /**
  * The Class FunkeyStep.
  */
-public class FunkeyStep implements ICodingStep {
+public final class FunkeyStep implements ICodingStep {
 
 	/** The code. */
 	private byte[] code;

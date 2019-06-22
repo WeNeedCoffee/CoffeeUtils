@@ -35,6 +35,10 @@ public class StringUtil {
 		}
 		return ret;
 	}
+	
+	public static int codepointLength(String str) {
+		return str.codePointCount(0, str.length());
+	}
 
 	/**
 	 * * Convert a string of 1's and 0's to a string of UTF-8 text.

@@ -11,5 +11,5 @@ public interface IBeforeEventHandler {
 	 *
 	 * @param event the event
 	 */
-	void HandleBeforeEvent(IEvent event);
+	void handleBeforeEvent(IEvent event);
 }

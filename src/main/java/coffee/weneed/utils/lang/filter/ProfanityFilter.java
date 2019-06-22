@@ -25,12 +25,12 @@ import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 public class ProfanityFilter implements IJSONObjectDataHolder {
 
 	/** The active leets. */
-	private static Map<Character, String[]> active_leets = new HashMap<>();
+	private static Map<Character, String[]> activeLeets = new HashMap<>();
 	/** The leets. */
 	public static Map<Character, String[]> leets = new HashMap<>();
 
 	/** The ascii leets. */
-	public static Map<Character, String[]> ascii_leets = new HashMap<>();
+	public static Map<Character, String[]> asciiLeets = new HashMap<>();
 
 	static {
 		// TODO finish
@@ -55,17 +55,17 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		ProfanityFilter.leets.put(StringUtil.getChar("x"), new String[] { "*", "><", "cks", "ecks" });
 		ProfanityFilter.leets.put(StringUtil.getChar("z"), new String[] { "s" });
 		// TODO be able to register ks as x as well as x as ks
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("c"), new String[] { "k", "s" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("f"), new String[] { "ph" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("g"), new String[] { "b" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("h"), new String[] { "wh" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("k"), new String[] { "c" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("l"), new String[] { "i" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("u"), new String[] { "v" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks" });
-		ProfanityFilter.ascii_leets.put(StringUtil.getChar("z"), new String[] { "s" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("c"), new String[] { "k", "s" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("f"), new String[] { "ph" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("g"), new String[] { "b" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("h"), new String[] { "wh" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("k"), new String[] { "c" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("i"), new String[] { "l", "y" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("l"), new String[] { "i" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("s"), new String[] { "c", "z" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("u"), new String[] { "v" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("x"), new String[] { "cks", "ecks", "ks" });
+		ProfanityFilter.asciiLeets.put(StringUtil.getChar("z"), new String[] { "s" });
 	}
 
 	/** The asterisk mark. */
@@ -92,16 +92,16 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param ascii the ascii
 	 */
 	public ProfanityFilter(boolean ascii) {
-		this(ascii ? ascii_leets : leets, null);
+		this(ascii ? asciiLeets : leets, null);
 	}
 
 	/**
 	 * Instantiates a new profanity filter.
 	 *
-	 * @param active_leets the active leets
+	 * @param activeLeets the active leets
 	 * @param tree         the tree
 	 */
-	public ProfanityFilter(Map<Character, String[]> active_leets, URL tree) {
+	public ProfanityFilter(Map<Character, String[]> activeLeets, URL tree) {
 		try {
 			fromJSON(new JSONObject(new String(NetUtil.downloadUrl(tree))));
 		} catch (JSONException e) {
@@ -368,7 +368,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	private boolean searchLeet(String input, int characterIndex, TreeNode node, boolean update) {
 		String sub = StringUtil.substr(input, characterIndex, input.length());
-		for (Entry<Character, String[]> entry : active_leets.entrySet()) {
+		for (Entry<Character, String[]> entry : activeLeets.entrySet()) {
 			Character c = entry.getKey();
 			if (!node.containsChild(c)) {
 				continue;
