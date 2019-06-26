@@ -7,43 +7,53 @@ import coffee.weneed.utils.io.CoffeeWriter;
 
 public class JSONUtil {
 
-	public byte[] bytesFromJSONObject(JSONObject json) {
-		CoffeeWriter cw = new CoffeeWriter();
-		cw.write((byte) 0x90);
-		cw.writeSmart(json.length());
-		for (Entry<String, Object> o : json.toMap().entrySet()) {
-			cw.writeString(o.getKey());
-			Object v = o.getValue();
-			if (v instanceof JSONObject) {
-				cw.write(bytesFromJSONObject((JSONObject) v));
-			} else if (v instanceof JSONArray) {
-				cw.write(bytesFromJSONArray((JSONArray) v)); 
-			} else if (v instanceof Number) {
-				cw.writeSmart((Number) v); 
-			} else if (v instanceof String) {
-				cw.writeString((String) v); 
+	/***
+	 * Convert JSON into pseudo CoffeeStorage format
+	 * @param json
+	 * @return
+	 */
+	public static byte[] bytesFromJSONObject(final JSONObject json) {
+		final CoffeeWriter writer = new CoffeeWriter();
+		writer.write((byte) 0x90);
+		writer.writeSmart(json.length());
+		for (final Entry<String, Object> entry : json.toMap().entrySet()) {
+			writer.writeString(entry.getKey());
+			final Object value = entry.getValue();
+			if (value instanceof JSONObject) {
+				writer.write(bytesFromJSONObject((JSONObject) value));
+			} else if (value instanceof JSONArray) {
+				writer.write(bytesFromJSONArray((JSONArray) value)); 
+			} else if (value instanceof Number) {
+				writer.writeSmart((Number) value); 
+			} else if (value instanceof String) {
+				writer.writeString((String) value); 
 			}
 		}
-		cw.write((byte) 0x91);
-		return cw.getByteArray();
+		writer.write((byte) 0x91);
+		return writer.getByteArray();
 	}
 	
-	public byte[] bytesFromJSONArray(JSONArray json) {
-		CoffeeWriter cw = new CoffeeWriter();
-		cw.write((byte) 0x92);
-		cw.writeSmart(json.length());
-		for (Object o : json.toList()) {
-			if (o instanceof JSONObject) {
-				cw.write(bytesFromJSONObject((JSONObject) o));
-			} else if (o instanceof JSONArray) {
-				cw.write(bytesFromJSONArray((JSONArray) o)); 
-			} else if (o instanceof Number) {
-				cw.writeSmart((Number) o); 
-			} else if (o instanceof String) {
-				cw.writeString((String) o); 
+	/***
+	 * Convert JSON into pseudo CoffeeStorage format
+	 * @param json
+	 * @return
+	 */
+	public static byte[] bytesFromJSONArray(final JSONArray json) {
+		final CoffeeWriter writer = new CoffeeWriter();
+		writer.write((byte) 0x92);
+		writer.writeSmart(json.length());
+		for (final Object object : json.toList()) {
+			if (object instanceof JSONObject) {
+				writer.write(bytesFromJSONObject((JSONObject) object));
+			} else if (object instanceof JSONArray) {
+				writer.write(bytesFromJSONArray((JSONArray) object)); 
+			} else if (object instanceof Number) {
+				writer.writeSmart((Number) object); 
+			} else if (object instanceof String) {
+				writer.writeString((String) object); 
 			}
 		}
-		cw.write((byte) 0x93);
-		return cw.getByteArray();
+		writer.write((byte) 0x93);
+		return writer.getByteArray();
 	}
 }
