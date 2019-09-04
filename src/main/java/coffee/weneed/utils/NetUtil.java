@@ -1,6 +1,7 @@
 package coffee.weneed.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -43,6 +44,14 @@ public class NetUtil {
 		if (!json.optString("status", "failure").equalsIgnoreCase("success"))
 			return -1;
 		return Double.valueOf(json.optString("result", "1"));
+	}
+
+	public static void downloadFile(String fileUrl, String destination) throws IOException {
+		downloadFile(fileUrl, new File(destination));
+	}
+	
+	public static void downloadFile(String fileUrl, File destination) throws IOException {
+		FileUtil.toFile(NetUtil.downloadUrl(fileUrl), destination);
 	}
 
 	/**

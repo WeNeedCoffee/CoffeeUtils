@@ -165,10 +165,13 @@ public class StringUtil {
 	 *
 	 * @param in        the in
 	 * @param delimiter the delimiter
-	 * @return the end
+	 * @return the end a => b
 	 */
 	public static String getEnd(String in, String delimiter) {
 		String[] ss = in.split(delimiter);
+		if (ss.length <= 1) {
+			return null;
+		}
 		return ss[ss.length - 1];
 	}
 

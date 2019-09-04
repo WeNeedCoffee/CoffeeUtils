@@ -1,6 +1,7 @@
 package coffee.weneed.utils;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,6 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 // TODO: Auto-generated Javadoc
@@ -30,6 +34,40 @@ public class FileUtil {
 		else if (!file.canWrite())
 			throw new IOException("Can't write to the file");
 		return true;
+	}
+
+	/***
+	 * https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
+	 * @param path
+	 * @param encoding
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readFile(String path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
+	
+	public static void toFile(byte[] data, File file) throws FileNotFoundException, IOException {
+		try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath())) {
+			   fos.write(data);
+		}
+	}
+	/***
+	 * https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
+	 * @param path
+	 * @param encoding
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readStream(InputStream inputStream, Charset encoding) throws IOException {
+		ByteArrayOutputStream result = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int length;
+		while ((length = inputStream.read(buffer)) != -1) {
+		    result.write(buffer, 0, length);
+		}
+		return result.toString(encoding.name());
 	}
 
 	/**

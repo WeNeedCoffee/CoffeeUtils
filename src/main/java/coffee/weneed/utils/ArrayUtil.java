@@ -37,7 +37,7 @@ public class ArrayUtil {
 	 * @param b   second array
 	 * @return An array with b appended to the end of a.
 	 */
-	public static <T> T[] combine(T[] a, T[] b) {
+	public static <T> T[] append(T[] a, T[] b) {
 		@SuppressWarnings("unchecked")
 		T[] result = (T[]) Array.newInstance(a.getClass(), a.length + b.length);
 		System.arraycopy(a, 0, result, 0, a.length);
