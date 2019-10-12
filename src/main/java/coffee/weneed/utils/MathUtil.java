@@ -68,6 +68,15 @@ public class MathUtil {
 		else
 			return d < 0 ? -(i + 1) : i + 1;
 	}
+	/**
+	 * Returns a number representing <code>(i - (i % len)) / len</code>
+	 * @param len
+	 * @param i
+	 * @return
+	 */
+	public static long getIndex(long len, long i) {
+		return (i - (i % len)) / len;
+	}
 
 	/**
 	 * Smart number.
