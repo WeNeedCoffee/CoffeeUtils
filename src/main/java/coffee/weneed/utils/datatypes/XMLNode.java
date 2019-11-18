@@ -1,12 +1,14 @@
 package coffee.weneed.utils.datatypes;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -460,6 +462,12 @@ public class XMLNode {
 		addAttribute("xmlns", namespace);
 	}
 
+	public static XMLNode getNode(String string) throws XmlPullParserException, IOException {
+		XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+		parser.setInput(new StringReader(string));
+		return new XMLNode(null, parser);
+	}
+	
 	/**
 	 * To string.
 	 *
