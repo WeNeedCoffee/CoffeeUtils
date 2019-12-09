@@ -31,6 +31,7 @@ public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONO
 	 */
 	protected ACoffeeHousingNode(String ID) {
 		parent = null;
+		this.ID = ID;
 	}
 
 	/**
@@ -40,6 +41,7 @@ public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONO
 	 */
 	public ACoffeeHousingNode(ACoffeeHousingNode parent, String ID) {
 		this.parent = parent;
+		this.ID = ID;
 	}
 
 	public String getID() {
