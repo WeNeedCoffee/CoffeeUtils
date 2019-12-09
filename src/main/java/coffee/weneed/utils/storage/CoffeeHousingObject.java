@@ -47,7 +47,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	/**
 	 * Deserialize.
 	 *
-	 * @param ca the ca
+	 * @param reader the ca
 	 * @throws IOException 
 	 */
 	/*
@@ -58,54 +58,54 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * utils.io.CoffeeAccessor)
 	 */
 	@Override
-	protected void deserialize(CoffeeAccessor ca) throws IOException {
-		if (ca.readByte() != 0x20) throw new IOException("Error.");
-		ca.readSmart();
-		if (ca.available() < 2)
+	protected void deserialize(CoffeeAccessor reader) throws IOException {
+		if (reader.readByte() != 0x20) throw new IOException("Error.");
+		reader.readSmart();
+		if (reader.available() < 2)
 			return;
 		items.clear();
-		int e = ca.readSmart().intValue();
-		for (int i = 0; i < e; i++) {
-			items.put(ca.readString(), MathUtil.smartNumber(ca.readSmart()));
+		int size = reader.readSmart().intValue();
+		for (int i = 0; i < size; i++) {
+			items.put(reader.readString(), MathUtil.smartNumber(reader.readSmart()));
 		}
-		e = ca.readSmart().intValue();
-		for (int i = 0; i < e; i++) {
-			items.put(ca.readString(), ca.readBytes(ca.readSmart().intValue()));
+		size = reader.readSmart().intValue();
+		for (int i = 0; i < size; i++) {
+			items.put(reader.readString(), reader.readBytes(reader.readSmart().intValue()));
 		}
-		e = ca.readSmart().intValue();
-		for (int i = 0; i < e; i++) {
-			items.put(ca.readString(), ca.readString());
+		size = reader.readSmart().intValue();
+		for (int i = 0; i < size; i++) {
+			items.put(reader.readString(), reader.readString());
 		}
-		e = ca.readSmart().intValue();
-		for (int i = 0; i < e; i++) {
-			items.put(ca.readString(), new JSONObject(ca.readString()));
+		size = reader.readSmart().intValue();
+		for (int i = 0; i < size; i++) {
+			items.put(reader.readString(), new JSONObject(reader.readString()));
 		}
-		e = ca.readSmart().intValue();
-		for (int i = 0; i < e; i++) {
-			items.put(ca.readString(), new JSONArray(ca.readString()));
+		size = reader.readSmart().intValue();
+		for (int i = 0; i < size; i++) {
+			items.put(reader.readString(), new JSONArray(reader.readString()));
 		}
-		e = ca.readSmart().intValue();
-		for (int i = 0; i < e; i++) {
-			String k = ca.readString();
+		size = reader.readSmart().intValue();
+		for (int i = 0; i < size; i++) {
+			String k = reader.readString();
 			ACoffeeHousingNode node = null;
-			switch (ca.readByte()) {
+			switch (reader.readByte()) {
 				case (byte) 0x12: {
 					node = new CoffeeHousingObject(this, k);
-					node.deserialize(ca);
+					node.deserialize(reader);
 					node.parent = this;
 					items.put(k, node);
 					break;
 				}
 				case (byte) 0x13: {
 					node = new CoffeeHousingList(this, k);
-					node.deserialize(ca);
+					node.deserialize(reader);
 					node.parent = this;
 					items.put(k, node);
 					break;
 				}
 			}
 		}
-		if (ca.readByte() != 0x21) throw new IOException("Error.");
+		if (reader.readByte() != 0x21) throw new IOException("Error.");
 	}
 
 	/**
@@ -123,10 +123,10 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	@Override
 	public void fromByteArray(byte[] in) throws IOException {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
-		ca.readByte();
-		deserialize(ca);
-		ca.readByte();
+		CoffeeAccessor reader = new CoffeeAccessor(new ByteArrayByteStream(in));
+		reader.readByte();
+		deserialize(reader);
+		reader.readByte();
 	}
 
 	/**
@@ -143,98 +143,99 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	@Override
 	public void fromJSON(JSONObject json) {
-		for (String k : json.keySet()) {
-			Object o = json.get(k);
-			if (o instanceof JSONObject) {
-				JSONObject obj = (JSONObject) o;
-				if (k.equals("strings")) {
-					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof String) {
-							items.put(sk, obj.getString(sk));
+		for (String key : json.keySet()) {
+				JSONObject node = null; 
+				try {
+					node = (JSONObject) json.get(key);
+				} catch (Exception e) {
+					//TODO
+				}
+				if (key.equals("strings")) {
+					for (String sk : node.keySet()) {
+						if (node.get(sk) instanceof String) {
+							items.put(sk, node.getString(sk));
 						}
 					}
-				} else if (k.equals("children")) {
-					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof JSONObject) {
-							if (obj.getJSONObject(sk).getInt("type") == 1) {
-								CoffeeHousingObject cho = new CoffeeHousingObject(this, sk);
-								cho.fromJSON(obj.getJSONObject(sk));
-								items.put(sk, cho);
-							} else if (obj.getJSONObject(sk).getInt("type") == 0) {
-								CoffeeHousingList cho = new CoffeeHousingList(this, sk);
-								cho.fromJSON(obj.getJSONObject(sk));
-								items.put(sk, cho);
+				} else if (key.equals("children")) {
+					for (String child_name : node.keySet()) {
+						if (node.get(child_name) instanceof JSONObject) {
+							if (node.getJSONObject(child_name).getInt("type") == 1) {
+								CoffeeHousingObject cho = new CoffeeHousingObject(this, child_name);
+								cho.fromJSON(node.getJSONObject(child_name));
+								items.put(child_name, cho);
+							} else if (node.getJSONObject(child_name).getInt("type") == 0) {
+								CoffeeHousingList list = new CoffeeHousingList(this, child_name);
+								list.fromJSON(node.getJSONObject(child_name));
+								items.put(child_name, list);
 							}
 						}
 					}
-				} else if (k.equals("numbers")) {
-					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof Number) {
-							items.put(sk, MathUtil.smartNumber((Number) obj.get(sk)));
+				} else if (key.equals("numbers")) {
+					for (String sk : node.keySet()) {
+						if (node.get(sk) instanceof Number) {
+							items.put(sk, MathUtil.smartNumber((Number) node.get(sk)));
 						}
 					}
-				} else if (k.equals("byte_arrays")) {
-					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof String) {
-							items.put(sk, StringUtil.hexToBytes(obj.getString(sk)));
+				} else if (key.equals("byte_arrays")) {
+					for (String sk : node.keySet()) {
+						if (node.get(sk) instanceof String) {
+							items.put(sk, StringUtil.hexToBytes(node.getString(sk)));
 						}
 					}
-				} else if (k.equals("json_objects")) {
-					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof JSONObject) {
-							items.put(sk, obj.getJSONObject(sk));
+				} else if (key.equals("json_objects")) {
+					for (String sk : node.keySet()) {
+						if (node.get(sk) instanceof JSONObject) {
+							items.put(sk, node.getJSONObject(sk));
 						}
 					}
-				} else if (k.equals("json_arrays")) {
-					for (String sk : obj.keySet()) {
-						if (obj.get(sk) instanceof JSONArray) {
-							items.put(sk, obj.getJSONArray(sk));
+				} else if (key.equals("json_arrays")) {
+					for (String sk : node.keySet()) {
+						if (node.get(sk) instanceof JSONArray) {
+							items.put(sk, node.getJSONArray(sk));
 						}
 					}
 				}
-
-			}
 		}
 	}
 
 	/**
 	 * Gets the.
 	 *
-	 * @param k the k
+	 * @param key the k
 	 * @return the object
 	 */
-	public Object get(String k) {
-		return items.get(k);
+	public Object get(String key) {
+		return items.get(key);
 	}
 
 	/**
 	 * Gets the byte array.
 	 *
-	 * @param k the k
+	 * @param key the k
 	 * @return the byte array
 	 */
-	public byte[] getByteArray(String k) {
-		return (byte[]) items.get(k);
+	public byte[] getByteArray(String key) {
+		return (byte[]) items.get(key);
 	}
 
 	/**
 	 * Gets the child.
 	 *
-	 * @param k the k
+	 * @param key the k
 	 * @return the child
 	 */
-	public ACoffeeHousingNode getChild(String k) {
-		return (ACoffeeHousingNode) items.get(k);
+	public ACoffeeHousingNode getChild(String key) {
+		return (ACoffeeHousingNode) items.get(key);
 	}
 
 	/**
 	 * Gets the number.
 	 *
-	 * @param k the k
+	 * @param key the k
 	 * @return the number
 	 */
-	public Number getNumber(String k) {
-		return (Number) items.get(k);
+	public Number getNumber(String key) {
+		return (Number) items.get(key);
 	}
 
 	/**
@@ -259,6 +260,24 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		 * contains all data within an object object data is held within the
 		 * folder named after the object, not the parent folder
 		 * \LIST\OBJECT1\OBJECT1.json RIGHT \LIST\OBJECT1.json WRONG
+		 * 
+		 * 
+		 * EDIT: Allow coding processes to be used, preferably do not store as json
+		 * store as follows:
+		 * \LIST\OBJECT1\CHN.file -- numbers serialized 
+		 * \LIST\OBJECT1\CHS.file -- strings serialized
+		 * ...
+		 * ...
+		 * \LIST\OBJECT1\CHB_[name].file -- Bin serialized and named by key
+		 * 
+		 * Subordinate objects are stored in folders
+		 * 
+		 * \LIST\OBJECT1\OBJECT2\CHN.file
+		 * ...
+		 * ...
+		 * 
+		 * 
+		 * lists could hold data? they have to hold what CoffeeHousingLists hold right?
 		 */
 		if (!folder.exists()) {
 			folder.mkdir();
@@ -281,8 +300,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * utils. io.CoffeeWriter)
 	 */
 	@Override
-	protected void serialize(CoffeeWriter cw1) {
-		CoffeeWriter cw = new CoffeeWriter();
+	protected void serialize(CoffeeWriter writer) {
+		CoffeeWriter twriter = new CoffeeWriter(); //create inner writer so that we can mark the size of it later
 		
 		Map<String, Number> numbers = new HashMap<>();
 		Map<String, byte[]> byteArrays = new HashMap<>();
@@ -306,65 +325,65 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 				jsonas.put(k, ((JSONArray) o).toString());
 			}
 		}
-		cw.writeSmart(numbers.size());
+		twriter.writeSmart(numbers.size());
 		for (String s : numbers.keySet()) {
 			Number b = numbers.get(s);
-			cw.writeString(s);
-			cw.writeSmart(b);
+			twriter.writeString(s);
+			twriter.writeSmart(b);
 		}
-		cw.writeSmart(byteArrays.size());
+		twriter.writeSmart(byteArrays.size());
 		for (String s : byteArrays.keySet()) {
 			byte[] bs = byteArrays.get(s);
-			cw.writeString(s);
-			cw.writeSmart(bs.length);
-			cw.write(bs);
+			twriter.writeString(s);
+			twriter.writeSmart(bs.length);
+			twriter.write(bs);
 		}
-		cw.writeSmart(strings.size());
+		twriter.writeSmart(strings.size());
 		for (String s : strings.keySet()) {
 			String ss = strings.get(s);
-			cw.writeString(s);
-			cw.writeString(ss);
+			twriter.writeString(s);
+			twriter.writeString(ss);
 		}
-		cw.writeSmart(jsonos.size());
+		twriter.writeSmart(jsonos.size());
 		for (String s : jsonos.keySet()) {
 			String ss = jsonos.get(s);
-			cw.writeString(s);
-			cw.writeString(ss.toString());
+			twriter.writeString(s);
+			twriter.writeString(ss.toString());
 		}
-		cw.writeSmart(jsonas.size());
+		twriter.writeSmart(jsonas.size());
 		for (String s : jsonas.keySet()) {
 			String ss = jsonas.get(s);
-			cw.writeString(s);
-			cw.writeString(ss.toString());
+			twriter.writeString(s);
+			twriter.writeString(ss.toString());
 		}
-		cw.writeSmart(children.size());
+		twriter.writeSmart(children.size());
 		for (String s : children.keySet()) {
-			cw.writeString(s);
-			children.get(s).serialize(cw);
+			twriter.writeString(s);
+			children.get(s).serialize(twriter);
 		}
 		
 		
-		cw1.write((byte) 0x20);
-		cw1.writeSmart(cw.getSize());
+		writer.write((byte) 0x20);
+		writer.writeSmart(twriter.getSize()); //mark the size of it so that it can be skipped when reading.
 		try {
-			cw1.write(cw);
+			writer.write(twriter);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		cw1.write((byte) 0x21);
+		writer.write((byte) 0x21);
 	}
 
 	/**
 	 * Sets the object.
 	 *
-	 * @param k the k
-	 * @param o the o
+	 * @param key the k
+	 * @param value the o
 	 * @throws Exception the exception
 	 */
-	public void set(String k, Object o) throws Exception {
-		if (o instanceof Byte || o instanceof byte[] || o instanceof Integer || o instanceof Long || o instanceof Float || o instanceof Double || o instanceof Short || o instanceof String || o instanceof ACoffeeHousingNode || o instanceof JSONObject || o instanceof JSONArray) {
-			items.put(k, o);
+	public void set(String key, Object value) throws Exception {
+		if (value instanceof Byte || value instanceof byte[] || value instanceof Integer || value instanceof Long || value instanceof Float || value instanceof Double || value instanceof Short || value instanceof String || value instanceof ACoffeeHousingNode || value instanceof JSONObject || value instanceof JSONArray) {
+			items.put(key, value);
 		} else {
 			throw new Exception("Unsupported data type");
 		}
@@ -373,62 +392,62 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	/**
 	 * Sets the byte array.
 	 *
-	 * @param k the k
-	 * @param b the b
+	 * @param key the k
+	 * @param bytes the b
 	 */
-	public void setByteArray(String k, byte[] b) {
-		items.put(k, b);
+	public void setByteArray(String key, byte[] bytes) {
+		items.put(key, bytes);
 	}
 
 	/**
 	 * Sets the child.
 	 *
-	 * @param k   the k
-	 * @param chn the chn
+	 * @param key   the k
+	 * @param child the chn
 	 */
-	public void setChild(String k, ACoffeeHousingNode chn) {
-		chn.parent = this;
-		items.put(k, chn);
+	public void setChild(String key, ACoffeeHousingNode child) {
+		child.parent = this;
+		items.put(key, child);
 	}
 
 	/**
 	 * Sets the JSON array.
 	 *
-	 * @param k the k
-	 * @param a the a
+	 * @param key the k
+	 * @param json the a
 	 */
-	public void setJSONArray(String k, JSONArray a) {
-		items.put(k, a);
+	public void setJSONArray(String key, JSONArray json) {
+		items.put(key, json);
 	}
 
 	/**
 	 * Sets the JSON object.
 	 *
-	 * @param k the k
-	 * @param o the o
+	 * @param key the k
+	 * @param json the o
 	 */
-	public void setJSONObject(String k, JSONObject o) {
-		items.put(k, o);
+	public void setJSONObject(String key, JSONObject json) {
+		items.put(key, json);
 	}
 
 	/**
 	 * Sets the number.
 	 *
-	 * @param k the k
-	 * @param n the n
+	 * @param key the k
+	 * @param value the n
 	 */
-	public void setNumber(String k, Number n) {
-		items.put(k, MathUtil.smartNumber(n));
+	public void setNumber(String key, Number value) {
+		items.put(key, MathUtil.smartNumber(value));
 	}
 
 	/**
 	 * Sets the string.
 	 *
-	 * @param k the k
-	 * @param s the s
+	 * @param key the k
+	 * @param value the s
 	 */
-	public void setString(String k, String s) {
-		items.put(k, s);
+	public void setString(String key, String value) {
+		items.put(key, value);
 	}
 
 	/**
@@ -443,11 +462,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	@Override
 	public byte[] toByteArray() {
-		CoffeeWriter cw = new CoffeeWriter();
-		cw.write((byte) 0x10);
-		serialize(cw);
-		cw.write((byte) 0x11);
-		return cw.getByteArray();
+		CoffeeWriter writer = new CoffeeWriter();
+		writer.write((byte) 0x10);
+		serialize(writer);
+		writer.write((byte) 0x11);
+		return writer.getByteArray();
 	}
 
 	/**
