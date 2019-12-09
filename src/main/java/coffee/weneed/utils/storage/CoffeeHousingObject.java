@@ -13,19 +13,26 @@ import coffee.weneed.utils.io.CoffeeAccessor;
 import coffee.weneed.utils.io.CoffeeWriter;
 
 // TODO: Auto-generated Javadoc
+// TODO: Write own name when serializing but only if parent is not present. - for example {"a": {"b": { "name": "b"}}, writing {"name": "b"} when serializing is not necessary as it is already written when defining "b", but writing "a" is necessary.
+
 /**
  * The Class CoffeeHousingObject.
+ * 
  */
 public class CoffeeHousingObject extends ACoffeeHousingNode {
 
 	/** The items. */
 	protected Map<String, Object> items = new HashMap<>();
 
+	public CoffeeHousingObject() {
+		super();
+	}
+	
 	/**
 	 * Instantiates a new coffee housing object.
 	 */
-	public CoffeeHousingObject() {
-		super();
+	public CoffeeHousingObject(String ID) {
+		super(ID);
 	}
 
 	/**
@@ -33,8 +40,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 *
 	 * @param parent the parent
 	 */
-	public CoffeeHousingObject(ACoffeeHousingNode parent) {
-		super(parent);
+	public CoffeeHousingObject(ACoffeeHousingNode parent, String ID) {
+		super(parent, ID);
 	}
 
 	/**
@@ -83,14 +90,14 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			ACoffeeHousingNode node = null;
 			switch (ca.readByte()) {
 				case (byte) 0x12: {
-					node = new CoffeeHousingObject(this);
+					node = new CoffeeHousingObject(this, k);
 					node.deserialize(ca);
 					node.parent = this;
 					items.put(k, node);
 					break;
 				}
 				case (byte) 0x13: {
-					node = new CoffeeHousingList(this);
+					node = new CoffeeHousingList(this, k);
 					node.deserialize(ca);
 					node.parent = this;
 					items.put(k, node);
@@ -150,11 +157,11 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 					for (String sk : obj.keySet()) {
 						if (obj.get(sk) instanceof JSONObject) {
 							if (obj.getJSONObject(sk).getInt("type") == 1) {
-								CoffeeHousingObject cho = new CoffeeHousingObject(this);
+								CoffeeHousingObject cho = new CoffeeHousingObject(this, sk);
 								cho.fromJSON(obj.getJSONObject(sk));
 								items.put(sk, cho);
 							} else if (obj.getJSONObject(sk).getInt("type") == 0) {
-								CoffeeHousingList cho = new CoffeeHousingList(this);
+								CoffeeHousingList cho = new CoffeeHousingList(this, sk);
 								cho.fromJSON(obj.getJSONObject(sk));
 								items.put(sk, cho);
 							}

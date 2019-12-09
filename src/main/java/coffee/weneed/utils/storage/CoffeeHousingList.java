@@ -26,8 +26,8 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	 *
 	 * @param parent the parent
 	 */
-	public CoffeeHousingList(ACoffeeHousingNode parent) {
-		super(parent);
+	public CoffeeHousingList(ACoffeeHousingNode parent, String ID) {
+		super(parent, ID);
 	}
 
 	/**
