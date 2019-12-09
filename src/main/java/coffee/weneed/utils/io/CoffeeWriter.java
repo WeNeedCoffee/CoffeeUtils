@@ -3,6 +3,7 @@ package coffee.weneed.utils.io;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import coffee.weneed.utils.StringUtil;
 
@@ -69,6 +70,9 @@ public class CoffeeWriter {
 		this.baos = baos;
 	}
 
+	public int getSize() {
+		return getBaos().size();
+	}
 	/**
 	 * To string.
 	 *
@@ -93,6 +97,14 @@ public class CoffeeWriter {
 		getBaos().write(b);
 	}
 
+	/**
+	 * Write.
+	 * @throws IOException 
+	 */
+	public final void write(CoffeeWriter cw) throws IOException {
+		getBaos().write(cw.getByteArray());
+	}
+	
 	/**
 	 * Write.
 	 *
@@ -218,9 +230,11 @@ public class CoffeeWriter {
 	}
 
 	/**
-	 * Write smart.
+	 * Writes a number in the lowest possible storage format.
+	 * 
+	 * For example, 254 would be stored as a byte, 256 as a short, so on and so forth.
 	 *
-	 * @param n the n
+	 * @param n the number to be written
 	 */
 	public final void writeSmart(Number n) {
 		if (n.doubleValue() % 1 == 0) {

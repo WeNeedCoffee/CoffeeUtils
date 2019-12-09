@@ -1,5 +1,6 @@
 package coffee.weneed.utils.storage;
 
+import java.io.IOException;
 import coffee.weneed.utils.dataholders.IByteArrayDataHolder;
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 import coffee.weneed.utils.io.CoffeeAccessor;
@@ -34,8 +35,9 @@ public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONO
 	 * Deserialize.
 	 *
 	 * @param lea the lea
+	 * @throws IOException 
 	 */
-	protected abstract void deserialize(CoffeeAccessor lea);
+	protected abstract void deserialize(CoffeeAccessor lea) throws IOException;
 
 	/**
 	 * Serialize.

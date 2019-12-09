@@ -1,6 +1,7 @@
 package coffee.weneed.utils.storage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import org.json.JSONArray;
@@ -40,6 +41,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * Deserialize.
 	 *
 	 * @param ca the ca
+	 * @throws IOException 
 	 */
 	/*
 	 * (non-Javadoc)
@@ -49,7 +51,9 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * utils.io.CoffeeAccessor)
 	 */
 	@Override
-	protected void deserialize(CoffeeAccessor ca) {
+	protected void deserialize(CoffeeAccessor ca) throws IOException {
+		if (ca.readByte() != 0x20) throw new IOException("Error.");
+		ca.readSmart();
 		if (ca.available() < 2)
 			return;
 		items.clear();
@@ -94,12 +98,14 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 				}
 			}
 		}
+		if (ca.readByte() != 0x21) throw new IOException("Error.");
 	}
 
 	/**
 	 * From byte array.
 	 *
 	 * @param in the in
+	 * @throws IOException 
 	 */
 	/*
 	 * (non-Javadoc)
@@ -109,9 +115,8 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * )
 	 */
 	@Override
-	public void fromByteArray(byte[] in) {
+	public void fromByteArray(byte[] in) throws IOException {
 		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
-		ca.readByte();
 		ca.readByte();
 		deserialize(ca);
 		ca.readByte();
@@ -269,8 +274,9 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * utils. io.CoffeeWriter)
 	 */
 	@Override
-	protected void serialize(CoffeeWriter cw) {
-		cw.write((byte) 0x12);
+	protected void serialize(CoffeeWriter cw1) {
+		CoffeeWriter cw = new CoffeeWriter();
+		
 		Map<String, Number> numbers = new HashMap<>();
 		Map<String, byte[]> byteArrays = new HashMap<>();
 		Map<String, String> strings = new HashMap<>();
@@ -329,6 +335,17 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			cw.writeString(s);
 			children.get(s).serialize(cw);
 		}
+		
+		
+		cw1.write((byte) 0x20);
+		cw1.writeSmart(cw.getSize());
+		try {
+			cw1.write(cw);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cw1.write((byte) 0x21);
 	}
 
 	/**

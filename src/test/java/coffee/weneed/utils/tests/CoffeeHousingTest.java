@@ -150,9 +150,10 @@ public class CoffeeHousingTest {
 
 	/**
 	 * Test bytes.
+	 * @throws IOException 
 	 */
 	@Test
-	public void testBytes() {
+	public void testBytes() throws IOException {
 		CoffeeHousingObject p = new CoffeeHousingObject();
 		p.fromByteArray(ee);
 	}
@@ -256,6 +257,7 @@ public class CoffeeHousingTest {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			System.gc();
 		}
 		double bat = 1.0d * bl / bt;
 		double xat = 1.0d * xl / xt;

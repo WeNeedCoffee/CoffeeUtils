@@ -26,7 +26,7 @@ public class CodingProcess {
 		for (ICodingStep e : s) {
 			steps.add(e);
 		}
-		rsteps = ArrayUtil.reverse(steps);
+		rsteps = ArrayUtil.reverse(steps); //TODO reverse steps on the fly or store them like this?
 	}
 
 	/**
