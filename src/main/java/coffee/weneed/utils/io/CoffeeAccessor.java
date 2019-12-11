@@ -197,6 +197,39 @@ public class CoffeeAccessor {
 			case 5: {
 				return readDouble();
 			}
+			case 6: {
+				return (float) readByte();
+			}
+			case 7: {
+				return (float) readShort();
+			}
+			case 8: {
+				return (float) readInt();
+			}
+			case 9: {
+				return (float) readLong();
+			}
+			case 10: {
+				return (float) readFloat();
+			}
+			case 11: {
+				return (double) readByte();
+			}
+			case 12: {
+				return (double) readShort();
+			}
+			case 13: {
+				return (double) readInt();
+			}
+			case 14: {
+				return (double) readLong();
+			}
+			case 15: {
+				return (double) readFloat();
+			}
+			case 16: {
+				return (double) readDouble();
+			}
 			default: {
 				return Long.MAX_VALUE + Long.MAX_VALUE;
 			}

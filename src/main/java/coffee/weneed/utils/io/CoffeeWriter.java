@@ -238,7 +238,44 @@ public class CoffeeWriter {
 	 */
 	public final void writeSmart(Number n) {
 		if (n.doubleValue() % 1 == 0) {
-			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
+			if (n instanceof Float) {
+				if (n.doubleValue() >= Byte.MIN_VALUE && n.doubleValue() <= Byte.MAX_VALUE) {
+					write((byte) 6);
+					write(n.byteValue());
+				} else if (n.doubleValue() >= Short.MIN_VALUE && n.doubleValue() <= Short.MAX_VALUE) {
+					write((byte) 7);
+					writeShort(n.shortValue());
+				} else if (n.doubleValue() >= Integer.MIN_VALUE && n.doubleValue() <= Integer.MAX_VALUE) {
+					write((byte) 8);
+					writeInt(n.intValue());
+				} else if (n.doubleValue() >= Long.MIN_VALUE && n.doubleValue() <= Long.MAX_VALUE) {
+					write((byte) 9);
+					writeLong(n.longValue());
+				} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
+					write((byte) 10);
+					writeFloat(n.floatValue());
+				}
+			} else if (n instanceof Double) {
+				if (n.doubleValue() >= Byte.MIN_VALUE && n.doubleValue() <= Byte.MAX_VALUE) {
+					write((byte) 11);
+					write(n.byteValue());
+				} else if (n.doubleValue() >= Short.MIN_VALUE && n.doubleValue() <= Short.MAX_VALUE) {
+					write((byte) 12);
+					writeShort(n.shortValue());
+				} else if (n.doubleValue() >= Integer.MIN_VALUE && n.doubleValue() <= Integer.MAX_VALUE) {
+					write((byte) 13);
+					writeInt(n.intValue());
+				} else if (n.doubleValue() >= Long.MIN_VALUE && n.doubleValue() <= Long.MAX_VALUE) {
+					write((byte) 14);
+					writeLong(n.longValue());
+				} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
+					write((byte) 15);
+					writeFloat(n.floatValue());
+				} else {
+					write((byte) 16);
+					writeDouble(n.doubleValue());
+				}
+			} else if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
 				write((byte) 0);
 				write(n.byteValue());
 			} else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE) {
@@ -247,14 +284,14 @@ public class CoffeeWriter {
 			} else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE) {
 				write((byte) 2);
 				writeInt(n.intValue());
-			} else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE) {
+			} else {
 				write((byte) 3);
 				writeLong(n.longValue());
 			}
-		} else if (n.floatValue() >= Float.MIN_VALUE && n.floatValue() <= Float.MAX_VALUE) {
+		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
 			write((byte) 4);
 			writeFloat(n.floatValue());
-		} else if (n.floatValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
+		} else if (n instanceof Double) {
 			write((byte) 5);
 			writeDouble(n.doubleValue());
 		}
