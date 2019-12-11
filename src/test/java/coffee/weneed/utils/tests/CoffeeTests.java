@@ -3,7 +3,7 @@ package coffee.weneed.utils.tests;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import org.junit.Test;
-import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeReader;
 import coffee.weneed.utils.io.CoffeeWriter;
 public class CoffeeTests {
 
@@ -13,6 +13,6 @@ public class CoffeeTests {
 		System.out.println(Float.MAX_VALUE - 2);
 		cw.writeSmart(Float.MAX_VALUE - 2);
 		System.out.println(cw.getSize());
-		System.out.println(new CoffeeAccessor(cw.getByteArray()).readSmart().floatValue());
+		System.out.println(new CoffeeReader(cw.getByteArray()).readSmart().floatValue());
 	}
 }

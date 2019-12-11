@@ -9,7 +9,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import org.json.JSONObject;
 import coffee.weneed.utils.StringUtil;
-import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeReader;
 import coffee.weneed.utils.io.CoffeeWriter;
 
 // TODO: Auto-generated Javadoc
@@ -153,7 +153,7 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 	 * utils.io.CoffeeAccessor)
 	 */
 	@Override
-	protected void deserialize(CoffeeAccessor lea) {
+	protected void deserialize(CoffeeReader lea) {
 		// TODO Auto-generated method stub
 
 	}

@@ -10,7 +10,7 @@ import org.tukaani.xz.LZMA2Options;
 import org.tukaani.xz.SingleXZInputStream;
 import org.tukaani.xz.XZOutputStream;
 import coffee.weneed.utils.io.ByteArrayByteStream;
-import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeReader;
 import coffee.weneed.utils.io.CoffeeWriter;
 import net.jpountz.lz4.LZ4Compressor;
 import net.jpountz.lz4.LZ4Factory;
@@ -30,7 +30,7 @@ public class CompressionUtil {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static byte[] bzip2(byte[] uncompressed) throws IOException {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(uncompressed));
+		CoffeeReader ca = new CoffeeReader(new ByteArrayByteStream(uncompressed));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		BZip2CompressorOutputStream bzout = new BZip2CompressorOutputStream(out);
 		bzout.write(ca.getRemainingBytes());
@@ -51,7 +51,7 @@ public class CompressionUtil {
 	 * @return the byte[]
 	 */
 	public static byte[] delz4(byte[] in) {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
+		CoffeeReader ca = new CoffeeReader(new ByteArrayByteStream(in));
 		LZ4Factory factory = LZ4Factory.fastestInstance();
 		LZ4FastDecompressor decompressor = factory.fastDecompressor();
 		int decompressedLength = ca.readSmart().intValue();
@@ -87,7 +87,7 @@ public class CompressionUtil {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static byte[] unbzip2(byte[] in) throws IOException {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(in));
+		CoffeeReader ca = new CoffeeReader(new ByteArrayByteStream(in));
 		int len = ca.readSmart().intValue();
 		BZip2CompressorInputStream bzIn = new BZip2CompressorInputStream(new ByteArrayInputStream(ca.getRemainingBytes()));
 		byte[] buffer = new byte[len];
@@ -106,7 +106,7 @@ public class CompressionUtil {
 	 * @throws IOException If there is an error decompressing the array.
 	 */
 	public static byte[] unxzip(byte[] compressed) throws IOException {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(compressed));
+		CoffeeReader ca = new CoffeeReader(new ByteArrayByteStream(compressed));
 		int len = ca.readSmart().intValue();
 		SingleXZInputStream xzInputStream = new SingleXZInputStream(new ByteArrayInputStream(ca.getRemainingBytes()));
 		byte[] buffer = new byte[len];
@@ -123,7 +123,7 @@ public class CompressionUtil {
 	 * @throws IOException If there is an error compressing the array.
 	 */
 	public static byte[] xzip(byte[] uncompressed) throws IOException {
-		CoffeeAccessor ca = new CoffeeAccessor(new ByteArrayByteStream(uncompressed));
+		CoffeeReader ca = new CoffeeReader(new ByteArrayByteStream(uncompressed));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		XZOutputStream xzOut = new XZOutputStream(out, new LZMA2Options());
 		xzOut.write(ca.getRemainingBytes());

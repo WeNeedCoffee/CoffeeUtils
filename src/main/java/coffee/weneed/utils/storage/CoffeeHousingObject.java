@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import coffee.weneed.utils.MathUtil;
 import coffee.weneed.utils.StringUtil;
 import coffee.weneed.utils.io.ByteArrayByteStream;
-import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeReader;
 import coffee.weneed.utils.io.CoffeeWriter;
 
 // TODO: Auto-generated Javadoc
@@ -58,7 +58,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 * utils.io.CoffeeAccessor)
 	 */
 	@Override
-	protected void deserialize(CoffeeAccessor reader) throws IOException {
+	protected void deserialize(CoffeeReader reader) throws IOException {
 		if (reader.readByte() != 0x20) throw new IOException("Error.");
 		reader.readSmart();
 		if (reader.available() < 2)
@@ -123,7 +123,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	@Override
 	public void fromByteArray(byte[] in) throws IOException {
-		CoffeeAccessor reader = new CoffeeAccessor(new ByteArrayByteStream(in));
+		CoffeeReader reader = new CoffeeReader(new ByteArrayByteStream(in));
 		reader.readByte();
 		deserialize(reader);
 		reader.readByte();

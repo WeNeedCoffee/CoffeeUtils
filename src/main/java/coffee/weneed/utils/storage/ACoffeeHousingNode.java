@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import coffee.weneed.utils.dataholders.IByteArrayDataHolder;
 import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
-import coffee.weneed.utils.io.CoffeeAccessor;
+import coffee.weneed.utils.io.CoffeeReader;
 import coffee.weneed.utils.io.CoffeeWriter;
 
 // TODO: Auto-generated Javadoc
@@ -53,7 +53,7 @@ public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONO
 	 * @param lea the lea
 	 * @throws IOException 
 	 */
-	protected abstract void deserialize(CoffeeAccessor lea) throws IOException;
+	protected abstract void deserialize(CoffeeReader lea) throws IOException;
 
 	/**
 	 * Serialize.

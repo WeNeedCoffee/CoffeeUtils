@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
  *
  * @author Dalethium
  */
-public class CoffeeAccessor {
+public class CoffeeReader {
 
 	/** The bs. */
 	private final ByteArrayByteStream bs;
@@ -20,7 +20,7 @@ public class CoffeeAccessor {
 	 *
 	 * @param in the in
 	 */
-	public CoffeeAccessor(byte[] in) {
+	public CoffeeReader(byte[] in) {
 		this(new ByteArrayByteStream(in));
 	}
 
@@ -29,7 +29,7 @@ public class CoffeeAccessor {
 	 *
 	 * @param bs the bs
 	 */
-	public CoffeeAccessor(ByteArrayByteStream bs) {
+	public CoffeeReader(ByteArrayByteStream bs) {
 		this.bs = bs;
 	}
 
