@@ -251,10 +251,10 @@ public class CoffeeWriter {
 				write((byte) 3);
 				writeLong(n.longValue());
 			}
-		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
+		} else if (n.floatValue() >= Float.MIN_VALUE && n.floatValue() <= Float.MAX_VALUE) {
 			write((byte) 4);
 			writeFloat(n.floatValue());
-		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
+		} else if (n.floatValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE) {
 			write((byte) 5);
 			writeDouble(n.doubleValue());
 		}
