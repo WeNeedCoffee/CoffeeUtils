@@ -4,7 +4,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.nio.charset.Charset;
+import coffee.weneed.utils.MathUtil;
 import coffee.weneed.utils.StringUtil;
 
 // TODO: Auto-generated Javadoc
@@ -239,40 +242,28 @@ public class CoffeeWriter {
 	public final void writeSmart(Number n) {
 		if (n.doubleValue() % 1 == 0) {
 			if (n instanceof Float) {
-				if (n.doubleValue() >= Byte.MIN_VALUE && n.doubleValue() <= Byte.MAX_VALUE) {
-					write((byte) 6);
-					write(n.byteValue());
-				} else if (n.doubleValue() >= Short.MIN_VALUE && n.doubleValue() <= Short.MAX_VALUE) {
+				if (n.floatValue() >= Byte.MIN_VALUE && n.floatValue() <= Byte.MAX_VALUE) {
 					write((byte) 7);
-					writeShort(n.shortValue());
-				} else if (n.doubleValue() >= Integer.MIN_VALUE && n.doubleValue() <= Integer.MAX_VALUE) {
+					write(n.byteValue());
+				} else if (n.floatValue() >= Short.MIN_VALUE && n.floatValue() <= Short.MAX_VALUE) {
 					write((byte) 8);
-					writeInt(n.intValue());
-				} else if (n.doubleValue() >= Long.MIN_VALUE && n.doubleValue() <= Long.MAX_VALUE) {
-					write((byte) 9);
-					writeLong(n.longValue());
-				} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
-					write((byte) 10);
+					writeShort(n.shortValue());
+				} else {
+					write((byte) 4);
 					writeFloat(n.floatValue());
 				}
 			} else if (n instanceof Double) {
 				if (n.doubleValue() >= Byte.MIN_VALUE && n.doubleValue() <= Byte.MAX_VALUE) {
-					write((byte) 11);
+					write((byte) 9);
 					write(n.byteValue());
 				} else if (n.doubleValue() >= Short.MIN_VALUE && n.doubleValue() <= Short.MAX_VALUE) {
-					write((byte) 12);
+					write((byte) 10);
 					writeShort(n.shortValue());
 				} else if (n.doubleValue() >= Integer.MIN_VALUE && n.doubleValue() <= Integer.MAX_VALUE) {
-					write((byte) 13);
+					write((byte) 11);
 					writeInt(n.intValue());
-				} else if (n.doubleValue() >= Long.MIN_VALUE && n.doubleValue() <= Long.MAX_VALUE) {
-					write((byte) 14);
-					writeLong(n.longValue());
-				} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
-					write((byte) 15);
-					writeFloat(n.floatValue());
 				} else {
-					write((byte) 16);
+					write((byte) 6);
 					writeDouble(n.doubleValue());
 				}
 			} else if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
@@ -288,11 +279,11 @@ public class CoffeeWriter {
 				write((byte) 3);
 				writeLong(n.longValue());
 			}
-		} else if (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE) {
-			write((byte) 4);
-			writeFloat(n.floatValue());
+		} else if (n instanceof Float || (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE && MathUtil.countDigits(n.doubleValue()) <= 8)) {
+			write(n instanceof Float ? (byte) 4 : (byte) 5);
+			writeFloat(n instanceof Float ? n.floatValue() : Float.valueOf(new BigDecimal(Double.toString(n.doubleValue()), MathContext.UNLIMITED).toPlainString()));
 		} else if (n instanceof Double) {
-			write((byte) 5);
+			write((byte) 6);
 			writeDouble(n.doubleValue());
 		}
 	}

@@ -1,5 +1,7 @@
 package coffee.weneed.utils;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -78,24 +80,53 @@ public class MathUtil {
 		return (i - (i % len)) / len;
 	}
 
+
+	public static int countDigits(double d) {
+		return BigDecimal.valueOf(d).toPlainString().replace(".", "").length();
+	}
+	
 	/**
-	 * Smart number.
+	 * Writes a number in the lowest possible storage format.
+	 * 
+	 * For example, 254 would be stored as a byte, 256 as a short, so on and so forth.
 	 *
-	 * @param n the n
-	 * @return the object
+	 * @param n the number to be written
 	 */
 	public static Object smartNumber(Number n) {
 		if (n.doubleValue() % 1 == 0) {
-			if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE)
+			if (n instanceof Float) {
+				if (n.floatValue() >= Byte.MIN_VALUE && n.floatValue() <= Byte.MAX_VALUE) {
+					return n.byteValue();
+				} else if (n.floatValue() >= Short.MIN_VALUE && n.floatValue() <= Short.MAX_VALUE) {
+					return n.shortValue();
+				} else {
+					return n.floatValue();
+				}
+			} else if (n instanceof Double) {
+				if (n.doubleValue() >= Byte.MIN_VALUE && n.doubleValue() <= Byte.MAX_VALUE) {
+					return n.byteValue();
+				} else if (n.doubleValue() >= Short.MIN_VALUE && n.doubleValue() <= Short.MAX_VALUE) {
+					return n.shortValue();
+				} else if (n.doubleValue() >= Integer.MIN_VALUE && n.doubleValue() <= Integer.MAX_VALUE) {
+					return n.intValue();
+				} else {
+					return n.doubleValue();
+				}
+			} else if (n.longValue() >= Byte.MIN_VALUE && n.longValue() <= Byte.MAX_VALUE) {
 				return n.byteValue();
-			else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE)
+			} else if (n.longValue() >= Short.MIN_VALUE && n.longValue() <= Short.MAX_VALUE) {
 				return n.shortValue();
-			else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE)
+			} else if (n.longValue() >= Integer.MIN_VALUE && n.longValue() <= Integer.MAX_VALUE) {
 				return n.intValue();
-			else if (n.longValue() >= Long.MIN_VALUE && n.longValue() <= Long.MAX_VALUE)
+			} else {
 				return n.longValue();
-		} else if (n.doubleValue() >= Double.MIN_VALUE && n.doubleValue() <= Double.MAX_VALUE)
+			}
+		} else if (n instanceof Float || (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE && MathUtil.countDigits(n.doubleValue()) <= 8)) {
+			return n instanceof Float ? n.floatValue() : Float.valueOf(new BigDecimal(Double.toString(n.doubleValue()), MathContext.UNLIMITED).toPlainString());
+		} else if (n instanceof Double) {
 			return n.doubleValue();
-		return null;
+		} else {
+			return null;
+		}
 	}
 }

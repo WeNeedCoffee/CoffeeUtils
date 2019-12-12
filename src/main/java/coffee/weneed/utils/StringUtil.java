@@ -161,7 +161,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Gets the end.
+	 * Gets the end of a string based on the splitting of a delimiter.
 	 *
 	 * @param in        the in
 	 * @param delimiter the delimiter
@@ -173,6 +173,17 @@ public class StringUtil {
 			return null;
 		}
 		return ss[ss.length - 1];
+	}
+	
+	/**
+	 * Gets the end.
+	 *
+	 * @param in        the in
+	 * @param delimiter the delimiter
+	 * @return the end a => b
+	 */
+	public static String getStart(String in, String delimiter) {
+		return in.split(delimiter)[0];
 	}
 
 	/**

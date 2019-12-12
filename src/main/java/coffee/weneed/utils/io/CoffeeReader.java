@@ -138,10 +138,10 @@ public class CoffeeReader {
 	 * @return the long
 	 */
 	public final long readLong() {
-		int byte1 = bs.readByte();
-		int byte2 = bs.readByte();
-		int byte3 = bs.readByte();
-		int byte4 = bs.readByte();
+		long byte1 = bs.readByte();
+		long byte2 = bs.readByte();
+		long byte3 = bs.readByte();
+		long byte4 = bs.readByte();
 		long byte5 = bs.readByte();
 		long byte6 = bs.readByte();
 		long byte7 = bs.readByte();
@@ -178,7 +178,8 @@ public class CoffeeReader {
 	 * @return the number
 	 */
 	public final Number readSmart() {
-		switch (readByte()) {
+		byte b = readByte();
+		switch (b) {
 			case 0: {
 				return readByte();
 			}
@@ -195,40 +196,25 @@ public class CoffeeReader {
 				return readFloat();
 			}
 			case 5: {
-				return readDouble();
+				return Double.valueOf(Float.toString(readFloat()));
 			}
 			case 6: {
-				return (float) readByte();
+				return readDouble();
 			}
 			case 7: {
-				return (float) readShort();
+				return (float) readByte();
 			}
 			case 8: {
-				return (float) readInt();
+				return (float) readShort();
 			}
 			case 9: {
-				return (float) readLong();
-			}
-			case 10: {
-				return (float) readFloat();
-			}
-			case 11: {
 				return (double) readByte();
 			}
-			case 12: {
+			case 10: {
 				return (double) readShort();
 			}
-			case 13: {
+			case 11: {
 				return (double) readInt();
-			}
-			case 14: {
-				return (double) readLong();
-			}
-			case 15: {
-				return (double) readFloat();
-			}
-			case 16: {
-				return (double) readDouble();
 			}
 			default: {
 				return Long.MAX_VALUE + Long.MAX_VALUE;
