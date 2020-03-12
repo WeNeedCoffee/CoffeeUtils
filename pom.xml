@@ -23,7 +23,7 @@
 	<repositories>
 		<repository>
 			<id>daleths-repo</id>
-			<url>http://dalethium.com/jenkins/plugin/repository/everything</url>
+			<url>https://dalethium.com/jenkins/plugin/repository/everything</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>
@@ -40,19 +40,14 @@
 	</organization>
 	<dependencies>
 		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna-platform</artifactId>
-			<version>5.4.0</version>
+			<groupId>com.github.mike10004</groupId>
+			<artifactId>fengyouchao-sockslib</artifactId>
+			<version>1.0.3</version> <!-- use latest version from Maven badge above -->
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20180813</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.kxml</groupId>
-			<artifactId>kxml2</artifactId>
-			<version>2.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.cloud</groupId>

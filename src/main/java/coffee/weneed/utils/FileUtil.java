@@ -1,11 +1,13 @@
 package coffee.weneed.utils;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -47,12 +49,13 @@ public class FileUtil {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, encoding);
 	}
-	
+
 	public static void toFile(byte[] data, File file) throws FileNotFoundException, IOException {
 		try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath())) {
-			   fos.write(data);
+			fos.write(data);
 		}
 	}
+
 	/***
 	 * https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
 	 * @param path
@@ -65,7 +68,7 @@ public class FileUtil {
 		byte[] buffer = new byte[1024];
 		int length;
 		while ((length = inputStream.read(buffer)) != -1) {
-		    result.write(buffer, 0, length);
+			result.write(buffer, 0, length);
 		}
 		return result.toString(encoding.name());
 	}
@@ -105,6 +108,88 @@ public class FileUtil {
 		try (InputStream input1 = new FileInputStream(file1); InputStream input2 = new FileInputStream(file2)) {
 			return contentEquals(input1, input2);
 		}
+	}
+
+	public static boolean areTextSame(File file1, File file2) throws IOException {
+		final boolean file1Exists = file1.exists();
+		if (file1Exists != file2.exists())
+			return false;
+
+		if (!file1Exists)
+			return true;
+
+		if (file1.isDirectory() || file2.isDirectory())
+			throw new IOException("Can't compare directories, only files");
+
+		if (file1.length() != file2.length())
+			return false;
+
+		if (file1.getCanonicalFile().equals(file2.getCanonicalFile()))
+			return true;
+		BufferedReader reader1 = new BufferedReader(new FileReader(file1));
+
+		BufferedReader reader2 = new BufferedReader(new FileReader(file2));
+
+		String line1 = reader1.readLine();
+
+		String line2 = reader2.readLine();
+
+		boolean areEqual = true;
+
+		int lineNum = 1;
+
+		while (line1 != null || line2 != null) {
+			if (line1 == null || line2 == null) {
+				areEqual = false;
+
+				break;
+			} else if (!line1.equalsIgnoreCase(line2)) {
+				areEqual = false;
+
+				break;
+			}
+
+			line1 = reader1.readLine();
+
+			line2 = reader2.readLine();
+
+			lineNum++;
+		}
+		reader1.close();
+		reader2.close();
+		return areEqual;
+	}
+
+	public static boolean areSame(File file1, File file2) throws IOException {
+		final boolean file1Exists = file1.exists();
+		if (file1Exists != file2.exists())
+			return false;
+
+		if (!file1Exists)
+			return true;
+
+		if (file1.isDirectory() || file2.isDirectory())
+			throw new IOException("Can't compare directories, only files");
+
+		if (file1.length() != file2.length())
+			return false;
+
+		if (file1.getCanonicalFile().equals(file2.getCanonicalFile()))
+			return true;
+		if (file1.getName().split("\\.").length > 1 && file2.getName().split("\\.").length > 1 && file1.getName().split("\\.")[1].equalsIgnoreCase(file2.getName().split("\\.")[1])) {
+			switch (file1.getName().split("\\.")[1].toLowerCase()) {
+				case "txt":
+				case "json":
+				case "cfg":
+				case "yml":
+				case "yaml":
+				case "conf":
+					return areTextSame(file1, file2);
+				default:
+					return contentEquals(file1, file2);
+			}
+		}
+		return contentEquals(file1, file2);
 	}
 
 	/**

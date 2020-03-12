@@ -254,6 +254,9 @@ public class CoffeeHousingTest {
 				int l = new CodingProcess(new LZA4Step()).encode(pb).length;
 				ll += System.currentTimeMillis() - time;
 				lv += l;
+				//CoffeeHousingObject e = new CoffeeHousingObject();
+				//e.fromByteArray(pb);
+				//assertEquals(p, e);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

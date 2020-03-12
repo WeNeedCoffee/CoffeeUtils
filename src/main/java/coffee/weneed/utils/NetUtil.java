@@ -1,14 +1,18 @@
 package coffee.weneed.utils;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.naming.NamingEnumeration;
@@ -34,7 +38,7 @@ public class NetUtil {
 	 * @return the double
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static double checkProxy(String ip, String contact) throws IOException {
+	public static double checkIP(String ip, String contact) throws IOException {
 		JSONObject json = null;
 		try {
 			json = new JSONObject(new String(NetUtil.downloadUrl("http://check.getipintel.net/check.php?ip=" + ip + "&contact=" + contact + "&flags=f&format=json")));
@@ -67,7 +71,47 @@ public class NetUtil {
 		URL url = new URL(toDownload);
 		return NetUtil.downloadUrl(url);
 	}
-
+	
+	public static String downloadHTTPSocket(Socket s, String address) throws UnknownHostException, IOException {
+		String domain = "";
+		int port;
+		String page = "";
+		if (address.startsWith("https")) {
+			port = 443; 
+			return null; //TODO https
+		} else {
+			port = 80; 
+		}
+		if (address.startsWith("https://")) {
+			domain = address.replaceFirst("https://", "");
+		} else if  (address.startsWith("http://")) {
+			domain = address.replaceFirst("http://", "");
+		}
+		if (domain.contains("/")) {
+			page = domain.replaceFirst(domain.split("/")[0], "/");
+			domain = domain.split("/")[0];	
+		}
+		return downloadHTTPSocket(s, domain, page, port);
+	}
+	public static String downloadHTTPSocket(Socket s, String domain, String page, int port) throws UnknownHostException, IOException {
+		s.connect(new InetSocketAddress(InetAddress.getByName(domain), port));
+		PrintWriter pw = new PrintWriter(s.getOutputStream());
+		pw.print("GET " + page + " HTTP/1.1\r\n");
+	    pw.print("Host: " + domain + "\r\n\r\n");
+		pw.flush();
+		BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		String res = null;
+		String t;
+		while((t = br.readLine()) != null)  {
+			if (res == null) {
+				res = t;
+			} else {
+				res += "\n" + t;
+			}
+		}
+		br.close();
+		return res;
+	}
 	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
 	 *
