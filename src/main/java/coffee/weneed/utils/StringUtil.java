@@ -167,6 +167,21 @@ public class StringUtil {
 	 * @param delimiter the delimiter
 	 * @return the end a => b
 	 */
+	public static String getBeginning(String in, String delimiter) {
+		String[] ss = in.split(delimiter);
+		if (ss.length <= 1) {
+			return in;
+		}
+		String s = "";
+		int i = 1;
+		for (String sss : ss) {
+			if (i >= ss.length) break;
+			s += sss + delimiter;
+			i++;
+		}
+		return s;
+	}
+	
 	public static String getEnd(String in, String delimiter) {
 		String[] ss = in.split(delimiter);
 		if (ss.length <= 1) {
@@ -174,6 +189,7 @@ public class StringUtil {
 		}
 		return ss[ss.length - 1];
 	}
+	
 	
 	/**
 	 * Gets the end.
