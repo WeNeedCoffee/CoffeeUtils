@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>coffee.weneed</groupId>
 	<artifactId>utils</artifactId>
-	<version>1.0.${build.number}</version>
+	<version>1.0.${env.BUILD_NUMBER}</version>
 	<packaging>jar</packaging>
 	<build>
 		<plugins>
