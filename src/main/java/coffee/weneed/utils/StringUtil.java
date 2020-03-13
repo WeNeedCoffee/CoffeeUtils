@@ -35,10 +35,6 @@ public class StringUtil {
 		}
 		return ret;
 	}
-	
-	public static int codepointLength(String str) {
-		return str.codePointCount(0, str.length());
-	}
 
 	/**
 	 * * Convert a string of 1's and 0's to a string of UTF-8 text.
@@ -47,8 +43,8 @@ public class StringUtil {
 	 * @param s string of 1's and 0's
 	 * @return decoded string
 	 */
-	public static String binToText(String s) {
-		return new String(binToBytes(s), StandardCharsets.UTF_8);
+	public static final String binToText(String s) {
+		return new String(StringUtil.binToBytes(s), StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -57,7 +53,7 @@ public class StringUtil {
 	 * @param in the in
 	 * @return the string
 	 */
-	public static String bytesToBin(byte[] in) {
+	public static final String bytesToBin(byte[] in) {
 		String ret = "";
 		for (byte b : in) {
 			ret += String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
@@ -71,7 +67,7 @@ public class StringUtil {
 	 * @param bytes the bytes
 	 * @return the string
 	 */
-	public static String bytesToHex(byte[] bytes) {
+	public static final String bytesToHex(byte[] bytes) {
 
 		char[] hexChars = new char[bytes.length * 2];
 		int v;
@@ -83,6 +79,10 @@ public class StringUtil {
 		return new String(hexChars);
 	}
 
+	public static int codepointLength(String str) {
+		return str.codePointCount(0, str.length());
+	}
+
 	/**
 	 * Combine.
 	 *
@@ -91,7 +91,7 @@ public class StringUtil {
 	 * @param sep   the sep
 	 * @return the string
 	 */
-	public static String combine(String[] in, int index, char sep) {
+	public static final String combine(String[] in, int index, char sep) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = index; i < in.length; i++) {
 			sb.append(in[i]).append(i + 1 >= in.length ? "" : sep);
@@ -116,7 +116,7 @@ public class StringUtil {
 		return ret;
 	}
 
-	public static String escapeUnicode(String s) {
+	public static final String escapeUnicode(String s) {
 		StringBuilder b = new StringBuilder();
 		for (char c : s.toCharArray()) {
 			b.append("\\u").append(Integer.toHexString(c).toUpperCase());
@@ -142,10 +142,14 @@ public class StringUtil {
 			if (e == 0) {
 				break;
 			}
-			ret.add(substr(in, t, e));
+			ret.add(StringUtil.substr(in, t, e));
 			t += e;
 		}
 		return ret;
+	}
+
+	public static final String getBeginning(String in, String delimiter) {
+		return StringUtil.substr(in, 0, in.length() - StringUtil.getEnd(in, delimiter).length() - 1 + delimiter.length());
 	}
 
 	/**
@@ -159,24 +163,6 @@ public class StringUtil {
 	public static Character getChar(String s) {
 		return s.charAt(0);
 	}
-	
-	
-	public static String getBeginning(String in, String delimiter) {
-		/*String[] ss = in.split(delimiter);
-		if (ss.length <= 1) {
-			return in;
-		}
-		String s = "";
-		int i = 1;
-		for (String sss : ss) {
-			if (i >= ss.length) break;
-			s += sss + delimiter;
-			i++;
-		}
-		return s;*/
-		return substr(in, 0, (in.length() - getEnd(in, delimiter).length() - 1) + delimiter.length());
-	}
-
 
 	/**
 	 * Gets the end of a string based on the splitting of a delimiter.
@@ -185,24 +171,11 @@ public class StringUtil {
 	 * @param delimiter the delimiter
 	 * @return the end a => b
 	 */
-	public static String getEnd(String in, String delimiter) {
+	public static final String getEnd(String in, String delimiter) {
 		String[] ss = in.split(delimiter);
-		if (ss.length <= 1) {
+		if (ss.length <= 1)
 			return null;
-		}
 		return ss[ss.length - 1];
-	}
-	
-	
-	/**
-	 * Gets the end.
-	 *
-	 * @param in        the in
-	 * @param delimiter the delimiter
-	 * @return the end a => b
-	 */
-	public static String getStart(String in, String delimiter) {
-		return in.split(delimiter)[0];
 	}
 
 	/**
@@ -257,6 +230,17 @@ public class StringUtil {
 			builder.append(padchar);
 		}
 		return builder.toString();
+	}
+
+	/**
+	 * Gets the end.
+	 *
+	 * @param in        the in
+	 * @param delimiter the delimiter
+	 * @return the end a => b
+	 */
+	public static final String getStart(String in, String delimiter) {
+		return in.split(delimiter)[0];
 	}
 
 	/**
@@ -396,7 +380,7 @@ public class StringUtil {
 	 * @param string The string to normalize.
 	 * @return Normalized ascii string.
 	 */
-	public static String normalize(String string) {
+	public static final String normalize(String string) {
 		return Normalizer.normalize(string, Normalizer.Form.NFD).replaceAll("[^\\x00-\\x7F]", "");
 	}
 
@@ -409,7 +393,7 @@ public class StringUtil {
 	 * @param to     the to
 	 * @return substring
 	 */
-	public static String substr(String string, int from, int to) {
+	public static final String substr(String string, int from, int to) {
 		if (from < 0 && to < 0) {
 			if (Math.abs(from) > Math.abs(to)) {
 				String s = string.substring(string.length() - Math.abs(from));
@@ -443,7 +427,7 @@ public class StringUtil {
 	 * @param in string to encode
 	 * @return string of 1's and 0's
 	 */
-	public static String textToBin(String in) {
+	public static final String textToBin(String in) {
 		return bytesToBin(in.getBytes(StandardCharsets.UTF_8));
 	}
 }
