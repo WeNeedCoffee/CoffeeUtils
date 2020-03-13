@@ -159,16 +159,10 @@ public class StringUtil {
 	public static Character getChar(String s) {
 		return s.charAt(0);
 	}
-
-	/**
-	 * Gets the end of a string based on the splitting of a delimiter.
-	 *
-	 * @param in        the in
-	 * @param delimiter the delimiter
-	 * @return the end a => b
-	 */
+	
+	
 	public static String getBeginning(String in, String delimiter) {
-		String[] ss = in.split(delimiter);
+		/*String[] ss = in.split(delimiter);
 		if (ss.length <= 1) {
 			return in;
 		}
@@ -179,9 +173,18 @@ public class StringUtil {
 			s += sss + delimiter;
 			i++;
 		}
-		return s;
+		return s;*/
+		return substr(in, 0, (in.length() - getEnd(in, delimiter).length() - 1) + delimiter.length());
 	}
-	
+
+
+	/**
+	 * Gets the end of a string based on the splitting of a delimiter.
+	 *
+	 * @param in        the in
+	 * @param delimiter the delimiter
+	 * @return the end a => b
+	 */
 	public static String getEnd(String in, String delimiter) {
 		String[] ss = in.split(delimiter);
 		if (ss.length <= 1) {
