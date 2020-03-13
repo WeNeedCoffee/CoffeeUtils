@@ -6,7 +6,7 @@
 	<groupId>coffee.weneed</groupId>
 	<artifactId>utils</artifactId>
 	<properties>
-		<build.number>failed</build.number>
+		<build.number>${env.BUILD_NUMBER}</build.number>
 	</properties>
 	<version>1.0.${build.number}</version>
 	<packaging>jar</packaging>
