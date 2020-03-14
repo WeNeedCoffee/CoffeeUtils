@@ -3,6 +3,7 @@ package coffee.weneed.utils;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,6 +14,9 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.naming.NamingEnumeration;
@@ -57,6 +61,17 @@ public class NetUtil {
 	public static void downloadFile(String fileUrl, File destination) throws IOException {
 		FileUtil.toFile(NetUtil.downloadUrl(fileUrl), destination);
 	}
+	
+	public static void downloadFileAlt(String fileUrl, File destination) throws IOException {
+		ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(fileUrl).openStream());
+		FileOutputStream fileOutputStream = new FileOutputStream(destination);
+		FileChannel fileChannel = fileOutputStream.getChannel();
+		fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+		fileOutputStream.close();
+
+	}
+	
+
 
 	/**
 	 * Download url.
