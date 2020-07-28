@@ -11,22 +11,22 @@ import java.time.temporal.ChronoUnit;
 public class TimeUtil {
 
 	/** The Constant ONE_SECOND_MS. */
-	public static final int ONE_SECOND_MS = 1000;
+	public static final long ONE_SECOND_MS = 1000;
 
 	/** The Constant ONE_MINUTE_MS. */
-	public static final int ONE_MINUTE_MS = TimeUtil.ONE_SECOND_MS * 60;
+	public static final long ONE_MINUTE_MS = TimeUtil.ONE_SECOND_MS * 60;
 
 	/** The Constant ONE_HOUR_MS. */
-	public static final int ONE_HOUR_MS = TimeUtil.ONE_MINUTE_MS * 60;
+	public static final long ONE_HOUR_MS = TimeUtil.ONE_MINUTE_MS * 60;
 
 	/** The Constant ONE_DAY_MS. */
-	public static final int ONE_DAY_MS = TimeUtil.ONE_HOUR_MS * 24;
+	public static final long ONE_DAY_MS = TimeUtil.ONE_HOUR_MS * 24;
 
 	/** The Constant ONE_WEEK_MS. */
-	public static final int ONE_WEEK_MS = TimeUtil.ONE_DAY_MS * 7;
+	public static final long ONE_WEEK_MS = TimeUtil.ONE_DAY_MS * 7;
 
 	/** The Constant ONE_YEAR_MS. */
-	public static final int ONE_YEAR_MS = TimeUtil.ONE_DAY_MS * 365;
+	public static final long ONE_YEAR_MS = TimeUtil.ONE_DAY_MS * 365;
 
 	/**
 	 * Returns the elapsed days between <code>startMillis</code> and
