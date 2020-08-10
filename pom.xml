@@ -42,14 +42,13 @@
 		<dependency>
 			<groupId>com.github.mike10004</groupId>
 			<artifactId>fengyouchao-sockslib</artifactId>
-			<version>1.0.3</version> <!-- use latest version from Maven badge above -->
+			<version>1.0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
-
 		<dependency> 
 			<groupId>com.jcraft</groupId>
 			<artifactId>jsch</artifactId>
