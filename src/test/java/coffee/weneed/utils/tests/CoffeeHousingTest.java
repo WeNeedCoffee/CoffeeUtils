@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 import coffee.weneed.utils.NetUtil;
+import coffee.weneed.utils.StringUtil;
 import coffee.weneed.utils.TimeUtil;
 import coffee.weneed.utils.coding.CodingProcess;
 import coffee.weneed.utils.coding.steps.compressing.BZip2Step;
@@ -113,6 +114,19 @@ public class CoffeeHousingTest {
 		}
 	};
 
+	String aa = "";
+	public String aaaa() {
+		if (StringUtil.isBlank(aa)) {
+		String a = "";
+		for (int i = 1; i<100 ; i++) {
+			System.out.println(i);
+			a+="aaaaaaaaaa";
+		}
+		aa = a;
+		}
+			return aa;
+		
+	}
 	/**
 	 * Generate coffee housing.
 	 *
@@ -130,12 +144,20 @@ public class CoffeeHousingTest {
 		p.setNumber("3", 1.0d);
 		p.setByteArray("4", "test.test".getBytes());
 		for (int i = 0; i < amount; i++) {
+			
 			CoffeeHousingObject p1 = new CoffeeHousingObject();
 			p1.setNumber(RandomStringUtils.randomAlphabetic(ra), RandomUtils.nextDouble());
 			p1.setString(RandomStringUtils.randomAlphabetic(ra), new String(RandomStringUtils.randomAlphabetic(rb)));
 			p1.setNumber(RandomStringUtils.randomAlphabetic(ra), RandomUtils.nextInt());
 			p1.setByteArray(RandomStringUtils.randomAlphabetic(ra), RandomUtils.nextBytes(rc));
 			p.setChild(RandomStringUtils.randomAlphabetic(ra) + i, p1);
+			/*
+			CoffeeHousingObject p1 = new CoffeeHousingObject();
+			p1.setNumber(aaaa(), RandomUtils.nextDouble());
+			p1.setString(aaaa(), aaaa());
+			p1.setNumber(aaaa(), RandomUtils.nextInt());
+			p1.setByteArray(aaaa(), RandomUtils.nextBytes(rc));
+			p.setChild(aaaa() + i, p1);*/
 		}
 		return p;
 	}

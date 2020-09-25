@@ -279,7 +279,7 @@ public class FileUtil {
 		f.delete();
 		try {
 			FileOutputStream st = new FileOutputStream(f);
-			st.write(sb.substring(0, sb.length() - 1).replace("\r", "").replace("\t", "").getBytes());
+			st.write(sb.substring(0, sb.length() - 1).getBytes());
 			st.flush();
 			st.close();
 		} catch (FileNotFoundException e) {
