@@ -20,16 +20,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-		<repository>
-			<id>daleths-repo</id>
-			<url>https://dalethium.com/jenkins/plugin/repository/everything</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
-		</repository>
-	</repositories>
 	<name>CoffeeUtils</name>
 	<url>https://github.com/WeNeedCoffee/CoffeeUtils</url>
 	<description>Generic utilities</description>
@@ -89,7 +79,6 @@
 			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>3.6</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

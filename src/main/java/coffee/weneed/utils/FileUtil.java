@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 // TODO: Auto-generated Javadoc
@@ -136,7 +137,7 @@ public class FileUtil {
 
 		boolean areEqual = true;
 
-		int lineNum = 1;
+		//int lineNum = 1;
 
 		while (line1 != null || line2 != null) {
 			if (line1 == null || line2 == null) {
@@ -153,7 +154,7 @@ public class FileUtil {
 
 			line2 = reader2.readLine();
 
-			lineNum++;
+			//lineNum++;
 		}
 		reader1.close();
 		reader2.close();
@@ -287,6 +288,18 @@ public class FileUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static List<String> fileToList(String file) throws IOException {
+		List<String> list = new ArrayList<>();
+		String s = new String(NetUtil.downloadURL(new File(file).toURI().toURL()));
+		String[] ss = s.split("\n");
+		for (String e : ss) {
+			list.add(e);
+		}
+		
+		return list;
+		
 	}
 
 }

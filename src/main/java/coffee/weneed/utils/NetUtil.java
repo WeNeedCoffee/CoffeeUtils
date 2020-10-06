@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
@@ -45,7 +46,7 @@ public class NetUtil {
 	public static double checkIP(String ip, String contact) throws IOException {
 		JSONObject json = null;
 		try {
-			json = new JSONObject(new String(NetUtil.downloadUrl("http://check.getipintel.net/check.php?ip=" + ip + "&contact=" + contact + "&flags=f&format=json")));
+			json = new JSONObject(new String(NetUtil.downloadURL("http://check.getipintel.net/check.php?ip=" + ip + "&contact=" + contact + "&flags=f&format=json")));
 		} catch (JSONException e) {
 			return -1;
 		}
@@ -57,11 +58,11 @@ public class NetUtil {
 	public static void downloadFile(String fileUrl, String destination) throws IOException {
 		downloadFile(fileUrl, new File(destination));
 	}
-	
+
 	public static void downloadFile(String fileUrl, File destination) throws IOException {
-		FileUtil.toFile(NetUtil.downloadUrl(fileUrl), destination);
+		FileUtil.toFile(NetUtil.downloadURL(fileUrl), destination);
 	}
-	
+
 	public static void downloadFileAlt(String fileUrl, File destination) throws IOException {
 		ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(fileUrl).openStream());
 		FileOutputStream fileOutputStream = new FileOutputStream(destination);
@@ -70,8 +71,6 @@ public class NetUtil {
 		fileOutputStream.close();
 
 	}
-	
-
 
 	/**
 	 * Download url.
@@ -80,44 +79,45 @@ public class NetUtil {
 	 * @param toDownload the to download
 	 * @return byte array
 	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @see coffee.weneed.utils.NetUtil#downloadUrl(URL)
+	 * @see coffee.weneed.utils.NetUtil#downloadURL(URL)
 	 */
-	public static byte[] downloadUrl(String toDownload) throws IOException {
+	public static byte[] downloadURL(String toDownload) throws IOException {
 		URL url = new URL(toDownload);
-		return NetUtil.downloadUrl(url);
+		return NetUtil.downloadURL(url);
 	}
-	
+
 	public static String downloadHTTPSocket(Socket s, String address) throws UnknownHostException, IOException {
 		String domain = "";
 		int port;
 		String page = "";
 		if (address.startsWith("https")) {
-			port = 443; 
+			port = 443;
 			return null; //TODO https
 		} else {
-			port = 80; 
+			port = 80;
 		}
 		if (address.startsWith("https://")) {
 			domain = address.replaceFirst("https://", "");
-		} else if  (address.startsWith("http://")) {
+		} else if (address.startsWith("http://")) {
 			domain = address.replaceFirst("http://", "");
 		}
 		if (domain.contains("/")) {
 			page = domain.replaceFirst(domain.split("/")[0], "/");
-			domain = domain.split("/")[0];	
+			domain = domain.split("/")[0];
 		}
 		return downloadHTTPSocket(s, domain, page, port);
 	}
+
 	public static String downloadHTTPSocket(Socket s, String domain, String page, int port) throws UnknownHostException, IOException {
 		s.connect(new InetSocketAddress(InetAddress.getByName(domain), port));
 		PrintWriter pw = new PrintWriter(s.getOutputStream());
 		pw.print("GET " + page + " HTTP/1.1\r\n");
-	    pw.print("Host: " + domain + "\r\n\r\n");
+		pw.print("Host: " + domain + "\r\n\r\n");
 		pw.flush();
 		BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		String res = null;
 		String t;
-		while((t = br.readLine()) != null)  {
+		while ((t = br.readLine()) != null) {
 			if (res == null) {
 				res = t;
 			} else {
@@ -127,6 +127,15 @@ public class NetUtil {
 		br.close();
 		return res;
 	}
+
+	public static byte[] downloadFile(String file) throws MalformedURLException, IOException {
+		return downloadFile(new File(file));
+	}
+
+	public static byte[] downloadFile(File file) throws MalformedURLException, IOException {
+		return downloadURL(file.toURI().toURL());
+	}
+
 	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
 	 *
@@ -135,7 +144,7 @@ public class NetUtil {
 	 * @return byte array
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static byte[] downloadUrl(URL toDownload) throws IOException {
+	public static byte[] downloadURL(URL toDownload) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		byte[] chunk = new byte[4096];
 		int bytesRead;

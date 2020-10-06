@@ -93,7 +93,7 @@ public class CoffeeHousingTest {
 	public static void setup() {
 		e = new CoffeeHousingObject();
 		try {
-			json = new JSONObject(NetUtil.downloadUrl(new File("CoffeeHousingTest.json").toURI().toURL()));
+			json = new JSONObject(NetUtil.downloadURL(new File("CoffeeHousingTest.json").toURI().toURL()));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

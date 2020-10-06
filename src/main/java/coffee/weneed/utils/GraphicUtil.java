@@ -196,7 +196,7 @@ public class GraphicUtil {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static BufferedImage scaleDown(String image, int width, int height) throws IOException {
-		return scaleDown(NetUtil.downloadUrl(image), width, height);
+		return scaleDown(NetUtil.downloadURL(image), width, height);
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class GraphicUtil {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static BufferedImage scaleDown(URL image, int width, int height) throws IOException {
-		return scaleDown(NetUtil.downloadUrl(image), width, height);
+		return scaleDown(NetUtil.downloadURL(image), width, height);
 	}
 	
 	/**

@@ -30,7 +30,7 @@ public class GoogleVisionUtil {
 	 */
 	public static GoogleVisionResult detectImage(URL url) throws IOException, GoogleVisionException {
 		ArrayList<AnnotateImageRequest> requests = new ArrayList<>();
-		Image img = Image.newBuilder().setContent(ByteString.copyFrom(NetUtil.downloadUrl(url))).build();
+		Image img = Image.newBuilder().setContent(ByteString.copyFrom(NetUtil.downloadURL(url))).build();
 		Feature feat = Feature.newBuilder().setType(Feature.Type.WEB_DETECTION).build();
 		AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
 		requests.add(request);

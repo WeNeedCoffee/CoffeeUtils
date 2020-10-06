@@ -191,7 +191,7 @@ public class FilterToolkit implements KeyListener {
 	 */
 	private void fix() throws MalformedURLException {
 		try {
-			for (String s : new String(NetUtil.downloadUrl(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
+			for (String s : new String(NetUtil.downloadURL(new File("./cleanwords.txt").toURI().toURL())).split("\\n")) {
 				FilterToolkit.filter.whitelistWord(s);
 			}
 		} catch (IOException e) {

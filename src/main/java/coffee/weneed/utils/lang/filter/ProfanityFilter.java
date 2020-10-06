@@ -103,7 +103,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	public ProfanityFilter(Map<Character, String[]> activeLeets, URL tree) {
 		try {
-			fromJSON(new JSONObject(new String(NetUtil.downloadUrl(tree))));
+			fromJSON(new JSONObject(new String(NetUtil.downloadURL(tree))));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
