@@ -302,4 +302,12 @@ public class FileUtil {
 		
 	}
 
+	public static byte[] downloadFile(String file) throws MalformedURLException, IOException {
+		return FileUtil.downloadFile(new File(file));
+	}
+
+	public static byte[] downloadFile(File file) throws MalformedURLException, IOException {
+		return NetUtil.downloadURL(file.toURI().toURL());
+	}
+
 }

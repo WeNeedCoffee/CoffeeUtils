@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
@@ -126,14 +125,6 @@ public class NetUtil {
 		}
 		br.close();
 		return res;
-	}
-
-	public static byte[] downloadFile(String file) throws MalformedURLException, IOException {
-		return downloadFile(new File(file));
-	}
-
-	public static byte[] downloadFile(File file) throws MalformedURLException, IOException {
-		return downloadURL(file.toURI().toURL());
 	}
 
 	/**

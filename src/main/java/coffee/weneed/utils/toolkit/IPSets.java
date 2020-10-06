@@ -10,6 +10,7 @@ import coffee.weneed.utils.FileUtil;
 public class IPSets {
 	public static final String PREFIX = "      - ";
 	public static final String MID = "." + PrivateConstants.BH + ".\t1\tIN\tA\t";
+	public static final String MID2 = "\t3600\tIN\tPTR\t";
 
 	static int stage = 0;
 	static boolean dns = false;
@@ -84,14 +85,17 @@ public class IPSets {
 		String ipset = baseip + "0/" + mask;
 		if (dns) {
 			List<String> three = new ArrayList<>();
+			List<String> four = new ArrayList<>();
 			SubnetUtils utils = new SubnetUtils(ipset);
 			utils.setInclusiveHostCount(false);
 
 			for (String ip : utils.getInfo().getAllAddresses()) {
 				three.add(ip + MID + ip);
+				four.add(ip.replace(baseip, "") + MID2 + ip);
 			}
 
 			FileUtil.listToFile("DNS.txt", three);
+			FileUtil.listToFile("DNS2.txt", four);
 		} else {
 
 			List<String> one = new ArrayList<>();
