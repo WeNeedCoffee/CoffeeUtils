@@ -174,8 +174,9 @@ public class StringUtil {
 	 */
 	public static final String getEnd(String in, String delimiter) {
 		String[] ss = in.split(delimiter);
-		if (ss.length <= 1)
+		if (ss.length <= 1) {
 			return null;
+		}
 		return ss[ss.length - 1];
 	}
 
@@ -291,10 +292,12 @@ public class StringUtil {
 	 * @return
 	 */
 	public static boolean isBlank(String s) {
-		if (s == null)
+		if (s == null) {
 			return true;
-		if (s.replace("\t", "").replace("\r", "").replace("\n", "").trim().isEmpty())
+		}
+		if (s.replace("\t", "").replace("\r", "").replace("\n", "").trim().isEmpty()) {
 			return true;
+		}
 		return false;
 	}
 
@@ -307,8 +310,9 @@ public class StringUtil {
 	 */
 	public static boolean isNumber(String s) {
 		for (char c : s.toCharArray()) {
-			if (!Character.isDigit(c))
+			if (!Character.isDigit(c)) {
 				return false;
+			}
 		}
 		return true;
 	}
@@ -399,26 +403,30 @@ public class StringUtil {
 			if (Math.abs(from) > Math.abs(to)) {
 				String s = string.substring(string.length() - Math.abs(from));
 				return s.substring(s.length() - Math.abs(to));
-			} else
+			} else {
 				return "";
+			}
 		} else if (from >= 0 && to < 0) {
 			String s = string.substring(from);
-			if (Math.abs(to) >= s.length())
+			if (Math.abs(to) >= s.length()) {
 				return "";
-			else
+			} else {
 				return s.substring(0, s.length() - Math.abs(to));
+			}
 
 		} else if (from < 0 && to >= 0) {
 			String s = string.substring(string.length() - Math.abs(from));
-			if (to >= s.length())
+			if (to >= s.length()) {
 				return s;
+			}
 			return s.substring(0, to);
 		} else {
 			String s = string.substring(Math.abs(from));
-			if (to >= s.length())
+			if (to >= s.length()) {
 				return s;
-			else
+			} else {
 				return s.substring(0, Math.abs(to));
+			}
 		}
 	}
 

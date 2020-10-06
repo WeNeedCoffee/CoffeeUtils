@@ -22,111 +22,64 @@ import java.util.List;
  * The Class FileUtil.
  */
 public class FileUtil {
-	/**
-	 * Can write.
-	 *
-	 * @param file the file
-	 * @return true, if successful
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static boolean canWrite(File file) throws IOException {
-		if (file.isDirectory())
-			throw new IOException("File is directory.");
-		else if (file.exists())
-			throw new IOException("File already exists");
-		else if (!file.canWrite())
-			throw new IOException("Can't write to the file");
-		return true;
-	}
-
-	/***
-	 * https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
-	 * @param path
-	 * @param encoding
-	 * @return
-	 * @throws IOException
-	 */
-	public static String readFile(String path, Charset encoding) throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(path));
-		return new String(encoded, encoding);
-	}
-
-	public static void toFile(byte[] data, File file) throws FileNotFoundException, IOException {
-		try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath())) {
-			fos.write(data);
-		}
-	}
-
-	/***
-	 * https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
-	 * @param path
-	 * @param encoding
-	 * @return
-	 * @throws IOException
-	 */
-	public static String readStream(InputStream inputStream, Charset encoding) throws IOException {
-		ByteArrayOutputStream result = new ByteArrayOutputStream();
-		byte[] buffer = new byte[1024];
-		int length;
-		while ((length = inputStream.read(buffer)) != -1) {
-			result.write(buffer, 0, length);
-		}
-		return result.toString(encoding.name());
-	}
-
-	/**
-	 * Compares the contents of two files to determine if they are equal or not.
-	 * <p>
-	 * This method checks to see if the two files are different lengths or if
-	 * they point to the same file, before resorting to byte-by-byte comparison
-	 * of the contents.
-	 * <p>
-	 * Code origin: Avalon, org.apache.commons.io
-	 *
-	 * @param file1 the first file
-	 * @param file2 the second file
-	 * @return true if the content of the files are equal or they both don't
-	 *         exist, false otherwise
-	 * @throws IOException in case of an I/O error
-	 */
-	public static boolean contentEquals(final File file1, final File file2) throws IOException {
+	public static boolean areSame(File file1, File file2) throws IOException {
 		final boolean file1Exists = file1.exists();
-		if (file1Exists != file2.exists())
+		if (file1Exists != file2.exists()) {
 			return false;
-
-		if (!file1Exists)
-			return true;
-
-		if (file1.isDirectory() || file2.isDirectory())
-			throw new IOException("Can't compare directories, only files");
-
-		if (file1.length() != file2.length())
-			return false;
-
-		if (file1.getCanonicalFile().equals(file2.getCanonicalFile()))
-			return true;
-
-		try (InputStream input1 = new FileInputStream(file1); InputStream input2 = new FileInputStream(file2)) {
-			return contentEquals(input1, input2);
 		}
+
+		if (!file1Exists) {
+			return true;
+		}
+
+		if (file1.isDirectory() || file2.isDirectory()) {
+			throw new IOException("Can't compare directories, only files");
+		}
+
+		if (file1.length() != file2.length()) {
+			return false;
+		}
+
+		if (file1.getCanonicalFile().equals(file2.getCanonicalFile())) {
+			return true;
+		}
+		if (file1.getName().split("\\.").length > 1 && file2.getName().split("\\.").length > 1 && file1.getName().split("\\.")[1].equalsIgnoreCase(file2.getName().split("\\.")[1])) {
+			switch (file1.getName().split("\\.")[1].toLowerCase()) {
+				case "txt":
+				case "json":
+				case "cfg":
+				case "yml":
+				case "yaml":
+				case "conf":
+					return areTextSame(file1, file2);
+				default:
+					return contentEquals(file1, file2);
+			}
+		}
+		return contentEquals(file1, file2);
 	}
 
 	public static boolean areTextSame(File file1, File file2) throws IOException {
 		final boolean file1Exists = file1.exists();
-		if (file1Exists != file2.exists())
+		if (file1Exists != file2.exists()) {
 			return false;
+		}
 
-		if (!file1Exists)
+		if (!file1Exists) {
 			return true;
+		}
 
-		if (file1.isDirectory() || file2.isDirectory())
+		if (file1.isDirectory() || file2.isDirectory()) {
 			throw new IOException("Can't compare directories, only files");
+		}
 
-		if (file1.length() != file2.length())
+		if (file1.length() != file2.length()) {
 			return false;
+		}
 
-		if (file1.getCanonicalFile().equals(file2.getCanonicalFile()))
+		if (file1.getCanonicalFile().equals(file2.getCanonicalFile())) {
 			return true;
+		}
 		BufferedReader reader1 = new BufferedReader(new FileReader(file1));
 
 		BufferedReader reader2 = new BufferedReader(new FileReader(file2));
@@ -161,36 +114,64 @@ public class FileUtil {
 		return areEqual;
 	}
 
-	public static boolean areSame(File file1, File file2) throws IOException {
-		final boolean file1Exists = file1.exists();
-		if (file1Exists != file2.exists())
-			return false;
-
-		if (!file1Exists)
-			return true;
-
-		if (file1.isDirectory() || file2.isDirectory())
-			throw new IOException("Can't compare directories, only files");
-
-		if (file1.length() != file2.length())
-			return false;
-
-		if (file1.getCanonicalFile().equals(file2.getCanonicalFile()))
-			return true;
-		if (file1.getName().split("\\.").length > 1 && file2.getName().split("\\.").length > 1 && file1.getName().split("\\.")[1].equalsIgnoreCase(file2.getName().split("\\.")[1])) {
-			switch (file1.getName().split("\\.")[1].toLowerCase()) {
-				case "txt":
-				case "json":
-				case "cfg":
-				case "yml":
-				case "yaml":
-				case "conf":
-					return areTextSame(file1, file2);
-				default:
-					return contentEquals(file1, file2);
-			}
+	/**
+	 * Can write.
+	 *
+	 * @param file the file
+	 * @return true, if successful
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static boolean canWrite(File file) throws IOException {
+		if (file.isDirectory()) {
+			throw new IOException("File is directory.");
+		} else if (file.exists()) {
+			throw new IOException("File already exists");
+		} else if (!file.canWrite()) {
+			throw new IOException("Can't write to the file");
 		}
-		return contentEquals(file1, file2);
+		return true;
+	}
+
+	/**
+	 * Compares the contents of two files to determine if they are equal or not.
+	 * <p>
+	 * This method checks to see if the two files are different lengths or if
+	 * they point to the same file, before resorting to byte-by-byte comparison
+	 * of the contents.
+	 * <p>
+	 * Code origin: Avalon, org.apache.commons.io
+	 *
+	 * @param file1 the first file
+	 * @param file2 the second file
+	 * @return true if the content of the files are equal or they both don't
+	 *         exist, false otherwise
+	 * @throws IOException in case of an I/O error
+	 */
+	public static boolean contentEquals(final File file1, final File file2) throws IOException {
+		final boolean file1Exists = file1.exists();
+		if (file1Exists != file2.exists()) {
+			return false;
+		}
+
+		if (!file1Exists) {
+			return true;
+		}
+
+		if (file1.isDirectory() || file2.isDirectory()) {
+			throw new IOException("Can't compare directories, only files");
+		}
+
+		if (file1.length() != file2.length()) {
+			return false;
+		}
+
+		if (file1.getCanonicalFile().equals(file2.getCanonicalFile())) {
+			return true;
+		}
+
+		try (InputStream input1 = new FileInputStream(file1); InputStream input2 = new FileInputStream(file2)) {
+			return contentEquals(input1, input2);
+		}
 	}
 
 	/**
@@ -209,8 +190,9 @@ public class FileUtil {
 	 * @throws NullPointerException if either input is null
 	 */
 	public static boolean contentEquals(InputStream input1, InputStream input2) throws IOException {
-		if (input1 == input2)
+		if (input1 == input2) {
 			return true;
+		}
 		if (!(input1 instanceof BufferedInputStream)) {
 			input1 = new BufferedInputStream(input1);
 		}
@@ -221,8 +203,9 @@ public class FileUtil {
 		int ch = input1.read();
 		while (-1 != ch) {
 			final int ch2 = input2.read();
-			if (ch != ch2)
+			if (ch != ch2) {
 				return false;
+			}
 			ch = input1.read();
 		}
 
@@ -263,6 +246,26 @@ public class FileUtil {
 		}
 	}
 
+	public static byte[] downloadFile(File file) throws MalformedURLException, IOException {
+		return NetUtil.downloadURL(file.toURI().toURL());
+	}
+
+	public static byte[] downloadFile(String file) throws MalformedURLException, IOException {
+		return FileUtil.downloadFile(new File(file));
+	}
+
+	public static List<String> fileToList(String file) throws IOException {
+		List<String> list = new ArrayList<>();
+		String s = new String(NetUtil.downloadURL(new File(file).toURI().toURL()));
+		String[] ss = s.split("\n");
+		for (String e : ss) {
+			list.add(e);
+		}
+
+		return list;
+
+	}
+
 	/**
 	 * List to file.
 	 *
@@ -289,25 +292,40 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 	}
-	
-	public static List<String> fileToList(String file) throws IOException {
-		List<String> list = new ArrayList<>();
-		String s = new String(NetUtil.downloadURL(new File(file).toURI().toURL()));
-		String[] ss = s.split("\n");
-		for (String e : ss) {
-			list.add(e);
+
+	/***
+	 * https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
+	 * @param path
+	 * @param encoding
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readFile(String path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
+
+	/***
+	 * https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
+	 * @param path
+	 * @param encoding
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readStream(InputStream inputStream, Charset encoding) throws IOException {
+		ByteArrayOutputStream result = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int length;
+		while ((length = inputStream.read(buffer)) != -1) {
+			result.write(buffer, 0, length);
 		}
-		
-		return list;
-		
+		return result.toString(encoding.name());
 	}
 
-	public static byte[] downloadFile(String file) throws MalformedURLException, IOException {
-		return FileUtil.downloadFile(new File(file));
-	}
-
-	public static byte[] downloadFile(File file) throws MalformedURLException, IOException {
-		return NetUtil.downloadURL(file.toURI().toURL());
+	public static void toFile(byte[] data, File file) throws FileNotFoundException, IOException {
+		try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath())) {
+			fos.write(data);
+		}
 	}
 
 }

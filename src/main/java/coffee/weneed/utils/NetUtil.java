@@ -49,17 +49,18 @@ public class NetUtil {
 		} catch (JSONException e) {
 			return -1;
 		}
-		if (!json.optString("status", "failure").equalsIgnoreCase("success"))
+		if (!json.optString("status", "failure").equalsIgnoreCase("success")) {
 			return -1;
+		}
 		return Double.valueOf(json.optString("result", "1"));
-	}
-
-	public static void downloadFile(String fileUrl, String destination) throws IOException {
-		downloadFile(fileUrl, new File(destination));
 	}
 
 	public static void downloadFile(String fileUrl, File destination) throws IOException {
 		FileUtil.toFile(NetUtil.downloadURL(fileUrl), destination);
+	}
+
+	public static void downloadFile(String fileUrl, String destination) throws IOException {
+		downloadFile(fileUrl, new File(destination));
 	}
 
 	public static void downloadFileAlt(String fileUrl, File destination) throws IOException {
@@ -69,20 +70,6 @@ public class NetUtil {
 		fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
 		fileOutputStream.close();
 
-	}
-
-	/**
-	 * Download url.
-	 *
-	 * @author Dalethium
-	 * @param toDownload the to download
-	 * @return byte array
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @see coffee.weneed.utils.NetUtil#downloadURL(URL)
-	 */
-	public static byte[] downloadURL(String toDownload) throws IOException {
-		URL url = new URL(toDownload);
-		return NetUtil.downloadURL(url);
 	}
 
 	public static String downloadHTTPSocket(Socket s, String address) throws UnknownHostException, IOException {
@@ -128,6 +115,20 @@ public class NetUtil {
 	}
 
 	/**
+	 * Download url.
+	 *
+	 * @author Dalethium
+	 * @param toDownload the to download
+	 * @return byte array
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @see coffee.weneed.utils.NetUtil#downloadURL(URL)
+	 */
+	public static byte[] downloadURL(String toDownload) throws IOException {
+		URL url = new URL(toDownload);
+		return NetUtil.downloadURL(url);
+	}
+
+	/**
 	 * https://stackoverflow.com/questions/2295221/java-net-url-read-stream-to-byte
 	 *
 	 * @author StackOverflow:ron-reiter
@@ -169,8 +170,9 @@ public class NetUtil {
 		if (attr == null || attr.size() == 0) {
 			attrs = ictx.getAttributes(hostName, new String[] { "A" });
 			attr = attrs.get("A");
-			if (attr == null)
+			if (attr == null) {
 				throw new NamingException("No match for name '" + hostName + "'");
+			}
 		}
 		ArrayList<String> res = new ArrayList<>();
 		NamingEnumeration<?> en = attr.getAll();
@@ -262,8 +264,9 @@ public class NetUtil {
 			int size = domainEle.length;
 			for (int i = 0; i < size; i++) {
 				String domainEleStr = domainEle[i];
-				if ("".equals(domainEleStr.trim()))
+				if ("".equals(domainEleStr.trim())) {
 					return false;
+				}
 			}
 			char[] domainChar = addStr.toCharArray();
 			size = domainChar.length;

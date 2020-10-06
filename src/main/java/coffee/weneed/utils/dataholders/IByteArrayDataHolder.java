@@ -12,7 +12,7 @@ public interface IByteArrayDataHolder {
 	 * From byte array.
 	 *
 	 * @param b the b
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	void fromByteArray(byte[] b) throws IOException;
 

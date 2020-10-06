@@ -17,34 +17,26 @@ public class ProxyUtil {
 		String user;
 		String pass;
 		InetSocketAddress address;
+
 		public Socks5Connection(InetSocketAddress address, String username, String password) {
 			user = username;
 			pass = password;
 			this.address = address;
 		}
-		
-		public String getUser() {
-			return user;
-		}
-		public String getPass() {
-			return pass;
-		}
+
 		public InetSocketAddress getAddress() {
 			return address;
 		}
+
+		public String getPass() {
+			return pass;
+		}
+
+		public String getUser() {
+			return user;
+		}
 	}
-	public static Socket createSocks5Socket(InetSocketAddress address, String username, String password) throws SocksException, IOException {
-		SocksProxy proxy = new Socks5(address);
-		proxy.setCredentials(new UsernamePasswordCredentials(username, password));
-	    return new SocksSocket(proxy);
-	}
-	
-	public static Socket createSocks5Socket(Socks5Connection socket) throws SocksException, IOException {
-		SocksProxy proxy = new Socks5(socket.getAddress());
-		proxy.setCredentials(new UsernamePasswordCredentials(socket.getUser(), socket.getPass()));
-	    return new SocksSocket(proxy);
-	}
-	
+
 	public static Socket createSocks5ChainSocket(List<Socks5Connection> sockets) throws SocksException, IOException {
 		List<SocksProxy> proxies = new ArrayList<>();
 		for (Socks5Connection s : sockets) {
@@ -60,6 +52,18 @@ public class ProxyUtil {
 			}
 			s.setChainProxy(proxy);
 		}
-	    return new SocksSocket(s);
+		return new SocksSocket(s);
+	}
+
+	public static Socket createSocks5Socket(InetSocketAddress address, String username, String password) throws SocksException, IOException {
+		SocksProxy proxy = new Socks5(address);
+		proxy.setCredentials(new UsernamePasswordCredentials(username, password));
+		return new SocksSocket(proxy);
+	}
+
+	public static Socket createSocks5Socket(Socks5Connection socket) throws SocksException, IOException {
+		SocksProxy proxy = new Socks5(socket.getAddress());
+		proxy.setCredentials(new UsernamePasswordCredentials(socket.getUser(), socket.getPass()));
+		return new SocksSocket(proxy);
 	}
 }

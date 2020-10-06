@@ -14,19 +14,6 @@ import java.util.List;
 public class ArrayUtil {
 
 	/**
-	 * https://stackoverflow.com/questions/740299/how-do-i-sort-a-set-to-a-list-in-java
-	 *
-	 * @param <T> the generic type
-	 * @param c   the c
-	 * @return the list
-	 */
-	public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
-		List<T> list = new ArrayList<>(c);
-		java.util.Collections.sort(list);
-		return list;
-	}
-
-	/**
 	 * https://github.com/haha01haha01/MapleLib/blob/master/WzLib/Util/WzTool.cs
 	 * Creates an array with b appended to the end of a.
 	 *
@@ -43,6 +30,19 @@ public class ArrayUtil {
 		System.arraycopy(a, 0, result, 0, a.length);
 		System.arraycopy(b, 0, result, a.length, b.length);
 		return result;
+	}
+
+	/**
+	 * https://stackoverflow.com/questions/740299/how-do-i-sort-a-set-to-a-list-in-java
+	 *
+	 * @param <T> the generic type
+	 * @param c   the c
+	 * @return the list
+	 */
+	public static <T extends Comparable<? super T>> List<T> asSortedList(Collection<T> c) {
+		List<T> list = new ArrayList<>(c);
+		java.util.Collections.sort(list);
+		return list;
 	}
 
 	/**
@@ -172,8 +172,9 @@ public class ArrayUtil {
 	 */
 	public static <T> T[] subarray(T[] arr, int startpos, int endpos) {
 		List<T> list = new ArrayList<>();
-		if (endpos >= arr.length || startpos < 0)
+		if (endpos >= arr.length || startpos < 0) {
 			throw new IndexOutOfBoundsException();
+		}
 		int i = 0;
 		for (T a : arr) {
 			if (i < startpos) {

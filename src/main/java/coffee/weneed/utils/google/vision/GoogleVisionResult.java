@@ -234,7 +234,7 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 * @param full_image_matches the new full image matches
 	 */
 	public void setFullImageMatches(List<String> full_image_matches) {
-		this.fullImageMatches = full_image_matches;
+		fullImageMatches = full_image_matches;
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 * @param matching_pages the matching pages
 	 */
 	public void setMatchingPages(List<CoffeeEntry<String, String>> matching_pages) {
-		this.matchingPages = matching_pages;
+		matchingPages = matching_pages;
 	}
 
 	/**
@@ -270,7 +270,7 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 * @param partial_image_matches the new partial image matches
 	 */
 	public void setPartialImageMatches(List<String> partial_image_matches) {
-		this.partialImageMatches = partial_image_matches;
+		partialImageMatches = partial_image_matches;
 	}
 
 	/**
@@ -279,7 +279,7 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	 * @param similar_images the new similar images
 	 */
 	public void setSimilarImages(List<String> similar_images) {
-		this.similarImages = similar_images;
+		similarImages = similar_images;
 	}
 
 	/**

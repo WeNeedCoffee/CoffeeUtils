@@ -25,8 +25,9 @@ public final class FunkeyStep implements ICodingStep {
 	private FunkeyStep(byte[] code, byte[][] cols) throws IllegalArgumentException {
 		int len = code.length;
 		for (byte[] col : cols) {
-			if (col.length != len)
+			if (col.length != len) {
 				throw new IllegalArgumentException("All character array lengths must be the same.");
+			}
 		}
 		this.code = code;
 		this.cols = cols;

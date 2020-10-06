@@ -94,8 +94,9 @@ public class BCrypt {
 	 * @return the decoded value of x
 	 */
 	private static byte char64(char x) {
-		if (x < 0 || x > BCrypt.index_64.length)
+		if (x < 0 || x > BCrypt.index_64.length) {
 			return -1;
+		}
 		return BCrypt.index_64[x];
 	}
 
@@ -126,8 +127,9 @@ public class BCrypt {
 		byte ret[];
 		byte c1, c2, c3, c4, o;
 
-		if (maxolen <= 0)
+		if (maxolen <= 0) {
 			throw new IllegalArgumentException("Invalid maxolen");
+		}
 
 		while (off < slen - 1 && olen < maxolen) {
 			c1 = BCrypt.char64(s.charAt(off++));
@@ -180,8 +182,9 @@ public class BCrypt {
 		StringBuffer rs = new StringBuffer();
 		int c1, c2;
 
-		if (len <= 0 || len > d.length)
+		if (len <= 0 || len > d.length) {
 			throw new IllegalArgumentException("Invalid len");
+		}
 
 		while (off < len) {
 			c1 = d[off++] & 0xff;
@@ -268,20 +271,23 @@ public class BCrypt {
 		int rounds, off = 0;
 		StringBuffer rs = new StringBuffer();
 
-		if (salt.charAt(0) != '$' || salt.charAt(1) != '2')
+		if (salt.charAt(0) != '$' || salt.charAt(1) != '2') {
 			throw new IllegalArgumentException("Invalid salt version");
+		}
 		if (salt.charAt(2) == '$') {
 			off = 3;
 		} else {
 			minor = salt.charAt(2);
-			if (minor != 'a' || salt.charAt(3) != '$')
+			if (minor != 'a' || salt.charAt(3) != '$') {
 				throw new IllegalArgumentException("Invalid salt revision");
+			}
 			off = 4;
 		}
 
 		// Extract number of rounds
-		if (salt.charAt(off + 2) > '$')
+		if (salt.charAt(off + 2) > '$') {
 			throw new IllegalArgumentException("Missing salt rounds");
+		}
 		rounds = Integer.parseInt(salt.substring(off, off + 2));
 
 		real_salt = salt.substring(off + 3, off + 25);
@@ -354,11 +360,13 @@ public class BCrypt {
 		int clen = cdata.length;
 		byte ret[];
 
-		if (log_rounds < 4 || log_rounds > 31)
+		if (log_rounds < 4 || log_rounds > 31) {
 			throw new IllegalArgumentException("Bad number of rounds");
+		}
 		rounds = 1 << log_rounds;
-		if (salt.length != BCrypt.BCRYPT_SALT_LEN)
+		if (salt.length != BCrypt.BCRYPT_SALT_LEN) {
 			throw new IllegalArgumentException("Bad salt length");
+		}
 
 		init_key();
 		ekskey(salt, password);

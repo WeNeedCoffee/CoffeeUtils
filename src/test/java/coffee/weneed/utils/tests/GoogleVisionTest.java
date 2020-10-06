@@ -19,7 +19,6 @@ public class GoogleVisionTest {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
 }

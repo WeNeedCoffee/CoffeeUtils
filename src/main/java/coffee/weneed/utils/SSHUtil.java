@@ -18,11 +18,19 @@ public class SSHUtil {
 	private Session session;
 
 	public SSHUtil(String host, String user, String pw) throws JSchException {
-		this.SSH_HOST = host;
-		this.SSH_LOGIN = user;
-		this.SSH_PASSWORD = pw;
+		SSH_HOST = host;
+		SSH_LOGIN = user;
+		SSH_PASSWORD = pw;
 		session = setupSshSession();
 		session.connect();
+	}
+
+	public void closeConnection(ChannelExec channel, Session session) {
+		try {
+			channel.disconnect();
+		} catch (Exception ignored) {
+		}
+		session.disconnect();
 	}
 
 	public List<String> runCommand(String command) throws JSchException {
@@ -50,13 +58,5 @@ public class SSHUtil {
 		session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
 		session.setConfig("StrictHostKeyChecking", "no"); // disable check for RSA key
 		return session;
-	}
-
-	public void closeConnection(ChannelExec channel, Session session) {
-		try {
-			channel.disconnect();
-		} catch (Exception ignored) {
-		}
-		session.disconnect();
 	}
 }

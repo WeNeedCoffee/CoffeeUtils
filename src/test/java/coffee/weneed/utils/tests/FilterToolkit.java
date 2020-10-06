@@ -229,8 +229,9 @@ public class FilterToolkit implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			if (e.getComponent() instanceof JTextArea == false)
+			if (e.getComponent() instanceof JTextArea == false) {
 				return;
+			}
 			JTextArea ta = (JTextArea) e.getComponent();
 			String s = ta.getText();
 			s = s.substring(0, s.length() - 1);// remove enter char

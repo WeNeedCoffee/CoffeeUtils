@@ -11,6 +11,20 @@ import java.util.Random;
  */
 public class MathUtil {
 
+	public static int countDigits(double d) {
+		return BigDecimal.valueOf(d).toPlainString().replace(".", "").length();
+	}
+
+	/**
+	 * Returns a number representing <code>(i - (i % len)) / len</code>
+	 * @param len
+	 * @param i
+	 * @return
+	 */
+	public static long getIndex(long len, long i) {
+		return (i - i % len) / len;
+	}
+
 	/**
 	 * Gets the mean.
 	 *
@@ -65,29 +79,16 @@ public class MathUtil {
 		double dAbs = Math.abs(d);
 		int i = (int) dAbs;
 		double result = dAbs - i;
-		if (result < 0.5)
+		if (result < 0.5) {
 			return d < 0 ? -i : i;
-		else
+		} else {
 			return d < 0 ? -(i + 1) : i + 1;
-	}
-	/**
-	 * Returns a number representing <code>(i - (i % len)) / len</code>
-	 * @param len
-	 * @param i
-	 * @return
-	 */
-	public static long getIndex(long len, long i) {
-		return (i - (i % len)) / len;
+		}
 	}
 
-
-	public static int countDigits(double d) {
-		return BigDecimal.valueOf(d).toPlainString().replace(".", "").length();
-	}
-	
 	/**
 	 * Writes a number in the lowest possible storage format.
-	 * 
+	 *
 	 * For example, 254 would be stored as a byte, 256 as a short, so on and so forth.
 	 *
 	 * @param n the number to be written
@@ -121,7 +122,7 @@ public class MathUtil {
 			} else {
 				return n.longValue();
 			}
-		} else if (n instanceof Float || (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE && MathUtil.countDigits(n.doubleValue()) <= 8)) {
+		} else if (n instanceof Float || n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE && MathUtil.countDigits(n.doubleValue()) <= 8) {
 			return n instanceof Float ? n.floatValue() : Float.valueOf(new BigDecimal(Double.toString(n.doubleValue()), MathContext.UNLIMITED).toPlainString());
 		} else if (n instanceof Double) {
 			return n.doubleValue();

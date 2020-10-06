@@ -40,8 +40,9 @@ public abstract class AbstractScriptManager {
 		FileReader fr = null;
 		try {
 			File script = path.toFile();
-			if (!script.exists())
+			if (!script.exists()) {
 				return null;
+			}
 			ScriptEngine engine = AbstractScriptManager.SCRIPT_ENGINE_MANAGER.getEngineByName("nashorn");
 			fr = new FileReader(script);
 			engine.eval("load('nashorn:mozilla_compat.js')");

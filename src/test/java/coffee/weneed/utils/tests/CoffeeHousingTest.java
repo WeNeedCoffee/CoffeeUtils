@@ -115,18 +115,20 @@ public class CoffeeHousingTest {
 	};
 
 	String aa = "";
+
 	public String aaaa() {
 		if (StringUtil.isBlank(aa)) {
-		String a = "";
-		for (int i = 1; i<100 ; i++) {
-			System.out.println(i);
-			a+="aaaaaaaaaa";
+			String a = "";
+			for (int i = 1; i < 100; i++) {
+				System.out.println(i);
+				a += "aaaaaaaaaa";
+			}
+			aa = a;
 		}
-		aa = a;
-		}
-			return aa;
-		
+		return aa;
+
 	}
+
 	/**
 	 * Generate coffee housing.
 	 *
@@ -144,7 +146,7 @@ public class CoffeeHousingTest {
 		p.setNumber("3", 1.0d);
 		p.setByteArray("4", "test.test".getBytes());
 		for (int i = 0; i < amount; i++) {
-			
+
 			CoffeeHousingObject p1 = new CoffeeHousingObject();
 			p1.setNumber(RandomStringUtils.randomAlphabetic(ra), RandomUtils.nextDouble());
 			p1.setString(RandomStringUtils.randomAlphabetic(ra), new String(RandomStringUtils.randomAlphabetic(rb)));
@@ -172,7 +174,7 @@ public class CoffeeHousingTest {
 
 	/**
 	 * Test bytes.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	@Test
 	public void testBytes() throws IOException {

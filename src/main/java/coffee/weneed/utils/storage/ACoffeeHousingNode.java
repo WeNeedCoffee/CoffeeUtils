@@ -20,18 +20,9 @@ public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONO
 	/** The items. */
 	protected Map<String, Object> items = new HashMap<>();
 
-	
 	protected ACoffeeHousingNode() {
 		parent = null;
 		ID = null;
-	}
-	
-	/**
-	 * Instantiates a new a coffee housing node.
-	 */
-	protected ACoffeeHousingNode(String ID) {
-		parent = null;
-		this.ID = ID;
 	}
 
 	/**
@@ -44,16 +35,25 @@ public abstract class ACoffeeHousingNode implements IByteArrayDataHolder, IJSONO
 		this.ID = ID;
 	}
 
-	public String getID() {
-		return ID;
+	/**
+	 * Instantiates a new a coffee housing node.
+	 */
+	protected ACoffeeHousingNode(String ID) {
+		parent = null;
+		this.ID = ID;
 	}
+
 	/**
 	 * Deserialize.
 	 *
 	 * @param lea the lea
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	protected abstract void deserialize(CoffeeReader lea) throws IOException;
+
+	public String getID() {
+		return ID;
+	}
 
 	/**
 	 * Serialize.

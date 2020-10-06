@@ -48,8 +48,9 @@ public class LogicUtil {
 	 */
 	public static Boolean isAnyObjectNull(Object... objects) {
 		for (Object o : objects) {
-			if (o == null)
+			if (o == null) {
 				return Boolean.TRUE;
+			}
 		}
 		return Boolean.FALSE;
 	}

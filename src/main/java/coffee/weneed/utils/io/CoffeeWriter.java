@@ -64,6 +64,10 @@ public class CoffeeWriter {
 		return getBaos().toByteArray();
 	}
 
+	public int getSize() {
+		return getBaos().size();
+	}
+
 	/**
 	 * Sets the baos.
 	 *
@@ -73,9 +77,6 @@ public class CoffeeWriter {
 		this.baos = baos;
 	}
 
-	public int getSize() {
-		return getBaos().size();
-	}
 	/**
 	 * To string.
 	 *
@@ -102,14 +103,6 @@ public class CoffeeWriter {
 
 	/**
 	 * Write.
-	 * @throws IOException 
-	 */
-	public final void write(CoffeeWriter cw) throws IOException {
-		getBaos().write(cw.getByteArray());
-	}
-	
-	/**
-	 * Write.
 	 *
 	 * @param b the b
 	 */
@@ -117,6 +110,14 @@ public class CoffeeWriter {
 		for (byte element : b) {
 			write(element);
 		}
+	}
+
+	/**
+	 * Write.
+	 * @throws IOException
+	 */
+	public final void write(CoffeeWriter cw) throws IOException {
+		getBaos().write(cw.getByteArray());
 	}
 
 	/**
@@ -234,7 +235,7 @@ public class CoffeeWriter {
 
 	/**
 	 * Writes a number in the lowest possible storage format.
-	 * 
+	 *
 	 * For example, 254 would be stored as a byte, 256 as a short, so on and so forth.
 	 *
 	 * @param n the number to be written
@@ -279,7 +280,7 @@ public class CoffeeWriter {
 				write((byte) 3);
 				writeLong(n.longValue());
 			}
-		} else if (n instanceof Float || (n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE && MathUtil.countDigits(n.doubleValue()) <= 8)) {
+		} else if (n instanceof Float || n.doubleValue() >= Float.MIN_VALUE && n.doubleValue() <= Float.MAX_VALUE && MathUtil.countDigits(n.doubleValue()) <= 8) {
 			write(n instanceof Float ? (byte) 4 : (byte) 5);
 			writeFloat(n instanceof Float ? n.floatValue() : Float.valueOf(new BigDecimal(Double.toString(n.doubleValue()), MathContext.UNLIMITED).toPlainString()));
 		} else if (n instanceof Double) {

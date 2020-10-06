@@ -17,7 +17,7 @@ import coffee.weneed.utils.io.CoffeeWriter;
 
 /**
  * The Class CoffeeHousingObject.
- * 
+ *
  */
 public class CoffeeHousingObject extends ACoffeeHousingNode {
 
@@ -26,13 +26,6 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 
 	public CoffeeHousingObject() {
 		super();
-	}
-	
-	/**
-	 * Instantiates a new coffee housing object.
-	 */
-	public CoffeeHousingObject(String ID) {
-		super(ID);
 	}
 
 	/**
@@ -45,10 +38,17 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	}
 
 	/**
+	 * Instantiates a new coffee housing object.
+	 */
+	public CoffeeHousingObject(String ID) {
+		super(ID);
+	}
+
+	/**
 	 * Deserialize.
 	 *
 	 * @param reader the ca
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	/*
 	 * (non-Javadoc)
@@ -59,10 +59,13 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	 */
 	@Override
 	protected void deserialize(CoffeeReader reader) throws IOException {
-		if (reader.readByte() != 0x20) throw new IOException("Error.");
+		if (reader.readByte() != 0x20) {
+			throw new IOException("Error.");
+		}
 		reader.readSmart();
-		if (reader.available() < 2)
+		if (reader.available() < 2) {
 			return;
+		}
 		items.clear();
 		int size = reader.readSmart().intValue();
 		for (int i = 0; i < size; i++) {
@@ -105,14 +108,16 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 				}
 			}
 		}
-		if (reader.readByte() != 0x21) throw new IOException("Error.");
+		if (reader.readByte() != 0x21) {
+			throw new IOException("Error.");
+		}
 	}
 
 	/**
 	 * From byte array.
 	 *
 	 * @param in the in
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	/*
 	 * (non-Javadoc)
@@ -144,57 +149,57 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	@Override
 	public void fromJSON(JSONObject json) {
 		for (String key : json.keySet()) {
-				JSONObject node = null; 
-				try {
-					node = (JSONObject) json.get(key);
-				} catch (Exception e) {
-					//TODO
+			JSONObject node = null;
+			try {
+				node = (JSONObject) json.get(key);
+			} catch (Exception e) {
+				//TODO
+			}
+			if (key.equals("strings")) {
+				for (String sk : node.keySet()) {
+					if (node.get(sk) instanceof String) {
+						items.put(sk, node.getString(sk));
+					}
 				}
-				if (key.equals("strings")) {
-					for (String sk : node.keySet()) {
-						if (node.get(sk) instanceof String) {
-							items.put(sk, node.getString(sk));
-						}
-					}
-				} else if (key.equals("children")) {
-					for (String child_name : node.keySet()) {
-						if (node.get(child_name) instanceof JSONObject) {
-							if (node.getJSONObject(child_name).getInt("type") == 1) {
-								CoffeeHousingObject cho = new CoffeeHousingObject(this, child_name);
-								cho.fromJSON(node.getJSONObject(child_name));
-								items.put(child_name, cho);
-							} else if (node.getJSONObject(child_name).getInt("type") == 0) {
-								CoffeeHousingList list = new CoffeeHousingList(this, child_name);
-								list.fromJSON(node.getJSONObject(child_name));
-								items.put(child_name, list);
-							}
-						}
-					}
-				} else if (key.equals("numbers")) {
-					for (String sk : node.keySet()) {
-						if (node.get(sk) instanceof Number) {
-							items.put(sk, MathUtil.smartNumber((Number) node.get(sk)));
-						}
-					}
-				} else if (key.equals("byte_arrays")) {
-					for (String sk : node.keySet()) {
-						if (node.get(sk) instanceof String) {
-							items.put(sk, StringUtil.hexToBytes(node.getString(sk)));
-						}
-					}
-				} else if (key.equals("json_objects")) {
-					for (String sk : node.keySet()) {
-						if (node.get(sk) instanceof JSONObject) {
-							items.put(sk, node.getJSONObject(sk));
-						}
-					}
-				} else if (key.equals("json_arrays")) {
-					for (String sk : node.keySet()) {
-						if (node.get(sk) instanceof JSONArray) {
-							items.put(sk, node.getJSONArray(sk));
+			} else if (key.equals("children")) {
+				for (String child_name : node.keySet()) {
+					if (node.get(child_name) instanceof JSONObject) {
+						if (node.getJSONObject(child_name).getInt("type") == 1) {
+							CoffeeHousingObject cho = new CoffeeHousingObject(this, child_name);
+							cho.fromJSON(node.getJSONObject(child_name));
+							items.put(child_name, cho);
+						} else if (node.getJSONObject(child_name).getInt("type") == 0) {
+							CoffeeHousingList list = new CoffeeHousingList(this, child_name);
+							list.fromJSON(node.getJSONObject(child_name));
+							items.put(child_name, list);
 						}
 					}
 				}
+			} else if (key.equals("numbers")) {
+				for (String sk : node.keySet()) {
+					if (node.get(sk) instanceof Number) {
+						items.put(sk, MathUtil.smartNumber((Number) node.get(sk)));
+					}
+				}
+			} else if (key.equals("byte_arrays")) {
+				for (String sk : node.keySet()) {
+					if (node.get(sk) instanceof String) {
+						items.put(sk, StringUtil.hexToBytes(node.getString(sk)));
+					}
+				}
+			} else if (key.equals("json_objects")) {
+				for (String sk : node.keySet()) {
+					if (node.get(sk) instanceof JSONObject) {
+						items.put(sk, node.getJSONObject(sk));
+					}
+				}
+			} else if (key.equals("json_arrays")) {
+				for (String sk : node.keySet()) {
+					if (node.get(sk) instanceof JSONArray) {
+						items.put(sk, node.getJSONArray(sk));
+					}
+				}
+			}
 		}
 	}
 
@@ -260,30 +265,31 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 		 * contains all data within an object object data is held within the
 		 * folder named after the object, not the parent folder
 		 * \LIST\OBJECT1\OBJECT1.json RIGHT \LIST\OBJECT1.json WRONG
-		 * 
-		 * 
+		 *
+		 *
 		 * EDIT: Allow coding processes to be used, preferably do not store as json
 		 * store as follows:
-		 * \LIST\OBJECT1\CHN.file -- numbers serialized 
+		 * \LIST\OBJECT1\CHN.file -- numbers serialized
 		 * \LIST\OBJECT1\CHS.file -- strings serialized
 		 * ...
 		 * ...
 		 * \LIST\OBJECT1\CHB_[name].file -- Bin serialized and named by key
-		 * 
+		 *
 		 * Subordinate objects are stored in folders
-		 * 
+		 *
 		 * \LIST\OBJECT1\OBJECT2\CHN.file
 		 * ...
 		 * ...
-		 * 
-		 * 
+		 *
+		 *
 		 * lists could hold data? they have to hold what CoffeeHousingLists hold right?
 		 */
 		if (!folder.exists()) {
 			folder.mkdir();
 		}
-		if (!folder.isDirectory())
+		if (!folder.isDirectory()) {
 			return;
+		}
 		new File(folder.getPath() + File.separator + folder.getName() + ".json");
 	}
 
@@ -302,7 +308,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 	@Override
 	protected void serialize(CoffeeWriter writer) {
 		CoffeeWriter twriter = new CoffeeWriter(); //create inner writer so that we can mark the size of it later
-		
+
 		Map<String, Number> numbers = new HashMap<>();
 		Map<String, byte[]> byteArrays = new HashMap<>();
 		Map<String, String> strings = new HashMap<>();
@@ -361,8 +367,7 @@ public class CoffeeHousingObject extends ACoffeeHousingNode {
 			twriter.writeString(s);
 			children.get(s).serialize(twriter);
 		}
-		
-		
+
 		writer.write((byte) 0x20);
 		writer.writeSmart(twriter.getSize()); //mark the size of it so that it can be skipped when reading.
 		try {

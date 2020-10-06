@@ -115,8 +115,9 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 */
 	@Override
 	public void fromJSON(JSONObject json) {
-		if (json.length() < 1)
+		if (json.length() < 1) {
 			return;
+		}
 		if (json.has("end")) {
 			setEnd(json.getBoolean("end"));
 		} else {
@@ -213,13 +214,16 @@ public class TreeNode implements IJSONObjectDataHolder {
 	 * @return true, if successful
 	 */
 	public boolean shouldSave() {
-		if (isEnd())
+		if (isEnd()) {
 			return true;
+		}
 		for (TreeNode e : node.values()) {
-			if (e.isEnd())
+			if (e.isEnd()) {
 				return true;
-			if (e.shouldSave())
+			}
+			if (e.shouldSave()) {
 				return true;
+			}
 		}
 		return false;
 	}

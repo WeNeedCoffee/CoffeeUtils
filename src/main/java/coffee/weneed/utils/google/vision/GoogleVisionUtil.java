@@ -21,7 +21,7 @@ public class GoogleVisionUtil {
 
 	/**
 	 * Detect image.
-	 * 
+	 *
 	 * @author Daleth
 	 * @param url the url
 	 * @return the google vision result
@@ -38,8 +38,9 @@ public class GoogleVisionUtil {
 			BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
 			List<AnnotateImageResponse> responses = response.getResponsesList();
 			AnnotateImageResponse res = responses.get(0);
-			if (!res.hasError())
+			if (!res.hasError()) {
 				return new GoogleVisionResult(url.toString(), res.getWebDetection());
+			}
 			throw new GoogleVisionException(String.format("Error: %s\n", res.getError().getMessage()));
 		}
 	}

@@ -179,11 +179,11 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param start the start
 	 */
 	private void checkWhiteList(String input, int start) {
-		if (input.isEmpty() || input.length() < start)
+		if (input.isEmpty() || input.length() < start) {
 			return;
-		else if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1))))
+		} else if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
 			return;
-		else {
+		} else {
 			checkWhiteList(input, whitelist, start, 0, input);
 		}
 	}
@@ -202,8 +202,9 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			unmarkAsterisk(start, start + spot - 1);
 			checkWhiteList(input.substring(spot), start + spot);
 		}
-		if (spot >= input.length() || n.isEmpty())
+		if (spot >= input.length() || n.isEmpty()) {
 			return;
+		}
 		char e = StringUtil.getChar(input.substring(0 + spot, 1 + spot));
 		if (n.containsChild(e)) {
 			checkWhiteList(input, n.getChildByLetter(e), start, spot + 1, orig);
@@ -328,8 +329,9 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 				updateNode(letter, input, characterIndex, node, 1);
 			}
 			return true;
-		} else if (searchLeet(input, characterIndex, node, update))
+		} else if (searchLeet(input, characterIndex, node, update)) {
 			return true;
+		}
 		return false;
 	}
 
@@ -343,8 +345,9 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	private void searchAlongTree(String input, int characterIndex, TreeNode node) {
 		if (characterIndex < input.length()) {
 			Character letter = input.charAt(characterIndex);
-			if (search(input, characterIndex, node, true))
+			if (search(input, characterIndex, node, true)) {
 				return;
+			}
 			if (!node.isEnd()) {
 				if (Character.toString(letter).matches("[\\W_]")) {
 					searchAlongTree(input, characterIndex + 1, node);
@@ -417,8 +420,9 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param word the word
 	 */
 	public void unwhitelistWord(String word) {
-		if (!filterBadWords(word).contains("*"))
+		if (!filterBadWords(word).contains("*")) {
 			return;
+		}
 		TreeNode n = whitelist;
 		for (Character c : word.toCharArray()) {
 			if (n.getChildByLetter(c) == null) {
@@ -461,8 +465,9 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param word the word
 	 */
 	public void whitelistWord(String word) {
-		if (!filterBadWords(word).contains("*"))
+		if (!filterBadWords(word).contains("*")) {
 			return;
+		}
 		TreeNode n = whitelist;
 		for (Character c : word.toCharArray()) {
 			if (n.getChildByLetter(c) == null) {
