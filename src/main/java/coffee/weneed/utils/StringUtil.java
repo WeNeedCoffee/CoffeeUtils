@@ -295,6 +295,16 @@ public class StringUtil {
 		return baos.toByteArray();
 	}
 
+	public static final boolean isAnyBlank(String... s) {
+		for (String ss : s) {
+			if (isBlank(ss)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * @author Daleth
 	 * @param s
