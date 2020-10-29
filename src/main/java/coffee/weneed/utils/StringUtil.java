@@ -180,6 +180,15 @@ public class StringUtil {
 		return ss[ss.length - 1];
 	}
 
+	public static final String getFirstValidString(String... s) {
+		for (String ss : s) {
+			if (!isBlank(ss)) {
+				return ss;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Gets a string padded from the left to <code>length</code> by
 	 * <code>padchar</code>.
