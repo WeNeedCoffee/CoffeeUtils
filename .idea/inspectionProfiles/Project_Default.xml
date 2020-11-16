@@ -1,0 +1,57 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="BooleanExpressionMayBeConditional" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="CStyleArrayDeclaration" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="CharsetObjectCanBeUsed" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="ConditionalExpressionWithIdenticalBranches" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="ConstantValueVariableUse" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="FieldMayBeFinal" enabled="false" level="INFORMATION" enabled_by_default="false" />
+    <inspection_tool class="JavaLangImport" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="LocalCanBeFinal" enabled="false" level="INFORMATION" enabled_by_default="false">
+      <option name="REPORT_VARIABLES" value="true" />
+      <option name="REPORT_PARAMETERS" value="true" />
+    </inspection_tool>
+    <inspection_tool class="MissortedModifiers" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <option name="m_requireAnnotationsFirst" value="true" />
+    </inspection_tool>
+    <inspection_tool class="NegatedConditionalExpression" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="RedundantFieldInitialization" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="RedundantImplements" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <option name="ignoreSerializable" value="false" />
+      <option name="ignoreCloneable" value="false" />
+    </inspection_tool>
+    <inspection_tool class="SamePackageImport" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="SimplifiableAnnotation" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="SimplifiableEqualsExpression" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="StaticCallOnSubclass" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="StaticFieldReferenceOnSubclass" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="UnnecessarilyQualifiedStaticUsage" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <option name="m_ignoreStaticFieldAccesses" value="false" />
+      <option name="m_ignoreStaticMethodCalls" value="false" />
+      <option name="m_ignoreStaticAccessFromStaticContext" value="true" />
+    </inspection_tool>
+    <inspection_tool class="UnnecessarilyQualifiedStaticallyImportedElement" enabled="false" level="INFORMATION" enabled_by_default="false" />
+    <inspection_tool class="UnnecessaryCallToStringValueOf" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryConstantArrayCreationExpression" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryEnumModifier" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryFinalOnLocalVariableOrParameter" enabled="false" level="INFORMATION" enabled_by_default="false" />
+    <inspection_tool class="UnnecessaryInterfaceModifier" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryQualifierForThis" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessarySemicolon" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessarySuperConstructor" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessarySuperQualifier" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryThis" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryToStringCall" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnqualifiedFieldAccess" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnqualifiedInnerClassAccess" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <option name="ignoreReferencesToLocalInnerClasses" value="true" />
+    </inspection_tool>
+    <inspection_tool class="UnqualifiedMethodAccess" enabled="true" level="INFORMATION" enabled_by_default="true" />
+    <inspection_tool class="UnqualifiedStaticUsage" enabled="true" level="INFORMATION" enabled_by_default="true">
+      <option name="m_ignoreStaticFieldAccesses" value="false" />
+      <option name="m_ignoreStaticMethodCalls" value="false" />
+      <option name="m_ignoreStaticAccessFromStaticContext" value="true" />
+    </inspection_tool>
+  </profile>
+</component>
