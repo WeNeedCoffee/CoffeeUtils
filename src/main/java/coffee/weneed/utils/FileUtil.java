@@ -307,7 +307,7 @@ public class FileUtil {
 
 	/***
 	 * https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
-	 * @param path
+	 * @param inputStream
 	 * @param encoding
 	 * @return
 	 * @throws IOException
