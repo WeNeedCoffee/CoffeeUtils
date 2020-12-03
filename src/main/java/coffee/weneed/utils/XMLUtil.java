@@ -23,6 +23,6 @@ public class XMLUtil {
 	 * @return the string
 	 */
 	public static String unescapeXml(String s) {
-		return s.replaceAll("&amp;", "&").replaceAll("&gt;", ">").replaceAll("&lt;", "<").replaceAll("&quot;", "\"").replaceAll("&apos;", "'");
+		return s.replaceAll("&amp;", "&").replaceAll("&gt;", ">").replaceAll("&lt;", "<").replaceAll("&quot;", "\"").replaceAll("&apos;", "'").replaceAll("&#039;", "'");
 	}
 }

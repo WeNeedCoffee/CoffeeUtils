@@ -35,12 +35,16 @@ public class CompressionUtil {
 		BZip2CompressorOutputStream bzout = new BZip2CompressorOutputStream(out);
 		bzout.write(ca.getRemainingBytes());
 		bzout.finish();
-		CoffeeWriter cw = new CoffeeWriter();
-		byte[] bo = out.toByteArray();
-		cw = new CoffeeWriter();
-		cw.writeSmart(uncompressed.length);
-		cw.write(bo);
+		byte[] ret = writeCompressed(out.toByteArray(), uncompressed.length); //TODO should this be out.len or uncomp.len?
 		bzout.close();
+		return ret;
+	}
+
+	public static byte[] writeCompressed(byte[] bo, int len) {
+		CoffeeWriter cw = new CoffeeWriter();
+		cw = new CoffeeWriter();
+		cw.writeSmart(len);
+		cw.write(bo);
 		return cw.getByteArray();
 	}
 
@@ -128,12 +132,8 @@ public class CompressionUtil {
 		XZOutputStream xzOut = new XZOutputStream(out, new LZMA2Options());
 		xzOut.write(ca.getRemainingBytes());
 		xzOut.finish();
-		CoffeeWriter cw = new CoffeeWriter();
-		byte[] bo = out.toByteArray();
-		cw = new CoffeeWriter();
-		cw.writeSmart(uncompressed.length);
-		cw.write(bo);
+		byte[] ret = writeCompressed(out.toByteArray(), uncompressed.length); //TODO should this be out.len or uncomp.len?
 		xzOut.close();
-		return cw.getByteArray();
+		return ret;
 	}
 }

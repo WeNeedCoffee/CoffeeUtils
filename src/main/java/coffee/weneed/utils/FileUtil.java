@@ -22,14 +22,14 @@ import java.util.List;
  * The Class FileUtil.
  */
 public class FileUtil {
-	public static boolean areSame(File file1, File file2) throws IOException {
+	private static int prolim(File file1, File file2) throws IOException {
 		final boolean file1Exists = file1.exists();
 		if (file1Exists != file2.exists()) {
-			return false;
+			return 0;
 		}
 
 		if (!file1Exists) {
-			return true;
+			return 1;
 		}
 
 		if (file1.isDirectory() || file2.isDirectory()) {
@@ -37,12 +37,18 @@ public class FileUtil {
 		}
 
 		if (file1.length() != file2.length()) {
-			return false;
+			return 0;
 		}
 
 		if (file1.getCanonicalFile().equals(file2.getCanonicalFile())) {
-			return true;
+			return 1;
 		}
+		return -1;
+	}
+	public static boolean areSame(File file1, File file2) throws IOException {
+		int p = prolim(file1, file2);
+		if (p >= 0)
+			return p == 1;
 		if (file1.getName().split("\\.").length > 1 && file2.getName().split("\\.").length > 1 && file1.getName().split("\\.")[1].equalsIgnoreCase(file2.getName().split("\\.")[1])) {
 			switch (file1.getName().split("\\.")[1].toLowerCase()) {
 				case "txt":
@@ -60,26 +66,9 @@ public class FileUtil {
 	}
 
 	public static boolean areTextSame(File file1, File file2) throws IOException {
-		final boolean file1Exists = file1.exists();
-		if (file1Exists != file2.exists()) {
-			return false;
-		}
-
-		if (!file1Exists) {
-			return true;
-		}
-
-		if (file1.isDirectory() || file2.isDirectory()) {
-			throw new IOException("Can't compare directories, only files");
-		}
-
-		if (file1.length() != file2.length()) {
-			return false;
-		}
-
-		if (file1.getCanonicalFile().equals(file2.getCanonicalFile())) {
-			return true;
-		}
+		int p = prolim(file1, file2);
+		if (p >= 0)
+			return p == 1;
 		BufferedReader reader1 = new BufferedReader(new FileReader(file1));
 
 		BufferedReader reader2 = new BufferedReader(new FileReader(file2));
@@ -148,27 +137,9 @@ public class FileUtil {
 	 * @throws IOException in case of an I/O error
 	 */
 	public static boolean contentEquals(final File file1, final File file2) throws IOException {
-		final boolean file1Exists = file1.exists();
-		if (file1Exists != file2.exists()) {
-			return false;
-		}
-
-		if (!file1Exists) {
-			return true;
-		}
-
-		if (file1.isDirectory() || file2.isDirectory()) {
-			throw new IOException("Can't compare directories, only files");
-		}
-
-		if (file1.length() != file2.length()) {
-			return false;
-		}
-
-		if (file1.getCanonicalFile().equals(file2.getCanonicalFile())) {
-			return true;
-		}
-
+		int p = prolim(file1, file2);
+		if (p >= 0)
+			return p == 1;
 		try (InputStream input1 = new FileInputStream(file1); InputStream input2 = new FileInputStream(file2)) {
 			return contentEquals(input1, input2);
 		}
