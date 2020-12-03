@@ -1,12 +1,17 @@
 package coffee.weneed.utils.tests;
 
 import static org.junit.Assert.assertEquals;
+
+import coffee.weneed.utils.crypt.BCrypt;
 import org.junit.Test;
 import coffee.weneed.utils.io.CoffeeReader;
 import coffee.weneed.utils.io.CoffeeWriter;
 
 public class CoffeeTests {
-
+	@Test
+	public void genSalt() {
+		System.out.println(BCrypt.gensalt(11));
+	}
 	@Test
 	public void testSmartNumber() {
 		Number[] ns = { Byte.MAX_VALUE, //1
