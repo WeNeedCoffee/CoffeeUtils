@@ -243,6 +243,16 @@ public class NetUtil {
 		}
 	}
 
+	/***
+	 * https://stackoverflow.com/questions/5667371/validate-ipv4-address-in-java
+	 * @param ip
+	 * @return
+	 */
+	public static boolean validateIP(final String ip) {
+		String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+
+		return ip.matches(PATTERN);
+	}
 	/**
 	 * https://www.dev2qa.com/check-valid-www-domain-and-hostname-java-examples/
 	 * addStr : A domain string. return : true means addStr is a valid domain
