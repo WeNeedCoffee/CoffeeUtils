@@ -1,3 +1,4 @@
+/*
 package coffee.weneed.utils.google.vision;
 
 import java.io.IOException;
@@ -14,12 +15,15 @@ import com.google.protobuf.ByteString;
 import coffee.weneed.utils.NetUtil;
 
 // TODO: Auto-generated Javadoc
+*/
 /**
  * The Class GoogleVisionUtil.
- */
+ *//*
+
 public class GoogleVisionUtil {
 
-	/**
+	*/
+/**
 	 * Detect image.
 	 *
 	 * @author Daleth
@@ -27,7 +31,8 @@ public class GoogleVisionUtil {
 	 * @return the google vision result
 	 * @throws IOException
 	 * @throws GoogleVisionException
-	 */
+	 *//*
+
 	public static GoogleVisionResult detectImage(URL url) throws IOException, GoogleVisionException {
 		ArrayList<AnnotateImageRequest> requests = new ArrayList<>();
 		Image img = Image.newBuilder().setContent(ByteString.copyFrom(NetUtil.downloadURL(url))).build();
@@ -45,3 +50,4 @@ public class GoogleVisionUtil {
 		}
 	}
 }
+*/

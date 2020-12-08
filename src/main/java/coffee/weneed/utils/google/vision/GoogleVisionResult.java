@@ -1,3 +1,4 @@
+/*
 package coffee.weneed.utils.google.vision;
 
 import java.util.ArrayList;
@@ -13,63 +14,87 @@ import coffee.weneed.utils.dataholders.IJSONObjectDataHolder;
 import coffee.weneed.utils.datatypes.CoffeeEntry;
 
 // TODO: Auto-generated Javadoc
+*/
 /**
  * The Class GoogleVisionResult.
  *
  * @author Daleth
- */
+ *//*
+
 public class GoogleVisionResult implements IJSONObjectDataHolder {
 
-	/** The descriptions. */
+	*/
+/** The descriptions. *//*
+
 	private List<GoogleVisionEntityResult> descriptions = new ArrayList<>();
 
-	/** The labels. */
+	*/
+/** The labels. *//*
+
 	private List<String> labels = new ArrayList<>();
 
-	/** The matching pages. */
+	*/
+/** The matching pages. *//*
+
 	private List<CoffeeEntry<String, String>> matchingPages = new ArrayList<>();
 
-	/** The partial image matches. */
+	*/
+/** The partial image matches. *//*
+
 	private List<String> partialImageMatches = new ArrayList<>();
 
-	/** The full image matches. */
+	*/
+/** The full image matches. *//*
+
 	private List<String> fullImageMatches = new ArrayList<>();
 
-	/** The similar images. */
+	*/
+/** The similar images. *//*
+
 	private List<String> similarImages = new ArrayList<>();
 
-	/** The image. */
+	*/
+/** The image. *//*
+
 	private String image;
 
-	/** The timestamp. */
+	*/
+/** The timestamp. *//*
+
 	private long timestamp;
 
-	/**
+	*/
+/**
 	 * Instantiates a new google vision result.
 	 *
 	 * @param json the json
-	 */
+	 *//*
+
 	public GoogleVisionResult(JSONObject json) {
 		fromJSON(json);
 	}
 
-	/**
+	*/
+/**
 	 * Instantiates a new google vision result.
 	 *
 	 * @param image the image
 	 * @param web   the web
-	 */
+	 *//*
+
 	public GoogleVisionResult(String image, WebDetection web) {
 		this.image = image;
 		fromWebDetection(web);
 		timestamp = System.currentTimeMillis();
 	}
 
-	/**
+	*/
+/**
 	 * From JSON.
 	 *
 	 * @param json the json
-	 */
+	 *//*
+
 	@Override
 	public void fromJSON(JSONObject json) {
 		image = json.getString("image");
@@ -121,11 +146,13 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 		}
 	}
 
-	/**
+	*/
+/**
 	 * From web detection.
 	 *
 	 * @param annotation the annotation
-	 */
+	 *//*
+
 	private void fromWebDetection(WebDetection annotation) {
 		for (WebEntity entity : annotation.getWebEntitiesList()) {
 			descriptions.add(new GoogleVisionEntityResult(entity));
@@ -147,155 +174,189 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 		}
 	}
 
-	/**
+	*/
+/**
 	 * Gets the descriptions.
 	 *
 	 * @return the descriptions
-	 */
+	 *//*
+
 	public List<GoogleVisionEntityResult> getDescriptions() {
 		return descriptions;
 	}
 
-	/**
+	*/
+/**
 	 * Gets the full image matches.
 	 *
 	 * @return the full image matches
-	 */
+	 *//*
+
 	public List<String> getFullImageMatches() {
 		return fullImageMatches;
 	}
 
-	/**
+	*/
+/**
 	 * Gets the image.
 	 *
 	 * @return the image
-	 */
+	 *//*
+
 	public String getImage() {
 		return image;
 	}
 
-	/**
+	*/
+/**
 	 * Gets the labels.
 	 *
 	 * @return the labels
-	 */
+	 *//*
+
 	public List<String> getLabels() {
 		return labels;
 	}
 
-	/**
+	*/
+/**
 	 * Gets the matching pages.
 	 *
 	 * @return the matching pages
-	 */
+	 *//*
+
 	public List<CoffeeEntry<String, String>> getMatchingPages() {
 		return matchingPages;
 	}
 
-	/**
+	*/
+/**
 	 * Gets the partial image matches.
 	 *
 	 * @return the partial image matches
-	 */
+	 *//*
+
 	public List<String> getPartialImageMatches() {
 		return partialImageMatches;
 	}
 
-	/**
+	*/
+/**
 	 * Gets the similar images.
 	 *
 	 * @return the similar images
-	 */
+	 *//*
+
 	public List<String> getSimilarImages() {
 		return similarImages;
 	}
 
-	/**
+	*/
+/**
 	 * Gets the timestamp.
 	 *
 	 * @return the timestamp
-	 */
+	 *//*
+
 	public long getTimestamp() {
 		return timestamp;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the descriptions.
 	 *
 	 * @param descriptions the new descriptions
-	 */
+	 *//*
+
 	public void setDescriptions(List<GoogleVisionEntityResult> descriptions) {
 		this.descriptions = descriptions;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the full image matches.
 	 *
 	 * @param full_image_matches the new full image matches
-	 */
+	 *//*
+
 	public void setFullImageMatches(List<String> full_image_matches) {
 		fullImageMatches = full_image_matches;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the image.
 	 *
 	 * @param image the new image
-	 */
+	 *//*
+
 	public void setImage(String image) {
 		this.image = image;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the labels.
 	 *
 	 * @param labels the new labels
-	 */
+	 *//*
+
 	public void setLabels(List<String> labels) {
 		this.labels = labels;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the matching pages.
 	 *
 	 * @param matching_pages the matching pages
-	 */
+	 *//*
+
 	public void setMatchingPages(List<CoffeeEntry<String, String>> matching_pages) {
 		matchingPages = matching_pages;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the partial image matches.
 	 *
 	 * @param partial_image_matches the new partial image matches
-	 */
+	 *//*
+
 	public void setPartialImageMatches(List<String> partial_image_matches) {
 		partialImageMatches = partial_image_matches;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the similar images.
 	 *
 	 * @param similar_images the new similar images
-	 */
+	 *//*
+
 	public void setSimilarImages(List<String> similar_images) {
 		similarImages = similar_images;
 	}
 
-	/**
+	*/
+/**
 	 * Sets the timestamp.
 	 *
 	 * @param timestamp the new timestamp
-	 */
+	 *//*
+
 	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	/**
+	*/
+/**
 	 * To JSON.
 	 *
 	 * @return the JSON object
-	 */
+	 *//*
+
 	@Override
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
@@ -336,3 +397,4 @@ public class GoogleVisionResult implements IJSONObjectDataHolder {
 	}
 
 }
+*/

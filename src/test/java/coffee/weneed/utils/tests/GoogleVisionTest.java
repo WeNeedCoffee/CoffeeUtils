@@ -1,3 +1,4 @@
+/*
 package coffee.weneed.utils.tests;
 
 import java.io.IOException;
@@ -22,3 +23,4 @@ public class GoogleVisionTest {
 
 	}
 }
+*/

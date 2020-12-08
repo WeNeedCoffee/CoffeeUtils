@@ -44,11 +44,11 @@
 			<artifactId>jsch</artifactId>
 			<version>0.1.55</version>
 		</dependency>
-		<dependency>
+<!--		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-vision</artifactId>
 			<version>1.69.0</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.lz4</groupId>
 			<artifactId>lz4-java</artifactId>
