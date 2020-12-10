@@ -1,6 +1,7 @@
 package coffee.weneed.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.ArrayList;
@@ -16,6 +17,17 @@ import java.util.List;
  */
 // TODO credit/source
 public class StringUtil {
+
+	/***
+	 * https://stackoverflow.com/questions/3585053/how-to-check-if-a-string-contains-only-ascii
+	 * @param v
+	 * @return
+	 */
+	public static boolean isPureAscii(String v) {
+		return Charset.forName("US-ASCII").newEncoder().canEncode(v);
+		// or "ISO-8859-1" for ISO Latin 1
+		// or StandardCharsets.US_ASCII with JDK1.7+
+	}
 
 	/** The Constant HEX. */
 	static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
