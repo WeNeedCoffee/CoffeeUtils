@@ -71,4 +71,8 @@ public class JSnow10 {
 	public static String replaceAll(String str, String find, String replace) {
 		return str.replaceAll(escapeRegExp(find), replace);
 	}
+
+	public static boolean isHidden(char c) {
+		return c == JSnow10.one || c == JSnow10.wOne || c == JSnow10.wZero || c == JSnow10.zero || c == JSnow10.zOne || c == JSnow10.zZero;
+	}
 }
