@@ -25,6 +25,61 @@ public class MathUtil {
 		return (i - i % len) / len;
 	}
 
+	public static long removeFirstDigit(long i) { return i % (long) Math.pow(10, (long) Math.log10(i));}
+	public static long removeXthDigit(long e, int x) {
+		long l = e;
+		for (int i = 0; i < x; x++) {
+			l = removeFirstDigit(l);
+		}
+		return l;
+	}
+	public static String shortString(long i, int chargoal) {
+		int c = 100;
+		int k = 1000;
+		int m = 1000000;
+		int b = (int) Math.pow(10, 9);
+		long t = (long) Math.pow(10, 12);
+		long q = (long) Math.pow(10, 15);
+		long index = 0;
+		String e = "";
+		long v = 0;
+		if (String.valueOf(i).length() <= chargoal) {
+			return String.valueOf(i);
+		} else if (i >= q) {
+			index = getIndex(q, i);
+			e = "Q";
+			v = removeXthDigit(i, String.valueOf(index).length());
+		} else if (i >= t) {
+			index = getIndex(t, i);
+			e = "T";
+			v = removeXthDigit(i, String.valueOf(index).length());
+		} else if (i >= b) {
+			index = getIndex(b, i);
+			e = "B";
+			v = removeXthDigit(i, String.valueOf(index).length());
+		} else if (i >= m) {
+			index = getIndex(m, i);
+			e = "M";
+			v = removeXthDigit(i, String.valueOf(index).length());
+		} else if (i >= k) {
+			index = getIndex(k, i);
+			e = "K";
+			v = removeXthDigit(i, String.valueOf(index).length());
+		} else if (i >= c) {
+			index = getIndex(c, i);
+			e = "C";
+			v = removeXthDigit(i, String.valueOf(index).length());
+		}
+		return index + decimalPoint(v, chargoal - String.valueOf(index).length() - 1) + e;
+
+	}
+	private static String decimalPoint(long i, int chargoal){
+		String s = "";
+		if (chargoal < 1) return s;
+		String l = String.valueOf(i);
+		if (l.length() <= chargoal)  return "." + l;
+		return "." + l.substring(0, chargoal);
+	}
 	/**
 	 * Gets the mean.
 	 *
