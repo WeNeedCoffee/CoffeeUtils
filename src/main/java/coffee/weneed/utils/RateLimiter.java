@@ -36,9 +36,14 @@ public class RateLimiter {
 		}
 		List<Long> tl = new ArrayList<>();
 		tl.addAll(getRecord());
+
+		try {
 		for (long timestamp : tl) {
 			temp += timestamp;
 		}
+		} catch (NullPointerException e) {
+		//FIXME java.lang.NullPointerException: Cannot invoke "java.lang.Long.longValue()" because the return value of "java.util.Iterator.next()" is null???
+	}
 		return tl.size() < 1 ? 0 : temp / tl.size();
 	}
 	/**
