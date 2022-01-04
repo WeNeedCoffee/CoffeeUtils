@@ -37,27 +37,27 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20180813</version>
+			<version>20211205</version>
 		</dependency>
 		<dependency>
 			<groupId>org.lz4</groupId>
 			<artifactId>lz4-java</artifactId>
-			<version>1.5.1</version>
+			<version>1.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
-			<version>[1.19,)</version>
+			<version>1.21</version>
 		</dependency>
 		<dependency>
 			<groupId>org.tukaani</groupId>
 			<artifactId>xz</artifactId>
-			<version>1.6</version>
+			<version>1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
