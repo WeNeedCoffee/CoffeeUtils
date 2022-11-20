@@ -3,7 +3,7 @@ package coffee.weneed.utils.tests;
 import static org.junit.Assert.assertEquals;
 import java.nio.charset.StandardCharsets;
 import org.junit.Test;
-import coffee.weneed.utils.jsnow.JSnow10;
+import coffee.weneed.utils.jsnow.JSnowIO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -18,6 +18,6 @@ public class JSnowTest {
 	@Test
 	public void testjsnow() {
 		String in = "testing testing 123";
-		assertEquals(in, new String(JSnow10.decode(JSnow10.encode(in.getBytes(StandardCharsets.UTF_8))), StandardCharsets.UTF_8));
+		assertEquals(in, new String(JSnowIO.decode(JSnowIO.encode(in.getBytes(StandardCharsets.UTF_8))), StandardCharsets.UTF_8));
 	}
 }
