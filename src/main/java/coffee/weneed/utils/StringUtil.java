@@ -161,7 +161,6 @@ public class StringUtil {
 	}
 
 	public static final String getBeginning(String in, String delimiter) {
-		System.out.println("test");
 		return StringUtil.substr(in, 0, in.length() - StringUtil.getEnd(in, delimiter).length() - 1 + delimiter.length());
 	}
 
