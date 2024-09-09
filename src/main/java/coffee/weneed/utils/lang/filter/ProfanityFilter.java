@@ -104,12 +104,10 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	public ProfanityFilter(Map<Character, String[]> activeLeets, URL tree) {
 		try {
 			fromJSON(new JSONObject(new String(NetUtil.downloadURL(tree))));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (JSONException | IOException e) {
 			e.printStackTrace();
 		}
-	}
+    }
 
 	/**
 	 * Adds the to tree.
@@ -142,7 +140,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	private String applyAsteriskMark(String userInput) {
 		StringBuilder filteredBadWords = new StringBuilder(userInput);
 		for (int i = 0; i < asteriskMark.length; i++) {
-			if (asteriskMark[i] == true) {
+			if (asteriskMark[i]) {
 				filteredBadWords.setCharAt(i, '*');
 			}
 		}
@@ -180,10 +178,8 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	private void checkWhiteList(String input, int start) {
 		if (input.isEmpty() || input.length() < start) {
-			return;
-		} else if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
-			return;
-		} else {
+        } else if (whitelist.isEmpty() || !whitelist.containsChild(StringUtil.getChar(input.substring(0, 1)))) {
+        } else {
 			checkWhiteList(input, whitelist, start, 0, input);
 		}
 	}
@@ -205,7 +201,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		if (spot >= input.length() || n.isEmpty()) {
 			return;
 		}
-		char e = StringUtil.getChar(input.substring(0 + spot, 1 + spot));
+		char e = StringUtil.getChar(input.substring(spot, 1 + spot));
 		if (n.containsChild(e)) {
 			checkWhiteList(input, n.getChildByLetter(e), start, spot + 1, orig);
 		} else {
@@ -247,12 +243,10 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			}
 		}
 		try {
-			while ((line = in.readLine()) != null) {
+			while (in != null && (line = in.readLine()) != null) {
 				addToTree(badWordLine + line.toLowerCase(), 0, blacklist);
 				unwhitelistWord(badWordLine + line.toLowerCase());
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -323,17 +317,14 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @return true, if successful
 	 */
 	private boolean search(String input, int characterIndex, TreeNode node, boolean update) {
-		Character letter = input.charAt(characterIndex);
+		char letter = input.charAt(characterIndex);
 		if (node.containsChild(letter)) {
 			if (update) {
 				updateNode(letter, input, characterIndex, node, 1);
 			}
 			return true;
-		} else if (searchLeet(input, characterIndex, node, update)) {
-			return true;
-		}
-		return false;
-	}
+		} else return searchLeet(input, characterIndex, node, update);
+    }
 
 	/**
 	 * Search along tree.
@@ -344,7 +335,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 */
 	private void searchAlongTree(String input, int characterIndex, TreeNode node) {
 		if (characterIndex < input.length()) {
-			Character letter = input.charAt(characterIndex);
+			char letter = input.charAt(characterIndex);
 			if (search(input, characterIndex, node, true)) {
 				return;
 			}
@@ -372,7 +363,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	private boolean searchLeet(String input, int characterIndex, TreeNode node, boolean update) {
 		String sub = StringUtil.substr(input, characterIndex, input.length());
 		for (Entry<Character, String[]> entry : activeLeets.entrySet()) {
-			Character c = entry.getKey();
+			char c = entry.getKey();
 			if (!node.containsChild(c)) {
 				continue;
 			}
@@ -424,7 +415,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			return;
 		}
 		TreeNode n = whitelist;
-		for (Character c : word.toCharArray()) {
+		for (char c : word.toCharArray()) {
 			if (n.getChildByLetter(c) == null) {
 				n.addChild(c);
 			}
@@ -442,13 +433,13 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 	 * @param node           the node
 	 * @param toSkip         the to skip
 	 */
-	private void updateNode(Character ch, String input, int characterIndex, TreeNode node, int toSkip) {
-		if (isSuspicionFound == false) {
+	private void updateNode(char ch, String input, int characterIndex, TreeNode node, int toSkip) {
+		if (!isSuspicionFound) {
 			isSuspicionFound = true;
 			badWordStart = characterIndex;
 		}
 		if (node.getChildByLetter(ch).isEnd()) {
-			if (characterIndex > 0 && characterIndex + 1 < input.length() && ch.equals(input.charAt(characterIndex + 1))) {
+			if (characterIndex > 0 && characterIndex + 1 < input.length() && ch == input.charAt(characterIndex + 1)) {
 				searchAlongTree(input, characterIndex + 1, node);
 				return;
 			}
@@ -469,7 +460,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 			return;
 		}
 		TreeNode n = whitelist;
-		for (Character c : word.toCharArray()) {
+		for (char c : word.toCharArray()) {
 			if (n.getChildByLetter(c) == null) {
 				n.addChild(c);
 			}
@@ -477,7 +468,7 @@ public class ProfanityFilter implements IJSONObjectDataHolder {
 		}
 		n.setEnd(true);
 		n = blacklist;
-		for (Character c : word.toCharArray()) {
+		for (char c : word.toCharArray()) {
 			if (n.getChildByLetter(c) == null) {
 				n.addChild(c);
 			}

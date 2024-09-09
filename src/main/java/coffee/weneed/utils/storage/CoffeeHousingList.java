@@ -582,10 +582,10 @@ public class CoffeeHousingList extends ACoffeeHousingNode implements List<Object
 		if (longs.length() > 0) {
 			json.put("longs", longs);
 		}
-		if (floats.length() > 0) {
+		if (!floats.isEmpty()) {
 			json.put("floats", floats);
 		}
-		if (doubles.length() > 0) {
+		if (!doubles.isEmpty()) {
 			json.put("doubles", doubles);
 		}
 		if (shorts.length() > 0) {
